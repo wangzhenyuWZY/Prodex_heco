@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/foxdex/dex-com/issues"
   },
-  "homepage": "https://github.com/foxdex/dex-com#readme"
+  "homepage": "https://github.com/foxdex/dex-com#readme",
+  "dependencies": {
+    "vue": "^2.6.12"
+  }
 }
