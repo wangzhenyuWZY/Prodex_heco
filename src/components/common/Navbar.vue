@@ -1,8 +1,5 @@
 <template>
-  <div id="app">
-  
-    
-    <div class="nav">
+  <div class="nav">
       <div class="logo"><img src="./assets/img/logo.png" alt=""></div>
       <div class="nav-header"> 
       <router-link to='/' tag='span' exact-active-class='on'>Exchange</router-link>
@@ -15,26 +12,15 @@
 
       </div>
     </div>
-
-    <router-view></router-view>
-  </div>
 </template>
 
 <script>
-
 export default {
-  name: 'App'
+
 }
 </script>
 
-<style>
-html, body {
-  padding: 0;
-  margin: 0  auto;
-  width: 1920px;
-  height: 1080px; 
-  /* background: #0F1522; */
-}
+<style >
 .nav {
   /* width: 1920px; */
   line-height: 72px;
@@ -67,5 +53,4 @@ html, body {
   color:#ffffff;
   
 }
-
 </style>
