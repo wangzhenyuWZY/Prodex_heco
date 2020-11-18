@@ -1,23 +1,51 @@
 <template>
   <div class="nav">
-      <div class="logo"><img src="../../assets/img/logo.png" alt=""></div>
-      <div class="nav-header"> 
-      <router-link to='/' tag='span' exact-active-class='on'>Exchange</router-link>
-      <router-link to='/pool' tag='span' exact-active-class='on'>Pool</router-link>
-      <router-link to='/foxdex' tag='span' exact-active-class='on'>FoxDex</router-link>
-      <router-link to='/wtrx' tag='span' active-class='on'>WTRX</router-link>
-      <router-link to='/stake' tag='span' active-class='on'>Stake</router-link>
-      </div>
-      <div class="nav-right">
-
-      </div>
+    <div class="logo"><img src="../../assets/img/logo.png" alt="" /></div>
+    <div class="nav-header">
+      <span tag="span" exact-active-class="on" @click="handelActive('Exchange')"
+        >Exchange</span
+      >
+      <span tag="span" exact-active-class="on" @click="handelActive('pool')"
+        >Pool</span
+      >
+      <span tag="span" exact-active-class="on" @click="handelActive('foxdex')"
+        >FoxDex</span
+      >
+      <span tag="span" active-class="on" @click="handelActive('wtrx')">WTRX</span>
+      <div class="active-bar" :style="{'transform':`translateX(${key}px)`}"></div>
     </div>
+    <div class="nav-right">dsdsds</div>
+  </div>
 </template>
 
 <script>
 export default {
-
-}
+  data() {
+    return {
+      key: '0'
+    }
+  },
+  methods: {
+    handelActive(e) {
+      switch (e) {
+        case 'Exchange':
+           this.$router.push('/');
+           this.key=0;
+          break;
+        case 'pool':
+           this.key=129;
+          break;
+        case 'foxdex':
+            this.key=240;
+          break;
+        case 'wtrx':
+            this.key=362;
+          break;
+      }
+      if (e !='Exchange') this.$router.push('/'+e);
+    },
+  },
+};
 </script>
 
 <style >
@@ -25,22 +53,34 @@ export default {
   /* width: 1920px; */
   line-height: 72px;
   height: 72px;
-  background-color:#131A28;
-  
+  background-color: #131a28;
+  display: flex;
 }
-.logo{
+.logo {
   float: left;
   width: 35px;
   height: 35px;
   margin-top: 10px;
   margin-left: 33px;
 }
-.logo img{
+.logo img {
   width: 100%;
 }
-.nav-header{
-  
-  color: #B7BFC8;
+.nav-header {
+  flex: 1;
+  color: #b7bfc8;
+  position: relative;
+}
+
+.active-bar {
+  position: absolute;
+  left: 50px;
+  bottom: 15px;
+ width: 40px;
+height: 4px;
+background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+border-radius: 3px;
+  transition: transform .6s;
 }
 .nav-header span {
   font-size: 22px;
@@ -50,7 +90,6 @@ export default {
   /* text-align: center; */
 }
 .on {
-  color:#ffffff;
-  
+  color: #ffffff;
 }
 </style>
