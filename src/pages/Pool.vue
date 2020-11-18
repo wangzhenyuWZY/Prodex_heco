@@ -1,8 +1,5 @@
 <template>
-<div>
-    <h1>pool页面</h1>
-</div>
-
+<div></div>
 </template>
 
 <script>

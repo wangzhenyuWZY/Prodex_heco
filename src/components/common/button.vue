@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="from_botton"  :style="{'line-height':height+'px'}" @click="()=>this.$emit('childClick')">{{text}}</div>
+        <div class="from_botton"  :style="{'line-height':height+'px','width':width+'px',fontSize:size+'px'}" @click="()=>this.$emit('childClick')">{{text}}</div>
     </div>
 </template>
 
@@ -13,7 +13,11 @@
             },
             height: {
                 type:String,
-                default:'64px'
+                default:'64'
+            },
+            size:{
+                type:String,
+                default:'20'
             }
         },
         

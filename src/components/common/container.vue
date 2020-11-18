@@ -1,5 +1,5 @@
 <template>
-  <div class="totalModel">
+  <div class="totalModel"  :style="{'width':width+'px','height':height+'px'}">
     <div class="modelBg">
         <slot></slot>
     </div>
@@ -7,7 +7,19 @@
 </template>
 
 <script>
-export default {};
+export default {
+ props: {
+   width: {
+     type:String,
+     default:'720'
+   },
+   height: {
+     type: String,
+     default: '721'
+   }
+   
+ }
+};
 </script>
 
 <style lang="scss" scoped>
