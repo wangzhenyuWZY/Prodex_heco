@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon_down</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-3" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Settings" transform="translate(-1221.000000, -353.000000)" fill="#B7BFC8">
+            <g id="编组-20" transform="translate(600.000000, 187.000000)">
+                <g id="编组-18" transform="translate(50.000000, 95.000000)">
+                    <g id="编组-9" transform="translate(420.000000, 38.000000)">
+                        <g id="编组-6" transform="translate(47.000000, 29.000000)">
+                            <g id="icon_down" transform="translate(104.000000, 4.000000)">
+                                <path d="M16.5879951,12.9799919 L21.3768932,20.9614886 C21.5717376,21.2862294 21.4664359,21.7074364 21.1416951,21.9022809 C21.0351246,21.9662232 20.9131796,22 20.788898,22 L11.211102,22 C10.8323924,22 10.5253877,21.6929953 10.5253877,21.3142857 C10.5253877,21.1900042 10.5591645,21.0680592 10.6231068,20.9614886 L15.4120049,12.9799919 C15.6068493,12.6552512 16.0280563,12.5499494 16.3527971,12.7447939 C16.4493111,12.8027023 16.5300867,12.8834779 16.5879951,12.9799919 Z" id="三角形" transform="translate(16.000000, 17.000000) rotate(-180.000000) translate(-16.000000, -17.000000) "></path>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

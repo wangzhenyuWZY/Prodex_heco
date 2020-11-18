@@ -1,18 +1,21 @@
 <template>
 <div>
-    <h1>Exchange页面</h1>
+  <fromBox></fromBox>
     
 </div>
   
 </template>
 
 <script>
-
+import fromBox from '@/components/common/fromBox.vue'
 export default {
     data() {
         return {
             key: ''
         }
+    },
+    components:{
+        fromBox
     }
 }
 </script>
