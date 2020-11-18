@@ -4,10 +4,11 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Exchange = ()=>import('../pages/Exchange.vue')
-const Pool = ()=>import('../pages/Pool.vue')
-const Foxdex = ()=>import('../pages/Foxdex.vue')
-const Wtrx = ()=>import('../pages/Wtrx.vue')
+const Exchange = ()=>import('../pages/Exchange/Exchange.vue')
+const Pool = ()=>import('../pages/Pool/Pool.vue')
+const Foxdex = ()=>import('../pages/Foxdex/Foxdex.vue')
+const Wtrx = ()=>import('../pages/Wtrx/Wtrx.vue')
+const Stake = ()=>import('../pages/Stake/Stake.vue')
 
 export default new VueRouter({
   mode: 'hash',
@@ -16,5 +17,6 @@ export default new VueRouter({
     { path: '/pool', component: Pool },
     { path: '/foxdex', component: Foxdex},
     { path: '/wtrx', component: Wtrx}, 
+    { path: '/stake', component: Stake},
   ]
 })

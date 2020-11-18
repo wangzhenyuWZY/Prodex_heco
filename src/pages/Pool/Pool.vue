@@ -11,7 +11,9 @@
                withdrawing your liquidity.</p>
             <p>Read more about providing liquidity</p>
         </div>
-        <div class="pool-box2"></div>
+        <div class="pool-box2">
+           
+        </div>
     </div>
     
 </div>
@@ -19,6 +21,7 @@
 </template>
 
 <script>
+
 export default {
 
 }
