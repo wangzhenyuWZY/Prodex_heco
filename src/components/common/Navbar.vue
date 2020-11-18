@@ -1,6 +1,6 @@
 <template>
   <div class="nav">
-      <div class="logo"><img src="./assets/img/logo.png" alt=""></div>
+      <div class="logo"><img src="../../assets/img/logo.png" alt=""></div>
       <div class="nav-header"> 
       <router-link to='/' tag='span' exact-active-class='on'>Exchange</router-link>
       <router-link to='/pool' tag='span' exact-active-class='on'>Pool</router-link>

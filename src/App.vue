@@ -1,35 +1,27 @@
 <template>
   <div id="app">
-    <div class="c">1</div>
+    <navBar></navBar>
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-
+import navBar from './components/common/Navbar'
 export default {
-  name: 'App'
+  name: 'App',
+  components:{
+    navBar
+  }
 }
 </script>
 
-<style lang="scss" scoped>
-.css{
-  .sss{
-    background:#131A28;
-  }
+<style lang="scss" >
+html, body, #app{
+  width: 100%;
+  height: 100%;
+  background: #0F1522; 
 }
-#app{
-  .c{
-    background: red;
-  }
-}
-html, body {
-  padding: 0;
-  margin: 0  auto;
-  width: 1920px;
-  height: 1080px; 
-  /* background: #0F1522; */
-}
+
 .nav {
   /* width: 1920px; */
   line-height: 72px;

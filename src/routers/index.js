@@ -4,10 +4,10 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-const Exchange = ()=>import('./pages/Exchange.vue')
-const Pool = ()=>import('./pages/Pool.vue')
-const Foxdex = ()=>import('./pages/Foxdex.vue')
-const Wtrx = ()=>import('./pages/Wtrx.vue')
+const Exchange = ()=>import('../pages/Exchange.vue')
+const Pool = ()=>import('../pages/Pool.vue')
+const Foxdex = ()=>import('../pages/Foxdex.vue')
+const Wtrx = ()=>import('../pages/Wtrx.vue')
 
 export default new VueRouter({
   mode: 'hash',
