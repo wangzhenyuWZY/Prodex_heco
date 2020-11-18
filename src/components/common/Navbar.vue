@@ -7,7 +7,6 @@
       <router-link to='/foxdex' tag='span' exact-active-class='on'>FoxDex</router-link>
       <router-link to='/wtrx' tag='span' active-class='on'>WTRX</router-link>
       </div>
-      ccccc
       <div class="nav-right">
 
       </div>

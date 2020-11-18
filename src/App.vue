@@ -1,21 +1,6 @@
 <template>
   <div id="app">
-  
-    
-    <div class="nav">
-      <div class="logo"><img src="./assets/img/logo.png" alt=""></div>
-      <div class="nav-header"> 
-      <router-link to='/' tag='span' exact-active-class='on'>Exchange</router-link>
-      <router-link to='/pool' tag='span' exact-active-class='on'>Pool</router-link>
-      <router-link to='/foxdex' tag='span' exact-active-class='on'>FoxDex</router-link>
-      <router-link to='/wtrx' tag='span' active-class='on'>WTRX</router-link>
-      </div>
-      
-      <div class="nav-right">
-
-      </div>
-    </div>
-
+    <div class="c">1</div>
     <router-view></router-view>
   </div>
 </template>
@@ -27,7 +12,17 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.css{
+  .sss{
+    background:#131A28;
+  }
+}
+#app{
+  .c{
+    background: red;
+  }
+}
 html, body {
   padding: 0;
   margin: 0  auto;
