@@ -3,7 +3,10 @@
     <vfromInput lable="From" select v-model="test" text="ETH" />
     <div class="from_contentIcon">箭头</div>
     <vfromInput lable="To" v-model="test1" select :text="'ETHCS'"  :showSelect='false'/>
-    <v-button text='Connect to a wallet'  height='50' @childClick="ddd"/>
+    <div class="margintop">
+      <v-button text='Connect to a wallet' height='50' @click="ddd"/>
+    </div>
+    
   </container>
 </template>
 
@@ -114,5 +117,11 @@ export default {
   font-family: PFDinTextCompPro-Regular, PFDinTextCompPro;
   font-weight: 400;
   color: #b7bfc8;
+}
+.margintop{
+  width: 320px;
+  margin: 0 auto;
+  margin-top: 86px;
+
 }
 </style>
