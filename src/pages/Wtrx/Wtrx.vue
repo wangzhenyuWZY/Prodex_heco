@@ -7,7 +7,7 @@
   <div class="wtrx-left">
     <p>TRX->WTRX</p>
     <p>TRX Balance:</p>
-    <input type="text" placeholder="Please enter the amout of TRX">
+    
     <p>You will get WTRX:</p>
     <button>Confim</button>
   </div>
