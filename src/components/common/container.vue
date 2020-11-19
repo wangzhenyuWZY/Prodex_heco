@@ -1,13 +1,21 @@
 <template>
   <div class="totalModel">
-    <div class="modelBg">
-        <slot></slot>
+      <slot name="title"></slot>
+    <div class="modelBg" :style="{'paddingTop':top+'px'}">
+        <slot name="body"></slot>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  props:{
+    top:{
+      type:String,
+      default:'96'
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -21,7 +29,6 @@ export default {};
   margin-top: 115px;
   .modelBg {
     padding: 0 50px;
-    padding-top: 95px;
   }
 }
 </style>

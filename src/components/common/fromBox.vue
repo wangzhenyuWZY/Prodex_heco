@@ -1,12 +1,37 @@
 <template>
-  <container>
-    <vfromInput lable="From" select v-model="test" text="ETH" />
-    <div class="from_contentIcon">箭头</div>
-    <vfromInput lable="To" v-model="test1" select :text="'ETHCS'"  :showSelect='false'/>
-    <div class="margintop">
-      <v-button text='Connect to a wallet' height='50' @click="ddd"/>
+  <container > 
+    <!-- top="0" -->
+    <!-- <div class="title" slot="title">
+      <div class="lt_box">
+        <img class="lt_icon" src="@/assets/img/icon_down.svg" alt="" />
+        <span class="content_text">Add Liquidity</span>
+      </div>
+      <div class="rg_box">
+        <img src="@/assets/img/icon_down.svg" alt="" />
+      </div>
+    </div> -->
+    <div slot="body">
+      <!-- <div class="box_size">
+        <div class="provider">
+          <p>You are the first liquidity provider.</p>
+          <p>The ratio of tokens you add will set the price of this pool.</p>
+          <p>Once you are happy with the rate click supply to review.</p>
+        </div>
+      </div> -->
+      
+      <vfromInput lable="From" select v-model="test" text="ETH" />
+      <div class="from_contentIcon">箭头</div>
+      <vfromInput
+        lable="To"
+        v-model="test1"
+        select
+        :text="'ETHCS'"
+        :showSelect="false"
+      />
+      <div class="margintop">
+        <v-button text="Connect to a wallet" height="50" @click="ddd" />
+      </div>
     </div>
-    
   </container>
 </template>
 
@@ -17,6 +42,7 @@ import container from "./container";
 export default {
   data() {
     return {
+      activeName:'first',
       formLabelAlign: {
         name: "",
         region: "",
@@ -25,6 +51,25 @@ export default {
       test: "0.0",
       test1: "0.1",
       labelPosition: "top",
+      options: [
+        {
+          value: "Chengdu",
+          label: "成都",
+        },
+        {
+          value: "Shenzhen",
+          label: "深圳",
+        },
+        {
+          value: "Guangzhou",
+          label: "广州",
+        },
+        {
+          value: "Dalian",
+          label: "大连",
+        },
+      ],
+      value7: "",
     };
   },
   components: {
@@ -41,9 +86,12 @@ export default {
     },
   },
   methods: {
+    handleClick(){
+
+    },
     ddd() {
-      console.log('1231')
-    }
+      console.log("1231");
+    },
   },
 };
 </script>
@@ -118,10 +166,56 @@ export default {
   font-weight: 400;
   color: #b7bfc8;
 }
-.margintop{
+.margintop {
   width: 320px;
   margin: 0 auto;
   margin-top: 86px;
-
+}
+.title {
+  height: 71px;
+  line-height: 71px;
+  border-bottom: 1px solid #0f1522;
+  padding: 0 32px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  img {
+    vertical-align: middle;
+  }
+  .lt_icon {
+    margin-right: 12px;
+  }
+  .rg_icon {
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+.content_text {
+  font-size: 20px;
+  font-family: Arial-BoldMT, Arial;
+  font-weight: normal;
+  color: #eeeef0;
+}
+.box_size {
+  background: #0f1522;
+  border-radius: 16px;
+  padding: 32px 0;
+  font-family: ArialMT;
+  color: #e5ebf2;
+  p {
+    text-align: center;
+    background: #0f1522;
+    border-radius: 16px;
+    padding: 32px 0;
+  }
+  p:nth-child(1) {
+    font-size: 20px;
+    margin-bottom: 16px;
+  }
+  p:nth-child(2) {
+    margin-bottom: 1px;
+  }
 }
 </style>

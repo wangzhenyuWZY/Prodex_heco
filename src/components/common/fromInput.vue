@@ -11,7 +11,7 @@
             :value="value"
           />
         </div>
-        <div class="input_rg">
+        <div class="input_rg" @click="isShow=!isShow" v-if="!hideSlect">
           <div class="from_select">
             <span class="from_icon" v-if="showSelect"></span>
             <span class="from_size" :class="showSelect ? '' : 'show_size'">{{
@@ -19,6 +19,11 @@
             }}</span>
             <img src="@/assets/img/icon_down.svg" alt="" />
           </div>
+          <ul class="select_model" v-show="isShow">
+            <li @click="selectClick(1)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
+             <li @click="selectClick(2)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
+              <li @click="selectClick(3)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
+          </ul>
         </div>
       </div>
     </div>
@@ -43,11 +48,23 @@ export default {
       type: String,
       default: " ",
     },
+    hideSlect:{
+      type: Boolean,
+      default:false
+    }
+  },
+  data() {
+    return {
+      isShow: false
+    }
   },
   methods: {
     hadelClick(e) {
       this.$emit("input", e.target.value);
     },
+    selectClick(e) {
+      console.log(e);
+    }
   },
 };
 </script>
@@ -78,6 +95,29 @@ export default {
       background: #0f1522;
       border-radius: 16px;
       cursor: pointer;
+      position: relative;
+      .select_model{
+        position: absolute;
+        left: 0;
+        top: 102px;
+        width: 201px;
+        background: #1C2538;
+        border-radius: 20px;
+        padding: 6px;
+        z-index: 6;
+        box-sizing: border-box;
+        >li{
+          height: 32px;
+          line-height: 32px;
+          font-family: ArialMT;
+          color: #E5EBF2;
+          span{
+            display: inline-block;
+            vertical-align: top;
+            
+          }
+        }
+      }
     }
   }
   .from_select {
