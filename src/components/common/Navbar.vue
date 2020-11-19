@@ -14,11 +14,20 @@
       <span tag="span" active-class="on" @click="handelActive('wtrx')">WTRX</span>
       <div class="active-bar" :style="{'transform':`translateX(${key}px)`}"></div>
     </div>
-    <div class="nav-right">dsdsds</div>
+    <div class="nav-right">
+      <div class="nav-butt">
+        <vbutton text='FoxDex' height='40' > </vbutton>
+      </div>
+      <div class="nav-inp">1</div>
+      <div class="nav-ion1">2</div>
+      <div class="nav-ion2">3</div>
+    </div>
   </div>
 </template>
 
 <script>
+import vbutton from "./button";
+
 export default {
   data() {
     return {
@@ -26,10 +35,15 @@ export default {
       childrenNode:[]
     }
   },
+  components:{
+    vbutton,
+  },
+
   mounted() {
     console.log(this.$refs);
     
   },
+  
   methods: {
     handelActive(e) {
       switch (e) {
@@ -61,6 +75,31 @@ export default {
   background-color: #131a28;
   display: flex;
 }
+.nav-butt{
+  width: 119px;
+}
+.nav-right{
+  display: flex;
+  justify-content:flex-end;
+  align-items:center;
+
+}
+.nav-inp{
+  width: 100px;
+  height: 40px;
+  background: #ffffff;
+}
+.nav-ion1{
+   width: 50px;
+  height: 40px;
+  background: pink;
+}
+.nav-ion2{
+   width: 50px;
+  height: 40px;
+  background: green;
+}
+
 .logo {
   float: left;
   width: 35px;
@@ -81,10 +120,10 @@ export default {
   position: absolute;
   left: 50px;
   bottom: 15px;
- width: 40px;
-height: 4px;
-background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
-border-radius: 3px;
+  width: 40px;
+  height: 4px;
+  background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+  border-radius: 3px;
   transition: transform .6s;
 }
 .nav-header span {

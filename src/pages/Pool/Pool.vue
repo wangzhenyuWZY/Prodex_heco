@@ -12,7 +12,12 @@
             <p>Read more about providing liquidity</p>
         </div>
         <div class="pool-box2">
-           
+          <div class="pool-inp">
+            <vfromInput  select v-model="test" text="wwwwwwww" />
+          </div>
+          <div class="pool-butt">
+          <vbutton text='Add Liquidity' height='48' ></vbutton>
+          </div>
         </div>
     </div>
     
@@ -21,8 +26,18 @@
 </template>
 
 <script>
-
+import vfromInput from '../../components/common/fromInput'
+import vbutton from '../../components/common/button'
 export default {
+  data(){
+    return{
+      test:'12'
+    }
+  },
+  components:{
+    vbutton,
+    vfromInput
+  }
 
 }
 </script>
@@ -32,6 +47,10 @@ export default {
   height: 1008px;
   background: #0F1522;
   /* position: relative; */
+}
+.pool-butt {
+  width: 200px;
+
 }
 .pool-top{
   box-sizing: content-box;
