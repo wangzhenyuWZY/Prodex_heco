@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <div class="from_botton"  :style="{'line-height':height+'px'}" @click="()=>this.$emit('childClick')">{{text}}</div>
-    </div>
+        <div class="from_botton" :class="className"  :style="{'line-height':height+'px',fontSize:size+'px'}" @click="(evt)=>this.$emit('click',evt)">{{text}}</div>
 </template>
 
 <script>
@@ -13,8 +11,17 @@
             },
             height: {
                 type:String,
-                default:'64px'
-            }
+                default:'64'
+            },
+            size:{
+                type:String,
+                default:'20'
+            },
+            className: {
+                type:String,
+                default: ''
+            },
+
         },
         
     }
@@ -22,13 +29,13 @@
 
 <style lang="scss" scoped>
 .from_botton{
-    width: 320px;
+    display: inline-block;
+    width: 100%;
     background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
     border-radius: 32px;
     line-height: 64px;
     text-align: center;
     margin:0 auto;
-    margin-top: 86px;
     font-size: 20px;
     font-family: ArialMT;
     color: #FFFFFF;
