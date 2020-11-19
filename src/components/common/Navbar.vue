@@ -2,15 +2,9 @@
   <div class="nav">
     <div class="logo"><img src="../../assets/img/logo.png" alt="" /></div>
     <div class="nav-header">
-      <span tag="span" exact-active-class="on" @click="handelActive('Exchange')"
-        >Exchange</span
-      >
-      <span tag="span" exact-active-class="on" @click="handelActive('pool')"
-        >Pool</span
-      >
-      <span tag="span" exact-active-class="on" @click="handelActive('foxdex')"
-        >FoxDex</span
-      >
+      <span tag="span" exact-active-class="on" @click="handelActive('Exchange')">Exchange</span>
+      <span tag="span" exact-active-class="on" @click="handelActive('pool')" >Pool</span>
+      <span tag="span" exact-active-class="on" @click="handelActive('foxdex')">FoxDex</span>
       <span tag="span" active-class="on" @click="handelActive('wtrx')">WTRX</span>
       <div class="active-bar" :style="{'transform':`translateX(${key}px)`}"></div>
     </div>
