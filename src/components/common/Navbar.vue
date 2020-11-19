@@ -1,18 +1,20 @@
 <template>
   <div class="nav">
     <div class="logo"><img src="../../assets/img/logo.png" alt="" /></div>
-    <div class="nav-header" ref='header'>
-      <span tag="span" exact-active-class="on" @click="handelActive('Exchange')"
-        >Exchange</span
-      >
-      <span tag="span" exact-active-class="on" @click="handelActive('pool')"
-        >Pool</span
-      >
-      <span tag="span" exact-active-class="on" @click="handelActive('foxdex')"
-        >FoxDex</span
-      >
-      <span tag="span" active-class="on" @click="handelActive('wtrx')">WTRX</span>
-      <div class="active-bar" :style="{'transform':`translateX(${key}px)`}"></div>
+    <div class="nav-header">
+      <div class="van_list" ref="header">
+        <span
+          v-for="(idx, index) in tag"
+          :key="idx.path"
+          @click="handelActive(idx.path, index)"
+          >{{ idx.name }}</span
+        >
+      </div>
+
+      <div
+        class="active-bar"
+        :style="{ transform: `translateX(${key}px)` }"
+      ></div>
     </div>
     <div class="nav-right">
       <div class="nav-butt">
@@ -31,9 +33,31 @@ import vbutton from "./button";
 export default {
   data() {
     return {
-      key: '0',
-      childrenNode:[]
-    }
+      key: "0",
+      childrenNode: [],
+      tag: [
+        {
+          path: "/",
+          name: "Exchange",
+        },
+        {
+          path: "/pool",
+          name: "Pool",
+        },
+        {
+          path: "/foxdex",
+          name: "FoxDex",
+        },
+        {
+          path: "/wtrx",
+          name: "WTRX",
+        },
+        {
+          path: "/stake",
+          name: "stake",
+        },
+      ],
+    };
   },
   components:{
     vbutton,
@@ -41,27 +65,41 @@ export default {
 
   mounted() {
     console.log(this.$refs);
-    
+    try {
+      this.$nextTick(() => {
+        this.$refs.header.children.forEach((element) => {
+          this.childrenNode.push(element.offsetWidth);
+        });
+        let hash = location.hash;
+        let str = hash.split("/")[1];
+        if (str) {
+          this.handelActive("/" + str);
+        } else {
+          this.handelActive("/");
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   },
   
   methods: {
-    handelActive(e) {
-      switch (e) {
-        case 'Exchange':
-           this.$router.push('/');
-           this.key=0;
-          break;
-        case 'pool':
-           this.key=129;
-          break;
-        case 'foxdex':
-            this.key=240;
-          break;
-        case 'wtrx':
-            this.key=362;
-          break;
+    handelActive(e, index) {
+      let indexOf4 =0 ;
+      if (index === undefined) {
+         indexOf4 = (this.tag || []).findIndex((item) => item.path === e);
+         indexOf4 == -1 ?  0: indexOf4;
       }
-      if (e !='Exchange') this.$router.push('/'+e);
+      this.key = this.setActive(index||indexOf4);
+      this.$router.push(e);
+    },
+    setActive(n) {
+      let num = 0;
+      for (let index = 0; index <=n; index++) {
+        num = (this.childrenNode[index] + num) * 1;
+      }
+      let num1 = parseInt((num-20)-this.childrenNode[n]/2);
+      return num1;
     },
   },
 };
@@ -118,7 +156,7 @@ export default {
 
 .active-bar {
   position: absolute;
-  left: 50px;
+  left: 0px;
   bottom: 15px;
   width: 40px;
   height: 4px;
@@ -128,7 +166,7 @@ export default {
 }
 .nav-header span {
   font-size: 22px;
-  margin: 0 26px;
+  padding: 0 26px;
   cursor: pointer;
   /* color: #B7BFC8; */
   /* text-align: center; */

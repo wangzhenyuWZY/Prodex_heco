@@ -7,7 +7,7 @@
   <div class="wtrx-left">
     <p>TRX->WTRX</p>
     <p>TRX Balance:</p>
-    
+     <input type="text" placeholder="Please enter the amout of TRX">
     <p>You will get WTRX:</p>
     <button>Confim</button>
   </div>
@@ -75,6 +75,8 @@ export default {
 }
 
 .wtrx-left input{
+  box-sizing: border-box;
+  padding-left: 50px;
   margin-top: 12px;
   font-size: 16px;
   font-family: ArialMT;
@@ -98,6 +100,7 @@ export default {
   margin-left: 40px;
   color: #ffffff;
   font-size: 18px;
+  cursor: pointer;
   line-height: 21px;
 }
 .wtrx-right p{
@@ -125,6 +128,7 @@ export default {
 }
 
 .wtrx-right input{
+  box-sizing: border-box;
   font-size: 16px;
   font-family: ArialMT;
   color: #878B97;
@@ -135,6 +139,7 @@ export default {
   background: #0F1522;
   border-radius: 24px;
   margin-left: 40px;
+  padding-left: 50px;
 }
 .wtrx-right p:nth-child(4){
   margin-top: 40px;
