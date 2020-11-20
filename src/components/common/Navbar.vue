@@ -18,7 +18,7 @@
     </div>
     <div class="nav-right">
       <div class="nav-butt">
-        <vbutton text='FoxDex' height='40' > </vbutton>
+        <vbutton text='FoxDex'  height='40' > </vbutton>
       </div>
       <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
@@ -105,7 +105,7 @@ export default {
 };
 </script>
 
-<style >
+<style lang="scss" scoped>
 .nav {
   /* width: 1920px; */
   line-height: 72px;
