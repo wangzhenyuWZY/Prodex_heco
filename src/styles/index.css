@@ -15,7 +15,7 @@ time, mark, audio, video {
  padding: 0;
  border: 0;
  font-size: 100%;
- font: inherit;
+ font-family: ArialMT;
  vertical-align: baseline;
  box-sizing: border-box;
 
@@ -49,6 +49,9 @@ input,button{
     outline: none;
     border: none;
 }
+button{
+    cursor: pointer;
+}
 /* .from_botton{
     display: block;
     width: 100%;
@@ -64,10 +67,24 @@ input,button{
     user-select:none;
     border: none;
 } */
-.from_botton {
-    cursor: pointer;
-pointer-events:none ;
+.from_botton:hover ,.from_botton:focus{
+    color: #fff !important;
 }
+.fl_lt{
+    float: left;
+}
+.clearfix:after{
+    content: "";
+    display: block;
+    height: 0;
+    clear:both;
+    visibility: hidden;
+    overflow: hidden;
+}
+.clearfix{
+    *zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
+}
+
 @media screen and (max-width: 750px) {
     html,body{
         font: 28px/1 Roboto,PingFang SC,Hiragino Sans GB,Heiti SC,Microsoft YaHei,WenQuanYi Micro Hei,serif;

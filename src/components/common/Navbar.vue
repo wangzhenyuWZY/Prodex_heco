@@ -18,7 +18,7 @@
     </div>
     <div class="nav-right">
       <div class="nav-butt">
-        <vbutton text='FoxDex'  height='40' > </vbutton>
+        <vbutton height='40' >FoxDex </vbutton>
       </div>
       <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
