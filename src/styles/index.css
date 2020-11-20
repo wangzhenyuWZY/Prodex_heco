@@ -18,7 +18,10 @@ time, mark, audio, video {
  font: inherit;
  vertical-align: baseline;
  box-sizing: border-box;
+
+
 }
+
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure, 
 footer, header, hgroup, menu, nav, section {
@@ -45,4 +48,39 @@ table {
 input,button{
     outline: none;
     border: none;
+}
+/* .from_botton{
+    display: block;
+    width: 100%;
+    background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+    border-radius: 32px;
+    height: 64px;
+    text-align: center;
+    margin:0 auto;
+    font-size: 20px;
+    font-family: ArialMT;
+    color: #FFFFFF;
+    cursor: pointer;
+    user-select:none;
+    border: none;
+} */
+.from_botton {
+    cursor: pointer;
+pointer-events:none ;
+}
+@media screen and (max-width: 750px) {
+    html,body{
+        font: 28px/1 Roboto,PingFang SC,Hiragino Sans GB,Heiti SC,Microsoft YaHei,WenQuanYi Micro Hei,serif;
+        height: 100%;
+        max-width: 750px;
+        width: 750px;
+        text-size-adjust: 100%;
+        text-rendering: optimizeLegibility;
+    }
+    .wtrx-bottom{
+        width: 700px !important;
+    }
+    .stake_list{
+        justify-content: space-around;
+    }
 }

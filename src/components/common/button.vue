@@ -1,5 +1,7 @@
 <template>
-        <div class="from_botton" :class="className"  :style="{'line-height':height+'px',fontSize:size+'px'}" @click="(evt)=>this.$emit('click',evt)">{{text}}</div>
+        <!-- <div class="from_botton" :class="className"  :style="{'line-height':height+'px',fontSize:size+'px'}" @click="(evt)=>this.$emit('click',evt)">{{text}}</div> -->
+        <el-button class="from_botton" :class="className"  :style="{'height':height+'px',fontSize:size+'px'}" @click="(evt)=>this.$emit('click',evt)" >{{text}}</el-button>
+        
 </template>
 
 <script>
@@ -23,17 +25,20 @@
             },
 
         },
+        created() {
+            console.log(this.props)
+        },
         
     }
 </script>
 
 <style lang="scss" scoped>
 .from_botton{
-    display: inline-block;
+    display: block;
     width: 100%;
     background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
     border-radius: 32px;
-    line-height: 64px;
+    height: 64px;
     text-align: center;
     margin:0 auto;
     font-size: 20px;
@@ -41,5 +46,6 @@
     color: #FFFFFF;
     cursor: pointer;
     user-select:none;
+    border: none;
 }
 </style>

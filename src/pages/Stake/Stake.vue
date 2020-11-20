@@ -1,6 +1,6 @@
 <template>
 <div class="stake">
-        <ul>
+        <ul class="stake_list">
             <li  v-for="(idx,index) in list" :key='idx.name+index'>
                 <div class="stake_top"> 
                     <span class="lt_icon">    
@@ -114,7 +114,7 @@ export default {
 
 <style lang="scss" scoped>
 .stake{
-    max-width: 988px;
+    max-width: 1024px;
     margin: 0 auto;
 }
     ul{
@@ -127,7 +127,7 @@ export default {
             box-sizing: border-box;
             background: #171F30;
             border-radius: 4px;
-            padding: 35px 42px;
+            padding: 37px 42px;
             margin-bottom: 32px;
             .content_zise{
                 font-size: 20px;
@@ -183,4 +183,5 @@ export default {
                     }
         }
     }
+
 </style>

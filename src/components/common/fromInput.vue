@@ -11,7 +11,7 @@
             :value="value"
           />
         </div>
-        <div class="input_rg" @click="isShow=!isShow" v-if="!hideSlect">
+        <div class="input_rg" @click="showModel" v-if="!hideSlect">
           <div class="from_select">
             <span class="from_icon" v-if="showSelect"></span>
             <span class="from_size" :class="showSelect ? '' : 'show_size'">{{
@@ -19,10 +19,16 @@
             }}</span>
             <img src="@/assets/img/icon_down.svg" alt="" />
           </div>
-          <ul class="select_model" v-show="isShow">
-            <li @click="selectClick(1)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
-             <li @click="selectClick(2)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
-              <li @click="selectClick(3)"><img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span></li>
+          <ul class="select_model" :class="className" @click="addClass">
+            <li @click="selectClick(1)">
+              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
+            </li>
+            <li @click="selectClick(2)">
+              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
+            </li>
+            <li @click="selectClick(3)">
+              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -48,23 +54,31 @@ export default {
       type: String,
       default: " ",
     },
-    hideSlect:{
+    hideSlect: {
       type: Boolean,
-      default:false
-    }
+      default: false,
+    },
   },
   data() {
     return {
-      isShow: false
-    }
+      isShow: false,
+      className: "",
+    };
   },
   methods: {
     hadelClick(e) {
       this.$emit("input", e.target.value);
     },
+    addClass() {
+      this.className = "open";
+    },
     selectClick(e) {
       console.log(e);
-    }
+    },
+    showModel() {
+      this.isShow = !this.isShow;
+      this.className = this.className == "" ? "open" : "";
+    },
   },
 };
 </script>
@@ -96,27 +110,33 @@ export default {
       border-radius: 16px;
       cursor: pointer;
       position: relative;
-      .select_model{
+      .select_model {
         position: absolute;
         left: 0;
         top: 102px;
         width: 201px;
-        background: #1C2538;
+        background: #1c2538;
         border-radius: 20px;
-        padding: 6px;
         z-index: 6;
+        overflow: hidden;
         box-sizing: border-box;
-        >li{
+        max-height: 0;
+        transition: max-height 0.1s ease-out;
+        > li {
           height: 32px;
           line-height: 32px;
           font-family: ArialMT;
-          color: #E5EBF2;
-          span{
+          color: #e5ebf2;
+          span {
             display: inline-block;
             vertical-align: top;
-            
           }
         }
+      }
+      .open {
+        max-height: 100%;
+        transition: max-height 0.1s ease-in;
+        transform-origin: 50% 0;
       }
     }
   }
@@ -135,8 +155,8 @@ export default {
       margin-right: 6px;
     }
     .show_size {
-        font-family: ArialMT;
-        color: #ed4d21;
+      font-family: ArialMT;
+      color: #ed4d21;
     }
   }
   .from_icon {
@@ -162,4 +182,21 @@ export default {
   color: #b7bfc8;
 }
 
+@keyframes slide-down {
+  0% {
+    transform: scale(1, 0);
+  }
+  25% {
+    transform: scale(1, 1.2);
+  }
+  50% {
+    transform: scale(1, 0.85);
+  }
+  75% {
+    transform: scale(1, 1.05);
+  }
+  100% {
+    transform: scale(1, 1);
+  }
+}
 </style>

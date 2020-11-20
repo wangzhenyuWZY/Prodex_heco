@@ -1,79 +1,90 @@
 <template>
-<div class="wtrx">
- <div class="wtrx-box"> 
-  <div class="wtrx-top">
-    <h3>WTROX Exchange</h3>
-  </div>
-<div class="wtrx-box1">
-  <div class="wtrx-left">
-    <samp class="trx">TRX->WTRX</samp>
-    <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{}}</samp> </div>
-     <input type="text" placeholder="Please enter the amout of TRX">
-    <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="trx-b2">{{}}</samp></div>
-    <button>Confim</button>
-  </div>
-  <div class="wtrx-right">
-    <samp class="wtrx1">TRX->WTRX</samp>
-    <div class="wtrx-a"> <samp class="wtrx-a1">TRX Balance:</samp><samp class="wtrx-a2">{{}}</samp> </div>
-     <input type="wtext" placeholder="Please enter the amout of TRX">
-    <div class="wtrx-b"> <samp class="wtrx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{}}</samp></div>
-    <button>Confim</button>
-  </div>
-  </div>
+  <div class="wtrx">
+    <div class="wtrx-box">
+      <div class="wtrx-top">
+        <h3>WTROX Exchange</h3>
+      </div>
+      <div class="wtrx-box1">
+        <div class="wtrx-left">
+          <samp class="trx">TRX->WTRX</samp>
+          <div class="trx-a">
+            <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{wtrx}}</samp>
+          </div>
+          <input type="text"
+                 placeholder="Please enter the amout of TRX" />
+          <div class="trx-b">
+            <samp class="trx-b1">You will get WTRX:</samp><samp class="trx-b2">{{wtrx}}</samp>
+          </div>
+          <button>Confim</button>
+        </div>
+        <div class="wtrx-right">
+          <samp class="wtrx1">TRX->WTRX</samp>
+          <div class="wtrx-a">
+            <samp class="wtrx-a1">TRX Balance:</samp><samp class="wtrx-a2">{{wtrx}}</samp>
+          </div>
+          <input type="wtext"
+                 placeholder="Please enter the amout of TRX" />
+          <div class="wtrx-b">
+            <samp class="wtrx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{wtrx}}</samp>
+          </div>
+          <button>Confim</button>
+        </div>
+      </div>
 
-  <div class="wtrx-bottom">
-    <p>what is WTRX?</p>
-    <p>TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.
-    <br> DepositTRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.</p>
-    <p>Can WTRX exchange to other TRC20 Tokens?</p>
-    <p>WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.</p>
+      <div class="wtrx-bottom">
+        <p>what is WTRX?</p>
+        <p>
+          TRX is the native asset of TRON, and WTRX is a TRC20 Token with the
+          equivalent value to TRX. <br />
+          DepositTRX to mint an equivalent amount of WTRX, and burn WTRX to get
+          an equivalent amount of TRX.
+        </p>
+        <p>Can WTRX exchange to other TRC20 Tokens?</p>
+        <p>
+          WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on
+          FoxDex.
+        </p>
+      </div>
+    </div>
   </div>
-  </div>
-</div>
 </template>
-
 <script>
 export default {
-  data(){
-    return{
-
+  data () {
+    return {
+      wtrx:0
     }
-  }
-
+  },
 }
 </script>
 
 <style lang="scss" scoped>
-.wtrx{
+.wtrx {
   height: 1008px;
-  background: #0F1522;
-
+  background: #0f1522;
 }
-.wtrx-box{
-  width: 900px;
+.wtrx-box {
   height: 800px;
   /* background: #cccc; */
   margin: 0 auto;
   display: flex;
-  align-items: center; 
-  flex-direction: column; 
+  align-items: center;
+  flex-direction: column;
 }
-.wtrx-box1{
+.wtrx-box1 {
   margin-top: 40px;
-  width: 900px;
   display: flex;
   justify-content: center;
-
 }
-.wtrx-top{
+.wtrx-top {
   /* float: left; */
   margin-top: 145px;
-  font-size: 24px; 
+  font-size: 24px;
   color: #ffffff;
 }
-.wtrx-left{
+.wtrx-left {
   margin-right: 15px;
-  background: #171F30;
+  background: #171f30;
   border-radius: 20px;
   width: 400px;
   height: 352px;
@@ -83,124 +94,117 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  .trx{
-      margin-top: 40px;
-      color:#ffffff;
-      font-size: 20px;
-        } 
-        .trx-a{
-          margin-top: 40px;
-          color:#ffffff;
+  .trx {
+    margin-top: 40px;
+    color: #ffffff;
+    font-size: 20px;
+  }
+  .trx-a {
+    margin-top: 40px;
+    color: #ffffff;
 
-        .trx-a1{
-          font-size: 18px;
-        }
-       
-       } 
-       .trx-b{
-          margin-top: 40px;
-          color:#ffffff;
-          .trx-b1{ 
-            font-size: 18px;
-          }
-
-        }
+    .trx-a1 {
+      font-size: 18px;
+    }
+  }
+  .trx-b {
+    margin-top: 40px;
+    color: #ffffff;
+    .trx-b1 {
+      font-size: 18px;
+    }
+  }
 }
 
-
-.wtrx-left input{
+.wtrx-left input {
   box-sizing: border-box;
   padding-left: 50px;
   margin-top: 12px;
   font-size: 16px;
   font-family: ArialMT;
-  color: #878B97;
+  color: #878b97;
   line-height: 18px;
   width: 320px;
   height: 48px;
-  background: #0F1522;
+  background: #0f1522;
   border-radius: 24px;
-  
 }
 
-.wtrx-left button{
+.wtrx-left button {
   margin-top: 12px;
   width: 320px;
   height: 48px;
-  background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+  background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
   border-radius: 24px;
- 
+
   color: #ffffff;
   font-size: 18px;
   cursor: pointer;
   line-height: 21px;
 }
 
-.wtrx-right{
+.wtrx-right {
   width: 400px;
   height: 350px;
   border-radius: 20px;
-  background: #171F30;
+  background: #171f30;
   margin-left: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center; 
-  .wtrx1{
-      margin-top: 40px;
-      color:#ffffff;
-      font-size: 20px;
-        } 
-        .wtrx-a{
-          margin-top: 40px;
-          color:#ffffff;
+  align-items: center;
+  .wtrx1 {
+    margin-top: 40px;
+    color: #ffffff;
+    font-size: 20px;
+  }
+  .wtrx-a {
+    margin-top: 40px;
+    color: #ffffff;
 
-        .wtrx-a1{
-          font-size: 18px;
-        }
-       
-       } 
-       .wtrx-b{
-          margin-top: 40px;
-          color:#ffffff;
-          .wtrx-b1{ 
-            font-size: 18px;
-          }
-          
-        }
+    .wtrx-a1 {
+      font-size: 18px;
+    }
+  }
+  .wtrx-b {
+    margin-top: 40px;
+    color: #ffffff;
+    .wtrx-b1 {
+      font-size: 18px;
+    }
+  }
 }
 
-.wtrx-right input{
+.wtrx-right input {
   box-sizing: border-box;
   font-size: 16px;
   font-family: ArialMT;
-  color: #878B97;
+  color: #878b97;
   line-height: 18px;
   margin-top: 12px;
   width: 320px;
   height: 48px;
-  background: #0F1522;
+  background: #0f1522;
   border-radius: 24px;
   padding-left: 50px;
 }
 
-.wtrx-right button{
+.wtrx-right button {
   margin-top: 12px;
 
   width: 320px;
   height: 48px;
-  background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+  background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
   border-radius: 24px;
   color: #ffffff;
   font-size: 18px;
   line-height: 21px;
 }
 
-
-.wtrx-bottom{
+.wtrx-bottom {
   width: 860px;
   height: 300px;
 }
-.wtrx-bottom p:nth-child(1){
+.wtrx-bottom p:nth-child(1) {
   font-weight: normal;
   font-size: 18px;
   color: #ffffff;
@@ -208,26 +212,25 @@ export default {
   text-align: center;
   line-height: 21px;
 }
-.wtrx-bottom p:nth-child(2){
+.wtrx-bottom p:nth-child(2) {
   margin-top: 8px;
   font-weight: bold;
   font-size: 18px;
-  color: #A6AEB7;
+  color: #a6aeb7;
   text-align: center;
-  line-height: 24px; 
+  line-height: 24px;
   font-family: Arial-BoldMT, Arial;
   font-weight: normal;
 }
-.wtrx-bottom p:nth-child(3){  
+.wtrx-bottom p:nth-child(3) {
   margin-top: 20px;
   color: #ffffff;
-  text-align: center;  
+  text-align: center;
 }
-.wtrx-bottom p:nth-child(4){
+.wtrx-bottom p:nth-child(4) {
   margin-top: 8px;
   font-weight: bold;
-  color: #A6AEB7;
-  text-align: center;  
+  color: #a6aeb7;
+  text-align: center;
 }
-
 </style>

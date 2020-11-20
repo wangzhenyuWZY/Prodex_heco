@@ -13,10 +13,11 @@
         </div>
         <div class="pool-box2">
           <div class="pool-inp">
-            <vfromInput  select v-model="test" text="wwwwwwww" />
+            <vfromInput   v-model="test" text="wwwwwwww" hideSlect />
           </div>
           <div class="pool-butt">
           <vbutton text='Add Liquidity' height='48' ></vbutton>
+           <h1 ref='demo' @click="fn" class="demo">2222</h1>
           </div>
         </div>
     </div>
@@ -31,18 +32,33 @@ import vbutton from '../../components/common/button'
 export default {
   data(){
     return{
-      test:'12'
+      test:'12',
+      ppd:{
+        a:1,
+        b:2,
+        c:3
+      }
     }
   },
   components:{
     vbutton,
-    vfromInput
-  }
+    vfromInput,
+  },
+  methods: {
+     fn () {
+        this.$refs.demo.style.setProperty('--demostyle','white');
+     }
+  },
 
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.demo{
+--demostyle:red;
+color: var(--demostyle);;
+}
+
 .pool{
   height: 1008px;
   background: #0F1522;

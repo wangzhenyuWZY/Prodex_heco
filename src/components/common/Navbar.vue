@@ -20,9 +20,9 @@
       <div class="nav-butt">
         <vbutton text='FoxDex' height='40' > </vbutton>
       </div>
-      <div class="nav-inp">1</div>
+      <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
-      <div class="nav-ion2">3</div>
+      <div class="nav-ion2">3</div> -->
     </div>
   </div>
 </template>

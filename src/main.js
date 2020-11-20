@@ -3,10 +3,22 @@ import App from './App.vue'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.css'
 import Element from 'element-ui';
+import FastClick from 'fastclick'
+import router from './routers'
+import {IsPc} from './utils/index';
 Vue.use(Element);
 Vue.config.productionTip = false
-import router from './routers'
-
+if ('addEventListener' in document) {
+  document.addEventListener('DOMContentLoaded', () => {
+    FastClick.attach(document.body)
+  }, false)
+}
+FastClick.prototype.focus = function (targetElement) {
+  targetElement.focus();
+};
+if (!IsPc()) {
+  require('./utils/dpi.js');
+}
 new Vue({
   router,
   render: h => h(App),
