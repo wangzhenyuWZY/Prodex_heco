@@ -6,6 +6,8 @@ import Element from 'element-ui';
 import FastClick from 'fastclick'
 import router from './routers'
 import {IsPc} from './utils/index';
+import initTronWeb from './utils/tronwebFn'
+Vue.prototype.$initTronWeb = initTronWeb
 Vue.use(Element);
 Vue.config.productionTip = false
 if ('addEventListener' in document) {
