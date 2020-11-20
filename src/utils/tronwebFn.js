@@ -1,15 +1,7 @@
-// import ipConfig from '../config/ipConfig.bak'
-var pageData = {
-    currentAddress: '',
-    currentAccountName: '',
-    currentAccount: {},
-    loading: true
-};
 const initTronWeb = () => {
     return new Promise(function (resolve, reject) {
         let tries = 0;
         const loadFinish = function () {
-            pageData.currentAddress = window.tronWeb.defaultAddress.base58;
             resolve(window.tronWeb);
         };
         let timer = setInterval(function () {

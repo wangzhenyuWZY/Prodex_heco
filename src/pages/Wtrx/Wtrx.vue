@@ -80,6 +80,7 @@ export default {
     async changeWtrx(){//兑换wtrx
         let that = this
         try {
+          debugger;
             let res = await that.wtrxContract["deposit"]().send({
               feeLimit:100000000,
               callValue:window.tronWeb.toSun(that.trxNum),
@@ -96,7 +97,9 @@ export default {
     async allowance(){//查询授权
       let that = this
       try {
+         debugger;
           let res = await that.wtrxContract["allowance"](window.tronWeb.defaultAddress.base58,ipConfig.wtrxAddress).call()
+          
           if(res){
             let approveBalance = window.tronWeb.toSun(res._hex)
             if(approveBalance==0){
@@ -111,6 +114,7 @@ export default {
     },
     async approved(){//授权
       let that = this
+      debugger;
       try {
           let res = await that.wtrxContract["approve"](ipConfig.wtrxAddress,0xe8d4a51000).send()
           if(res){
