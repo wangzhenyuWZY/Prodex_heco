@@ -12,12 +12,17 @@
             <p>Read more about providing liquidity</p>
         </div>
         <div class="pool-box2">
-          <div class="pool-inp">
-            <vfromInput  select v-model="test" text="wwwwwwww" />
-          </div>
+          <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt">
+          <div class="pool-butt1">
           <vbutton text='Add Liquidity' height='48' ></vbutton>
           </div>
+          <div class="pool-butt2">
+          <vbutton text='Add Liquidity' height='48' ></vbutton>
+          </div>
+          </div>
+          <samp class="pool-p1">Connect to a wallet to view your liquidity.</samp>
+          <samp class="pool-p2"> Don't see a pool you joined?<samp class="pool-p3"> Import it.</samp></samp>
         </div>
     </div>
     
@@ -26,7 +31,7 @@
 </template>
 
 <script>
-import vfromInput from '../../components/common/fromInput'
+
 import vbutton from '../../components/common/button'
 export default {
   data(){
@@ -36,22 +41,77 @@ export default {
   },
   components:{
     vbutton,
-    vfromInput
+
   }
 
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .pool{
   height: 1008px;
   background: #0F1522;
   /* position: relative; */
 }
-.pool-butt {
-  width: 200px;
 
+.pool-box2{
+  display: flex;
+  flex-direction: column;
+  margin-top: 40px;
+  margin-left: 30px;
+ 
+.pool-p{
+  width: 127px;
+  height: 22px;
+  font-size: 20px;
+  font-family: Arial-BoldMT, Arial;
+  font-weight: normal;
+  color: #E5EBF2;
+  line-height: 23px;
 }
+.pool-p1{
+  width: 360px;
+  height: 20px;
+  font-size: 18px;
+  font-family: ArialMT;
+  color: #A6AEB7;
+  line-height: 21px;
+  margin-top: 24px;
+}
+.pool-p2{
+  width: 380px;
+  height: 20px;
+  font-size: 18px;
+  font-family: ArialMT;
+  color: #A6AEB7;
+  line-height: 21px;
+  margin-top: 20px;
+
+  .pool-p3{
+    width: 76px;
+    height: 20px;
+    font-size: 18px;
+    font-family: ArialMT;
+    color: #FF5D37;
+    line-height: 21px;
+  
+ }
+}
+
+.pool-butt{
+  width: 400px;
+  display: flex;
+  justify-items: center;
+  margin-top: 24px;
+.pool-butt1 {
+  width: 200px;
+}
+.pool-butt2 {
+  width: 200px;
+}
+}
+}
+
 .pool-top{
   box-sizing: content-box;
   padding-top: 132px;
