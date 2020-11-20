@@ -32,7 +32,7 @@
 </template>
 
 <script>
-
+import ipConfig from '../../config/ipconfig.bak'
 import vbutton from '../../components/common/button'
 export default {
   data(){
@@ -47,7 +47,34 @@ export default {
   },
   components:{
     vbutton,
-
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    init(){//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.getBFactoryContract()
+      })
+    },
+    async getBFactoryContract(){//链接BFactory合约
+      this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
+      if(this.BFactoryContract){
+        this.createBPool()
+      }
+    },
+    async createBPool(){//newBPool
+      let that = this
+        try {
+            let res = await that.BFactoryContract["newBPool"]().send();
+            if(res){
+              console.log(res)
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
   }
 
 }

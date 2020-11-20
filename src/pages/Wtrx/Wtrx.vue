@@ -70,7 +70,6 @@ export default {
     async getWtrx(){//获取wtrxbalance
       let that = this
         try {
-            that.wtrxContract = await window.tronWeb.contract().at(ipConfig.wtrxAddress);
             let res = await that.wtrxContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
             that.wtrxBalance = window.tronWeb.fromSun(res)
         } catch (error) {
