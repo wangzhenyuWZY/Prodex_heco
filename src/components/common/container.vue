@@ -20,7 +20,7 @@ export default {
 
 <style lang="scss" scoped>
 .totalModel {
-  width: 720px;
+  width: 690px;
   height: 721px;
   background: #171f30;
   border-radius: 20px;
@@ -28,7 +28,7 @@ export default {
   box-sizing: border-box;
   margin-top: 115px;
   .modelBg {
-    padding: 0 50px;
+    padding: 0 40px;
   }
 }
 </style>

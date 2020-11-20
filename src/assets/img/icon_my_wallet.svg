@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon_my_wallet@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="icon_my_wallet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="我的钱包btn_work_wallet_nor" transform="translate(-1.000000, 0.000000)">
+            <rect id="Rectangle" x="1" y="0" width="24" height="24"></rect>
+            <g id="分组" transform="translate(2.000000, 1.000000)">
+                <path d="M20.4683552,9.87617961 L15.1322255,9.87617961 C13.4518978,9.87617961 12.089723,11.2383544 12.089723,12.9186821 C12.089723,14.5990098 13.4518978,15.9611846 15.1322255,15.9611846 L20.4683552,15.9611846 L20.4683552,15.9611846" id="Path-29" stroke="#E5EBF2" stroke-width="1.76842105" stroke-linejoin="round"></path>
+                <circle id="椭圆形" fill="#E5EBF2" cx="15.24761" cy="12.9186821" r="1.10526316"></circle>
+                <rect id="Rectangle" stroke="#E5EBF2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" x="0.976074219" y="5.51412199" width="19.492281" height="14.8091202" rx="1.10526316"></rect>
+                <polyline id="路径" stroke="#E5EBF2" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" transform="translate(12.058575, 5.277544) rotate(-32.000000) translate(-12.058575, -5.277544) " points="7.86925853 2.60385479 16.2478908 2.60385479 16.2478908 7.95123395"></polyline>
+            </g>
+        </g>
+    </g>
+</svg>
