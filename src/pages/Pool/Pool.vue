@@ -10,9 +10,13 @@
       <!-- <AddLiquidity /> -->
       <!-- <recevive/> -->
         <!-- <willRecevive/> -->
-              <liquidity/>
+              <!-- <liquidity/> -->
     <!-- <vAlret/> --> 
    
+    <!-- <AddLiquidity/> -->
+    <!-- <liquidity/> -->
+    <!-- <Pool1/> -->
+    <Pool2/>
 
      
     </div>
@@ -22,8 +26,6 @@
 
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-// import vbutton from '../../components/common/button'
-// import { vbutton, container, fromInput } from '../../components/index'
 import success from '@/assets/img/icon_successfully.svg';
 import err from '@/assets/img/icon_faile.svg';
 import failure from '@/assets/img/icon_faile.svg';
@@ -35,6 +37,10 @@ import recevive from './recevive';
 import willRecevive from './willRecevive';
 import addfrombox from './addfrombox';
 import connectbox from './Connectbox'
+//import liquidity from './liquidity'
+// import Pool1 from './Pool1'
+import Pool2 from './Pool2'
+
 export default {
   data () {
     return {
@@ -61,12 +67,11 @@ export default {
     // AddLiquidity,
       // recevive
       //  willRecevive
-    liquidity
+    // liquidity
+    Pool2
     // vAlret
+  },    
 
-   
-    
-  },
   created () {
     this.init()
   },
@@ -126,23 +131,21 @@ export default {
 }
 
 .pool-box2 {
-  border-radius: 0 0 20px 20px;
-  .pool_boxbg {
+
+   border-radius: 0 0 20px 20px;
+  .pool_boxbg{
     display: flex;
+    height: 360px;
     flex-direction: column;
     padding-top: 40px;
     padding-left: 30px;
     background: #fff;
+    background: url(../../assets/img/pool_bg.png) no-repeat;
+    background-size: 240px 219px;
+    background-position: 460px 140px;
+    
   }
-  .pool-p {
-    width: 127px;
-    height: 22px;
-    font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
-    font-weight: normal;
-    color: #e5ebf2;
-    line-height: 23px;
-  }
+  
   .pool-p1 {
     width: 360px;
     height: 20px;
@@ -150,7 +153,7 @@ export default {
     font-family: ArialMT;
     color: #a6aeb7;
     line-height: 21px;
-    margin-top: 24px;
+    margin-top: 32px;
   }
   .pool-p2 {
     width: 380px;
@@ -159,7 +162,7 @@ export default {
     font-family: ArialMT;
     color: #a6aeb7;
     line-height: 21px;
-    margin-top: 20px;
+    margin-top: 32px;
 
     .pool-p3 {
       width: 76px;
@@ -172,14 +175,27 @@ export default {
   }
 
   .pool-butt {
-    width: 400px;
+    width: 100%;
     display: flex;
     justify-items: center;
     margin-top: 24px;
+    .pool-p {
+    margin: auto 0;
+    width: 130px;
+    height: 28px;
+    font-size: 20px;
+    font-family: Arial-BoldMT, Arial;
+    font-weight: normal;
+    color: #0F1730;
+    line-height: 23px;
+
+     }
     .pool-butt1 {
+      margin-left: 70px;
       width: 200px;
     }
     .pool-butt2 {
+      margin-left: 22px;
       width: 200px;
     }
   }
@@ -202,13 +218,13 @@ export default {
   width: 690px;
   height: 506px;
   border-radius: 20px;
-  .pool_bg {
-    background: url(../../assets/img/pool_bg.png) no-repeat;
-    background-position: right bottom;
-  }
+
+
+
 }
+
 .pool-box1 {
-  width: 690px;
+  width: 100%;
   height: 216px;
   background: url(../../assets/img/bg_pool.png) no-repeat;
   background-size: cover;
@@ -216,7 +232,7 @@ export default {
 .pool-box1 p:nth-child(1) {
   box-sizing: content-box;
   padding-top: 40px;
-  margin-left: 34px;
+  margin-left: 32px;
   font-size: 20px;
   font-family: ArialMT;
   color: #eeeef0;
@@ -224,7 +240,8 @@ export default {
 }
 .pool-box1 p:nth-child(2) {
   margin-top: 12px;
-  margin-left: 34px;
+  width: 660px;
+  margin-left: 32px;
   font-size: 18px;
   font-family: ArialMT;
   color: #eeeef0;
@@ -233,7 +250,7 @@ export default {
 .pool-box1 p:nth-child(3) {
   margin-top: 24px;
   font-size: 18px;
-  margin-left: 34px;
+  margin-left: 32px;
   font-family: ArialMT;
   color: #e5ebf2;
   line-height: 21px;
@@ -314,10 +331,10 @@ export default {
     color: #ff5d37;
     background: none;
   }
-  .failure_size {
+  .failure_size{
     font-size: 14px;
     font-family: ArialMT;
-    color: #878b97;
+    color: #878B97;
     margin-top: 24px;
     margin-bottom: 8px;
   }
