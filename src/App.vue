@@ -19,7 +19,15 @@ export default {
 html, body, #app{
   width: 100%;
   height: 100%;
-  background: #0F1522; 
+  overflow: hidden;
+
+}
+#app{
+   background: url(./assets/img/bg.png) no-repeat;
+   background-size: cover;
+}
+html{
+   background: #FFFFFF;
 }
 
 

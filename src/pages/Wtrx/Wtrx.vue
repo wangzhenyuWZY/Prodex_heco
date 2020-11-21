@@ -1,4 +1,5 @@
 <template>
+<div class="container">
 <div class="wtrx">
  <div class="wtrx-box"> 
     <div class="wtrx-top">
@@ -30,6 +31,7 @@
       <p>WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.</p>
     </div>
   </div>
+</div>
 </div>
 </template>
 <script>

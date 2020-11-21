@@ -1,7 +1,9 @@
 <template>
+<div class="container">
 <div>
   <fromBox></fromBox>
     
+</div>
 </div>
   
 </template>

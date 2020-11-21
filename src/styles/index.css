@@ -84,6 +84,13 @@ button{
 .clearfix{
     *zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
 }
+.container{
+    height: 100%;
+    overflow-y: scroll;
+}
+.container::-webkit-scrollbar {
+    width: 0px;
+}
 
 @media screen and (max-width: 750px) {
     html,body{

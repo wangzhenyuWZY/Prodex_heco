@@ -1,4 +1,5 @@
 <template>
+<div class="container">
   <div class="nav">
     <div class="logo"><img src="../../assets/img/logo.png" alt="" /></div>
     <div class="nav-header">
@@ -7,6 +8,7 @@
           v-for="(idx, index) in tag"
           :key="idx.path"
           @click="handelActive(idx.path, index)"
+          :class="navIndex == index ?'active':''"
           >{{ idx.name }}</span
         >
       </div>
@@ -25,6 +27,7 @@
       <div class="nav-ion2">3</div> -->
     </div>
   </div>
+  </div>
 </template>
 
 <script>
@@ -34,10 +37,15 @@ export default {
   data() {
     return {
       key: "0",
+      navIndex:0,
       childrenNode: [],
       tag: [
         {
-          path: "/",
+          path:'/',
+          name:'Home'
+        },
+        {
+          path: "/exchange",
           name: "Exchange",
         },
         {
@@ -90,8 +98,10 @@ export default {
          indexOf4 = (this.tag || []).findIndex((item) => item.path === e);
          indexOf4 == -1 ?  0: indexOf4;
       }
+      this.navIndex= index||indexOf4;
       this.key = this.setActive(index||indexOf4);
       this.$router.push(e);
+      
     },
     setActive(n) {
       let num = 0;
@@ -110,7 +120,6 @@ export default {
   /* width: 1920px; */
   line-height: 72px;
   height: 72px;
-  background-color: #131a28;
   display: flex;
 }
 .nav-butt{
@@ -150,10 +159,12 @@ export default {
 }
 .nav-header {
   flex: 1;
-  color: #b7bfc8;
+color: #495169;
   position: relative;
 }
-
+  .active{
+    color: #0F1522;
+  }
 .active-bar {
   position: absolute;
   left: 0px;

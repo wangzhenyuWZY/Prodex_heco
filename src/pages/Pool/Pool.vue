@@ -1,10 +1,12 @@
 <template>
+<div class="container">
   <div class="pool">
     <div class="pool-top">
       <h1>Pool</h1>
     </div>
    
-    <AddLiquidity/>
+    <!-- <AddLiquidity/> -->
+    <liquidity/>
     <!-- 弹框 -->
     <transition name="el-alert-fade" >
         <div class="v_alert" v-show="showAlert">
@@ -23,6 +25,7 @@
       </transition>
 
   </div>
+  </div>
 
 </template>
 
@@ -33,6 +36,7 @@ import success from '@/assets/img/icon_successfully.svg';
 import err from '@/assets/img/icon_faile.svg';
 import failure from '@/assets/img/icon_faile.svg';
 import AddLiquidity from './AddLiquidity'
+import liquidity from './liquidity'
 export default {
   data () {
     return {
@@ -56,7 +60,8 @@ export default {
     // vButton: vbutton,
     // container,
     // vfromInput: fromInput,
-    AddLiquidity
+    // AddLiquidity,
+    liquidity
 
   }
 
@@ -71,16 +76,19 @@ export default {
 
 .pool {
   height: 1008px;
-  background: #0f1522;
   /* position: relative; */
 }
 
 .pool-box2 {
-  display: flex;
-  flex-direction: column;
-  margin-top: 40px;
-  margin-left: 30px;
 
+  border-radius: 0 0 20px 20px;
+  .pool_boxbg{
+    display: flex;
+  flex-direction: column;
+  padding-top: 40px;
+  padding-left: 30px;
+  background: #fff;
+  }
   .pool-p {
     width: 127px;
     height: 22px;
@@ -139,26 +147,29 @@ export default {
   height: 27px;
   margin: 0 auto;
   overflow: hidden;
-  color: #ffffff;
+  color: #0F1730;
   font-size: 24px;
   margin-bottom: 9px;
 }
 .pool-box {
   margin: 0 auto;
-  width: 720px;
+  width: 690px;
   height: 506px;
-  background: #171f30;
   border-radius: 20px;
+  .pool_bg{
+    background: url(../../assets/img/pool_bg.png) no-repeat;
+    background-position: right bottom;
+  }
 }
 .pool-box1 {
-  width: 723px;
-  height: 233px;
-  background: #0d1429;
-  opacity: 0.8203;
+  width: 690px;
+  height: 216px;
+  background: url(../../assets/img/bg_pool.png) no-repeat;
+  background-size: cover;
 }
 .pool-box1 p:nth-child(1) {
   box-sizing: content-box;
-  padding-top: 55px;
+  padding-top: 40px;
   margin-left: 34px;
   font-size: 20px;
   font-family: ArialMT;
@@ -178,8 +189,9 @@ export default {
   font-size: 18px;
   margin-left: 34px;
   font-family: ArialMT;
-  color: #878b97;
+  color: #E5EBF2;
   line-height: 21px;
+  text-decoration:underline;
 }
 .title {
   height: 71px;
