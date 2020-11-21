@@ -52,12 +52,15 @@ input,button{
 button{
     cursor: pointer;
 }
-/* .from_botton{
+img{
+    vertical-align: middle;
+}
+.from_botton{
     display: block;
     width: 100%;
     background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
     border-radius: 32px;
-    height: 64px;
+    height: 56px;
     text-align: center;
     margin:0 auto;
     font-size: 20px;
@@ -66,13 +69,47 @@ button{
     cursor: pointer;
     user-select:none;
     border: none;
-} */
+    vertical-align: middle;
+}
+.black_botton{
+    border: 1px solid #0F1730;
+    background: none;
+    color: #0F1730;
+}
+    
+
 .from_botton:hover ,.from_botton:focus{
-    color: #fff !important;
+    color: #fff ;
+}
+.black_botton:hover{
+    background: none;
+    border: 1px solid #0F1730;
+    color: #0F1730;
 }
 .fl_lt{
     float: left;
 }
+.fl_rg{
+    float: right;
+}
+.tag {
+    cursor: pointer;
+}
+.mrge12 {
+    margin-bottom: 12px;
+  }
+  .mrge24 {
+    margin-bottom: 24px;
+  }
+  .mrge32{
+    margin-bottom: 32px;
+  }
+  .mrgtop16{
+      margin-top: 16px;
+  }
+  .ftblod {
+      font-weight: bold;
+  }
 .clearfix:after{
     content: "";
     display: block;

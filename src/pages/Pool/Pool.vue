@@ -1,30 +1,21 @@
 <template>
-<div class="container">
-  <div class="pool">
-    <div class="pool-top">
-      <h1 @click="createBPool">Pool</h1>
-    </div>
+  <div class="container">
+    <div class="pool">
+      <div class="pool-top">
+        <h1 @click="createBPool">Pool</h1>
+      </div>
+      <!-- <addfrombox/> -->
+      <!-- <connectbox/> -->
+      <!-- <selctoken/> -->
+      <!-- <AddLiquidity /> -->
+      <!-- <recevive/> -->
+        <!-- <willRecevive/> -->
+              <liquidity/>
+    <!-- <vAlret/> --> 
    
-    <!-- <AddLiquidity/> -->
-    <liquidity/>
-    <!-- 弹框 -->
-    <transition name="el-alert-fade" >
-        <div class="v_alert" v-show="showAlert">
-          <div class="alert_type">
-            <img class="success"
-            :class="types1 == 'failure'?'failure':''"
-                 :src="types2[types1]"
-                 alt="">
-          </div>
-          <div class="alert_size">Connect successfully</div>
-          <div class="alert_button" v-show="types1 == 'failure'">
-            <p class="failure_size">Please try again</p>
-            <button class="alert_btn">Retry</button>
-          </div>
-        </div>
-      </transition>
 
-  </div>
+     
+    </div>
   </div>
 
 </template>
@@ -38,6 +29,12 @@ import err from '@/assets/img/icon_faile.svg';
 import failure from '@/assets/img/icon_faile.svg';
 import AddLiquidity from './AddLiquidity'
 import liquidity from './liquidity'
+import vAlret from './valret'
+import selctoken from './selctToken';
+import recevive from './recevive';
+import willRecevive from './willRecevive';
+import addfrombox from './addfrombox';
+import connectbox from './Connectbox'
 export default {
   data () {
     return {
@@ -47,9 +44,9 @@ export default {
         b: 2,
         c: 3
       },
-      types1:'failure',
-      test1:'0',
-      showAlert:false,
+      types1: 'failure',
+      test1: '0',
+      showAlert: true,
       types2: {
         success,
         err,
@@ -57,52 +54,61 @@ export default {
       }
     }
   },
-  components:{
-    // vbutton,
-    AddLiquidity
+  components: {
+    // addfrombox
+    // connectbox
+    // selctoken
+    // AddLiquidity,
+      // recevive
+      //  willRecevive
+    liquidity
+    // vAlret
+
+   
+    
   },
-  created() {
+  created () {
     this.init()
   },
   methods: {
-    init(){//初始化tronweb
+    init () {//初始化tronweb
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
       })
     },
-    async getBFactoryContract(){//链接BFactory合约
+    async getBFactoryContract () {//链接BFactory合约
       this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
     },
-    async createBPool(){//newBPool
+    async createBPool () {//newBPool
       let that = this
-        try {
-          if(this.BFactoryContract){
-            let res = await that.BFactoryContract["newBPool"]().send();
-            if(res){
-              that.getBPoolContract()
-            }
+      try {
+        if (this.BFactoryContract) {
+          let res = await that.BFactoryContract["newBPool"]().send();
+          if (res) {
+            that.getBPoolContract()
           }
-        } catch (error) {
-            console.log(error);
         }
+      } catch (error) {
+        console.log(error);
+      }
     },
-    async getBPoolContract(bPollContract){//链接BPool合约
+    async getBPoolContract (bPollContract) {//链接BPool合约
       this.BPoolContract = await window.tronWeb.contract().at(bPollContract);
-      if(this.BPoolContract){
+      if (this.BPoolContract) {
         this.bindCoin()
       }
     },
-    async bindCoin(){//bind
+    async bindCoin () {//bind
       let that = this
-        try {
-            let res = await that.BPoolContract["newBPool"]().send();
-            if(res){
-              that.getBFactoryContract()
-            }
-        } catch (error) {
-            console.log(error);
+      try {
+        let res = await that.BPoolContract["newBPool"]().send();
+        if (res) {
+          that.getBFactoryContract()
         }
+      } catch (error) {
+        console.log(error);
+      }
     },
   }
 
@@ -116,19 +122,17 @@ export default {
 }
 
 .pool {
-  height: 1008px;
   /* position: relative; */
 }
 
 .pool-box2 {
-
   border-radius: 0 0 20px 20px;
-  .pool_boxbg{
+  .pool_boxbg {
     display: flex;
-  flex-direction: column;
-  padding-top: 40px;
-  padding-left: 30px;
-  background: #fff;
+    flex-direction: column;
+    padding-top: 40px;
+    padding-left: 30px;
+    background: #fff;
   }
   .pool-p {
     width: 127px;
@@ -183,12 +187,13 @@ export default {
 
 .pool-top {
   box-sizing: content-box;
-  padding-top: 132px;
+  padding-top: 40px;
+  margin-bottom: 16px;
   width: 52px;
   height: 27px;
   margin: 0 auto;
   overflow: hidden;
-  color: #0F1730;
+  color: #0f1730;
   font-size: 24px;
   margin-bottom: 9px;
 }
@@ -197,7 +202,7 @@ export default {
   width: 690px;
   height: 506px;
   border-radius: 20px;
-  .pool_bg{
+  .pool_bg {
     background: url(../../assets/img/pool_bg.png) no-repeat;
     background-position: right bottom;
   }
@@ -230,14 +235,14 @@ export default {
   font-size: 18px;
   margin-left: 34px;
   font-family: ArialMT;
-  color: #E5EBF2;
+  color: #e5ebf2;
   line-height: 21px;
-  text-decoration:underline;
+  text-decoration: underline;
 }
 .title {
   height: 71px;
   line-height: 71px;
-  border-bottom: 1px solid #0f1522;
+  border-bottom: 1px solid #e5ebf2;
   padding: 0 32px;
   overflow: hidden;
   display: flex;
@@ -246,7 +251,8 @@ export default {
     font-size: 20px;
     font-family: Arial-BoldMT, Arial;
     font-weight: normal;
-    color: #eeeef0;
+    color: #0f1730;
+    margin-left: 12px;
   }
   img {
     vertical-align: middle;
@@ -262,24 +268,13 @@ export default {
     }
   }
 }
+
 .box_sizes {
-  background: #0f1522;
+  background: #f4f5fa;
   border-radius: 16px;
-  padding: 29px 0;
+  // padding: 29px 0;
   font-family: ArialMT;
-  color: #e5ebf2;
-  p {
-    text-align: center;
-    background: #0f1522;
-    border-radius: 16px;
-  }
-  p:nth-child(1) {
-    font-size: 20px;
-    margin-bottom: 16px;
-  }
-  p:nth-child(2) {
-    margin-bottom: 8px;
-  }
+
 }
 .v_alert {
   position: fixed;
@@ -288,16 +283,16 @@ export default {
   right: 0;
   bottom: 0;
   margin: auto;
-  width: 280px;
-  height: 280px;
-  background: rgba(147, 154, 169, 0.27); // 0.27
-  border-radius: 19px;
+  width: 480px;
+  height: 438px;
+  background: #ffffff;
+  border-radius: 20px;
   text-align: center;
   .alert_type {
     .success {
       margin-top: 97px;
     }
-    .failure{
+    .failure {
       margin-top: 60px;
     }
   }
@@ -319,12 +314,12 @@ export default {
     color: #ff5d37;
     background: none;
   }
-  .failure_size{
-font-size: 14px;
-font-family: ArialMT;
-color: #878B97;
-margin-top: 24px;
-margin-bottom: 8px;
+  .failure_size {
+    font-size: 14px;
+    font-family: ArialMT;
+    color: #878b97;
+    margin-top: 24px;
+    margin-bottom: 8px;
   }
 }
 </style>

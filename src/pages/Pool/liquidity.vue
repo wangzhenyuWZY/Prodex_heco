@@ -19,10 +19,10 @@
           <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt">
           <div class="pool-butt1">
-          <vbutton  height='48' >Add Liquidity</vbutton>
+            <el-button>Add Liquidity</el-button>
           </div>
           <div class="pool-butt2">
-          <vbutton  height='48' >Add Liquidity</vbutton>
+             <el-button>Add Liquidity</el-button>
           </div>
           </div>
           <samp class="pool-p1">Connect to a wallet to view your liquidity.</samp>
@@ -35,10 +35,8 @@
 </template>
 
 <script>
-import { vbutton } from '../../components/index'
   export default {
       components: {
-        vbutton
       }
   }
 </script>

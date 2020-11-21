@@ -1,44 +1,11 @@
 <template>
-  <container > 
-    <!-- top="0" -->
-    <!-- <div class="title" slot="title">
-      <div class="lt_box">
-        <img class="lt_icon" src="@/assets/img/icon_down.svg" alt="" />
-        <span class="content_text">Add Liquidity</span>
-      </div>
-      <div class="rg_box">
-        <img src="@/assets/img/icon_down.svg" alt="" />
-      </div>
-    </div> -->
-    <div slot="body">
-      <!-- <div class="box_size">
-        <div class="provider">
-          <p>You are the first liquidity provider.</p>
-          <p>The ratio of tokens you add will set the price of this pool.</p>
-          <p>Once you are happy with the rate click supply to review.</p>
-        </div>
-      </div> -->
-      
-      <vfromInput lable="From" select v-model="test" text="ETH" />
-      <div class="from_contentIcon">箭头</div>
-      <vfromInput
-        lable="To"
-        v-model="test1"
-        select
-        :text="'ETHCS'"
-        :showSelect="false"
-      />
-      <div class="margintop">
-        <v-button text="Connect to a wallet" height="50" @click="ddd" />
-      </div>
-    </div>
-  </container>
+  <div > 
+   1232132
+  </div>
 </template>
 
 <script>
-import vButton from "./button";
-import vfromInput from "./fromInput";
-import container from "./container";
+
 export default {
   data() {
     return {
@@ -72,11 +39,7 @@ export default {
       value7: "",
     };
   },
-  components: {
-    vButton,
-    vfromInput,
-    container,
-  },
+
   watch: {
     test(old) {
       console.log(old);

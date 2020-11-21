@@ -7,9 +7,12 @@
           <input
             class="globle_input"
             type="text"
+            placeholder="0.0"
             @keyup="hadelClick"
             :value="value"
+            ref="input"
           />
+          <div class="input_max" v-if="showmax" @click="setValue">MAX</div>
         </div>
       </div>
     </div>
@@ -38,6 +41,14 @@
       type: Boolean,
       default: false,
     },
+    showmax:{
+      type:Boolean,
+      default: false
+    },
+    balance:{
+       type:[String,Number],
+       default:'0'
+    }
   },
   data() {
     return {
@@ -48,6 +59,9 @@
   methods: {
     hadelClick(e) {
       this.$emit("input", e.target.value);
+    },
+    setValue () {
+       this.$emit("input", this.balance);
     },
     addClass() {
       this.className = "open";
@@ -68,7 +82,7 @@
     font-size: 20px;
     font-family: Arial-BoldMT, Arial;
     font-weight: normal;
-    color: #e5ebf2;
+    color: #0F1730;
     margin-bottom: 12px;
     padding-left: 16px;
   }
@@ -76,7 +90,21 @@
     display: flex;
 
     .input_lt {
+      position: relative;
       flex: 1;
+      .input_max{
+        position: absolute;
+        right: 16px;
+        top: 28px;
+        width: 64px;
+        line-height: 32px;
+        text-align: center;
+        cursor: pointer;
+        background: #0F1730;
+        border-radius: 18px;
+        font-size: 16px;
+        color: #FFFFFF;
+      }
     }
     .input_rg {
       display: flex;
@@ -85,7 +113,7 @@
       margin-left: 20px;
       width: 201px;
       height: 88px;
-      background: #0f1522;
+      background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
       position: relative;
@@ -150,15 +178,20 @@
   box-sizing: border-box;
   outline: none;
   height: 88px;
+  background: #F4F5FA;
   width: 100%;
-  background: #0f1522;
   border: none;
   border-radius: 16px;
   font-size: 40px;
   padding-left: 16px;
-  font-family: PFDinTextCompPro-Regular, PFDinTextCompPro;
-  font-weight: 400;
-  color: #b7bfc8;
+  font-weight: normal;
+  color: #FF5D37;
+}
+.globle_input::placeholder{
+  
+font-weight: normal;
+color: #A6AEB7;
+font-size: 40px;
 }
 
 @keyframes slide-down {

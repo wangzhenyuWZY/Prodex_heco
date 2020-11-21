@@ -1,11 +1,11 @@
 import Navbar from './common/Navbar.vue'
-import fromInput from './common/fromInput'
+import frominput from './common/frominput'
 import container from './common/container'
-import vbutton  from './common/button'
+import setselect  from './common/select.vue'
 
 export {
   Navbar,
-  fromInput,
+  frominput,
   container,
-  vbutton
+  setselect
 }
