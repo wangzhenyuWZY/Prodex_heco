@@ -2,7 +2,7 @@
 <div class="container">
   <div class="pool">
     <div class="pool-top">
-      <h1>Pool</h1>
+      <h1 @click="createBPool">Pool</h1>
     </div>
    
     <!-- <AddLiquidity/> -->
@@ -30,7 +30,8 @@
 </template>
 
 <script>
-
+import ipConfig from '../../config/ipconfig.bak'
+// import vbutton from '../../components/common/button'
 // import { vbutton, container, fromInput } from '../../components/index'
 import success from '@/assets/img/icon_successfully.svg';
 import err from '@/assets/img/icon_faile.svg';
@@ -56,13 +57,53 @@ export default {
       }
     }
   },
-  components: {
-    // vButton: vbutton,
-    // container,
-    // vfromInput: fromInput,
-    // AddLiquidity,
-    liquidity
-
+  components:{
+    // vbutton,
+    AddLiquidity
+  },
+  created() {
+    this.init()
+  },
+  methods: {
+    init(){//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.getBFactoryContract()
+      })
+    },
+    async getBFactoryContract(){//链接BFactory合约
+      this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
+    },
+    async createBPool(){//newBPool
+      let that = this
+        try {
+          if(this.BFactoryContract){
+            let res = await that.BFactoryContract["newBPool"]().send();
+            if(res){
+              that.getBPoolContract()
+            }
+          }
+        } catch (error) {
+            console.log(error);
+        }
+    },
+    async getBPoolContract(bPollContract){//链接BPool合约
+      this.BPoolContract = await window.tronWeb.contract().at(bPollContract);
+      if(this.BPoolContract){
+        this.bindCoin()
+      }
+    },
+    async bindCoin(){//bind
+      let that = this
+        try {
+            let res = await that.BPoolContract["newBPool"]().send();
+            if(res){
+              that.getBFactoryContract()
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    },
   }
 
 }
