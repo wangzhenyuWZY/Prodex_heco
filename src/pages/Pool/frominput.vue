@@ -89,6 +89,8 @@
       border-radius: 16px;
       cursor: pointer;
       position: relative;
+
+      
       .select_model {
         position: absolute;
         left: 0;

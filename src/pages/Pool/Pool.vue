@@ -6,15 +6,17 @@
     </div>
    
     <!-- <AddLiquidity/> -->
-    <liquidity/>
+    <!-- <liquidity/> -->
+    <!-- <Pool1/> -->
+    <Pool2/>
     <!-- 弹框 -->
     <transition name="el-alert-fade" >
-        <div class="v_alert" v-show="showAlert">
+        <div class="v_alert" v-show="showAlert"> 
           <div class="alert_type">
             <img class="success"
-            :class="types1 == 'failure'?'failure':''"
+                 :class="types1 == 'failure'?'failure':''"
                  :src="types2[types1]"
-                 alt="">
+                  alt="">
           </div>
           <div class="alert_size">Connect successfully</div>
           <div class="alert_button" v-show="types1 == 'failure'">
@@ -37,7 +39,10 @@ import success from '@/assets/img/icon_successfully.svg';
 import err from '@/assets/img/icon_faile.svg';
 import failure from '@/assets/img/icon_faile.svg';
 import AddLiquidity from './AddLiquidity'
-import liquidity from './liquidity'
+//import liquidity from './liquidity'
+// import Pool1 from './Pool1'
+import Pool2 from './Pool2'
+
 export default {
   data () {
     return {
@@ -59,7 +64,10 @@ export default {
   },
   components:{
     // vbutton,
-    liquidity
+    // liquidity,
+    // Pool1,
+    Pool2
+
   },
   created() {
     this.init()
@@ -207,15 +215,13 @@ export default {
   width: 690px;
   height: 506px;
   border-radius: 20px;
-  .pool_bg{
-   
-    // background: url(../../assets/img/pool_bg.png) no-repeat;
-    // background-size: 240px 219px;
-    // background-position: right bottom;
-  }
+
+
+
 }
+
 .pool-box1 {
-  width: 690px;
+  width: 100%;
   height: 216px;
   background: url(../../assets/img/bg_pool.png) no-repeat;
   background-size: cover;
@@ -223,7 +229,7 @@ export default {
 .pool-box1 p:nth-child(1) {
   box-sizing: content-box;
   padding-top: 40px;
-  margin-left: 34px;
+  margin-left: 32px;
   font-size: 20px;
   font-family: ArialMT;
   color: #eeeef0;
@@ -231,7 +237,8 @@ export default {
 }
 .pool-box1 p:nth-child(2) {
   margin-top: 12px;
-  margin-left: 34px;
+  width: 660px;
+  margin-left: 32px;
   font-size: 18px;
   font-family: ArialMT;
   color: #eeeef0;
@@ -240,7 +247,7 @@ export default {
 .pool-box1 p:nth-child(3) {
   margin-top: 24px;
   font-size: 18px;
-  margin-left: 34px;
+  margin-left: 32px;
   font-family: ArialMT;
   color: #E5EBF2;
   line-height: 21px;
