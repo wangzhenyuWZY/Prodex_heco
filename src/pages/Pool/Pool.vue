@@ -16,7 +16,7 @@
     <!-- <AddLiquidity/> -->
     <!-- <liquidity/> -->
     <!-- <Pool1/> -->
-    <Pool2/>
+    <!-- <Pool2/> -->
 
      
     </div>
@@ -68,7 +68,7 @@ export default {
       // recevive
       //  willRecevive
     // liquidity
-    Pool2
+    // Pool2
     // vAlret
   },    
 
