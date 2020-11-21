@@ -18,10 +18,10 @@
           <div class="pool-butt">
           <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt1">
-          <vbutton  height='48' >Add Liquidity</vbutton>
+             <el-button class="from_botton">Add Liquidity</el-button >
           </div>
           <div class="pool-butt2">
-          <vbutton  height='48' >Add Liquidity</vbutton>
+            <el-button class="from_botton">Add Liquidity</el-button >
           </div>
           </div>
           <div class="pool-inp1">
@@ -56,10 +56,8 @@
 </template>
 
 <script>
-import { vbutton } from '../../components/index'
   export default {
       components: {
-        vbutton
       }
   }
 </script>

@@ -1,0 +1,155 @@
+<template>
+  <el-dialog title=""
+             :visible.sync="showAlert"
+             width="480px"
+             custom-class="dialog_recevive"
+             :before-close="handleClosea">
+    <span slot="title"
+          class="select_size">
+      <span>You will recevive</span>
+    </span>
+    <div class="box_sizes">
+      <div class="provider receive__Pool receove_Share">
+          <div class="received ">
+            <span class="rg ftblod">0.000000233456</span>
+            <div class="lt ">
+              <img class="lt_icon"
+                   src="@/assets/img/btc.svg"
+                   alt="">
+              <span>ETH</span>
+            </div>
+            
+          </div>
+          <div class="add">+</div>
+                  <div class="received ">
+            <span class="rg ftblod">0.000000233456</span>
+            <div class="lt ">
+              <img class="lt_icon"
+                   src="@/assets/img/btc.svg"
+                   alt="">
+              <span>USDT</span>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
+    <div class="box_sizes">
+      <div class="provider receove_Share ">
+        <div class="">
+          <div class="received mrge32">
+            <div class="lt ">
+              <img class="lt_icon"
+                   src="@/assets/img/btc.svg"
+                   alt="">
+              <span>ETH/USDT Burned</span>
+            </div>
+            <span class="rg ftblod">0.000000233456</span>
+          </div>
+          <div class="received mrge12">
+            <div class="lt">
+              <span class="ftblod">Price</span>
+            </div>
+            <span class="ftblod">1ETH=499.165 USDT</span>
+          </div>
+          <div class="conversion ftblod">1USDT=0.02034564 ETH</div>
+         
+        </div>
+      </div>
+    </div>
+    <el-button class="from_botton recevive_btn">Confirm</el-button>
+  </el-dialog>
+</template>
+
+<script>
+
+export default {
+  data () {
+    return {
+      showAlert: true
+
+    }
+  },
+  components: {
+    // vButton: vbutton,
+    // frominput,
+    // vfromInput: fromInput,
+    // setselect
+
+  }
+  , methods: {
+    handleClosea () {
+
+    }
+  },
+}
+</script>
+
+<style  scoped>
+>>> .dialog_recevive {
+  border-radius: 20px;
+}
+>>> .dialog_recevive .el-icon-close {
+  font-size: 28px;
+  color: #0f1730;
+}
+>>> .dialog_recevive .el-icon-close:hover {
+  color: #0f1730;
+}
+>>> .el-dialog__body {
+  padding: 0 32px;
+  padding-bottom: 48px;
+}
+>>> .el-dialog__header {
+  padding: 28px 32px 0px;
+}
+>>> .el-dialog__headerbtn {
+  top: 24px;
+  right: 34px;
+}
+.title__num {
+  font-size: 40px;
+  font-weight: normal;
+  color: #fe613c;
+  margin-bottom: 8px;
+}
+.receive__Pool {
+  margin-top: 24px;
+  font-size: 18px;
+  color: #0f1730;
+  text-align: center;
+  padding: 16px 0;
+}
+.receive__size {
+  margin-top: 16px;
+  font-size: 16px;
+  color: #878b97;
+  padding-bottom: 24px;
+  margin-bottom: 24px;
+  border-bottom: 1px solid #e5ebf2;
+}
+.received span {
+  font-size: 18px;
+}
+.received .rg {
+  padding-top: 5px;
+}
+.conversion {
+  color: #0f1730;
+
+  font-size: 18px;
+  text-align: right;
+}
+.receove_Share {
+  padding: 24px;
+}
+
+.recevive_btn{
+  margin-top: 48px;
+}
+.add{
+  text-align: left;
+font-size: 24px;
+color: #878B97;
+margin: 10px 0;
+}
+</style>
