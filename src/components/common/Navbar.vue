@@ -20,7 +20,7 @@
     </div>
     <div class="nav-right">
       <div class="nav-butt">
-        <vbutton height='40' >FoxDex </vbutton>
+        <el-button>FoxDex</el-button>
       </div>
       <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import vbutton from "./button";
 
 export default {
   data() {
@@ -67,9 +66,7 @@ export default {
       ],
     };
   },
-  components:{
-    vbutton,
-  },
+
 
   mounted() {
     console.log(this.$refs);

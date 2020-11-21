@@ -1,5 +1,5 @@
 <template>
-  <div class="from_data">
+ <div class="from_data">
     <div class="fromInput">
       <div class="from_lable">{{ lable }}</div>
       <div class="from_input">
@@ -7,29 +7,12 @@
           <input
             class="globle_input"
             type="text"
+            placeholder="0.0"
             @keyup="hadelClick"
             :value="value"
+            ref="input"
           />
-        </div>
-        <div class="input_rg" @click="showModel" v-if="!hideSlect">
-          <div class="from_select">
-            <span class="from_icon" v-if="showSelect"></span>
-            <span class="from_size" :class="showSelect ? '' : 'show_size'">{{
-              text
-            }}</span>
-            <img src="@/assets/img/icon_down.svg" alt="" />
-          </div>
-          <ul class="select_model" :class="className" @click="addClass">
-            <li @click="selectClick(1)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-            <li @click="selectClick(2)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-            <li @click="selectClick(3)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-          </ul>
+          <div class="input_max" v-if="showmax" @click="setValue">MAX</div>
         </div>
       </div>
     </div>
@@ -37,8 +20,8 @@
 </template>
 
 <script>
-export default {
-  props: {
+  export default {
+      props: {
     lable: {
       type: String,
       default: "",
@@ -58,6 +41,14 @@ export default {
       type: Boolean,
       default: false,
     },
+    showmax:{
+      type:Boolean,
+      default: false
+    },
+    balance:{
+       type:[String,Number],
+       default:'0'
+    }
   },
   data() {
     return {
@@ -68,6 +59,9 @@ export default {
   methods: {
     hadelClick(e) {
       this.$emit("input", e.target.value);
+    },
+    setValue () {
+       this.$emit("input", this.balance);
     },
     addClass() {
       this.className = "open";
@@ -80,24 +74,37 @@ export default {
       this.className = this.className == "" ? "open" : "";
     },
   },
-};
+  }
 </script>
-
 <style lang="scss" scoped>
 .from_data {
   .from_lable {
     font-size: 20px;
     font-family: Arial-BoldMT, Arial;
     font-weight: normal;
-    color: #e5ebf2;
-    margin-bottom: 16px;
+    color: #0F1730;
+    margin-bottom: 12px;
     padding-left: 16px;
   }
   .from_input {
     display: flex;
 
     .input_lt {
+      position: relative;
       flex: 1;
+      .input_max{
+        position: absolute;
+        right: 16px;
+        top: 28px;
+        width: 64px;
+        line-height: 32px;
+        text-align: center;
+        cursor: pointer;
+        background: #0F1730;
+        border-radius: 18px;
+        font-size: 16px;
+        color: #FFFFFF;
+      }
     }
     .input_rg {
       display: flex;
@@ -105,8 +112,8 @@ export default {
       justify-items: center;
       margin-left: 20px;
       width: 201px;
-      height: 96px;
-      background: #0f1522;
+      height: 88px;
+      background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
       position: relative;
@@ -170,16 +177,21 @@ export default {
 .globle_input {
   box-sizing: border-box;
   outline: none;
-  height: 96px;
+  height: 88px;
+  background: #F4F5FA;
   width: 100%;
-  background: #0f1522;
   border: none;
   border-radius: 16px;
-  font-size: 48px;
+  font-size: 40px;
   padding-left: 16px;
-  font-family: PFDinTextCompPro-Regular, PFDinTextCompPro;
-  font-weight: 400;
-  color: #b7bfc8;
+  font-weight: normal;
+  color: #FF5D37;
+}
+.globle_input::placeholder{
+  
+font-weight: normal;
+color: #A6AEB7;
+font-size: 40px;
 }
 
 @keyframes slide-down {

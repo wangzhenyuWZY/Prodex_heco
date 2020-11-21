@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="88px" height="88px" viewBox="0 0 88 88" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon_waiting@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pool_Add-Liquidity_Transaction-Submitted" transform="translate(-916.000000, -368.000000)">
+            <g id="编组-3" transform="translate(721.000000, 268.000000)">
+                <g id="icon_waiting" transform="translate(195.000000, 100.000000)">
+                    <rect id="矩形备份-4" fill="#FFBA38" x="0" y="0" width="88" height="88" rx="44"></rect>
+                    <path d="M28,40 C30.209139,40 32,41.790861 32,44 C32,46.209139 30.209139,48 28,48 C25.790861,48 24,46.209139 24,44 C24,41.790861 25.790861,40 28,40 Z M44,40 C46.209139,40 48,41.790861 48,44 C48,46.209139 46.209139,48 44,48 C41.790861,48 40,46.209139 40,44 C40,41.790861 41.790861,40 44,40 Z M60,40 C62.209139,40 64,41.790861 64,44 C64,46.209139 62.209139,48 60,48 C57.790861,48 56,46.209139 56,44 C56,41.790861 57.790861,40 60,40 Z" id="形状结合" fill="#FFFFFF"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

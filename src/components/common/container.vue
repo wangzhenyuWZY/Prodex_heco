@@ -1,9 +1,12 @@
 <template>
-  <div class="totalModel">
+  <div class="totalModel" :class="pdd?'setpdd':''">
+    <div class="toal_bg">
       <slot name="title"></slot>
     <div class="modelBg" :style="{'paddingTop':top+'px'}">
         <slot name="body"></slot>
     </div>
+  </div>
+      <slot name="footer" ></slot>
   </div>
 </template>
 
@@ -13,20 +16,31 @@ export default {
     top:{
       type:String,
       default:'96'
+    },
+    pdd:{
+      type:Boolean,
+      default:false
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
-.totalModel {
-  width: 690px;
-  height: 721px;
-  background: #171f30;
-  border-radius: 20px;
+.totalModel{
+width: 690px;
   margin: 0 auto;
+  position: relative;
+
+}
+.setpdd{
+  padding-bottom: 230px;
+}
+.toal_bg {
+  
+  background: #FFFFFF;
+  border-radius: 20px;
   box-sizing: border-box;
-  margin-top: 115px;
+  // margin-top: 115px;
   .modelBg {
     padding: 0 40px;
   }
