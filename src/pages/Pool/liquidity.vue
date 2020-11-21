@@ -16,8 +16,9 @@
         </div>
         <div class="pool-box2">
           <div class="pool_boxbg">
-          <samp class="pool-p">Your liquidity</samp>
+          
           <div class="pool-butt">
+          <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt1">
           <vbutton  height='48' >Add Liquidity</vbutton>
           </div>
