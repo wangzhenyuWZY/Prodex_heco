@@ -9,6 +9,8 @@ docker build -t  foxdex/web:latest .
 
 echo "DOCKER_ACCESS_TOKEN"
 echo $DOCKER_ACCESS_TOKEN
+echo "node-version"
+echo $node-version
 echo "END"
 
 docker login --username foxdex -p $DOCKER_ACCESS_TOKEN
