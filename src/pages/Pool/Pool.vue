@@ -40,24 +40,14 @@ import connectbox from './Connectbox'
 //import liquidity from './liquidity'
 // import Pool1 from './Pool1'
 import Pool2 from './Pool2'
+import {approved} from '../../utils/tronwebFn'
 
 export default {
   data () {
     return {
-      test: '12',
-      ppd: {
-        a: 1,
-        b: 2,
-        c: 3
-      },
-      types1: 'failure',
-      test1: '0',
-      showAlert: true,
-      types2: {
-        success,
-        err,
-        failure,
-      }
+      BFactoryContract:null,
+      firstCoinContract:null,
+      bPoolContract:null
     }
   },
   components: {
@@ -81,7 +71,8 @@ export default {
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
-        that.checkBind()
+        // that.checkBind(that.bPoolContract)
+        // that.unBindCoin();
       })
     },
     async getBFactoryContract(){//链接BFactory合约
@@ -98,7 +89,10 @@ export default {
               shouldPollResponse:true
             })
             if(res){
-              that.getWtrxContract(res)
+              that.bPoolContract = res
+              approved('TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C',res).then(()=>{
+                that.bindCoin()
+              })
             }
           }
         }
@@ -106,57 +100,43 @@ export default {
           console.log(error);
         }
     },
-    async getWtrxContract(res){
-      this.wtrxContract = await window.tronWeb.contract().at('TDFPVQJQnYFZrw1SvxKBsc34i9xiSe73bq');
-      if(this.wtrxContract){
-        this.approved(res)
-      }
-    },
-    async approved(data){//授权
+    async bindCoin(){//绑定币种
       let that = this
-      try {
-          let res = await that.wtrxContract["approve"](data,0xe8d4a51000).send({shouldPollResponse:true})
-          if(res){
-            alert('授权成功')
-            that.getBPoolContract(data)
-          }
-      } catch (error) {
-          console.log(error);
-      }
-    },
-    async getBPoolContract(bPollContract){
       var functionSelector = 'bind(address,uint256,uint256)';
       var parameter = [
-          {type: 'address', value: 'TDFPVQJQnYFZrw1SvxKBsc34i9xiSe73bq'},
-          {type: 'uint256', value: 100},
-          {type: 'uint256', value: 10},
+          {type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C'},
+          {type: 'uint256', value: '10000001'},
+          {type: 'uint256', value: '1000000000000000001'},
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(bPollContract,functionSelector, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              console.log(res)
               alert('success');
-              // window.location.reload();
           });
       }) 
     },
-    async checkBind(){
+    async unBindCoin(){//解除绑定
+      let that = this
+      var functionSelector = 'unbind(address)';
+      var parameter = [
+          {type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C'}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('TR51WC82auiTArBttVTUCDgYSJ9bw7363t',functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    async checkBind(){//检查是否绑定
       var functionSelector = 'isBound(address)';
-      var parameter = [{type: 'address', value: 'TDFPVQJQnYFZrw1SvxKBsc34i9xiSe73bq'}]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TB7DMRPWsnd2yxvBeoeyz1sHLBghRA9EBn',functionSelector,{}, parameter,'TA6mdQTHYA6orGU2Wj97BXDThHjntCwXE4');
-      console.log(transaction)
-
-      //  const parameter1 = []
-      // const transaction = await window.tronWeb.transactionBuilder.triggerConstantContract("419e62be7f4f103c36507cb2a753418791b1cdc182", "name()", {},
-      //   parameter1,"417946F66D0FC67924DA0AC9936183AB3B07C81126");
-      //   console.log(transaction)
-      //  window.tronWeb.trx.sendRawTransaction(transaction).then(function (res) {
-      //         console.log(res)
-      //                     alert('success');
-      //                     // window.location.reload();
-      //  });
+      var parameter = [{type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C'}]
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TR51WC82auiTArBttVTUCDgYSJ9bw7363t',functionSelector,{}, parameter);
+      console.log(window.tronWeb.toDecimal(transaction.constant_result[0]))
     }
   }
 
