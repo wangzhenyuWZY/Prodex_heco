@@ -5,6 +5,9 @@ name: Node.js CI
 
 on: [push]
 
+env:
+  DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
 jobs:
   build:
 
@@ -20,7 +23,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-        env:
-          DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
       - run: ./sh/build.sh
 
