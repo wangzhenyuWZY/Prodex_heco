@@ -110,11 +110,7 @@ img{
     background: none;
     border: 1px solid #FF5D37;
 }
-.black_botton:hover{
-    background: none;
-    border: 1px solid #0F1730;
-    color: #0F1730;
-}
+
 .red_button:hover{
     background: none;
     border: 1px solid #FF5D37;
@@ -124,6 +120,16 @@ img{
     color:#FF5D37;
     background: none;
     border: 1px solid #FF5D37;
+}
+.black_botton:active{
+    color: #0F1730;
+    border: 1px solid #0F1730;
+    background: none;
+}
+.black_botton:hover,.black_botton:focus{
+    background: none;
+    border: 1px solid #0F1730;
+    color: #0F1730;
 }
 .fl_lt{
     float: left;
@@ -206,6 +212,6 @@ img{
         width: 700px !important;
     }
     .stake_list{
-        justify-content: space-around;
+        justify-content: space-around !important;
     }
 }

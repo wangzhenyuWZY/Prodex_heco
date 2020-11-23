@@ -18,6 +18,7 @@ const Connectbox =()=>import('../pages/Pool/Connectbox')
 const selctoken =()=>import('../pages/Pool/selctToken')
 const recevive =()=>import('../pages/Pool/recevive')
 const willRecevive =()=>import('../pages/Pool/willRecevive')
+const createpair =()=>import('../pages/Pool/createpair')
 export default new VueRouter({
   mode: 'hash',
   routes: [
@@ -55,6 +56,10 @@ export default new VueRouter({
           path:'willRecevive',
           component:willRecevive
         },
+        {
+          path:'pair',
+          component:createpair
+        }
         
        
        
