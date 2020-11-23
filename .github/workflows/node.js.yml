@@ -26,3 +26,6 @@ jobs:
     - run: npm ci
     - run: npm test
     - run: ./sh/build.sh
+
+
+  deploy:
