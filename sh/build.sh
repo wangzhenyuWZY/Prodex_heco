@@ -1,4 +1,7 @@
 #!/bin/sh
+npm install
+npm ci
+npm test
 
 yarn build
 

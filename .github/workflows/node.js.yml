@@ -22,11 +22,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
       env:
         DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-      run: |
-        npm install
-        npm ci
-        npm test
-        ./sh/build.sh
+      run: ./sh/build.sh
 
 
 #  deploy:
