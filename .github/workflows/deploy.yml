@@ -15,4 +15,4 @@ jobs:
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
           pwd
           scp sh/restart.sh ${{secrets.SERVER_USERNAME}}@${{secrets.SERVER_HOST}}:~/sh/
-          ssh ${{secrets.SERVER_USERNAME}}@${{secrets.SERVER_HOST}} "cd sh && sh restar.sh"
+          ssh ${{secrets.SERVER_USERNAME}}@${{secrets.SERVER_HOST}} "cd sh && sh restart.sh"
