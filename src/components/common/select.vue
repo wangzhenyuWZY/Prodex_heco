@@ -131,6 +131,12 @@ import tokenData from '../../utils/token'
     width: 100%;
     padding-right: 12px;
     text-align: right;
+    .spimg{
+      img{
+        width: 40px;
+        height: 40px;
+      }
+    }
     .from_size {
       font-size: 20px;
       font-family: ArialMT;

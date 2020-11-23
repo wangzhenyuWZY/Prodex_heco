@@ -146,7 +146,7 @@ export default {
       token.item==1?this.token1 = token:this.token2 = token  
       this.getBalance(token.address)
       if(this.token1.address && this.token2.address){
-        this.getSpotPrice(this.token1.address,this.token2.address)
+        // this.getSpotPrice(this.token1.address,this.token2.address)
       }
     },
     async getBalance(address){//获取余额
@@ -157,13 +157,13 @@ export default {
         that.token1.balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
       }
     },
+    // async getSpotPrice(){
+    //   await 
+    // },
     showSelect(index){
       this.isSelect = true
       this.item = index
     }
-    // async getSpotPrice(){
-    //   await 
-    // }
   }
 }
 </script>

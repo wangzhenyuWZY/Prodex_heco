@@ -1,47 +1,44 @@
 <template>
-<div >
-  <div class="nav">
-    <div class="logo"><img src="../../assets/img/logo.png" alt="" /></div>
-    <div class="nav-header">
-      <div class="van_list" ref="header">
-        <span
-          v-for="(idx, index) in tag"
-          :key="idx.path"
-          @click="handelActive(idx.path, index)"
-          :class="navIndex == index ?'active':''"
-          >{{ idx.name }}</span
-        >
-      </div>
+  <div>
+    <div class="nav">
+      <div class="logo"><img src="../../assets/img/logo.png"
+             alt="" /></div>
+      <div class="nav-header">
+        <div class="van_list"
+             ref="header">
+          <span v-for="(idx, index) in tag"
+                :key="idx.path"
+                @click="handelActive(idx.path, index)"
+                :class="navIndex == index ?'active':''">{{ idx.name }}</span>
+        </div>
 
-      <div
-        class="active-bar"
-        :style="{ transform: `translateX(${key}px)` }"
-      ></div>
-    </div>
-    <div class="nav-right">
-      <div class="nav-butt">
-        <el-button>FoxDex</el-button>
+        <div class="active-bar"
+             :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
-      <!-- <div class="nav-inp">1</div>
+      <div class="nav-right">
+        <div class="nav-butt">
+          <el-button class="from_botton nav_btn ">Connect to a wallet</el-button>
+        </div>
+        <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
       <div class="nav-ion2">3</div> -->
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
 <script>
 
 export default {
-  data() {
+  data () {
     return {
       key: "0",
-      navIndex:0,
+      navIndex: 0,
       childrenNode: [],
       tag: [
         {
-          path:'/',
-          name:'Home'
+          path: '/',
+          name: 'Home'
         },
         {
           path: "/exchange",
@@ -68,17 +65,16 @@ export default {
   },
 
 
-  mounted() {
-    console.log(this.$refs);
+  mounted () {
     try {
       this.$nextTick(() => {
         this.$refs.header.children.forEach((element) => {
           this.childrenNode.push(element.offsetWidth);
         });
         let hash = location.hash;
-        let str = hash.split("/")[1];
+        let str = hash.split("#")[1];
         if (str) {
-          this.handelActive("/" + str);
+          this.handelActive(str);
         } else {
           this.handelActive("/");
         }
@@ -87,25 +83,34 @@ export default {
       console.log(error);
     }
   },
-  
+
   methods: {
-    handelActive(e, index) {
-      let indexOf4 =0 ;
-      if (index === undefined) {
-         indexOf4 = (this.tag || []).findIndex((item) => item.path === e);
-         indexOf4 == -1 ?  0: indexOf4;
+    handelActive (e, index) {
+      console.log(e)
+      if (e == '/') {
+        this.navIndex = 0;
+      } else {
+        for (let i = 0; i < this.tag.length; i++) {
+          let el = this.tag[i].path+'';
+          if (e.match(el)&&el != '/') {
+            console.log(e.match(el)  == e)
+            this.navIndex = i;
+            break;
+          }
+
+        }
       }
-      this.navIndex= index||indexOf4;
-      this.key = this.setActive(index||indexOf4);
+
+      this.key = this.setActive(this.navIndex);
       this.$router.push(e);
-      
+
     },
-    setActive(n) {
+    setActive (n) {
       let num = 0;
-      for (let index = 0; index <=n; index++) {
+      for (let index = 0; index <= n; index++) {
         num = (this.childrenNode[index] + num) * 1;
       }
-      let num1 = parseInt((num-20)-this.childrenNode[n]/2);
+      let num1 = parseInt((num - 20) - this.childrenNode[n] / 2);
       return num1;
     },
   },
@@ -119,27 +124,27 @@ export default {
   height: 72px;
   display: flex;
 }
-.nav-butt{
-  width: 119px;
+.nav-butt {
+  // width: 119px;
 }
-.nav-right{
+.nav-right {
   display: flex;
-  justify-content:flex-end;
-  align-items:center;
-
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 32px;
 }
-.nav-inp{
+.nav-inp {
   width: 100px;
   height: 40px;
   background: #ffffff;
 }
-.nav-ion1{
-   width: 50px;
+.nav-ion1 {
+  width: 50px;
   height: 40px;
   background: pink;
 }
-.nav-ion2{
-   width: 50px;
+.nav-ion2 {
+  width: 50px;
   height: 40px;
   background: green;
 }
@@ -156,21 +161,21 @@ export default {
 }
 .nav-header {
   flex: 1;
-color: #495169;
+  color: #495169;
   position: relative;
 }
-  .active{
-    color: #0F1522;
-  }
+.active {
+  color: #0f1522;
+}
 .active-bar {
   position: absolute;
   left: 0px;
   bottom: 15px;
   width: 40px;
   height: 4px;
-  background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
+  background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
   border-radius: 3px;
-  transition: transform .6s;
+  transition: transform 0.6s;
 }
 .nav-header span {
   font-size: 22px;

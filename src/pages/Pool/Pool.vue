@@ -1,23 +1,20 @@
 <template>
   <div class="container">
-    <div class="pool">
-      <div class="pool-top">
-        <h1 @click="createBPool">Pool</h1>
-      </div>
+    <div class="globle_title" @click="createBPool">Pool</div>
       <!-- <addfrombox/> -->
-      <connectbox/>
+      <!-- <connectbox/> -->
       <!-- <selctoken/> -->
-      <!-- <AddLiquidity /> -->
+      <AddLiquidity />
       <!-- <recevive/>
         <willRecevive/> -->
               <!-- <liquidity/> -->
     <!-- <vAlret/> --> 
-  
+      <!-- <router-view></router-view> -->
+    <!-- <liquidity/> -->
     <!-- <Pool1/> -->
     <!-- <Pool2/> -->
 
      
-    </div>
   </div>
 
 </template>
@@ -35,8 +32,6 @@ import willRecevive from './willRecevive';
 import addfrombox from './addfrombox';
 import connectbox from './Connectbox'
 //import liquidity from './liquidity'
-// import Pool1 from './Pool1'
-import Pool2 from './Pool2'
 import {approved} from '../../utils/tronwebFn'
 // import selctoken from './selctToken';
 
@@ -52,13 +47,12 @@ export default {
   },
   components: {
     // addfrombox,
-    connectbox,
+    // connectbox,
     // selctoken
-    // AddLiquidity,
+    AddLiquidity,
       // recevive,
       //  willRecevive
     // liquidity
-    // Pool2
     // vAlret
   },    
 
@@ -144,222 +138,5 @@ export default {
 </script>
 
 <style lang="scss" >
-.demo {
-  --demostyle: red;
-  color: var(--demostyle);
-}
-
-.pool {
-  /* position: relative; */
-}
-
-.pool-box2 {
-
-   border-radius: 0 0 20px 20px;
-  .pool_boxbg{
-    display: flex;
-    height: 360px;
-    flex-direction: column;
-    padding-top: 40px;
-    padding-left: 30px;
-    background: #fff;
-    background: url(../../assets/img/pool_bg.png) no-repeat;
-    background-size: 240px 219px;
-    background-position: 460px 140px;
-    
-  }
-  
-  .pool-p1 {
-    width: 360px;
-    height: 20px;
-    font-size: 18px;
-    font-family: ArialMT;
-    color: #a6aeb7;
-    line-height: 21px;
-    margin-top: 32px;
-  }
-  .pool-p2 {
-    width: 380px;
-    height: 20px;
-    font-size: 18px;
-    font-family: ArialMT;
-    color: #a6aeb7;
-    line-height: 21px;
-    margin-top: 32px;
-
-    .pool-p3 {
-      width: 76px;
-      height: 20px;
-      font-size: 18px;
-      font-family: ArialMT;
-      color: #ff5d37;
-      line-height: 21px;
-    }
-  }
-
-  .pool-butt {
-    width: 100%;
-    display: flex;
-    justify-items: center;
-    margin-top: 24px;
-    .pool-p {
-    margin: auto 0;
-    width: 130px;
-    height: 28px;
-    font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
-    font-weight: normal;
-    color: #0F1730;
-    line-height: 23px;
-
-     }
-    .pool-butt1 {
-      margin-left: 70px;
-      width: 200px;
-    }
-    .pool-butt2 {
-      margin-left: 22px;
-      width: 200px;
-    }
-  }
-}
-
-.pool-top {
-  box-sizing: content-box;
-  padding-top: 40px;
-  margin-bottom: 16px;
-  width: 52px;
-  height: 27px;
-  margin: 0 auto;
-  overflow: hidden;
-  color: #0f1730;
-  font-size: 24px;
-  margin-bottom: 9px;
-}
-.pool-box {
-  margin: 0 auto;
-  width: 690px;
-  height: 506px;
-  border-radius: 20px;
-
-
-
-}
-
-.pool-box1 {
-  width: 100%;
-  height: 216px;
-  background: url(../../assets/img/bg_pool.png) no-repeat;
-  background-size: cover;
-}
-.pool-box1 p:nth-child(1) {
-  box-sizing: content-box;
-  padding-top: 40px;
-  margin-left: 32px;
-  font-size: 20px;
-  font-family: ArialMT;
-  color: #eeeef0;
-  line-height: 23px;
-}
-.pool-box1 p:nth-child(2) {
-  margin-top: 12px;
-  width: 660px;
-  margin-left: 32px;
-  font-size: 18px;
-  font-family: ArialMT;
-  color: #eeeef0;
-  line-height: 21px;
-}
-.pool-box1 p:nth-child(3) {
-  margin-top: 24px;
-  font-size: 18px;
-  margin-left: 32px;
-  font-family: ArialMT;
-  color: #e5ebf2;
-  line-height: 21px;
-  text-decoration: underline;
-}
-.title {
-  height: 71px;
-  line-height: 71px;
-  border-bottom: 1px solid #e5ebf2;
-  padding: 0 32px;
-  overflow: hidden;
-  display: flex;
-  justify-content: space-between;
-  .content_text {
-    font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
-    font-weight: normal;
-    color: #0f1730;
-    margin-left: 12px;
-  }
-  img {
-    vertical-align: middle;
-    cursor: pointer;
-  }
-  .lt_icon {
-    margin-right: 12px;
-  }
-  .rg_icon {
-    img {
-      width: 32px;
-      height: 32px;
-    }
-  }
-}
-
-.box_sizes {
-  background: #f4f5fa;
-  border-radius: 16px;
-  // padding: 29px 0;
-  font-family: ArialMT;
-
-}
-.v_alert {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  margin: auto;
-  width: 480px;
-  height: 438px;
-  background: #ffffff;
-  border-radius: 20px;
-  text-align: center;
-  .alert_type {
-    .success {
-      margin-top: 97px;
-    }
-    .failure {
-      margin-top: 60px;
-    }
-  }
-  .alert_size {
-    font-size: 18px;
-    font-family: ArialMT;
-    color: #e5ebf2;
-    margin-top: 7px;
-    text-align: center;
-  }
-  .alert_btn {
-    width: 200px;
-    height: 40px;
-    border-radius: 20px;
-    border: 1px solid #ff5d37;
-    margin: 0 auto;
-    font-size: 20px;
-    font-family: ArialMT;
-    color: #ff5d37;
-    background: none;
-  }
-  .failure_size{
-    font-size: 14px;
-    font-family: ArialMT;
-    color: #878B97;
-    margin-top: 24px;
-    margin-bottom: 8px;
-  }
-}
+@import '@/styles/pool.scss'
 </style>
