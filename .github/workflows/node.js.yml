@@ -28,4 +28,4 @@ jobs:
     - run: ./sh/build.sh
 
 
-  deploy:
+#  deploy:
