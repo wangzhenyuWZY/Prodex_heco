@@ -12,4 +12,4 @@ jobs:
           chmod 0600 deploy.key
           ssh-add deploy.key
           echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
-          ssh ${{secrets.SERVER_USERNAME}}@${{secrets.SERVER_HOST}} "cd dex-com && sh restar.sh"
+          ssh ${{secrets.SERVER_USERNAME}}@${{secrets.SERVER_HOST}} "cd sh && sh restar.sh"
