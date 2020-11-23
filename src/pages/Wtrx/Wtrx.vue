@@ -36,6 +36,7 @@
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
+import {approved} from '../../utils/tronwebFn'
 export default {
   data() {
     return {
@@ -81,7 +82,6 @@ export default {
     async changeWtrx(){//兑换wtrx
         let that = this
         try {
-          debugger;
             let res = await that.wtrxContract["deposit"]().send({
               feeLimit:100000000,
               callValue:window.tronWeb.toSun(that.trxNum),
@@ -104,7 +104,7 @@ export default {
           if(res){
             let approveBalance = window.tronWeb.toSun(res._hex)
             if(approveBalance==0){
-              that.approved()
+              approved(ipConfig.wtrxAddress,ipConfig.wtrxAddress)
             }else{
               that.changeTrx()
             }
@@ -113,19 +113,18 @@ export default {
           console.log(error);
       }
     },
-    async approved(){//授权
-      let that = this
-      debugger;
-      try {
-          let res = await that.wtrxContract["approve"](ipConfig.wtrxAddress,0xe8d4a51000).send()
-          if(res){
-            alert('授权成功')
-            that.changeTrx()
-          }
-      } catch (error) {
-          console.log(error);
-      }
-    },
+    // async approved(){//授权
+    //   let that = this
+    //   try {
+    //       let res = await that.wtrxContract["approve"](ipConfig.wtrxAddress,0xe8d4a51000).send()
+    //       if(res){
+    //         alert('授权成功')
+    //         that.changeTrx()
+    //       }
+    //   } catch (error) {
+    //       console.log(error);
+    //   }
+    // },
     async changeTrx(){//兑换trx
       let contractAddress = ipConfig.wtrxAddress
       let functionSelector = 'withdraw(uint256)';

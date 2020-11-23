@@ -7,6 +7,9 @@ import FastClick from 'fastclick'
 import router from './routers'
 import {IsPc} from './utils/index';
 import initTronWeb from './utils/tronwebFn'
+import layer from 'vue-layer'
+import 'vue-layer/lib/vue-layer.css';
+Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$initTronWeb = initTronWeb
 Vue.use(Element);
 Vue.config.productionTip = false
