@@ -14,9 +14,9 @@ jobs:
           port: 22
           username: ${{ secrets.SERVER_USERNAME }}
           private_key: ${{ secrets.PRIVATE_KEY }}
-          scp_source: sh/restart.sh
+          scp_source: ./
           scp_target: ~/
           before_script: |
             df -h
           after_script: |
-            ./restart.sh
+            ./sh/restart.sh
