@@ -123,28 +123,23 @@ methods:{
     init(){//初始化tronweb
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
-        // window.tronWeb.trx.getAccount(window.tronWeb.defaultAddress.base58).then(function (account) {
-        //   that.trxBalance = window.tronWeb.fromSun(account.balance)
-        // });
         that.grtMasterChef()
       })
     },
     
-    async grtMasterChef(){//连接MasterChef
+    async grtMasterChef(){//连接MasterChef合约
       this.stakeContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
-      if(this.stakeContract){
-        this.getstake()
-      }
+      
     },
     async getstake(){//1.获取PoolInfo[] 返回一个数组，数组里的信息包括：lptoken的地址
        let that = this
        try {
             let res = await that.stakeContract["poolInfo"](window.tronWeb.defaultAddress.base58).call();
             that.stakepoolinfo = window.tronWeb.fromSun(res)
+           
         } catch (error) {
             console.log(error);
         }
-
     },
 
 }
@@ -179,15 +174,15 @@ ul {
   li {
     width: 320px;
     box-sizing: border-box;
-    background: #171f30;
-    border-radius: 4px;
+    background: #FFFFFF;
+    border-radius: 16px;
     padding: 37px 42px;
     margin-bottom: 32px;
     .content_zise {
       font-size: 20px;
       font-family: Arial-BoldMT, Arial;
       font-weight: normal;
-      color: #eeeef0;
+      color: #0F1730;;
       vertical-align: middle;
     }
     .lt_icon {
@@ -208,7 +203,7 @@ ul {
       .lt_addres {
         font-size: 20px;
         font-family: ArialMT;
-        color: #878b97;
+        color: #878B97;
         text-align: right;
         display: inline-block;
         width: 74px;
@@ -217,11 +212,11 @@ ul {
         font-size: 18px;
         font-family: Arial-BoldMT, Arial;
         font-weight: normal;
-        color: #eeeef0;
+        color: #0F1730;;
       }
     }
     .stake_btn {
-      width: 200px;
+      width: 256px;     
       height: 48px;
       line-height: 48px;
       border-radius: 32px;
