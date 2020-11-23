@@ -1,7 +1,7 @@
 version: '3'
 
 services:
-  web:
+  foxdex:
     image: foxdex/web:latest
     container_name: foxdex
     restart: always

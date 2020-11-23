@@ -2,5 +2,8 @@
 
 docker login --username foxdex -p $DOCKER_ACCESS_TOKEN
 
-docker pull foxdex/web:latest
+docker rmi -f foxdex/web:latest
+docker-compose  -f  docker-compose.yml  pull foxdex
 
+docker-compose -f docker-compose.yml down
+docker-compose -f docker-compose.yml up -d
