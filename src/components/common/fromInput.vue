@@ -1,7 +1,7 @@
 <template>
  <div class="from_data">
     <div class="fromInput">
-      <div class="from_lable">{{ lable }}</div>
+      <div class="from_lable" v-show="lable">{{ lable }}</div>
       <div class="from_input">
         <div class="input_lt">
           <input
@@ -23,8 +23,8 @@
   export default {
       props: {
     lable: {
-      type: String,
-      default: "",
+      type: [String,Number],
+      default: 0,
     },
     value: {
       default: "0.0",

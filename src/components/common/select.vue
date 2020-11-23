@@ -3,7 +3,7 @@
   <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}">Balance:{{lable}}</div>
  <div class="input_content" @click="showModel" >
           <div class="from_select">
-            <span class="from_icon" v-if="showSelect"></span>
+            <span class="spimg" v-if="showSelect"><img :src="attrsrc" alt=""></span>
             <span class="from_size" :class="showSelect ? '' : 'show_size'">{{showSelect?text:'Optional pass'}}</span>
             <img src="@/assets/img/icon_down.svg" alt="" />
           </div>
@@ -26,7 +26,7 @@
   export default {
      props: {
     lable: {
-      type: [String,Number],
+      type: [String,Number,Boolean],
       default: "0",
     },
     value: {
@@ -39,6 +39,9 @@
     text: {
       type: String,
       default: " ",
+    },
+    attrsrc:{
+        default:require('@/assets/img/btc.svg')
     },
     hideSlect: {
       type: Boolean,
@@ -116,6 +119,12 @@
     width: 100%;
     padding-right: 12px;
     text-align: right;
+    .spimg{
+      img{
+        width: 40px;
+        height: 40px;
+      }
+    }
     .from_size {
       font-size: 20px;
       font-family: ArialMT;

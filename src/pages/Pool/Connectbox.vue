@@ -207,4 +207,5 @@ export default {
   width: 190px;
   text-align: right;
 }
+
 </style>
