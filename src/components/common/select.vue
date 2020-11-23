@@ -1,55 +1,67 @@
 <template>
 <div class="input_select">
-  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}">Balance:{{lable}}</div>
- <div class="input_content" @click="showModel" >
-          <div class="from_select">
-            <span class="from_icon" v-if="showSelect"></span>
-            <span class="from_size" :class="showSelect ? '' : 'show_size'">{{showSelect?text:'Optional pass'}}</span>
-            <img src="@/assets/img/icon_down.svg" alt="" />
-          </div>
-          <ul class="select_model" :class="className" @click="addClass">
-            <li @click="selectClick(1)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-            <li @click="selectClick(2)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-            <li @click="selectClick(3)">
-              <img src="@/assets/img/icon_down.svg" alt="" /> <span>深圳</span>
-            </li>
-          </ul>
-        </div>
-        </div>
+  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}">Balance:{{balance}}</div>
+  <div class="input_content" @click="showModel" >
+      <div class="from_select">
+        <span class="from_icon" v-show="imgUrl!==null"></span>
+        <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:'Optional pass'}}</span>
+        <img src="@/assets/img/icon_down.svg" alt="" />
+      </div>
+      <!-- <ul class="select_model" :class="className" @click="addClass">
+        <li v-for="(item,index) in tokenList" :key="index" @click="selectClick(item)">
+          <img src="@/assets/img/icon_down.svg" alt="" /> <span>{{item.name}}</span>
+        </li>
+      </ul> -->
+    </div>
+  </div>
 </template>
 
 <script>
+import tokenData from '../../utils/token'
   export default {
-     props: {
-    lable: {
-      type: [String,Number],
-      default: "0",
+    props: {
+      lable: {
+        type: [String,Number],
+        default: "0",
+      },
+      value: {
+        default: "0.0",
+      },
+      showSelect: {
+        type: Boolean,
+        default: true,
+      },
+      text: {
+        type: String,
+        default: "",
+      },
+      imgUrl: {
+        type: String,
+        default: null,
+      },
+      item: {
+        type: String,
+        default: "",
+      },
+      balance: {
+        type: Number,
+        default: 0,
+      },
+      hideSlect: {
+        type: Boolean,
+        default: false,
+      },
     },
-    value: {
-      default: "0.0",
-    },
-    showSelect: {
-      type: Boolean,
-      default: true,
-    },
-    text: {
-      type: String,
-      default: " ",
-    },
-    hideSlect: {
-      type: Boolean,
-      default: false,
-    },
-  },
   data() {
     return {
       isShow: false,
       className: "",
+      tokenList: tokenData.tokenList,
+      itemToken:{}
     };
+  },
+  created(){
+    console.log('imgurl=====',this.imgUrl)
   },
   methods: {
     hadelClick(e) {
@@ -59,11 +71,14 @@
       this.className = "open";
     },
     selectClick(e) {
-      console.log(e);
+      e.item = this.item
+      this.$emit('change',e)
+      console.log(e.address);
     },
     showModel() {
-      this.isShow = !this.isShow;
-      this.className = this.className == "" ? "open" : "";
+      // this.isShow = !this.isShow;
+      // this.className = this.className == "" ? "open" : "";
+      this.$emit('click')
     },
   },
   }

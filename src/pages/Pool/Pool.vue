@@ -5,16 +5,14 @@
         <h1 @click="createBPool">Pool</h1>
       </div>
       <!-- <addfrombox/> -->
-      <!-- <connectbox/> -->
+      <connectbox/>
       <!-- <selctoken/> -->
       <!-- <AddLiquidity /> -->
-      <!-- <recevive/> -->
-        <!-- <willRecevive/> -->
+      <!-- <recevive/>
+        <willRecevive/> -->
               <!-- <liquidity/> -->
     <!-- <vAlret/> --> 
-   
-    <!-- <AddLiquidity/> -->
-    <!-- <liquidity/> -->
+  
     <!-- <Pool1/> -->
     <!-- <Pool2/> -->
 
@@ -32,7 +30,6 @@ import failure from '@/assets/img/icon_faile.svg';
 import AddLiquidity from './AddLiquidity'
 import liquidity from './liquidity'
 import vAlret from './valret'
-import selctoken from './selctToken';
 import recevive from './recevive';
 import willRecevive from './willRecevive';
 import addfrombox from './addfrombox';
@@ -41,21 +38,24 @@ import connectbox from './Connectbox'
 // import Pool1 from './Pool1'
 import Pool2 from './Pool2'
 import {approved} from '../../utils/tronwebFn'
+// import selctoken from './selctToken';
+
 
 export default {
   data () {
     return {
       BFactoryContract:null,
       firstCoinContract:null,
-      bPoolContract:null
+      bPoolContract:null,
+      isSelect:false
     }
   },
   components: {
-    // addfrombox
-    // connectbox
+    // addfrombox,
+    connectbox,
     // selctoken
     // AddLiquidity,
-      // recevive
+      // recevive,
       //  willRecevive
     // liquidity
     // Pool2

@@ -82,7 +82,6 @@ export default {
     async changeWtrx(){//兑换wtrx
         let that = this
         try {
-          debugger;
             let res = await that.wtrxContract["deposit"]().send({
               feeLimit:100000000,
               callValue:window.tronWeb.toSun(that.trxNum),
