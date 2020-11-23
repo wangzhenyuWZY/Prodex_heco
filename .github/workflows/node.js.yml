@@ -5,6 +5,9 @@ name: Node.js CI
 
 on: [push]
 
+env:
+  DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
+
 jobs:
   build:
 
@@ -15,17 +18,10 @@ jobs:
         node-version: [12.x]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
-      env:
-        DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
-    - run: npm install
-    - run: npm ci
-    - run: npm test
-    - run: ./sh/build.sh
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: ./sh/build.sh
 
-
-#  deploy:
