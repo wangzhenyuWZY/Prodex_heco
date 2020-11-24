@@ -34,8 +34,15 @@ export const tokenList = [
         address:'TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55',
         img:'',
         balance:0
-    },
-    
+    }
+]
+export const pairList = [
+    {
+        address:'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',
+        token1:'WTRX',
+        token2:'inverst',
+        pair:'WTRX/INVERST'
+    }
 ]
 
 const tokenData = {

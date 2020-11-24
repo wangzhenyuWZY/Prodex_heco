@@ -18,11 +18,11 @@
               placeholder="Search name or paste address"
             ></el-input>
       </div>
-      <div class="select_size select__bases">
+      <div class="select_size select__bases" hidden>
         <span> Common bases</span>
          <img  class="select_title" src="@/assets/img/icon_instructions.svg" alt="">
       </div>
-      <ul class="bases__list">
+      <ul class="bases__list" v-show="false">
           <li>
                 <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
                   <span class="bases_currency">ETH</span>
@@ -43,7 +43,7 @@
       </div>
       <div class="currency_list">
         <ul class="list_scroll">
-            <li v-for="(item,index) in tokenList" :key="index" @click="selectClick(item)">
+            <li v-for="(item,index) in tokenList" :key="index" @click="selectClick(item,index)">
               <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
                 <span class="bases_currency">{{item.name}}</span>
             </li>
@@ -52,7 +52,7 @@
 
       </div>
 
-      <div class="Change_back clearfix">
+      <div class="Change_back clearfix" hidden>
          <div class="Change_lt fl_lt tag">
             <img src="@/assets/img/icon_instructions.svg" alt="">
             <span>CoinGecko</span>
@@ -90,8 +90,8 @@ import tokenData from '../../utils/token'
       handleClosea () {
         this.$emit('closeAlert')
       },
-      selectClick(e) {
-        e.item = this.item
+      selectClick(e,index) {
+        e.item = index
         this.$emit('change',e)
       },
     }

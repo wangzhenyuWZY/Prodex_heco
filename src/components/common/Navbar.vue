@@ -10,11 +10,7 @@
               <i class="el-icon-menu icons"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>黄金糕</el-dropdown-item>
-              <el-dropdown-item>狮子头</el-dropdown-item>
-              <el-dropdown-item>螺蛳粉</el-dropdown-item>
-              <el-dropdown-item>双皮奶</el-dropdown-item>
-              <el-dropdown-item>蚵仔煎</el-dropdown-item>
+              <el-dropdown-item v-for="(el,index) in tag" :key="el.path+index">{{el.name}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </div>

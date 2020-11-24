@@ -30,17 +30,18 @@
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
             <frominput lable="Input"
-                       v-model="value1"></frominput>
+                       v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
             <frominput lable="weight"
-                       v-model="value1"></frominput>
+                       v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <setselect 
+            @click="showSelect"
             :lable='false'
-            :imgUrl="wenicon"
-                       text="深圳" />
+            :imgUrl="token1.img"
+                       :text="token1.name" />
           </div>
         </div>
 
@@ -50,17 +51,17 @@
                <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
             <frominput lable="Input"
-                       v-model="value1"></frominput>
+                       v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
             <frominput lable="weight"
-                       v-model="value1"></frominput>
+                       v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect 
-            :lable='false'
-            :imgUrl="wenicon"
-                       text="深圳" />
+            <setselect :lable='false'
+                       :imgUrl="token2.img"
+                       :showSelect="false"
+                       :text="token2.name" />
           </div>
         </div>
         <div class="Price_text"
@@ -74,7 +75,7 @@
                alt="">
         </div>
         <div class="whe clearfix">
-          <el-button class="from_botton pair_mandate fl_lt">  Mandate</el-button>
+          <el-button class="from_botton pair_mandate fl_lt" @click="handel">  Mandate</el-button>
           <el-button class="from_botton pair_mandate pair_swap fl_rg"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
@@ -126,33 +127,144 @@
         </div>
       </div>
     </container>
+    <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
   </div>
 </template>
 
 <script>
-import { container, frominput, setselect } from '../../components/index'
+import { container,frominput,setselect } from '../../components/index'
+import selctoken from './selctToken';
+import ipConfig from '../../config/ipconfig.bak'
+import {approved} from '../../utils/tronwebFn'
 export default {
   data () {
     return {
-      test1: '',
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: 0,
-      login: false,
-      wenicon: require('@/assets/img/icon_instructions.svg')
+      token1:{},
+      token2:{},
+      isSelect:false,
+      item:1,
+      login:false,
+      firstTokenNum:'10000001',
+      firstTokenWeight:'1000000000000000001',
+      secondTokenNum:'10000001',
+      secondTokenWeight:'1000000000000000001', 
+      value3:'',
+      BFactoryContract:null,
+      firstCoinContract:null,
+      bPoolContract:null
     }
   },
   components: {
     container,
     frominput,
     setselect,
-
+    selctoken
+  },
+  created () {
+    this.init()
   },
   methods: {
-    handel () {
-      console.log('2222')
-      this.login = !this.login
+    handel() {
+      // this.login = !this.login
+      this.createBPool()
+    },
+    init () {//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.getBFactoryContract()
+        // that.checkBind(that.bPoolContract)
+        // that.unBindCoin();
+      })
+    },
+    async getBFactoryContract(){//链接BFactory合约
+      this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);         
+    },
+    async createBPool () {//newBPool
+      let that = this
+        try {
+          if(this.BFactoryContract){
+            let res = await that.BFactoryContract["newBPool"]().send({
+              feeLimit:100000000,
+              callValue:0,
+              tokenId:0,
+              shouldPollResponse:true
+            })
+            if(res){
+              that.bPoolContract = res
+              approved(that.token1.address,res).then(()=>{
+                that.bindCoin(that.token1.address,that.firstTokenNum,that.firstTokenWeight)
+              })
+              approved(that.token2.address,res).then(()=>{
+                that.bindCoin(that.token2.address,that.secondTokenNum,that.secondTokenWeight)
+              })
+            }
+          }
+        }
+        catch (error) {
+          console.log(error);
+        }
+    },
+    async bindCoin(address,balance,weight){//绑定币种
+      let that = this
+      var functionSelector = 'bind(address,uint256,uint256)';
+      var parameter = [
+          {type: 'address', value: address},
+          {type: 'uint256', value: balance},
+          {type: 'uint256', value: weight},
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    async unBindCoin(){//解除绑定
+      let that = this
+      var functionSelector = 'unbind(address)';
+      var parameter = [
+          {type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C'}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('TR51WC82auiTArBttVTUCDgYSJ9bw7363t',functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    async checkBind(){//检查是否绑定
+      var functionSelector = 'isBound(address)';
+      var parameter = [{type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C'}]
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TR51WC82auiTArBttVTUCDgYSJ9bw7363t',functionSelector,{}, parameter);
+      console.log(window.tronWeb.toDecimal(transaction.constant_result[0]))
+    },
+    changeCoin(token){
+      this.isSelect = false
+      token.item==0?this.token1 = token:this.token2 = token  
+      this.getBalance(token)
+      if(this.token1.address && this.token2.address){
+        // this.getSpotPrice(this.token1.address,this.token2.address)
+      }
+    },
+    async getBalance(token){//获取余额
+      let that = this
+      let tokenContract = await window.tronWeb.contract().at(token.address)
+      let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
+      if(tokenBalance){
+        let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+        token.item==0?that.token1.balance=balance:that.token2.balance=balance
+      }
+    },
+    // async getSpotPrice(){
+    //   await 
+    // },
+    showSelect(index){
+      this.isSelect = true
+      this.item = index
     }
   },
 }
