@@ -20,21 +20,20 @@
   <div class="b2-top">
 <samp class="top1">Top Tokens</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
   </div>
-
   <div class="table">
-      <el-table
-        :data="tableData"
-        stripe
-        header-cell-class-name="adddd"
-        header-row-class-name="tabe_tr"
-        :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-        cell-class-name="dddsadsa"
-        style="width: 100%" >
-        <el-table-column
-          prop="address"
-          label="name"
-          width="200">
-        </el-table-column>
+    <el-table
+      :data="tableData"
+      stripe
+      header-cell-class-name="adddd"
+      header-row-class-name="tabe_tr"
+      :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+      cell-class-name="dddsadsa"
+      style="width: 100%" >
+    <el-table-column
+      prop="address"
+      label="name"
+      width="200">
+    </el-table-column>
     <el-table-column
       prop="assets"
       label="Assets"
@@ -61,6 +60,7 @@
       label="Price change(24hr)">
     </el-table-column>
     </el-table>
+    
       </div>
       <div class="pagin">
         <el-pagination
@@ -130,19 +130,19 @@
   </div>
 
   <div class="table">
-      <el-table
-        :data="tableData"
-        stripe
-        header-cell-class-name="adddd"
-        header-row-class-name="tabe_tr"
-        :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-        cell-class-name="dddsadsa"
-        style="width: 100%" >
-        <el-table-column
-          prop="address"
-          label="name"
-          width="200">
-        </el-table-column>
+    <el-table
+      :data="tableData"
+      stripe
+      header-cell-class-name="adddd"
+      header-row-class-name="tabe_tr"
+      :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+      cell-class-name="dddsadsa"
+      style="width: 100%" >
+    <el-table-column
+      prop="address"
+      label="name"
+      width="200">
+    </el-table-column>
     <el-table-column
       prop="assets"
       label="Assets"
@@ -178,9 +178,6 @@
      </el-pagination>
       </div>
  </div>
- 
-
-
  </div>
 </template>
 
@@ -189,7 +186,74 @@
     data() {
       return {
         tableData: [{
-          address: '0xleff…a3d5',
+          address: '1',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },
+        {
+          address: '2',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },
+        {
+          address: '3',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },{
+          address: '4',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },{
+          address: '5',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },{
+          address: '6',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },{
+          address: '7',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },
+        {
+          address: '8',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },{
+          address: '9',
+          assets: '50% WETH',
+          swapfee: '0.4%',
+          markrtcap: '$83M',
+          myliquidity: '- -',
+          volume: '$1.4M',
+        },
+        {
+          address: '10',
           assets: '50% WETH',
           swapfee: '0.4%',
           markrtcap: '$83M',
@@ -201,9 +265,7 @@
     }
   }
 </script>
-
 <style  lang="scss" scoped>
-
 .c-top{
   margin: 0 auto;
   overflow: hidden;
@@ -277,7 +339,7 @@ margin-top: 40px;
   overflow: hidden;
   margin-top: 24px;
   background: #FFFFFF;
-  margin-bottom: 100px;
+ 
   .b2-top{
     height: 112px;
   .top1{
@@ -326,7 +388,6 @@ margin-top: 40px;
   .tabe_tr{
     /* background-image: linear-gradient(131deg, #FFA61B 0%, #F3330E 100%) ; */
     height: 40px;
-     
   }
 }
 
@@ -341,5 +402,9 @@ margin-top: 40px;
 <style  scoped>
   >>>.adddd{
     background-color: #F4F8FB;
+  }
+  >>>.el-table__row{
+    height: 72px;
+    background: #ffffff;
   }
 </style>
