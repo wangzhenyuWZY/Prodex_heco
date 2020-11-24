@@ -57,7 +57,7 @@ export default new VueRouter({
           component:willRecevive
         },
         {
-          path:'pair',
+          path:'pairs',
           component:createpair
         }
         
@@ -71,6 +71,6 @@ export default new VueRouter({
     {
       path:"/test",
       component:Stakes
-    },
+    }
   ]
 })
