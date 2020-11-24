@@ -164,9 +164,9 @@ export default {
   justify-content: center;
 }
 .wtrx-top {
-  /* float: left; */
   margin-top: 120px;
   font-size: 24px;
+  font-weight: bold;
 }
 .wtrx-left {
   margin-right: 15px;

@@ -50,19 +50,19 @@
           <div class="lt">
             <span>Total FARM Earned</span>
           </div>
-          <div class="rg ftblod">0.000000000</div>
+          <div class="rg ftblod">{{farmtoal.farmTotal}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
             <span>Your Unstaked UNISWAP_LP</span>
           </div>
-          <div class="rg ftblod">0.000000000</div>
+          <div class="rg ftblod">{{farmtoal.maxamount}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
             <span>Your Staked UNISWAP_LP</span>
           </div>
-          <div class="rg ftblod">0.000000000</div>
+          <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btn clearfix">
           <el-button class="Approve1">Approve</el-button>
@@ -76,7 +76,7 @@
                 <div class="lt">
                  <frominput
                     showmax
-                     balance='123'
+                    :balance="farmtoal.maxamount"
                     v-model="test1"
                  />
                 </div>
@@ -97,6 +97,17 @@
 import { container, frominput, setselect } from '../../components/index'
 
 export default {
+  props: {
+     farmtoal:{
+       type:Object,
+       default:{
+         farmTotal:0,
+        shareToal:0,
+        uniswaplp:0,
+        maxamount:0
+       }
+     }
+  },
   data () {
     return {
       test1: '',
@@ -107,6 +118,9 @@ export default {
 
     }
   },
+  watch: {
+    
+  },
   components: {
     // vButton: vbutton,
     container,
@@ -114,7 +128,13 @@ export default {
     // vfromInput: fromInput,
     // setselect
 
-  }
+  },
+  methods: {
+    hadelClick (e) {
+      console.log('22222')
+        console.log(e)
+    }
+  },
 }
 </script>
 

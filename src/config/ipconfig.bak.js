@@ -8,3 +8,4 @@ const ipConfig = {
   
 }
 export default ipConfig
+

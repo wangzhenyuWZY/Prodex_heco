@@ -4,7 +4,8 @@
       <!-- <addfrombox/> -->
       <!-- <connectbox/> -->
       <!-- <selctoken/> -->
-      <AddLiquidity />
+      <!-- <AddLiquidity /> -->
+      <addd/>
       <!-- <recevive/>
         <willRecevive/> -->
               <!-- <liquidity/> -->
@@ -34,6 +35,7 @@ import connectbox from './Connectbox'
 //import liquidity from './liquidity'
 import {approved} from '../../utils/tronwebFn'
 // import selctoken from './selctToken';
+import addd from './createpair';
 
 
 export default {
@@ -50,6 +52,7 @@ export default {
     // connectbox,
     // selctoken
     AddLiquidity,
+    addd
       // recevive,
       //  willRecevive
     // liquidity

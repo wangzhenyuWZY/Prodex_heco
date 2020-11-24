@@ -7,10 +7,11 @@
           <input
             class="globle_input"
             type="text"
-            placeholder="0.0"
+            :placeholder="placeholder"
             @keyup="hadelClick"
             :value="value"
             ref="input"
+            :maxlength="maxlength"
           />
           <div class="input_max" v-if="showmax" @click="setValue">MAX</div>
         </div>
@@ -29,9 +30,19 @@
     value: {
       default: "0.0",
     },
+    placeholder:{
+       type:[String,Number],
+       default:''
+    },
+    maxlength:{
+      type:Number
+    },
     showSelect: {
       type: Boolean,
       default: true,
+    },
+    hadelClicks: {
+      default:null
     },
     text: {
       type: String,
@@ -59,6 +70,10 @@
   methods: {
     hadelClick(e) {
       this.$emit("input", e.target.value);
+      if (this.hadelClicks) {
+      this.$emit('hadelClick',e.target.value);
+
+      }
     },
     setValue () {
        this.$emit("input", this.balance);
@@ -87,16 +102,15 @@
     padding-left: 16px;
   }
   .from_input {
-    display: flex;
 
     .input_lt {
       position: relative;
-      flex: 1;
+         display: flex;
       .input_max{
-        position: absolute;
-        right: 16px;
-        top: 28px;
         width: 64px;
+        height: 32px;
+        margin-top: 28px;
+        margin-right: 16px;
         line-height: 32px;
         text-align: center;
         cursor: pointer;
@@ -186,6 +200,7 @@
   padding-left: 16px;
   font-weight: normal;
   color: #FF5D37;
+  flex: 1;
 }
 .globle_input::placeholder{
   

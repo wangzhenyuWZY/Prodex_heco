@@ -1,9 +1,25 @@
 <template>
   <div>
-    <div class="nav">
+    <div class="nav clearfix">
       <div class="logo"><img src="../../assets/img/logo.png"
              alt="" /></div>
-      <div class="nav-header">
+      <div class="moble fl_lt" v-show="false">
+        <div class="iconsv">
+          <el-dropdown trigger="click" size="medium">
+            <span class="el-dropdown-link">
+              <i class="el-icon-menu icons"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>黄金糕</el-dropdown-item>
+              <el-dropdown-item>狮子头</el-dropdown-item>
+              <el-dropdown-item>螺蛳粉</el-dropdown-item>
+              <el-dropdown-item>双皮奶</el-dropdown-item>
+              <el-dropdown-item>蚵仔煎</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+      </div>
+      <div class="nav-header fl_lt" v-show="true">
         <div class="van_list"
              ref="header">
           <span v-for="(idx, index) in tag"
@@ -15,12 +31,13 @@
         <div class="active-bar"
              :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
-      <div class="nav-right">
+      <div class="nav-right fl_rg">
         <div class="nav-butt">
           <el-button class="from_botton nav_btn ">Connect to a wallet</el-button>
         </div>
         <div class="nav_merge">
-          <img src="@/assets/img/icon_merge.svg" alt="">
+          <img src="@/assets/img/icon_merge.svg"
+               alt="">
         </div>
         <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
@@ -93,9 +110,9 @@ export default {
         this.navIndex = 0;
       } else {
         for (let i = 0; i < this.tag.length; i++) {
-          let el = this.tag[i].path+'';
-          if (e.match(el)&&el != '/') {
-            console.log(e.match(el)  == e)
+          let el = this.tag[i].path + '';
+          if (e.match(el) && el != '/') {
+            console.log(e.match(el) == e)
             this.navIndex = i;
             break;
           }
@@ -120,18 +137,25 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.iconsv{
+  margin-left: 50px;
+}
+.icons {
+  font-size: 34px;
+  color: #0f1730;
+  vertical-align: sub;
+}
 .nav {
   /* width: 1920px; */
   line-height: 72px;
   height: 72px;
-  display: flex;
 }
 .nav-butt {
   // width: 119px;
 }
-.nav_merge{
+.nav_merge {
   margin-left: 24px;
-  img{
+  img {
     vertical-align: middle;
     margin-top: -3px;
     cursor: pointer;
@@ -162,8 +186,6 @@ export default {
 .logo {
   float: left;
   width: 35px;
-  height: 35px;
-  margin-top: 10px;
   margin-left: 33px;
 }
 .logo img {
