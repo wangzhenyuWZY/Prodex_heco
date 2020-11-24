@@ -1,4 +1,5 @@
 <template>
+  <div>
   <container top="32" pdd>
     <div class="title"
          slot="title">
@@ -19,12 +20,12 @@
         <div class="ctx_1 fl_lt">
           <frominput lable="input"
                      showmax
-                     balance='123'
-                     v-model="value1"></frominput>
+                     :balance='token1.balance'
+                     v-model="token1Num"></frominput>
         </div>
         <div class="ctx_3 fl_lt">
-          <setselect lable="321321"
-                     text="深圳" />
+          <setselect lable="321321"  :showSelect="false" :imgUrl="token1.img" item='1' :balance="token1.balance"
+                     :text="token1.name" @click="showSelect(1)" />
         </div>
       </div>
 
@@ -32,12 +33,11 @@
       <div class="setInput clearfix">
         <div class="ctx_1 fl_lt">
           <frominput lable="input"
-                     v-model="value3"></frominput>
+                     v-model="token2Num"></frominput>
         </div>
         <div class="ctx_3 fl_lt">
-          <setselect :showSelect="false"
-                     text="深2圳"
-                     lable="321321" />
+          <setselect :showSelect="false" :imgUrl="token2.img" item='2' :balance="token2.balance"
+                     :text="token2.name" @click="showSelect(2)"  />
         </div>
       </div>
       <div class="box_sizes">
@@ -113,28 +113,57 @@
         </div>
       </div>
     </div>
-  </container>
 
+    
+  </container>
+  <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
+  </div>
 </template>
 
 <script>
 import { container,frominput,setselect } from '../../components/index'
-
+import selctoken from './selctToken';
 export default {
   data () {
     return {
-      test1: '',
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: 0,
+      token1Num:'',
+      token2Num:'',
+      token1:{},
+      token2:{},
+      isSelect:false,
+      item:1
     }
   },
   components: {
     container,
     frominput,
-    setselect
-
+    setselect,
+    selctoken
+  },
+  methods:{
+    changeCoin(token){
+      this.isSelect = false
+      token.item==1?this.token1 = token:this.token2 = token  
+      this.getBalance(token.address)
+      if(this.token1.address && this.token2.address){
+        // this.getSpotPrice(this.token1.address,this.token2.address)
+      }
+    },
+    async getBalance(address){//获取余额
+      let that = this
+      let tokenContract = await window.tronWeb.contract().at(address)
+      let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
+      if(tokenBalance){
+        that.token1.balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+      }
+    },
+    // async getSpotPrice(){
+    //   await 
+    // },
+    showSelect(index){
+      this.isSelect = true
+      this.item = index
+    }
   }
 }
 </script>

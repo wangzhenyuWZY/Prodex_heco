@@ -8,6 +8,10 @@
             <frominput lable="From"
                        v-model="value1"></frominput>
           </div>
+          <div class="ctx_2 fl_lt">
+            <frominput lable="From"
+                       v-model="value1"></frominput>
+          </div>
           <div class="ctx_3 fl_lt">
             <setselect :lable='false'
                        text="深圳" />
@@ -19,6 +23,10 @@
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
+            <frominput lable="To"
+                       v-model="value3"></frominput>
+          </div>
+              <div class="ctx_2 fl_lt">
             <frominput lable="To"
                        v-model="value3"></frominput>
           </div>
@@ -39,10 +47,24 @@
         <div class="whe" :class="login?'login_text':'outlogin'">
           <el-button class="from_botton"> <img class="whe_img"
                 v-show="!login"
+                @click="handel"
                  src="@/assets/img/icon_my_wallet.svg"
                  alt=""> {{login?'Swap':'Connect to a wallet'}}</el-button>
         </div>
-
+          <div class="setInput clearfix">
+          <div class="ctx_1 fl_lt">
+            <frominput lable="To"
+                       v-model="value3"></frominput>
+          </div>
+              <div class="ctx_2 fl_lt">
+            <frominput lable="To"
+                       v-model="value3"></frominput>
+          </div>
+          <div class="ctx_3 fl_lt">
+            <frominput lable="To"
+                       v-model="value3"></frominput>
+          </div>
+        </div>
       </div>
     <div slot="footer"
         v-show="login"
@@ -75,13 +97,11 @@
       </div>
     </div>
     </container>
-    <change v-if="false"/>
   </div>
 </template>
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
-import change from './change'
 export default {
   data () {
     return {
@@ -98,9 +118,14 @@ export default {
     container,
     frominput,
     setselect,
-    change
 
-  }
+  },
+  methods: {
+    handel() {
+      console.log('2222')
+      this.login = !this.login
+    }
+   },
 }
 </script>
 
@@ -115,7 +140,7 @@ export default {
 }
 
 .ctx_1 {
-  width: 397px;
+  width: 200px;
   display: inline-block;
 }
 .ctx_2 {

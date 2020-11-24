@@ -43,46 +43,10 @@
       </div>
       <div class="currency_list">
         <ul class="list_scroll">
-              <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
-                <li>
-                <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
-                  <span class="bases_currency">ETH</span>
-              </li>
+            <li v-for="(item,index) in tokenList" :key="index" @click="selectClick(item)">
+              <img  class="currency_img" src="@/assets/img/btc.svg" alt="">
+                <span class="bases_currency">{{item.name}}</span>
+            </li>
         </ul>
       </div>
 
@@ -101,22 +65,36 @@
 </template>
 
 <script>
-  export default {
-      data () {
-    return {
-      test: '12',
-      value:'',
-      dataType: 'success',
-      test1: '0',
-      showAlert: true,
-     
+import tokenData from '../../utils/token'
+  export default { 
+    props: {
+      showAlert: {
+        type: Boolean,
+        default: false,
+      },
+      item: {
+        type: Number,
+        default: 1,
+      }
+    },   
+    data () {
+      return {
+        value:'',
+        tokenList: tokenData.tokenList,
+      }
+    },
+    created(){
+      console.log('showAlert====================',this.showAlert)
+    },
+    methods: {
+      handleClosea () {
+        this.$emit('closeAlert')
+      },
+      selectClick(e) {
+        e.item = this.item
+        this.$emit('change',e)
+      },
     }
-  },
-  methods: {
-    handleClosea () {
-
-    }
-  }
 
   }
 </script>

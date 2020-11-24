@@ -1,16 +1,28 @@
 <template>
   <div class="container">
     <div class="stake">
+      <div class="content_top">
+        <div class="connected clearfix">
+          <div class="text_one fl_lt">Earn FARM with FoxDex</div>
+          <div class="fl_lt text_two">You haven't connected a wallet.</div>
+          <div class="fl_rg conted_btn">
+            <el-button class="from_botton"> <img class="whe_img"
+                   src="@/assets/img/icon_my_wallet.svg"
+                   alt=""> Connect to a wallet</el-button>
+          </div>
+        </div>
+        <div class="ect_title">
+          Stake your LP tokens for rewards
+        </div>
+      </div>
       <ul class="stake_list">
         <li v-for="(idx,index) in list"
             :key='idx.name+index'>
           <div class="stake_top">
-            <span class="lt_icon">
-              <img class="lt_icon"
-                   src="@/assets/img/icon_down.svg"
+            <span class="lt_icon ">
+              <img src="@/assets/img/btc.svg"
                    alt="" />
-              <img class="lt_icon"
-                   src="@/assets/img/icon_down.svg"
+              <img src="@/assets/img/btc.svg"
                    alt="" />
             </span>
             <span class="content_zise">
@@ -22,6 +34,11 @@
             <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">{{idx.name2}}</span></div>
           </div>
           <div class="stake_btn">{{idx.account}}%APY</div>
+          <div class="stake_apy clearfix">
+            <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
+               <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
+            <div class="prizes">18,000 USD in prizes</div>
+          </div>
         </li>
 
       </ul>
@@ -172,6 +189,55 @@ created() {
 .stake {
   max-width: 1024px;
   margin: 0 auto;
+  color: #0f1730;
+  padding-bottom: 70px;
+  .content_top{
+      margin-top: 20px;
+  }
+  .whe_img{
+      vertical-align: bottom;
+  }
+  .conted_btn {
+    width: 320px;
+  }
+  .ect_title {
+    font-size: 20px;
+    font-family: Arial-BoldMT, Arial;
+    text-align: center;
+    margin-top: 32px;
+  }
+  .text_one {
+    font-size: 24px;
+    font-family: Arial-BoldMT, Arial;
+    line-height: 56px;
+  }
+  .text_two {
+    font-size: 18px;
+    color: #878b97;
+    line-height: 56px;
+    margin-left: 109px;
+  }
+}
+.stake_apy {
+  font-size: 18px;
+  margin-top: 16px;
+  min-height: 25px;
+
+  .apy_size {
+    color: #878b97;
+    float: left;
+  }
+  .apy_number {
+    color: #0f1730;
+    font-family: Arial-BoldMT, Arial;
+    float: right;
+  }
+  .prizes {
+    text-align: center;
+    font-family: Arial-BoldMT, Arial;
+    font-weight: normal;
+    color: #0f1730;
+  }
 }
 
 ul {
@@ -181,26 +247,46 @@ ul {
   margin-top: 40px;
   li {
     width: 320px;
-    box-sizing: border-box;
-    background: #FFFFFF;
+    background: #ffffff;
     border-radius: 16px;
-    padding: 37px 42px;
+    padding: 37px 32px;
     margin-bottom: 32px;
     .content_zise {
       font-size: 20px;
       font-family: Arial-BoldMT, Arial;
       font-weight: normal;
-      color: #0F1730;;
       vertical-align: middle;
     }
     .lt_icon {
-      > img {
+      margin-right: 4px;
+      position: relative;
+      overflow: hidden;
+      min-width: 70px;
+      display: inline-block;
+      height: 32px;
+      vertical-align: middle;
+      img {
         vertical-align: middle;
+        width: 32px;
+        height: 32px;
+      }
+      img:nth-child(1) {
+        position: absolute;
+        right: 0;
+        top: 0;
+        z-index: 0;
+      }
+      img:nth-child(2) {
+        position: absolute;
+        right: 16px;
+        top: 0;
+        z-index: 1;
       }
     }
     .stake_addres {
       margin-top: 40px;
       margin-bottom: 40px;
+      padding-left: 27px;
       > span {
         display: inline-block;
       }
@@ -210,8 +296,7 @@ ul {
 
       .lt_addres {
         font-size: 20px;
-        font-family: ArialMT;
-        color: #878B97;
+        color: #878b97;
         text-align: right;
         display: inline-block;
         width: 74px;
@@ -220,11 +305,9 @@ ul {
         font-size: 18px;
         font-family: Arial-BoldMT, Arial;
         font-weight: normal;
-        color: #0F1730;;
       }
     }
     .stake_btn {
-      width: 256px;     
       height: 48px;
       line-height: 48px;
       border-radius: 32px;
