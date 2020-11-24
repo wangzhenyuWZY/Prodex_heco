@@ -89,7 +89,6 @@ export default {
 
   methods: {
     handelActive (e, index) {
-      console.log(e)
       if (e == '/') {
         this.navIndex = 0;
       } else {
