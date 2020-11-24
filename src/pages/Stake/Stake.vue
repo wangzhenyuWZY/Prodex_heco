@@ -34,7 +34,7 @@ import ipConfig from '../../config/ipconfig.bak'
 export default {
   data () {
     return {
-      stakepoolinfo:'0',
+      
       list: [
         {
           name: 'fUNISWAP_LP',
@@ -117,31 +117,32 @@ export default {
     }
   },
 created() {
-  this.init()
-},
-methods:{
-    init(){//初始化tronweb
-      let that = this
-      this.$initTronWeb().then(function (tronWeb) {
-        that.grtMasterChef()
-      })
-    },
-    
-    async grtMasterChef(){//连接MasterChef合约
-      this.stakeContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
-      
-    },
-    async getstake(){//1.获取PoolInfo[] 返回一个数组，数组里的信息包括：lptoken的地址
-       let that = this
-       try {
-            let res = await that.stakeContract["poolInfo"](window.tronWeb.defaultAddress.base58).call();
-            that.stakepoolinfo = window.tronWeb.fromSun(res)
-           
-        } catch (error) {
-            console.log(error);
-        }
-    },
-
+   this.init()
+ },
+  methods:{
+      init(){//初始化tronweb
+        let that = this
+        this.$initTronWeb().then(function (tronWeb) {       
+          that.grtMasterChef()
+          that.getMasterChefContract()
+        })
+  },
+  async grtMasterChef(){//连接MasterChef合约
+    this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
+    console.log(this.MasterChefContract);
+     
+  },
+  async getMasterChefContract(){//1.获取PoolInfo[] 返回一个数组，数组里的信息包括：lptoken的地址
+    let that = this
+    try {
+      console.log(that.MasterChefContract);
+      let res = await that.MasterChefContract["poolInfo"](window.tronWeb.defaultAddress.base58).call();
+      that.stakepoolinfo = window.tronWeb.fromSun(res)
+      console.log();
+    } catch (error) {
+      console.log(error);
+    }
+  },
 }
 // 2. deposit用来质押，需要传入的参数
 // （1）PoolInfo[]数组的序号
@@ -157,6 +158,13 @@ methods:{
 // （2）用户的地址
 
 // (5).计算APY
+
+
+//  0:"lpToken: TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C"
+//  1:"allocPoint: 1"
+//  2:"lastRewardBlock: 9,925,699"
+//  3:"accFoxPerShare: 0"
+//  4:"perBlockToken: 1,950,000,000,000,000,000"
 }
 </script>
 
