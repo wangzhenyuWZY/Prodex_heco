@@ -19,6 +19,9 @@
         <div class="nav-butt">
           <el-button class="from_botton nav_btn ">Connect to a wallet</el-button>
         </div>
+        <div class="nav_merge">
+          <img src="@/assets/img/icon_merge.svg" alt="">
+        </div>
         <!-- <div class="nav-inp">1</div>
       <div class="nav-ion1">2</div>
       <div class="nav-ion2">3</div> -->
@@ -126,6 +129,14 @@ export default {
 }
 .nav-butt {
   // width: 119px;
+}
+.nav_merge{
+  margin-left: 24px;
+  img{
+    vertical-align: middle;
+    margin-top: -3px;
+    cursor: pointer;
+  }
 }
 .nav-right {
   display: flex;

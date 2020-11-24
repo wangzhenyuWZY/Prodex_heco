@@ -1,9 +1,9 @@
 <template>
 <div class="input_select">
   <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}">Balance:{{balance}}</div>
-  <div class="input_content" @click="showModel" >
+  <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
-        <span class="from_icon" v-show="imgUrl!==null"></span>
+        <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="imgUrl" alt=""> </span>
         <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:'Optional pass'}}</span>
         <img src="@/assets/img/icon_down.svg" alt="" />
       </div>
@@ -21,7 +21,7 @@ import tokenData from '../../utils/token'
   export default {
     props: {
       lable: {
-        type: [String,Number],
+        type: [String,Number,Boolean],
         default: "0",
       },
       value: {
@@ -67,10 +67,16 @@ import tokenData from '../../utils/token'
     hadelClick(e) {
       this.$emit("input", e.target.value);
     },
+    ddd() {
+      alert(2222)
+    },
     addClass() {
       this.className = "open";
     },
-    selectClick(e) {
+    iconHlep() {
+
+    },
+     selectClick(e) {
       e.item = this.item
       this.$emit('change',e)
       console.log(e.address);
@@ -151,10 +157,12 @@ import tokenData from '../../utils/token'
   }
   .from_icon {
     display: inline-block;
-    width: 40px;
-    height: 40px;
+   
     border-radius: 50%;
-    background: #4d4dde;
+    img{
+        width: 40px;
+    height: 40px;
+    }
   }
   .from_lable{
     font-size: 20px;
