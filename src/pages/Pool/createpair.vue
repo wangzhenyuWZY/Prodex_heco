@@ -27,12 +27,16 @@
             </div>
           </div>
         </div>
-        <div class="setInput clearfix">
-          <div class="ctx_1 ctx_pair fl_lt">
+        <div class="setInput  clearfix">
+          <div class="ctx_1    fl_lt">
             <frominput lable="Input"
                        v-model="value1"></frominput>
           </div>
-          <div class="selct_3 fl_lt">
+           <div class="ctx_2   fl_lt">
+            <frominput lable="weight"
+                       v-model="value1"></frominput>
+          </div>
+          <div class="ctx_3 fl_lt">
             <setselect 
             :lable='false'
             :imgUrl="wenicon"
@@ -43,16 +47,20 @@
         <div class="from_contentIcon">
           <i class="el-icon-plus tran_icon"></i>
         </div>
-        <div class="setInput clearfix">
-          <div class="ctx_1  ctx_pair fl_lt">
+               <div class="setInput  clearfix">
+          <div class="ctx_1    fl_lt">
             <frominput lable="Input"
-                       v-model="value3"></frominput>
+                       v-model="value1"></frominput>
           </div>
-          <div class="selct_3 fl_lt">
-            <setselect :lable='false'
-                       :imgUrl="wenicon"
-                       :showSelect="false"
-                       text="深2圳" />
+           <div class="ctx_2   fl_lt">
+            <frominput lable="weight"
+                       v-model="value1"></frominput>
+          </div>
+          <div class="ctx_3 fl_lt">
+            <setselect 
+            :lable='false'
+            :imgUrl="wenicon"
+                       text="深圳" />
           </div>
         </div>
         <div class="Price_text"
