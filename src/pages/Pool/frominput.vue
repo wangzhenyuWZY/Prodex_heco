@@ -9,6 +9,7 @@
             type="text"
             placeholder="0.0"
             @keyup="hadelClick"
+            @keydown="hadeldown"
             :value="value"
             ref="input"
           />
@@ -41,6 +42,9 @@
       type: Boolean,
       default: false,
     },
+    hadelClick: {
+       type:Function
+    },
     showmax:{
       type:Boolean,
       default: false
@@ -57,7 +61,8 @@
     };
   },
   methods: {
-    hadelClick(e) {
+    hadelClicks(e) {
+      
       this.$emit("input", e.target.value);
     },
     setValue () {

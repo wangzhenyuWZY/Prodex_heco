@@ -13,6 +13,9 @@ Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$initTronWeb = initTronWeb
 Vue.use(Element);
 Vue.config.productionTip = false
+// 引入echarts
+import echarts from 'echarts'
+Vue.prototype.$echarts = echarts 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', () => {
     FastClick.attach(document.body)

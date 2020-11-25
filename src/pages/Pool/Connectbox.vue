@@ -14,8 +14,15 @@
              alt="" />
       </div>
     </div>
+    
     <div slot="body"
          class="posting">
+         <div class="xzk">
+           <el-button class="xzk-but">Uni ETH-USDT <img src="../../assets/img/icon_down.svg" alt=""></el-button>
+           
+           
+           
+         </div>
       <div class="setInput clearfix">
         <div class="ctx_1 fl_lt">
           <frominput lable="input"
@@ -252,6 +259,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.xzk{
+ 
+  height: 56px;
+  border-radius: 16px;
+  // border: 1px solid #0F1730;;
+  margin-bottom: 32px;
+  .xzk-but{
+    width: 608px;
+    height: 56px;
+    border-radius: 16px;
+    border: 1px solid #0F1730;
+    color: #000;
+  }
+}
 .whe {
   width: 293px;
   margin: 0 auto;
@@ -304,8 +325,8 @@ export default {
   line-height: 72px;
   border-bottom: 1px solid #E5EBF2;
   font-weight: normal;
-    color: #0F1730;
-    font-size: 20px;
+  color: #0F1730;
+  font-size: 20px;
     
 }
 .connect_currency{

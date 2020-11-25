@@ -1,23 +1,25 @@
 <template>
-  <div class="container">
-    <div class="stake">
-      <div class="content_top">
+  <div class="container glbale_pd">
+    <div class="stake"  v-show="!showModel">
+      <div class="content_top"
+           v-if="login">
         <div class="connected clearfix">
           <div class="text_one fl_lt">Earn FARM with FoxDex</div>
-          <div class="fl_lt text_two">You haven't connected a wallet.</div>
           <div class="fl_rg conted_btn">
             <el-button class="from_botton"> <img class="whe_img"
                    src="@/assets/img/icon_my_wallet.svg"
                    alt=""> Connect to a wallet</el-button>
           </div>
+          <div class="fl_rg text_two">You haven't connected a wallet.</div>
         </div>
         <div class="ect_title">
           Stake your LP tokens for rewards
         </div>
       </div>
-      <ul class="stake_list">
-        <li v-for="(idx,index) in list"
-            :key='idx.name+index'>
+      <ul class="stake_list"
+          v-if="poolList.length>0">
+        <li v-for="(idx,index) in poolList"
+            :key='index'>
           <div class="stake_top">
             <span class="lt_icon ">
               <img src="@/assets/img/btc.svg"
@@ -30,172 +32,258 @@
             </span>
           </div>
           <div class="stake_addres">
-            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.name}}</span></div>
-            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">{{idx.name2}}</span></div>
+            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">fUNISWAP_LP</span></div>
+            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">name2</span></div>
           </div>
-          <div class="stake_btn">{{idx.account}}%APY</div>
+          <div class="stake_btn"
+               @click="showModels(index)">12.04%APY</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
             <div class="prizes">18,000 USD in prizes</div>
           </div>
         </li>
-
       </ul>
     </div>
+    <selected v-show="showModel"
+         :farmtoal="total"
+         @Approve="Approve"
+         @amount="clickAmount"
+         @back ="()=>{this.showModel=false}"
+         @stake="stake" />
   </div>
 </template>
 
 <script>
 import ipConfig from '../../config/ipconfig.bak'
+import { approved } from '../../utils/tronwebFn'
+import selected from './Selected'
 export default {
   data () {
     return {
-      
+      MasterChefContract: null,
+      getContract: null,
+      poolLength: 0,
+      poolIndex: 0,
+      login: false,
+      showModel: false,
+      total: {
+        farmTotal: 0, // 总数
+        shareToal: 0, // 抵押数量
+        uniswaplp: 0, // 计算用户收益
+        balanceOf: 0, // 钱包余额
+        decimals: 0, // 精度 查询减 发送合约加
+
+
+      },
       list: [
         {
           name: 'fUNISWAP_LP',
           name2: 'FARM',
           account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        },
-
+        }
+      ],
+      poolList: [
 
       ]
     }
   },
-created() {
-   this.init()
- },
-  methods:{
-      init(){//初始化tronweb
-        let that = this
-        this.$initTronWeb().then(function (tronWeb) {       
-          that.grtMasterChef()
-          that.getMasterChefContract()
-        })
+  components: {
+    selected
   },
-  async grtMasterChef(){//连接MasterChef合约
-    this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
-    console.log(this.MasterChefContract);
-     
+  created () {
+    this.init()
   },
-  async getMasterChefContract(){//1.获取PoolInfo[] 返回一个数组，数组里的信息包括：lptoken的地址
-    let that = this
-    try {
-      console.log(that.MasterChefContract);
-      let res = await that.MasterChefContract["poolInfo"](window.tronWeb.defaultAddress.base58).call();
-      that.stakepoolinfo = window.tronWeb.fromSun(res)
-      console.log();
-    } catch (error) {
-      console.log(error);
+  methods: {
+    async init () {//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.grtMasterChef()
+      })
+    },
+    async Approve (x) { //  提现 x = 0 ;领取奖励
+      console.log('提现=====');
+      try {
+        let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
+        if (res) {
+          let approveBalance = window.tronWeb.toSun(res._hex)
+          if (approveBalance == 0) {
+            pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+          } else {
+              this.withdraw(x||this.total.shareToal)
+          }
+        } else {
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async clickAmount () { // 领取奖励
+        this.Approve('0');
+    },
+    async stake (n) { // 抵押
+        try {
+        let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
+        if (res) {
+          let approveBalance = window.tronWeb.toSun(res._hex)
+          if (approveBalance == 0) {
+            pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+          } else {
+              this.deposit(n);
+          }
+        } else {
+        }
+      } catch (error) {
+        console.log(error)
+      }
+
+    },
+    async grtMasterChef () {//连接MasterChef合约需要对应的合约base58信息
+      this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
+      console.log(this.MasterChefContract)
+      if (this.MasterChefContract) {
+        await this.getMasterChefContract();
+      }
+    },
+    async getContracts (n) { // 查询对应合约余额
+      try {
+        this.getContract = await window.tronWeb.contract().at(n);
+        let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
+        console.log(balanceOf);
+        this.total.decimals = await this.getContract.decimals().call(); // 精度
+        let res = await this.toDecimal(balanceOf._hex);
+        console.log(res);
+        this.total.balanceOf = res == 0 ? 0 : Math.pow(res, -this.total.decimals);
+      } catch (error) {
+        console.log('getContracts==', error)
+      }
+    },
+    async showModels (index) { // 弹框
+      this.poolIndex = index;
+      await this.getContracts(this.poolList[this.poolIndex].lpToken);
+      await this.tokenPerBlock();
+      let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
+      this.showModel = true;
+      this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
+
+      this.pendingTokens();
+    },
+    async updata () { // 提现 抵押 更新 余额  抵押数
+      try {
+        let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
+        let res = await this.toDecimal(balanceOf._hex);
+        this.total.balanceOf = Math.pow(res, -this.total.decimals);
+        let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
+        this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getMasterChefContract () {//1.获取PoolInfo[] 返回列表一个数组，数组里的信息包括：lptoken的地址
+      let that = this
+      try {
+        let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
+        this.poolLength = await this.toDecimal(leng); // 16进制转10进制
+        console.log(this.poolLength);
+        let arry = [];
+        for (let index = 0; index < this.poolLength; index++) {
+          let res = await that.MasterChefContract["poolInfo"](index).call();
+          console.log(res);
+          arry.push(res);
+        }
+        this.poolList = arry;
+
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async pendingTokens () {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
+      let penaccount = await this.MasterChefContract.pendingToken(this.poolIndex, window.tronWeb.defaultAddress.base58).call();
+      let pre = await this.toDecimal(penaccount);
+      this.total.uniswaplp = pre;
+    },
+    async deposit (n) { // 质押  
+      // （1）PoolInfo[]数组的序号
+      // （2）质押的数量,为0的时候只领取奖励，不进行质押
+      //  let c = Math.pow(n,this.total.decimals);
+      let data = {  // 使用send来执行non-pure或modify智能合约方法，这些方法确实修改了区块链，消耗资源（bandwidth 和 energy）并且还广播到网络。
+        // feeLimit:100000000,  //调用合约方法消耗最大数量的SUN。上限是 1000 TRX。(1TRX = 1,000,000SUN)
+        // callValue:window.tronWeb.toSun(that.trxNum), // 本次调用往合约转账的SUN。
+        shouldPollResponse: true, // 如果设置为 TRUE，则会等到在 Solidity 节点上确认事务之后再返回结果。
+        // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
+        // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
+      };
+      let num = await this.MasterChefContract['deposit'](this.poolIndex, n).send(data);
+      if (num) {
+        this.updata();
+        console.log(num);
+      }
+    },
+    async withdraw (x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
+      let n = x||this.total.shareToal || 0;
+      debugger;
+      let num = await this.MasterChefContract.withdraw(this.poolIndex, n).send({
+        shouldPollResponse: true
+      });
+      if (num) {
+        this.updata();
+        console.log(num);
+      }
+    },
+    async tokenPerBlock () { // 转换 数值 
+      this.total.farmTotal = await this.toDecimal(this.poolList[this.poolIndex].perBlockToken._hex);   // 总数
+      // this.total.shareToal = await this.toDecimal(this.poolList[this.poolIndex].accFoxPerShare._hex);  //抵押数量
+    },
+    async toDecimal (n) { // 16进制转10进制
+      try {
+        let num = await window.tronWeb.toDecimal(n);
+        return num;
+      } catch (error) {
+        console.log(error);
+        return 0;
+      }
+
     }
-  },
-}
-// 2. deposit用来质押，需要传入的参数
-// （1）PoolInfo[]数组的序号
-// （2）质押的数量,为0的时候只领取奖励，不进行质押
 
-// 3. withdraw用来提现，需要传入的参数
- 
-// （1）PoolInfo[]数组的序号
-// （2）提现的数量
+  }
+  // 1. 初始化tronweb
+  // 2. 链接对应的合约地址
+  /// 4 授权 才能  抵押或者 提现
+  // 2. deposit用来质押，需要传入的参数
+  // （1）PoolInfo[]数组的序号
+  // （2）质押的数量,为0的时候只领取奖励，不进行质押           
 
-// 4. pendingToken 计算用户的收益有多少
-// （1）PoolInfo[]数组的序号
-// （2）用户的地址
+  // 3. withdraw用来提现，需要传入的参数
+  // （1）PoolInfo[]数组的序号
+  // （2）提现的数量
 
-// (5).计算APY
-
-
-//  0:"lpToken: TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C"
-//  1:"allocPoint: 1"
-//  2:"lastRewardBlock: 9,925,699"
-//  3:"accFoxPerShare: 0"
-//  4:"perBlockToken: 1,950,000,000,000,000,000"
+  // 4. pendingToken 计算用户的收益有多少
+  // （1）PoolInfo[]数组的序号
+  // （2）用户的地址
+  // 收益率  总数/余额/ 价格
+  //  0:"lpToken: TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C"   UNISWAP_LP
+  //  1:"allocPoint: 1"    占比
+  //  2:"lastRewardBlock: 9,925,699" 
+  //  3:"accFoxPerShare: 0"    抵押数量
+  //  4:"perBlockToken: 1,950,000,000,000,000,000"    资金池总数
 }
 </script>
 
 <style lang="scss" scoped>
+.glbale_pd {
+  padding-bottom: 220px;
+}
 .stake {
   max-width: 1024px;
   margin: 0 auto;
   color: #0f1730;
   padding-bottom: 70px;
-  .content_top{
-      margin-top: 20px;
+  .content_top {
+    margin-top: 20px;
   }
-  .whe_img{
-      vertical-align: bottom;
+  .whe_img {
+    vertical-align: bottom;
   }
   .conted_btn {
     width: 320px;
@@ -215,7 +303,7 @@ created() {
     font-size: 18px;
     color: #878b97;
     line-height: 56px;
-    margin-left: 109px;
+    margin-right: 16px;
   }
 }
 .stake_apy {
@@ -241,8 +329,11 @@ created() {
 }
 
 ul {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
+  gap: 32px;
+  // display: flex;
+  // justify-content: space-between;
   flex-wrap: wrap;
   margin-top: 40px;
   li {
@@ -250,7 +341,6 @@ ul {
     background: #ffffff;
     border-radius: 16px;
     padding: 37px 32px;
-    margin-bottom: 32px;
     .content_zise {
       font-size: 20px;
       font-family: Arial-BoldMT, Arial;

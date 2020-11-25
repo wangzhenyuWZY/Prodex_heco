@@ -31,7 +31,7 @@ import willRecevive from './willRecevive';
 import addfrombox from './addfrombox';
 import connectbox from './Connectbox'
 //import liquidity from './liquidity'
-// import selctoken from './selctToken';
+//import selctoken from './selctToken';
 import createpair from './createpair';
 
 

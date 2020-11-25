@@ -13,6 +13,14 @@
         <span class="bpb">Transactions (24H): <samp class="bpb2">{{173.444}}</samp></span>
         <span class="bpc">Pairs:<samp class="bpc3">{{ 19.162}}</samp></span>
       </div>
+      <div class="c-mian">
+        <div class="mian-box1">
+          <chart/>
+        </div>
+        <div class="mian-box2">
+         <chart2 /> 
+        </div>
+      </div>
 
 
     </div>
@@ -23,7 +31,6 @@
   <div class="table">
     <el-table
       :data="tableData"
-      stripe
       header-cell-class-name="adddd"
       header-row-class-name="tabe_tr"
       :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
@@ -124,7 +131,7 @@
      </el-pagination>
       </div>
  </div>
- <div class="c-box2">
+ <div class="c-box2" style="margin-bottom: 120px">
   <div class="b2-top">
 <samp class="top1">Transactions</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
   </div>
@@ -182,7 +189,11 @@
 </template>
 
 <script>
+import chart from './chart.vue'
+import chart2 from './chart2.vue'
+
  export default {
+  components: { chart, chart2 },
     data() {
       return {
         tableData: [{
@@ -266,6 +277,7 @@
   }
 </script>
 <style  lang="scss" scoped>
+
 .c-top{
   margin: 0 auto;
   overflow: hidden;
@@ -273,10 +285,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
 }
 .c-mp{
-  width: 304px;
+  margin-top: 40px;
   height: 27px;
   font-size: 24px;
   font-family: Arial-BoldItalicMT, Arial;
@@ -301,7 +312,6 @@
       line-height: 21px;
       margin-top: 14px;
       margin-left: 280px;
-
   }
   
 }
@@ -329,6 +339,12 @@ margin-top: 40px;
     line-height: 23px;
   }
 
+}
+.mian-box1,.mian-box2{
+  width: 960px;
+  height: 360px;
+  border: 1px #FFE5EBF2 solid;
+  margin: 44px auto;
 }
 }
 .c-box2{
@@ -373,7 +389,6 @@ margin-top: 40px;
     height: 20px;
     font-size: 18px;
     font-family: ArialMT;
-   
     } 
   }
   }
@@ -383,7 +398,9 @@ margin-top: 40px;
     margin-top: 33px;
   }
 .table{
+    
     height: 760px;
+    background: #ffffff;
  
   .tabe_tr{
     /* background-image: linear-gradient(131deg, #FFA61B 0%, #F3330E 100%) ; */
@@ -400,6 +417,12 @@ margin-top: 40px;
 
 </style>
 <style  scoped>
+  >>>.el-table__row.el-table__row--striped{
+     background: #000;
+   }
+  /* >>>.el-table tr{
+    background: #ffffff;
+  } */
   >>>.adddd{
     background-color: #F4F8FB;
   }
