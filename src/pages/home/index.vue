@@ -13,6 +13,11 @@
         <span class="bpb">Transactions (24H): <samp class="bpb2">{{173.444}}</samp></span>
         <span class="bpc">Pairs:<samp class="bpc3">{{ 19.162}}</samp></span>
       </div>
+      <div class="c-mian">
+        <div class="mian-box1"></div>
+        <div class="mian-box2"></div>
+
+      </div>
 
 
     </div>
@@ -124,7 +129,7 @@
      </el-pagination>
       </div>
  </div>
- <div class="c-box2">
+ <div class="c-box2" style="margin-bottom: 120px">
   <div class="b2-top">
 <samp class="top1">Transactions</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
   </div>
@@ -266,6 +271,7 @@
   }
 </script>
 <style  lang="scss" scoped>
+
 .c-top{
   margin: 0 auto;
   overflow: hidden;
@@ -274,9 +280,11 @@
   flex-direction: column;
   align-items: center;
   
+  
 }
 .c-mp{
-  width: 304px;
+  margin-top: 40px;
+  width: 300px;
   height: 27px;
   font-size: 24px;
   font-family: Arial-BoldItalicMT, Arial;
@@ -301,7 +309,6 @@
       line-height: 21px;
       margin-top: 14px;
       margin-left: 280px;
-
   }
   
 }
@@ -329,6 +336,11 @@ margin-top: 40px;
     line-height: 23px;
   }
 
+}
+.mian-box1{
+  width: 960px;
+  height: 360px;
+  border: 1px #FFE5EBF2 solid;
 }
 }
 .c-box2{

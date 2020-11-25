@@ -9,6 +9,7 @@
     "start": "npm run serve"
   },
   "dependencies": {
+    "9cf-chart": "^1.0.20",
     "antd": "^4.8.4",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
