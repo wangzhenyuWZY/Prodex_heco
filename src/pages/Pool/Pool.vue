@@ -2,18 +2,18 @@
   <div class="container">
     <div class="globle_title">Pool</div>
       <!-- <addfrombox/> -->
-      <!-- <connectbox/> -->
+      <connectbox/>
       <!-- <selctoken/> -->
       <!-- <AddLiquidity /> -->
       <!-- <recevive/>
-        <willRecevive/> -->
-              <!-- <liquidity/> -->
-    <!-- <vAlret/> --> 
+      <willRecevive/> -->
+      <!-- <liquidity/> -->
+      <!-- <vAlret/> --> 
       <!-- <router-view></router-view> -->
-    <!-- <liquidity/> -->
-    <!-- <Pool1/> -->
-    <!-- <Pool2/> -->
-    <createpair/>
+      <!-- <liquidity/> -->
+      <!-- <Pool1/> -->
+      <!-- <Pool2/> -->
+      <!-- <createpair/> -->
      
   </div>
 
@@ -31,7 +31,7 @@ import willRecevive from './willRecevive';
 import addfrombox from './addfrombox';
 import connectbox from './Connectbox'
 //import liquidity from './liquidity'
-// import selctoken from './selctToken';
+//import selctoken from './selctToken';
 import createpair from './createpair';
 
 
@@ -43,14 +43,14 @@ export default {
   },
   components: {
     // addfrombox,
-    // connectbox,
+    connectbox,
     // selctoken
     // AddLiquidity,
-      // recevive,
-      //  willRecevive
-    // liquidity
+    // recevive,
+    // willRecevive,
+    // liquidity,
     // vAlret
-    createpair
+    // createpair
   },    
 
   created () {

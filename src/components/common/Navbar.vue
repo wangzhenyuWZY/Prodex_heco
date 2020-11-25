@@ -182,6 +182,7 @@ export default {
 .logo {
   float: left;
   width: 35px;
+  height: 35px;
   margin-left: 33px;
 }
 .logo img {
@@ -206,7 +207,7 @@ export default {
   transition: transform 0.6s;
 }
 .nav-header span {
-  font-size: 22px;
+  font-size: 20px;
   padding: 0 26px;
   cursor: pointer;
   /* color: #B7BFC8; */
