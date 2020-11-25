@@ -38,7 +38,7 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect 
-            @click="showSelect"
+            @click="showSelect(0)"
             :lable='false'
             :imgUrl="token1.img"
                        :text="token1.name" />
@@ -59,6 +59,7 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect :lable='false'
+                        @click="showSelect(1)"
                        :imgUrl="token2.img"
                        :showSelect="false"
                        :text="token2.name" />
@@ -192,17 +193,34 @@ export default {
             if(res){
               that.bPoolContract = res
               approved(that.token1.address,res).then(()=>{
-                that.bindCoin(that.token1.address,that.firstTokenNum,that.firstTokenWeight)
+                that.bindCoin(that.token1.address,that.firstTokenNum,that.firstTokenWeight).then(()=>{
+                  approved(that.token2.address,res).then(()=>{
+                    that.bindCoin(that.token2.address,that.secondTokenNum,that.secondTokenWeight).then(()=>{
+                      this.finalize(res)
+                    })
+                  })
+                })
               })
-              approved(that.token2.address,res).then(()=>{
-                that.bindCoin(that.token2.address,that.secondTokenNum,that.secondTokenWeight)
-              })
+              
             }
           }
         }
         catch (error) {
           console.log(error);
         }
+    },
+    async finalize(address){
+      let that = this
+      var functionSelector = 'finalize()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(address,functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
     },
     async bindCoin(address,balance,weight){//绑定币种
       let that = this
@@ -215,11 +233,16 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              alert('success');
-          });
-      }) 
+      let signedTransaction = await window.tronWeb.trx.sign(transaction.transaction) 
+      let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
+      if(res){
+        alert('success');
+      }
+      // window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+      //     window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+      //         alert('success');
+      //     });
+      // }) 
     },
     async unBindCoin(){//解除绑定
       let that = this

@@ -143,12 +143,28 @@ export default {
     }
   },
   components: {
-    // vButton: vbutton,
     container,
-    // frominput,
-    // vfromInput: fromInput,
-    // setselect
-
+  },
+  created(){
+    this.init()
+  },
+  methods:{
+    init () {//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.getBalance()
+      })
+    },
+    async getBalance(){
+      var functionSelector = 'balanceOf(address)';
+      var parameter = [
+        {type: 'address', value: 'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9'}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',functionSelector,{}, parameter);
+      if(transaction){
+        console.log(transaction)
+      }
+    }
   }
 }
 </script>
