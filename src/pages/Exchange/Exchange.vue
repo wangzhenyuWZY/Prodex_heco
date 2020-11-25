@@ -6,11 +6,11 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="From"
-                       v-model="value1"></frominput>
+                       v-model="token1Num"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :lable='false'
-                       text="深圳" />
+            <setselect  :showSelect="false" :imgUrl="token1.img" item='0' :balance="token1.balance"
+                     :text="token1.name" @click="showSelect(0)" />           
           </div>
         </div>
 
@@ -20,13 +20,11 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
-                       v-model="value3"></frominput>
+                       v-model="token2Num"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :lable='false'
-                        :attrsrc="wenicon"
-                       :showSelect="login"
-                       text="深2圳" />
+            <setselect :showSelect="false" :imgUrl="token2.img" item='1' :balance="token2.balance"
+                     :text="token2.name" @click="showSelect(1)"  />
           </div>
         </div>
         <div class="Price_text"   v-show="login"> 
@@ -37,7 +35,7 @@
                <span> DAI </span> 
                <img src="@/assets/img/icon_slect.png" alt=""></div>
         <div class="whe" :class="login?'login_text':'outlogin'">
-          <el-button class="from_botton"> <img class="whe_img"
+          <el-button class="from_botton" @click="doswap"> <img class="whe_img"
                 v-show="!login"
                  src="@/assets/img/icon_my_wallet.svg"
                  alt=""> {{login?'Swap':'Connect to a wallet'}}</el-button>
@@ -76,30 +74,122 @@
     </div>
     </container>
     <change v-if="false"/>
+    <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
   </div>
 </template>
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
+import selctoken from '../Pool/selctToken';
+import tokenData from '../../utils/token'
+import {approved,decimals,getConfirmedTransaction} from '../../utils/tronwebFn'
 export default {
   data () {
     return {
-      test1: '',
-      value1: '',
-      value2: '',
-      value3: '',
-      value4: 0,
-      login:false,
-      wenicon: require('@/assets/img/icon_instructions.svg')
+      token1:{},
+      token2:{},
+      token1Num:null,
+      token2Num:null,
+      login:true,
+      isSelect:false,
+      item:0,
+      pairAddress:'',
+      decimals:18,
+      token1Balance:0,
+      token2Balance:0
     }
   },
   components: {
     container,
     frominput,
     setselect,
-    change
+    change,
+    selctoken
+  },
+  created(){
 
+  },
+  methods:{
+    showSelect(index){
+      this.isSelect = true
+      this.item = index
+    },
+    changeCoin(token){
+      let that = this
+      this.isSelect = false
+      token.item==0?this.token1 = token:this.token2 = token 
+      that.getBalance(token)
+    },
+    async getBalance(token){//获取余额
+      let that = this
+      let tokenContract = await window.tronWeb.contract().at(token.address)
+      let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
+      if(token){
+        let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+        token.item==0?that.token1.balance=balance:that.token2.balance=balance
+        decimals(token.address).then((res)=>{
+          token.item==0?that.token1.decimals=res:that.token2.decimals=res
+        })
+        if(this.token1.address && this.token2.address){
+          this.getPairAddress()
+        }
+      }
+    },
+    async getPairAddress(){
+      let pairname = this.token1.name+'/'+this.token2.name
+      let pairname1 = this.token2.name+'/'+this.token1.name
+      let pair = tokenData.pairList.filter((item)=>{
+        return item.pair==pairname.toUpperCase() || item.pair==pairname1.toUpperCase()
+      })
+      if(pair&&pair.length>0){
+        this.pairAddress = pair[0].address
+        this.decimals = pair[0].decimals
+        approved(this.token1.address,pair[0].address)
+        this.getBalanceInPool(pair[0].address,this.token1.address).then((res)=>{
+          this.token1Balance = res
+        })
+        this.getBalanceInPool(pair[0].address,this.token2.address).then((res)=>{
+          this.token2Balance = res
+        })
+      }
+    },
+    getBalanceInPool(pairAddress,coinAddress){
+      let that = this
+      return new Promise(function (resolve, reject) {
+        var functionSelector = 'getBalance(address)';
+        var parameter = [
+          {type: 'address', value: coinAddress}
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(pairAddress,functionSelector,{}, parameter).then((transaction)=>{
+          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.token1.decimals)
+          resolve(tokenBalanceInPool);
+        })
+      })
+    },
+    async doswap(){
+      let that = this
+      if(that.token1Num>that.token1Balance){
+        that.$layer.msg('兑换额不能大于流动性池余额')
+        return
+      }
+      var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
+      var parameter = [
+        {type:'address',value:that.token1.address},
+        {type:'uint256',value:that.token1Num*Math.pow(10,that.token1.decimals)},
+        {type:'address',value:that.token2.address},
+        {type:'uint256',value:0},
+        {type:'uint256',value:'1000000000000000000000000'}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              getConfirmedTransaction(res.txid)
+          });
+      }) 
+    }
   }
 }
 </script>

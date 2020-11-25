@@ -53,5 +53,23 @@ const decimals = (address) => {
         }
     })
 }
-export {approved,decimals}
+const getConfirmedTransaction = (id) => {
+    return new Promise(function (resolve, reject) {
+        try {
+            var interval = window.setInterval(()=>{
+                window.tronWeb.trx.getTransactionInfo(id).then((res)=>{
+                    if(res.contractResult){
+                        clearInterval(interval)
+                        console.log(res)
+                        resolve(res);
+                    }
+                })
+            },2000)
+            
+        } catch (error) {
+            console.log(error);
+        }
+    })
+}
+export {approved,decimals,getConfirmedTransaction}
 export default initTronWeb;

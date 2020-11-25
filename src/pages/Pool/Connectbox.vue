@@ -134,7 +134,8 @@ export default {
       item:1,
       pairAddress:null,
       justPrice:0,
-      reversePrice:0
+      reversePrice:0,
+      decimals:18
     }
   },
   components: {
@@ -154,13 +155,17 @@ export default {
         
       })
     },
-    getPairAddress(){
+    async getPairAddress(){
       let pairname = this.token1.name+'/'+this.token2.name
       let pair = tokenData.pairList.filter((item)=>{
         return item.pair==pairname.toUpperCase()
       })
       if(pair){
         this.pairAddress = pair[0].address
+        var fun = 'decimals()';
+        var par = []
+        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(pair[0].address,fun,{}, par);
+        this.decimals = parseInt(res.constant_result[0],16)
         this.getSpotPrice(this.token1.address,this.token2.address,'justPrice')
         this.getSpotPrice(this.token2.address,this.token1.address,'reversePrice')
       }
@@ -229,7 +234,7 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pairAddress,functionSelector,{}, parameter);
       if(transaction){
-        name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16):this.reversePrice=parseInt(transaction.constant_result[0],16)
+        name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16)/this.decimals:this.reversePrice=parseInt(transaction.constant_result[0],16)/this.decimals
       }
     },
     async checkBind(){//检查是否绑定

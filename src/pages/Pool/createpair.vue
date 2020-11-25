@@ -38,8 +38,8 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect 
+            :balance="token1.balance"
             @click="showSelect(0)"
-            :lable='false'
             :imgUrl="token1.img"
                        :text="token1.name" />
           </div>
@@ -58,8 +58,8 @@
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :lable='false'
-                        @click="showSelect(1)"
+            <setselect @click="showSelect(1)"
+                        :balance="token2.balance"
                        :imgUrl="token2.img"
                        :showSelect="false"
                        :text="token2.name" />
@@ -136,7 +136,7 @@
 import { container,frominput,setselect } from '../../components/index'
 import selctoken from './selctToken';
 import ipConfig from '../../config/ipconfig.bak'
-import {approved} from '../../utils/tronwebFn'
+import {approved,decimals,getConfirmedTransaction} from '../../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -145,14 +145,16 @@ export default {
       isSelect:false,
       item:1,
       login:false,
-      firstTokenNum:'10000001',
-      firstTokenWeight:'1000000000000000001',
-      secondTokenNum:'10000001',
-      secondTokenWeight:'1000000000000000001', 
+      firstTokenNum:'',
+      firstTokenWeight:'',
+      secondTokenNum:'',
+      secondTokenWeight:'', 
       value3:'',
       BFactoryContract:null,
       firstCoinContract:null,
-      bPoolContract:null
+      bPoolContract:null,
+      token1IsBind:false,
+      token2IsBind:false,
     }
   },
   components: {
@@ -175,6 +177,7 @@ export default {
         that.getBFactoryContract()
         // that.checkBind(that.bPoolContract)
         // that.unBindCoin();
+        // that.finalize('TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9')
       })
     },
     async getBFactoryContract(){//链接BFactory合约
@@ -193,15 +196,15 @@ export default {
             if(res){
               that.bPoolContract = res
               approved(that.token1.address,res).then(()=>{
-                that.bindCoin(that.token1.address,that.firstTokenNum,that.firstTokenWeight).then(()=>{
-                  approved(that.token2.address,res).then(()=>{
-                    that.bindCoin(that.token2.address,that.secondTokenNum,that.secondTokenWeight).then(()=>{
-                      this.finalize(res)
-                    })
-                  })
-                })
+                let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
+                let weight = window.tronWeb.toBigNumber(that.firstTokenWeight*Math.pow(10,18)).toString(10)
+                that.bindCoin(that.token1.address,number,weight,'token1IsBind')
               })
-              
+              approved(that.token2.address,res).then(()=>{
+                let number = window.tronWeb.toBigNumber(that.secondTokenNum*Math.pow(10, that.token2.decimals)).toString(10)
+                let weight = window.tronWeb.toBigNumber(that.secondTokenWeight*Math.pow(10,18)).toString(10)
+                that.bindCoin(that.token2.address,number,weight,'token2IsBind')
+              })
             }
           }
         }
@@ -213,7 +216,7 @@ export default {
       let that = this
       var functionSelector = 'finalize()';
       var parameter = []
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(address,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(address,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -222,7 +225,7 @@ export default {
           });
       }) 
     },
-    async bindCoin(address,balance,weight){//绑定币种
+    async bindCoin(address,balance,weight,name){//绑定币种
       let that = this
       var functionSelector = 'bind(address,uint256,uint256)';
       var parameter = [
@@ -230,13 +233,22 @@ export default {
           {type: 'uint256', value: balance},
           {type: 'uint256', value: weight},
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       let signedTransaction = await window.tronWeb.trx.sign(transaction.transaction) 
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
       if(res){
-        alert('success');
+        getConfirmedTransaction(res.txid).then((result)=>{
+          if(name=='token1IsBind')
+            that.token1IsBind = true
+          if(name=='token2IsBind')
+            that.token2IsBind = true
+          if(that.token1IsBind && that.token2IsBind){
+            console.log(1111)
+            that.finalize(that.bPoolContract)
+          }  
+        })
       }
       // window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
       //     window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
@@ -266,9 +278,13 @@ export default {
       console.log(window.tronWeb.toDecimal(transaction.constant_result[0]))
     },
     changeCoin(token){
+      let that = this
       this.isSelect = false
-      token.item==0?this.token1 = token:this.token2 = token  
-      this.getBalance(token)
+      decimals(token.address).then((res)=>{
+        token.decimals = res
+        token.item==0?this.token1 = token:this.token2 = token 
+        that.getBalance(token)
+      })
       if(this.token1.address && this.token2.address){
         // this.getSpotPrice(this.token1.address,this.token2.address)
       }
@@ -278,7 +294,7 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if(tokenBalance){
-        let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+        let balance = parseFloat(tokenBalance,16)/Math.pow(10,token.decimals)
         token.item==0?that.token1.balance=balance:that.token2.balance=balance
       }
     },

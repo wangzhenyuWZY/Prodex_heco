@@ -26,9 +26,8 @@ export default new VueRouter({
     { path: '/exchange', component: Exchange,},
     { path: '/pool', component: Pool,
       children:[
-
         {
-          path:'liquidity',
+          path:'/',
           component:liquidity
         },
       

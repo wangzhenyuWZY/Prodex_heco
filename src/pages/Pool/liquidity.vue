@@ -16,10 +16,14 @@
         <div class="pool-butt">
           <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt1">
-            <el-button class="from_botton red_button bottun_hei">Create a pair</el-button>
+            <router-link to="/pool/pairs">
+              <el-button class="from_botton red_button bottun_hei">Create a pair</el-button>
+            </router-link>  
           </div>
           <div class="pool-butt2 ">
-            <el-button class="from_botton bottun_hei">Add Liquidity</el-button>
+            <router-link to="/pool/connectpool">
+              <el-button class="from_botton bottun_hei">Add Liquidity</el-button>
+            </router-link>
           </div>
         </div>
         <div class="pool_boxbg" v-show="false">

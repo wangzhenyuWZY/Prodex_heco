@@ -21,18 +21,18 @@
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">
-            <div class="between">{{value4}}%</div>
+            <div class="between">{{percentage}}%</div>
             <div class="demonstration">
-              <el-slider :show-tooltip="false"
-                         v-model="value4"
+              <el-slider :show-tooltip="false" :max="maxBalance"
+                         v-model="slidenum" @change="changeSlide"
                          ></el-slider>
             </div>
           </div>
           <ul class="setSlider">
-            <li>25%</li>
-            <li>50%</li>
-            <li>75%</li>
-            <li>MAX</li>
+            <li @click="slidenum=maxBalance*0.25;percentage=25">25%</li>
+            <li @click="slidenum=maxBalance*0.5;percentage=50">50%</li>
+            <li @click="slidenum=maxBalance*0.75;percentage=75">75%</li>
+            <li @click="slidenum=maxBalance;percentage=100">MAX</li>
           </ul>
         </div>
       </div>
@@ -101,14 +101,14 @@
               </div>
             </div>
             <div class="weth">
-              <el-button class="weth_btn">Receive WETH</el-button>
+              <el-button class="weth_btn" @click="exitPool">Receive WETH</el-button>
             </div>
           </div>
         </div>
-        <div class="mount_title">
+        <div class="mount_title" hidden>
           Price
         </div>
-        <div class="box_sizes box_Price">
+        <div class="box_sizes box_Price" hidden>
           <div class="provider Receive">
             <div class="">
               <div class="received ">
@@ -121,7 +121,7 @@
           </div>
         </div>
         <div class="Approve_btn clearfix">
-              <el-button class="Approve1" >Approve</el-button>
+              <el-button class="Approve1" @click="approveLpToken">Approve</el-button>
               <el-button class="Approve1 Approve2" >Enter an amount</el-button>
         </div>
     </div>
@@ -130,7 +130,7 @@
 
 <script>
 import { container ,frominput,setselect} from '../../components/index'
-
+import {decimals} from '../../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -139,7 +139,11 @@ export default {
       value2: '',
       value3: '',
       value4: 0,
-
+      maxBalance:0,
+      slidenum:0,
+      percentage:0,
+      decimals:0,
+      pairAddress:'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',
     }
   },
   components: {
@@ -156,14 +160,62 @@ export default {
       })
     },
     async getBalance(){
+      let that = this
       var functionSelector = 'balanceOf(address)';
       var parameter = [
-        {type: 'address', value: 'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9'}
+        {type: 'address', value: window.tronWeb.defaultAddress.base58}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pairAddress,functionSelector,{}, parameter);
       if(transaction){
-        console.log(transaction)
+        var fun = 'decimals()';
+        var par = []
+        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pairAddress,fun,{}, par);
+        that.decimals = parseInt(res.constant_result[0],16)
+        that.maxBalance = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.decimals)
+        console.log(parseInt(transaction.constant_result[0],16))
       }
+    },
+    async approveLpToken(){
+      let that = this
+      var functionSelector = 'approve(address,uint256)';
+      var parameter = [
+        {type:'address',value:that.pairAddress},
+        {type:'uint256',value:'100000000000000000000'}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{shouldPollResponse:true}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    async exitPool(){
+      let that = this
+      var functionSelector = 'exitPool(uint256,uint256[])';
+      var parameter = [
+          {type: 'uint256', value: that.slidenum*Math.pow(10,that.decimals)+''},
+          {type: 'uint256[]', value:[0,0] }
+      ]
+      console.log(parameter)
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    changeSlide(){
+      let percentage = parseInt(this.slidenum/this.maxBalance*100)
+      if(percentage){
+        this.percentage = percentage
+      }else{
+        this.percentage = 0
+      }
+      console.log(this.slidenum)
     }
   }
 }

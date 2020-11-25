@@ -91,7 +91,7 @@ import tokenData from '../../utils/token'
         this.$emit('closeAlert')
       },
       selectClick(e,index) {
-        e.item = index
+        e.item = this.item
         this.$emit('change',e)
       },
     }
