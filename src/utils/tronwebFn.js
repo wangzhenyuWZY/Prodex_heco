@@ -30,11 +30,12 @@ const approved = (coinAddress,contractAddress) => {
                 Contract["approve"](contractAddress,0xe8d4a51000).send({shouldPollResponse:true}).then((res)=>{
                     if(res){
                         alert('授权成功')
-                        resolve();
+                        resolve(1);
                     }
                 })
             })
         } catch (error) {
+            reject(0)
             console.log(error);
         }
     })

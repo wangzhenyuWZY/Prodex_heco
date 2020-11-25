@@ -57,7 +57,6 @@
       default: false
     },
     balance:{
-       type:[String,Number],
        default:'0'
     }
   },

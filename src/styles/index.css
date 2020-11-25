@@ -45,6 +45,14 @@ table {
  border-collapse: collapse;
  border-spacing: 0;
 }
+input[type=number] {
+    -moz-appearance:textfield;
+}
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 input,button{
     outline: none;
     border: none;
@@ -71,6 +79,15 @@ img{
     border: none;
     vertical-align: middle;
 }
+.from_botton:hover ,.from_botton:focus{
+    color: #fff ;
+}
+.from_botton.is-disabled, .from_botton.is-disabled:focus, .from_botton.is-disabled:hover{
+    background: #F4F5FA;
+
+    color: #878B97;
+}
+
 .black_botton{
     border: 1px solid #0F1730;
     background: none;
@@ -102,9 +119,7 @@ img{
 }
 
 
-.from_botton:hover ,.from_botton:focus{
-    color: #fff ;
-}
+
 .nav_btn:hover{
     color:#FF5D37;
     background: none;

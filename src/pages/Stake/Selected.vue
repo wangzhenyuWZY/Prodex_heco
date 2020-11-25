@@ -5,7 +5,7 @@
       <div class="title"
            slot="title">
         <div class="lt_box">
-          <span class="icon_box">
+          <span class="icon_box" @click="$emit('back')">
             <i class="el-icon-back back_icon"></i>
           </span>
           <span class="content_text">Your Selected Pool</span>
@@ -40,7 +40,7 @@
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
               </div>
-              <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
+              <div class="rg"> <span class="text_color">APR:</span> <span class="ftblod">322.16%</span> </div>
             </div>
           </div>
         </div>
@@ -56,7 +56,7 @@
           <div class="lt">
             <span>Your Unstaked UNISWAP_LP</span>
           </div>
-          <div class="rg ftblod">{{farmtoal.maxamount}}</div>
+          <div class="rg ftblod">{{farmtoal.balanceOf}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
@@ -65,8 +65,8 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btn clearfix">
-          <el-button class="Approve1">Approve</el-button>
-          <el-button class="Approve1 Approve2">Enter an amount</el-button>
+          <el-button class="Approve1" @click="Approve">Approve</el-button>
+          <el-button class="Approve1 Approve2" @click="amount">Enter an amount</el-button>
         </div>
         <div class="ftblod mrge12">Amount</div>
         <div class="box_sizes box_Price">
@@ -76,7 +76,7 @@
                 <div class="lt">
                  <frominput
                     showmax
-                    :balance="farmtoal.maxamount"
+                    :balance="farmtoal.balanceOf"
                     v-model="test1"
                  />
                 </div>
@@ -86,7 +86,7 @@
           </div>
         </div>
          <div class="selt_btn clearfix">
-          <el-button class="Approve1">STAKE</el-button>
+          <el-button class="Approve1" @click="stake">STAKE</el-button>
         </div>
       </div>
     </container>
@@ -99,12 +99,12 @@ import { container, frominput, setselect } from '../../components/index'
 export default {
   props: {
      farmtoal:{
-       type:Object,
        default:{
          farmTotal:0,
         shareToal:0,
         uniswaplp:0,
-        maxamount:0
+        maxamount:0,
+        balanceOf:0
        }
      }
   },
@@ -133,7 +133,17 @@ export default {
     hadelClick (e) {
       console.log('22222')
         console.log(e)
+    },
+    Approve () {
+        this.$emit('Approve')
+    },
+    amount () {
+        this.$emit('amount',this.test1)
+    },
+    stake () {
+      this.$emit('stake',this.test1)
     }
+    
   },
 }
 </script>
@@ -141,7 +151,7 @@ export default {
 <style lang="scss"   scoped>
 .stake_slect {
   color: #0f1730;
-  font-size: 20px;
+  font-size: 18px;
 
   .ctx_1 {
     width: 397px;
