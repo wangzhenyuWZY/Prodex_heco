@@ -23,7 +23,6 @@ const initTronWeb = () => {
     });
 }
 const approved = (coinAddress,contractAddress) => {
-    let that = this
     return new Promise(function (resolve, reject) {
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
@@ -39,5 +38,20 @@ const approved = (coinAddress,contractAddress) => {
         }
     })
 }
-export {approved}
+const decimals = (address) => {
+    return new Promise(function (resolve, reject) {
+        try {
+            window.tronWeb.contract().at(address).then((Contract)=>{
+                Contract["decimals"]().call().then((res)=>{
+                    if(res){
+                        resolve(res);
+                    }
+                })
+            })
+        } catch (error) {
+            console.log(error);
+        }
+    })
+}
+export {approved,decimals}
 export default initTronWeb;

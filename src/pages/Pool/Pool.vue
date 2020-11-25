@@ -2,7 +2,7 @@
   <div class="container">
     <div class="globle_title">Pool</div>
       <!-- <addfrombox/> -->
-      <!-- <connectbox/> -->
+      <connectbox/>
       <!-- <selctoken/> -->
       <!-- <AddLiquidity /> -->
       <!-- <recevive/>
@@ -13,7 +13,7 @@
     <!-- <liquidity/> -->
     <!-- <Pool1/> -->
     <!-- <Pool2/> -->
-    <createpair/>
+    <!-- <createpair/> -->
      
   </div>
 
@@ -43,14 +43,14 @@ export default {
   },
   components: {
     // addfrombox,
-    // connectbox,
+    connectbox,
     // selctoken
     // AddLiquidity,
       // recevive,
-      //  willRecevive
-    // liquidity
+      //  willRecevive,
+    // liquidity,
     // vAlret
-    createpair
+    // createpair
   },    
 
   created () {

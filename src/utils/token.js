@@ -42,10 +42,17 @@ export const pairList = [
         token1:'WTRX',
         token2:'inverst',
         pair:'WTRX/INVERST'
+    },
+    {
+        address:'TRoaUkGQzqnPuEMvNBN2FrciJDLQ7T7mJe',
+        token1:'WTRX',
+        token2:'DAI',
+        pair:'WTRX/DAI'
     }
 ]
 
 const tokenData = {
-    tokenList
+    tokenList,
+    pairList
 }
 export default tokenData
