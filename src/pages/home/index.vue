@@ -31,7 +31,6 @@
   <div class="table">
     <el-table
       :data="tableData"
-      stripe
       header-cell-class-name="adddd"
       header-row-class-name="tabe_tr"
       :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
