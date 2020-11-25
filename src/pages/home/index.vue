@@ -14,9 +14,12 @@
         <span class="bpc">Pairs:<samp class="bpc3">{{ 19.162}}</samp></span>
       </div>
       <div class="c-mian">
-        <div class="mian-box1"></div>
-        <div class="mian-box2"></div>
-
+        <div class="mian-box1">
+          <chart/>
+        </div>
+        <div class="mian-box2">
+         <chart2 /> 
+        </div>
       </div>
 
 
@@ -187,7 +190,11 @@
 </template>
 
 <script>
+import chart from './chart.vue'
+import chart2 from './chart2.vue'
+
  export default {
+  components: { chart, chart2 },
     data() {
       return {
         tableData: [{
@@ -279,8 +286,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  
-  
 }
 .c-mp{
   margin-top: 40px;
@@ -337,10 +342,11 @@ margin-top: 40px;
   }
 
 }
-.mian-box1{
+.mian-box1,.mian-box2{
   width: 960px;
   height: 360px;
   border: 1px #FFE5EBF2 solid;
+  margin: 44px auto;
 }
 }
 .c-box2{
@@ -385,7 +391,6 @@ margin-top: 40px;
     height: 20px;
     font-size: 18px;
     font-family: ArialMT;
-   
     } 
   }
   }
@@ -395,7 +400,9 @@ margin-top: 40px;
     margin-top: 33px;
   }
 .table{
+    
     height: 760px;
+    background: #ffffff;
  
   .tabe_tr{
     /* background-image: linear-gradient(131deg, #FFA61B 0%, #F3330E 100%) ; */
@@ -412,6 +419,12 @@ margin-top: 40px;
 
 </style>
 <style  scoped>
+  >>>.el-table__row.el-table__row--striped{
+     background: #000;
+   }
+  /* >>>.el-table tr{
+    background: #ffffff;
+  } */
   >>>.adddd{
     background-color: #F4F8FB;
   }
