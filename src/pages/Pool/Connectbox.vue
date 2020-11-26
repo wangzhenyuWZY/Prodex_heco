@@ -52,12 +52,12 @@
           <div class="box_title">Prices and pool share</div>
           <ul class="pre_list clearfix">
             <li>
-              <p>{{justPrice?justPrice:'--'}}</p>
-              <p>0XBTC per ETH</p>
+              <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
+              <p>{{token1.name}} per {{token2.name}}</p>
             </li>
             <li>
-              <p>{{reversePrice?reversePrice:'--'}}</p>
-              <p>ETH per 0XBTC</p>
+              <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
+              <p>{{token2.name}} per {{token1.name}}</p>
             </li>
             <li>
               <p>0</p>
@@ -67,8 +67,8 @@
         </div>
       </div>
       <div class="connect_btn clearfix">
-        <div class="whe fl_lt">
-          <el-button class="from_botton">Approve USDT</el-button>
+        <div class="whe fl_lt" v-show="!isApproved">
+          <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
         </div>
         <div class="whe fl_rg">
           <el-button class="from_botton black_botton" @click="joinPool">Supply</el-button>
@@ -129,7 +129,7 @@
 import { container,frominput,setselect } from '../../components/index'
 import selctoken from './selctToken';
 import tokenData from '../../utils/token'
-import {decimals} from '../../utils/tronwebFn'
+import {decimals,allowance,approved} from '../../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -142,7 +142,8 @@ export default {
       pairAddress:null,
       justPrice:0,
       reversePrice:0,
-      decimals:18
+      decimals:18,
+      isApproved:true
     }
   },
   components: {
@@ -159,7 +160,6 @@ export default {
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
         that.checkBind()
-        
       })
     },
     async getPairAddress(){
@@ -202,7 +202,6 @@ export default {
           {type: 'uint256', value: that.token1Num*Math.pow(10, that.token1.decimals)},
           {type: 'uint256', value: Math.pow(10, that.token1.decimals)}
       ]
-      console.log(parameter)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pairAddress,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
@@ -216,10 +215,32 @@ export default {
       let that = this
       this.isSelect = false
       decimals(token.address).then((res)=>{
-        token.decimals = res
-        token.item==0?this.token1 = token:this.token2 = token 
+        that.token.decimals = res
+        if(token.item==0){
+          that.token1 = token
+          allowance(that.token1.address).then((res)=>{
+            if(res){
+              let approveBalance = window.tronWeb.toSun(res._hex)
+              if (approveBalance == 0) {
+                alert('未授权请先授权');
+                that.isApproved = false
+              } else {
+                that.isApproved = true
+              }
+            }
+          })
+        }else{
+          this.token2 = token 
+        }
         that.getBalance(token)
       })
+    },
+    doApprove(){
+      if(this.token1.address && this.token2.address){
+        approved(this.token1.address,this.pairAddress)
+      }else{
+        this.$layer.msg('请选择交易对')
+      }
     },
     async getBalance(token){//获取余额
       let that = this
@@ -241,7 +262,7 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pairAddress,functionSelector,{}, parameter);
       if(transaction){
-        name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16)/this.decimals:this.reversePrice=parseInt(transaction.constant_result[0],16)/this.decimals
+        name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals):this.reversePrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals)
       }
     },
     async checkBind(){//检查是否绑定

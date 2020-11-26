@@ -4,39 +4,39 @@ export const tokenList = [
         address:'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
         img:'111',
         balance:0,
-        decimals:18
+        decimals:6
     },
     { 
-        name:'inverst',
+        name:'INVERST',
         address:'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C',
         img:'',
         balance:0,
-        decimals:18
+        decimals:6
     },
     { 
         name:'DAI',
-        address:'TDFPVQJQnYFZrw1SvxKBsc34i9xiSe73bq',
+        address:'TRdyNcAxCFTDhrw1cWEKdWEX87hS6FFvGe',
         img:'',
         balance:0,
         decimals:18
     },
     { 
         name:'USDT',
-        address:'TBKYAnVJdKWUJLdTYHuy1mmoL9ifYWTSAU',
+        address:'TQKzfGM1F1bvjo2tnQ5Kirqdu2hR8mFWs2',
         img:'',
         balance:0,
-        decimals:18
+        decimals:8
     },
     { 
-        name:'LOM1',
-        address:'TC4cWgq9FvXrM3vgyUdyexQDrbPUD3tpNa',
+        name:'FOX',
+        address:'TE9oQF7Y8tbq5Lqdfr9S47QNXHt7GRcHh4',
         img:'',
         balance:0,
-        decimals:18
+        decimals:12
     },
     { 
-        name:'SPKL',
-        address:'TSdqRcnAaMUQWRy4zRR8Pd3QuJuBKX9W55',
+        name:'WETH',
+        address:'TPkjDBVb3AyCqsnM5AfZ9NA8AtyTiP7sUZ',
         img:'',
         balance:0,
         decimals:18
@@ -44,17 +44,17 @@ export const tokenList = [
 ]
 export const pairList = [
     {
-        address:'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',
+        address:'THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR',
         token1:'WTRX',
-        token2:'inverst',
-        pair:'WTRX/INVERST',
+        token2:'USDT',
+        pair:'WTRX/USDT',
         decimals:18
     },
     {
-        address:'TRoaUkGQzqnPuEMvNBN2FrciJDLQ7T7mJe',
-        token1:'WTRX',
-        token2:'DAI',
-        pair:'WTRX/DAI',
+        address:'TTyQ98bBQWadT4i4rD3MfWp3WQGHizwmFY',
+        token1:'INVERST',
+        token2:'USDT',
+        pair:'INVERST/USDT',
         decimals:18
     }
 ]

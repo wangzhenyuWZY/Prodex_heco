@@ -39,7 +39,7 @@
               <el-button class="from_botton"
                          :loading="btnLoading2"
                          :disabled="btnDisabled2"
-                         @click="allowance">Confim</el-button>
+                         @click="getAllowance">Confim</el-button>
             </div>
           </div>
         </div>
@@ -58,7 +58,7 @@
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-import { approved } from '../../utils/tronwebFn'
+import { approved,allowance } from '../../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -158,11 +158,10 @@ export default {
         console.log(error);
       }
     },
-    async allowance () {//查询授权
+    getAllowance () {//查询授权
       let that = this;
       that.loading2(1);
-      try {
-        let res = await that.wtrxContract["allowance"](window.tronWeb.defaultAddress.base58, ipConfig.wtrxAddress).call()
+      allowance(ipConfig.wtrxAddress).then((res)=>{
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
           if (approveBalance == 0) {
@@ -175,10 +174,7 @@ export default {
         } else {
           that.loading2();
         }
-      } catch (error) {
-        console.log(error);
-        that.loading2();
-      }
+      })
     },
     async changeTrx () {//兑换trx
       let that = this;
