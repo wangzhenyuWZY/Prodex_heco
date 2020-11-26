@@ -290,13 +290,13 @@ export default {
   }
   .ect_title {
     font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     text-align: center;
     margin-top: 32px;
   }
   .text_one {
     font-size: 24px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     line-height: 56px;
   }
   .text_two {
@@ -317,12 +317,12 @@ export default {
   }
   .apy_number {
     color: #0f1730;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     float: right;
   }
   .prizes {
     text-align: center;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     font-weight: normal;
     color: #0f1730;
   }
@@ -343,7 +343,7 @@ ul {
     padding: 37px 32px;
     .content_zise {
       font-size: 20px;
-      font-family: Arial-BoldMT, Arial;
+      font-family: roboto-mediumitalic;
       font-weight: normal;
       vertical-align: middle;
     }
@@ -393,7 +393,7 @@ ul {
       }
       .rg_addres {
         font-size: 18px;
-        font-family: Arial-BoldMT, Arial;
+        font-family: roboto-mediumitalic;
         font-weight: normal;
       }
     }
@@ -404,7 +404,7 @@ ul {
       border: 1px solid #ff5d37;
       text-align: center;
       font-size: 18px;
-      font-family: Arial-BoldMT, Arial;
+      font-family: roboto-mediumitalic;
       font-weight: normal;
       color: #ff5d37;
       margin: 0 auto;

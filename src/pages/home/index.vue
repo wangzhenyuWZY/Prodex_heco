@@ -26,7 +26,10 @@
     </div>
 <div class="c-box2">
   <div class="b2-top">
-<samp class="top1">Top Tokens</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
+<samp class="top1">Top Tokens</samp> 
+<div class="top-inp">
+  <img  class="t-img" src="../../assets/img/sousuo.png" alt="">
+  <input type="text" placeholder="Please enter Top Tokens"></div>
   </div>
   <div class="table">
     <el-table
@@ -79,23 +82,26 @@
  </div>
  <div class="c-box2">
   <div class="b2-top">
-<samp class="top1">Top Pairs</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
-  </div>
+<samp class="top1">Top Tokens</samp> 
+  <div class="top-inp">
+    <img  class="t-img" src="../../assets/img/sousuo.png" alt="">
 
+  <input type="text"  placeholder="Please enter Top Tokens">
+  </div>
+  </div>
   <div class="table">
-      <el-table
-        :data="tableData"
-        stripe
-        header-cell-class-name="adddd"
-        header-row-class-name="tabe_tr"
-        :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-        cell-class-name="dddsadsa"
-        style="width: 100%" >
-        <el-table-column
-          prop="address"
-          label="name"
-          width="200">
-        </el-table-column>
+    <el-table
+      :data="tableData"
+      header-cell-class-name="adddd"
+      header-row-class-name="tabe_tr"
+      :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+      cell-class-name="dddsadsa"
+      style="width: 100%" >
+    <el-table-column
+      prop="address"
+      label="name"
+      width="200">
+    </el-table-column>
     <el-table-column
       prop="assets"
       label="Assets"
@@ -122,6 +128,7 @@
       label="Price change(24hr)">
     </el-table-column>
     </el-table>
+    
       </div>
       <div class="pagin">
         <el-pagination
@@ -139,7 +146,6 @@
   <div class="table">
     <el-table
       :data="tableData"
-      stripe
       header-cell-class-name="adddd"
       header-row-class-name="tabe_tr"
       :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
@@ -179,7 +185,7 @@
       </div>
       <div class="pagin">
         <el-pagination
-        background
+        background="true"
         layout="prev, pager, next"
         :total="100">
      </el-pagination>
@@ -277,6 +283,11 @@ import chart2 from './chart2.vue'
   }
 </script>
 <style  lang="scss" scoped>
+.t-img{
+  width: 24px;
+  height: 24px;
+
+}
 
 .c-top{
   margin: 0 auto;
@@ -290,10 +301,11 @@ import chart2 from './chart2.vue'
   margin-top: 40px;
   height: 27px;
   font-size: 24px;
-  font-family: Arial-BoldItalicMT, Arial;
+  font-family: Roboto-Medium, Roboto;
   font-weight: normal;
   color: #0F1730;
   line-height: 28px;
+  
 
 }
 .c-inp{
@@ -307,7 +319,7 @@ import chart2 from './chart2.vue'
       width: 262px;
       height: 20px;
       font-size: 18px;
-      font-family: ArialMT;
+      font-family: roboto-regular;
       color: #A6AEB7;
       line-height: 21px;
       margin-top: 14px;
@@ -333,7 +345,7 @@ margin-top: 40px;
     margin: 32px 24px;
     height: 22px;
     font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     font-weight: normal;
     color: #0F1730;
     line-height: 23px;
@@ -365,7 +377,7 @@ margin-top: 40px;
     width: 110px;
     height: 22px;
     font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     font-weight: normal;
     color: #0F1730;
     line-height: 23px;
@@ -388,7 +400,7 @@ margin-top: 40px;
     width: 197px;
     height: 20px;
     font-size: 18px;
-    font-family: ArialMT;
+    font-family: roboto-regular;
     } 
   }
   }
@@ -410,23 +422,34 @@ margin-top: 40px;
 
 .el-table tr{
   background-color: inherit;
+
   }
 
 }
 
+::v-deep {
+  .el-pagination.is-background .el-pager li:not(.disabled) {
+    background-color: #f4f5fa;   // 进行修改未选中背景和字体
+    color: #878B97;
+  }
+  .el-pagination.is-background .el-pager li:not(.disabled).active {
+    background-color:#0F1730;   // 进行修改选中项背景和字体
+    color: #fff;
+  }
+}
+
+
 
 </style>
 <style  scoped>
-  >>>.el-table__row.el-table__row--striped{
-     background: #000;
-   }
-  /* >>>.el-table tr{
-    background: #ffffff;
-  } */
+
+
   >>>.adddd{
     background-color: #F4F8FB;
+    margin-left: 41px;
   }
   >>>.el-table__row{
+   
     height: 72px;
     background: #ffffff;
   }

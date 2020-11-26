@@ -286,7 +286,8 @@ export default {
   padding-left: 50px;
   margin-top: 12px;
   font-size: 16px;
-  font-family: ArialMT;
+  font-family: roboto-regular;
+
   color: #878b97;
   line-height: 18px;
   width: 320px;
@@ -325,7 +326,7 @@ export default {
 .wtrx-right input {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: ArialMT;
+  font-family: roboto-regular;
   color: #878b97;
   line-height: 18px;
   margin-top: 12px;

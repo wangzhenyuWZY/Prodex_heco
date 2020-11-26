@@ -239,7 +239,7 @@ export default {
 .from_contentIcon {
   height: 36px;
   font-size: 32px;
-  font-family: ArialMT;
+  font-family: roboto-regular;
 color: #0F1730;
   text-align: center;
 }

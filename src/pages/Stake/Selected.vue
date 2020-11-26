@@ -170,7 +170,7 @@ export default {
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: ArialMT;
+    font-family: roboto-regular;
     color: #0f1730;
     text-align: center;
   }
@@ -221,7 +221,7 @@ export default {
     justify-content: space-between;
     .content_text {
       font-size: 20px;
-      font-family: Arial-BoldMT, Arial;
+      font-family: roboto-mediumitalic;
       font-weight: normal;
       color: #0f1730;
       margin-left: 12px;

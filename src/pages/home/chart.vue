@@ -3,6 +3,7 @@
     
     <div class="c-top"> 
       <samp class="cp">Liquidity: <samp class="cp1"> $2.92b<samp class="cp2">-15.84%</samp></samp></samp>
+      <samp class="cp-img"><img src="../../assets/img/icon_y.png" alt=""></samp>
     </div>
     
       <div id="myChart" :style="{width: '960px', height: '300px'}"></div>
@@ -58,6 +59,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cp-img{
+  float: right;
+  margin-right: 24px;
+  
+}
 .c-top{
   margin-top: 16px;
 }
@@ -65,7 +71,7 @@ export default {
   width: 72px;
   height: 20px;
   font-size: 18px;
-  font-family: ArialMT;
+  font-family: roboto-regular;
   color: #0F1730;
   line-height: 21px;
   margin: 0 32px;
@@ -74,7 +80,7 @@ export default {
     width: 63px;
     height: 22px;
     font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     font-weight: normal;
     color: #0F1730;
     line-height: 23px;
@@ -83,7 +89,7 @@ export default {
       width: 68px;
       height: 20px;
       font-size: 18px;
-      font-family: ArialMT;
+      font-family: roboto-regular;
       color: #F75C40;
       line-height: 21px;
 
