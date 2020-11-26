@@ -137,7 +137,6 @@
       </div>
       <div class="pagin">
         <el-pagination
-        background
         layout="prev, pager, next"
         :total="100">
      </el-pagination>
@@ -197,7 +196,6 @@
       </div>
       <div class="pagin">
         <el-pagination
-        background="true"
         layout="prev, pager, next"
         :total="100">
      </el-pagination>

@@ -89,7 +89,8 @@ export default {
     try {
       this.$nextTick(() => {
         this.$refs.header.children.forEach((element) => {
-          this.childrenNode.push(element.offsetWidth);
+            let str = element.getBoundingClientRect();
+          this.childrenNode.push(element.offsetWidth -2);
         });
         let hash = location.hash;
         let str = hash.split("#")[1];
@@ -201,7 +202,6 @@ export default {
   width: 100%;
 }
 .nav-header {
-  flex: 1;
   color: #495169;
   position: relative;
 }
@@ -220,7 +220,7 @@ export default {
 }
 .nav-header span {
   font-size: 20px;
-  padding: 0 26px;
+  padding: 0 24px;
   cursor: pointer;
   /* color: #B7BFC8; */
   /* text-align: center; */

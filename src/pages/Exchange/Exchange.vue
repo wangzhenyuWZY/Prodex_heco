@@ -298,7 +298,6 @@ export default {
       })
     },
     confirmSwap(){  
-     
       this.isConfirm = true
     },
     inputFlag () {

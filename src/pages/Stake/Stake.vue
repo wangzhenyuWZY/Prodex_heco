@@ -16,9 +16,8 @@
           Stake your LP tokens for rewards
         </div>
       </div>
-      <ul class="stake_list"
-          v-if="poolList.length>0">
-        <li v-for="(idx,index) in poolList"
+      <ul class="stake_list">
+        <li v-for="(idx,index) in farmList"
             :key='index'>
           <div class="stake_top">
             <span class="lt_icon ">
@@ -28,12 +27,12 @@
                    alt="" />
             </span>
             <span class="content_zise">
-              Uni ETH-USDT
+              {{idx.name}}
             </span>
           </div>
           <div class="stake_addres">
-            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">fUNISWAP_LP</span></div>
-            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">name2</span></div>
+            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.name}}</span></div>
+            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FARM</span></div>
           </div>
           <div class="stake_btn"
                @click="showModels(index)">12.04%APY</div>
@@ -58,6 +57,7 @@
 import ipConfig from '../../config/ipconfig.bak'
 import { approved } from '../../utils/tronwebFn'
 import selected from './Selected'
+import farmList from './farmList';
 export default {
   data () {
     return {
@@ -67,13 +67,14 @@ export default {
       poolIndex: 0,
       login: false,
       showModel: false,
+      farmList:farmList,
       total: {
         farmTotal: 0, // 总数
         shareToal: 0, // 抵押数量
         uniswaplp: 0, // 计算用户收益
         balanceOf: 0, // 钱包余额
         decimals: 0, // 精度 查询减 发送合约加
-
+        
 
       },
       list: [
@@ -83,16 +84,18 @@ export default {
           account: '12.04%'
         }
       ],
-      poolList: [
-
-      ]
+      poolList: farmList
     }
   },
   components: {
     selected
   },
   created () {
-    this.init()
+    this.init();
+    let arry = localStorage.getItem('farmList');
+    if (arry) {
+      this.poolList = JSON.parse(arry);
+    }
   },
   methods: {
     async init () {//初始化tronweb
@@ -127,6 +130,7 @@ export default {
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
           if (approveBalance == 0) {
+            console.log(this.poolList[this.poolIndex].lpToken)
             pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
           } else {
               this.deposit(n);
@@ -188,9 +192,13 @@ export default {
         let arry = [];
         for (let index = 0; index < this.poolLength; index++) {
           let res = await that.MasterChefContract["poolInfo"](index).call();
-          console.log(res);
+          let res1 = await window.tronWeb.contract().at(res.lpToken);
+           let res2 = await res1.name().call();
+           res.name = res2;
+           console.log(res);
           arry.push(res);
         }
+         localStorage.setItem('farmList',JSON.stringify(arry));
         this.poolList = arry;
 
       } catch (error) {
