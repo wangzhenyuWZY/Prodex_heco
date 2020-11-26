@@ -116,7 +116,7 @@ import tokenData from '../../utils/token'
         > li {
           height: 32px;
           line-height: 32px;
-          font-family: ArialMT;
+          font-family: Roboto-Regular, Roboto;
           color: #e5ebf2;
           span {
             display: inline-block;
@@ -145,13 +145,13 @@ import tokenData from '../../utils/token'
     }
     .from_size {
       font-size: 20px;
-      font-family: ArialMT;
+      font-family: Roboto-Regular, Roboto;
       color: #0F1730;
       margin-left: 8px;
       margin-right: 6px;
     }
     .show_size {
-      font-family: ArialMT;
+      font-family: Roboto-Regular, Roboto;
       color: #ed4d21;
     }
   }
