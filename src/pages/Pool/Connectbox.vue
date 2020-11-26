@@ -344,6 +344,14 @@ export default {
       this.isSelect = true
       this.selectType = ""
       this.item = index
+    },
+    sbmitBtn () {
+      if (this.showFees(this.token1)&& this.showFees(this.token2)) {  // 是否为空    
+          if (this.token1Num!=''&&this.token2Num!="") {
+
+          }
+      }
+       
     }
   }
 }
