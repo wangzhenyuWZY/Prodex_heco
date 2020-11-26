@@ -71,7 +71,7 @@
           <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
         </div>
         <div class="whe fl_rg">
-          <el-button class="from_botton black_botton" @click="joinPool">Supply</el-button>
+          <el-button class="from_botton black_botton" @click="supply">Supply</el-button>
         </div>
       </div>
 
@@ -90,7 +90,7 @@
                      <img class="lt_icon"
                      src="@/assets/img/btc.svg"
                      alt="">
-                     <span>ETH/USDT</span>
+                     <span>{{pair.pair}}</span>
                 </div>
                  <div class="currencyprices">0.000000233456</div>
                      
@@ -139,11 +139,12 @@ export default {
       token2:{},
       isSelect:false,
       item:1,
-      pairAddress:null,
+      pair:{},
       justPrice:0,
       reversePrice:0,
       decimals:18,
-      isApproved:true
+      isApproved:true,
+      iSingle:false
     }
   },
   components: {
@@ -159,7 +160,7 @@ export default {
     init () {//初始化tronweb
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
-        that.checkBind()
+        // that.checkBind()
       })
     },
     async getPairAddress(){
@@ -168,13 +169,20 @@ export default {
         return item.pair==pairname.toUpperCase()
       })
       if(pair){
-        this.pairAddress = pair[0].address
+        this.pair = pair[0]
         var fun = 'decimals()';
         var par = []
         let res = await window.tronWeb.transactionBuilder.triggerConstantContract(pair[0].address,fun,{}, par);
         this.decimals = parseInt(res.constant_result[0],16)
         this.getSpotPrice(this.token1.address,this.token2.address,'justPrice')
         this.getSpotPrice(this.token2.address,this.token1.address,'reversePrice')
+      }
+    },
+    supply(){
+      if(this.iSingle){
+        this.joinswapExternAmountIn()
+      }else{
+        this.joinPool()
       }
     },
     async joinPool(){
@@ -185,7 +193,7 @@ export default {
           {type: 'uint256[]', value: [that.token1Num*Math.pow(10, that.token1.decimals), that.token2Num*Math.pow(10, that.token2.decimals)]},
       ]
       console.log(parameter)
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -200,9 +208,9 @@ export default {
       var parameter = [
           {type: 'address',value: that.token1.address},
           {type: 'uint256', value: that.token1Num*Math.pow(10, that.token1.decimals)},
-          {type: 'uint256', value: Math.pow(10, that.token1.decimals)}
+          {type: 'uint256', value: 0}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR',functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -215,7 +223,7 @@ export default {
       let that = this
       this.isSelect = false
       decimals(token.address).then((res)=>{
-        that.token.decimals = res
+        token.decimals = res
         if(token.item==0){
           that.token1 = token
           allowance(that.token1.address).then((res)=>{
@@ -237,7 +245,7 @@ export default {
     },
     doApprove(){
       if(this.token1.address && this.token2.address){
-        approved(this.token1.address,this.pairAddress)
+        approved(this.token1.address,this.pair.address)
       }else{
         this.$layer.msg('请选择交易对')
       }
@@ -260,7 +268,7 @@ export default {
         {type: 'address', value: address1},
         {type: 'address', value: address2}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address,functionSelector,{}, parameter);
       if(transaction){
         name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals):this.reversePrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals)
       }

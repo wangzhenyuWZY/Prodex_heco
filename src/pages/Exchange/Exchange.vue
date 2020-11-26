@@ -6,7 +6,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="From"
-                       v-model="token1Num"></frominput>
+                       v-model="token1Num" @input='cumpToken2'></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  :showSelect="false" :imgUrl="token1.img" item='0' :balance="token1.balance"
@@ -20,7 +20,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
-                       v-model="token2Num"></frominput>
+                       v-model="token2Num" @input="cumpToken1"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <setselect :showSelect="false" :imgUrl="token2.img" item='1' :balance="token2.balance"
@@ -29,16 +29,23 @@
         </div>
         <div class="Price_text"   v-show="login"> 
             <span>Price: </span> 
-            <span>0.0020495 </span>
-                <span> ETH </span> 
+            <span>{{spotPrice.toFixed(token1.decimals)}} </span>
+                <span> {{token1.name}} </span> 
                <span> per </span>
-               <span> DAI </span> 
-               <img src="@/assets/img/icon_slect.png" alt=""></div>
+               <span> {{token2.name}} </span> 
+               <img src="@/assets/img/icon_slect.png" alt="" @click="convert"></div>
         <div class="whe" :class="login?'login_text':'outlogin'">
-          <el-button class="from_botton" @click="doswap"> <img class="whe_img"
+          <div class="connect_btn clearfix">
+            <div class="whe fl_lt" v-show="!isApproved && login">
+              <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
+            </div>
+            <div class="whe fl_rg">
+              <el-button class="from_botton" @click="confirmSwap"> <img class="whe_img"
                 v-show="!login"
                  src="@/assets/img/icon_my_wallet.svg"
                  alt=""> {{login?'Swap':'Connect to a wallet'}}</el-button>
+            </div>
+          </div>       
         </div>
 
       </div>
@@ -52,19 +59,19 @@
               <div class="lt">
                 <span>Minimum received <img src="@/assets/img/icon_instructions.svg" alt=""></span>
               </div>
-              <span class="rg">441.4 aDAI</span>
+              <span class="rg">{{token2Num}} {{token2.name}}</span>
             </div>
             <div class="received setmage">
               <div class="lt">
                 <span>Price Impacte <img src="@/assets/img/icon_instructions.svg" alt=""></span>
               </div>
-              <span class="rec_red">5.30%</span>
+              <span class="rec_red">{{percentage}}%</span>
             </div>
             <div class="received">
               <div class="lt">
                 <span>Liquidity Provider Fee <img src="@/assets/img/icon_instructions.svg" alt=""></span>
               </div>
-              <span class="">0.003 ETH</span>
+              <span class="">{{swapFee}} {{token1.name}}</span>
             </div>
              <div class="fees_account">View pair analytics <img  src="@/assets/img/icon_jump_green.png"
                  alt=""></div>
@@ -73,7 +80,16 @@
       </div>
     </div>
     </container>
-    <change v-if="false"/>
+    <change v-if="isConfirm"
+       @doConfirm="doswap" 
+       :token1='token1'
+       :token2='token2'
+       :token1Num='token1Num'
+       :token2Num='token2Num'
+       :spotPrice='spotPrice'
+       :swapFee='swapFee'
+       :percentage='percentage'
+       />
     <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
   </div>
 </template>
@@ -83,7 +99,11 @@ import { container, frominput, setselect } from '../../components/index'
 import change from './change'
 import selctoken from '../Pool/selctToken';
 import tokenData from '../../utils/token'
-import {approved,decimals,getConfirmedTransaction} from '../../utils/tronwebFn'
+import {approved,decimals,getConfirmedTransaction,allowance} from '../../utils/tronwebFn'
+import {calcSpotPrice,
+    calcOutGivenIn,
+    calcInGivenOut,
+    calcOutGivenInAfterPrice} from '../../utils/calc_comparisons'
 export default {
   data () {
     return {
@@ -92,12 +112,19 @@ export default {
       token1Num:null,
       token2Num:null,
       login:true,
+      isApproved:true,
       isSelect:false,
       item:0,
-      pairAddress:'',
+      pair:{},
       decimals:18,
       token1Balance:0,
-      token2Balance:0
+      token2Balance:0,
+      token1Weight:0,
+      token2Weight:0,
+      swapFee:0,
+      spotPrice:0,
+      percentage:0,
+      isConfirm:false
     }
   },
   components: {
@@ -128,44 +155,127 @@ export default {
       if(token){
         let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
         token.item==0?that.token1.balance=balance:that.token2.balance=balance
-        decimals(token.address).then((res)=>{
-          token.item==0?that.token1.decimals=res:that.token2.decimals=res
-        })
         if(this.token1.address && this.token2.address){
           this.getPairAddress()
         }
       }
     },
+    doApprove(){
+      if(this.token1.address && this.token2.address){
+        approved(this.token1.address,this.pair.address)
+      }else{
+        this.$layer.msg('请选择交易对')
+      }
+    },
     async getPairAddress(){
+      let that = this
       let pairname = this.token1.name+'/'+this.token2.name
       let pairname1 = this.token2.name+'/'+this.token1.name
       let pair = tokenData.pairList.filter((item)=>{
         return item.pair==pairname.toUpperCase() || item.pair==pairname1.toUpperCase()
       })
       if(pair&&pair.length>0){
-        this.pairAddress = pair[0].address
+        this.pair = pair[0]
         this.decimals = pair[0].decimals
-        approved(this.token1.address,pair[0].address)
-        this.getBalanceInPool(pair[0].address,this.token1.address).then((res)=>{
-          this.token1Balance = res
+        allowance(that.token1.address).then((res)=>{
+          if(res){
+            let approveBalance = window.tronWeb.toSun(res._hex)
+            if (approveBalance == 0) {
+              that.isApproved = false
+            } else {
+              that.isApproved = true
+            }
+          }
         })
-        this.getBalanceInPool(pair[0].address,this.token2.address).then((res)=>{
+        this.getBalanceInPool(pair[0],this.token1).then((res)=>{
+          this.token1Balance = res
+          this.getSpotPrice()
+        })
+        this.getBalanceInPool(pair[0],this.token2).then((res)=>{
           this.token2Balance = res
+          this.getSpotPrice()
+        })
+        this.getWeight(pair[0],this.token1).then((res)=>{
+          this.token1Weight = res
+          this.getSpotPrice()
+        })
+        this.getWeight(pair[0],this.token2).then((res)=>{
+          this.token2Weight = res
+          this.getSpotPrice()
+        })
+        this.getSwapFee(pair[0]).then((res)=>{
+          this.swapFee = res
+          this.getSpotPrice()
         })
       }
     },
-    getBalanceInPool(pairAddress,coinAddress){
+    cumpToken1(){//计算兑换的token1
+      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee&&this.token1Num){
+        let token1Num = calcInGivenOut(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token2Num,this.swapFee)
+        this.token1Num = token1Num.toFixed(this.token1.decimals)
+      }
+    },
+    cumpToken2(){//计算兑换的token2
+      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee&&this.token1Num){
+        let token2Num = calcOutGivenIn(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token1Num,this.swapFee)
+        this.token2Num = token2Num.toFixed(this.token2.decimals)
+        let afterPrice = calcOutGivenInAfterPrice(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token1Num,this.swapFee)
+        this.percentage = ((afterPrice-this.spotPrice)/this.spotPrice*100).toFixed(2)
+      }
+    },
+    getSpotPrice(){//计算token1的价格
+      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee){
+        this.spotPrice = calcSpotPrice(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.swapFee)
+      }
+      if(this.token1Num){
+        this.cumpToken2()
+      }
+    },
+    getBalanceInPool(pair,coin){//获取余额
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getBalance(address)';
         var parameter = [
-          {type: 'address', value: coinAddress}
+          {type: 'address', value: coin.address}
         ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pairAddress,functionSelector,{}, parameter).then((transaction)=>{
-          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.token1.decimals)
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
           resolve(tokenBalanceInPool);
         })
       })
+    },
+    getWeight(pair,coin){//获取权重
+      let that = this
+      return new Promise(function (resolve, reject) {
+        var functionSelector = 'getNormalizedWeight(address)';
+        var parameter = [
+          {type: 'address', value: coin.address}
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+          let weight = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+          resolve(weight);
+        })
+      })
+    },
+    getSwapFee(pair){//获取swapfee
+      let that = this
+      return new Promise(function (resolve, reject) {
+        var functionSelector = 'getSwapFee()';
+        var parameter = []
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+          let swapFee = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+          resolve(swapFee);
+        })
+      })
+    },
+    confirmSwap(){
+      this.isConfirm = true
+    },
+    convert(){
+      let token1 = this.token1
+      let token2 = this.token2
+      this.token1 = token2
+      this.token2 = token1
     },
     async doswap(){
       let that = this
@@ -181,7 +291,7 @@ export default {
         {type:'uint256',value:0},
         {type:'uint256',value:'1000000000000000000000000'}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
