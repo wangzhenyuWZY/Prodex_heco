@@ -166,7 +166,7 @@ export default {
     height: 72px;
     line-height: 72px;
     font-size: 20px;
-    font-family: ArialMT;
+    font-family: Roboto-Regular, Roboto;
     color: #eeeef0;
     padding: 0 24px;
     cursor: pointer;

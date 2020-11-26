@@ -15,7 +15,7 @@ time, mark, audio, video {
  padding: 0;
  border: 0;
  font-size: 100%;
- font-family: ArialMT;
+ font-family: Roboto-Regular, Roboto;
  vertical-align: baseline;
  box-sizing: border-box;
 
@@ -78,7 +78,7 @@ img{
     text-align: center;
     margin:0 auto;
     font-size: 20px;
-    font-family: ArialMT;
+    font-family: Roboto-Regular, Roboto;
     color: #FFFFFF;
     cursor: pointer;
     user-select:none;
@@ -113,7 +113,7 @@ img{
   border: 1px solid #FF5D37;
   background: none;
   font-size: 18px;
-  font-family: Arial-BoldMT, Arial;
+  font-family: roboto-mediumitalic;
   font-weight: normal;
   color: #FF5D37;
   padding: 0;
@@ -123,8 +123,6 @@ img{
     color:#FF5D37;
     background: none;
 }
-
-
 
 .nav_btn:hover{
     color:#FF5D37;
@@ -201,7 +199,7 @@ img{
 .globle_title{
     height: 27px;
     font-size: 24px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     color: #0F1730;
     margin-top: 75px;
     margin-bottom: 16px;
@@ -215,7 +213,7 @@ img{
 .box_sizes{
     background: #f4f5fa;
       border-radius: 16px;
-      font-family: ArialMT;
+      font-family: Roboto-Regular, Roboto;
   }
   .change_red{
       color: #FF5D37;
@@ -236,4 +234,17 @@ img{
     .stake_list{
         justify-content: space-around !important;
     }
+}
+@font-face {
+
+    /* font-properties */
+
+    font-family: roboto;
+
+    src:url('./font-face/roboto-medium.ttf'), 
+
+    url('./font-face/roboto-mediumitalic.ttf'),
+
+    url('./font-face/Roboto-Normal.ttf'); /* IE9 */
+
 }

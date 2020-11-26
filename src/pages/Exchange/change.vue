@@ -11,12 +11,12 @@
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
         <div class="received ">
-          <span class="rg ftblod">0.000000233456</span>
+          <span class="rg ftblod">{{token1Num}}</span>
           <div class="lt change_img">
             <img class="lt_icon"
                  src="@/assets/img/btc.svg"
                  alt="">
-            <span>ETH</span>
+            <span>{{token1.name}}</span>
           </div>
 
         </div>
@@ -24,12 +24,12 @@
           <i class="el-icon-back changeicon"></i>
         </div>
         <div class="received ">
-          <span class="rg ftblod">0.000000233456</span>
+          <span class="rg ftblod">{{token2Num}}</span>
           <div class="lt change_img">
             <img class="lt_icon"
                  src="@/assets/img/btc.svg"
                  alt="">
-            <span>USDT</span>
+            <span>{{token2.name}}</span>
           </div>
         </div>
       </div>
@@ -37,10 +37,10 @@
     <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
       <div class="Price_text" > 
             <span>Price: </span> 
-            <span>0.0020495 </span>
-                <span> ETH </span> 
+            <span>{{spotPrice}} </span>
+                <span> {{token1.name}} </span> 
                <span> per </span>
-               <span> DAI </span> 
+               <span> {{token2.name}} </span> 
                <img src="@/assets/img/icon_slect.png" alt=""></div>
     <div class="box_sizes">
       <div class="provider receove_Share ">
@@ -53,7 +53,7 @@
                    src="@/assets/img/icon_instructions.svg"
                    alt="">
             </div>
-            <span class="rg ">441.4 aDAI</span>
+            <span class="rg ">{{token2Num}} {{token2.name}}</span>
           </div>
             <div class="received change20">
             <div class="lt change_img">
@@ -63,7 +63,7 @@
                    src="@/assets/img/icon_instructions.svg"
                    alt="">
             </div>
-            <span class="rg change_red">5.30%</span>
+            <span class="rg change_red">{{percentage}}%</span>
           </div>
             <div class="received ">
             <div class="lt change_img">
@@ -73,20 +73,21 @@
                    src="@/assets/img/icon_instructions.svg"
                    alt="">
             </div>
-            <span class="rg ">0.003 ETH</span>
+            <span class="rg ">{{swapFee}} {{token1.name}}</span>
           </div>
     
 
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn">Confirm Swap</el-button>
+    <el-button class="from_botton recevive_btn" @click="doConfirm">Confirm Swap</el-button>
   </el-dialog>
 </template>
 
 <script>
 
 export default {
+  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage'],  
   data () {
     return {
       showAlert: true
@@ -103,6 +104,9 @@ export default {
   , methods: {
     handleClosea () {
 
+    },
+    doConfirm(){
+      this.$emit('doConfirm')
     }
   },
 }

@@ -13,6 +13,7 @@
     "antd": "^4.8.4",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "decimal.js": "^10.2.1",
     "echarts": "^4.9.0",
     "element-ui": "^2.14.1",
     "fastclick": "^1.0.6",

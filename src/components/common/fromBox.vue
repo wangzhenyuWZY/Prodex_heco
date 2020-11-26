@@ -63,7 +63,7 @@ export default {
 .from_data {
   .from_lable {
     font-size: 20px;
-    font-family: Arial-BoldMT, Arial;
+    font-family: roboto-mediumitalic;
     font-weight: normal;
     color: #e5ebf2;
     margin-bottom: 16px;
@@ -96,7 +96,7 @@ export default {
     text-align: right;
     .from_size {
       font-size: 20px;
-      font-family: ArialMT;
+      font-family: Roboto-Regular, Roboto;
       color: #b7bfc8;
       margin-left: 8px;
       margin-right: 6px;
@@ -157,7 +157,7 @@ export default {
 }
 .content_text {
   font-size: 20px;
-  font-family: Arial-BoldMT, Arial;
+  font-family: roboto-mediumitalic;
   font-weight: normal;
   color: #eeeef0;
 }
@@ -165,7 +165,7 @@ export default {
   background: #0f1522;
   border-radius: 16px;
   padding: 32px 0;
-  font-family: ArialMT;
+  font-family: Roboto-Regular, Roboto;
   color: #e5ebf2;
   p {
     text-align: center;
