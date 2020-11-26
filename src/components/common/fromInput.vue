@@ -6,10 +6,11 @@
         <div class="input_lt">
           <input
             class="globle_input"
-            type="text"
+            type="number"
             :placeholder="placeholder"
             @keyup="hadelClick"
             :value="value"
+            :disabled ="disabled"
             ref="input"
             :maxlength="maxlength"
           />
@@ -33,6 +34,10 @@
     placeholder:{
        type:[String,Number],
        default:''
+    },
+    disabled:{
+        type: Boolean,
+        default: false,
     },
     maxlength:{
       type:Number
@@ -101,10 +106,12 @@
     padding-left: 16px;
   }
   .from_input {
-
+    
     .input_lt {
       position: relative;
          display: flex;
+         background: #F4F5FA; 
+             border-radius: 16px;
       .input_max{
         width: 64px;
         height: 32px;

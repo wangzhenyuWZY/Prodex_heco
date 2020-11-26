@@ -14,6 +14,7 @@
             <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
                    v-model="trxNum"
+                    :disabled="inputdisabled1"
                    placeholder="Please enter the amout of TRX">
             <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
@@ -31,6 +32,7 @@
             <div class="wtrx-a"> <samp class="wtrx-a1">WTRX Balance:</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
             <input type="number"
                    v-model="wtrxNum"
+                   :disabled = "inputdisabled1"
                    placeholder="Please enter the amout of TRX">
             <div class="wtrx-b"> <samp class="wtrx-b1">You will get TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
@@ -68,6 +70,8 @@ export default {
       wtrxNum: null,
       btnDisabled1: true,
       btnDisabled2: true,
+      inputdisabled1:true,
+      inputdisabled2:true,
       btnLoading1: false,
       btnLoading2: false,
     };
@@ -126,7 +130,9 @@ export default {
       let that = this
       try {
         let res = await that.wtrxContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
-        that.wtrxBalance = window.tronWeb.fromSun(res)
+        that.wtrxBalance = window.tronWeb.fromSun(res);
+        this.inputdisabled1 = false
+        this.inputdisabled2 = false
       } catch (error) {
         console.log(error);
       }

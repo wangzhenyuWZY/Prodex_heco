@@ -9,8 +9,9 @@ import {IsPc} from './utils/index';
 import initTronWeb from './utils/tronwebFn'
 import layer from 'vue-layer'
 import 'vue-layer/lib/vue-layer.css';
+import store from './store/index';
 Vue.prototype.$layer = layer(Vue);
-Vue.prototype.$initTronWeb = initTronWeb
+Vue.prototype.$initTronWeb =initTronWeb;
 Vue.use(Element);
 Vue.config.productionTip = false
 // 引入echarts
@@ -29,5 +30,6 @@ if (!IsPc()) {
 }
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

@@ -143,7 +143,7 @@
      </el-pagination>
       </div>
  </div>
- <div class="c-box2" style="margin-bottom: 120px">
+ <div class="c-box2" >
   <div class="b2-top">
 <samp class="top1">Transactions</samp>
  <div class="top-inp">

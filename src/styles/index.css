@@ -48,6 +48,12 @@ table {
 input[type=number] {
     -moz-appearance:textfield;
 }
+input:disabled {
+    cursor: not-allowed;
+}
+a{
+    text-decoration:none;
+}
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -180,9 +186,9 @@ img{
     *zoom: 1;/*ie6清除浮动的方式 *号只有IE6-IE7执行，其他浏览器不执行*/
 }
 .container{
-    height: 100%;
+    height: calc(100vh - 72px);
     width: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .colorFE613C {
     color: #FE613C;
