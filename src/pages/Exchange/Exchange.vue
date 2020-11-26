@@ -162,12 +162,14 @@ export default {
     },
     doApprove(){
       if(this.token1.address && this.token2.address){
-        approved(this.token1.address,this.pair.address)
+        approved(this.token1.address,this.pair.address).then((res)=>{
+          this.isApproved = true
+        })
       }else{
         this.$layer.msg('请选择交易对')
       }
     },
-    async getPairAddress(token){
+    async getPairAddress(){
       let that = this
       let pairname = this.token1.name+'/'+this.token2.name
       let pairname1 = this.token2.name+'/'+this.token1.name
@@ -177,18 +179,16 @@ export default {
       if(pair&&pair.length>0){
         this.pair = pair[0]
         this.decimals = pair[0].decimals
-        if(token.item==0){
-          allowance(that.token1.address).then((res)=>{
-            if(res){
-              let approveBalance = window.tronWeb.toSun(res._hex)
-              if (approveBalance == 0) {
-                that.isApproved = false
-              } else {
-                that.isApproved = true
-              }
+        allowance(that.token1.address).then((res)=>{
+          if(res){
+            let approveBalance = window.tronWeb.toSun(res._hex)
+            if (approveBalance == 0) {
+              that.isApproved = false
+            } else {
+              that.isApproved = true
             }
-          })
-        }
+          }
+        })
         this.getBalanceInPool(pair[0],this.token1).then((res)=>{
           this.token1Balance = res
           this.getSpotPrice()
@@ -233,7 +233,7 @@ export default {
         this.cumpToken2()
       }
     },
-    getBalanceInPool(pair,coin){//获取余额
+    getBalanceInPool(pair,coin){//获取Pool中的余额
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getBalance(address)';
@@ -298,7 +298,9 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              getConfirmedTransaction(res.txid)
+              getConfirmedTransaction(res.txid).then(()=>{
+                window.location.reload()
+              })
           });
       }) 
     }
