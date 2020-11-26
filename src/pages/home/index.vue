@@ -197,7 +197,7 @@
       </div>
       <div class="pagin">
         <el-pagination
-        background="true"
+        background
         layout="prev, pager, next"
         :total="100">
      </el-pagination>
@@ -385,7 +385,7 @@ margin-top: 40px;
   .b2-top{
     height: 112px;
   .top1{
-    margin-top: 53px;
+    margin-top: 54px;
     margin-left: 41px;
     float: left;
     height: 22px;

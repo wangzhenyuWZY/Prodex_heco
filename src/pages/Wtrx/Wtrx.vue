@@ -315,6 +315,7 @@ export default {
 
     .wtrx-a1 {
       font-size: 18px;
+    
     }
   }
   .wtrx-b {
