@@ -156,7 +156,7 @@ export default {
         let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
         token.item==0?that.token1.balance=balance:that.token2.balance=balance
         if(this.token1.address && this.token2.address){
-          this.getPairAddress()
+          this.getPairAddress(token)
         }
       }
     },
@@ -177,16 +177,18 @@ export default {
       if(pair&&pair.length>0){
         this.pair = pair[0]
         this.decimals = pair[0].decimals
-        allowance(that.token1.address).then((res)=>{
-          if(res){
-            let approveBalance = window.tronWeb.toSun(res._hex)
-            if (approveBalance == 0) {
-              that.isApproved = false
-            } else {
-              that.isApproved = true
+        if(token.item==0){
+          allowance(that.token1.address).then((res)=>{
+            if(res){
+              let approveBalance = window.tronWeb.toSun(res._hex)
+              if (approveBalance == 0) {
+                that.isApproved = false
+              } else {
+                that.isApproved = true
+              }
             }
-          }
-        })
+          })
+        }
         this.getBalanceInPool(pair[0],this.token1).then((res)=>{
           this.token1Balance = res
           this.getSpotPrice()
