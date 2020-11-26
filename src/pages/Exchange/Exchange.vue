@@ -9,7 +9,7 @@
                        v-model="token1Num" @input='cumpToken2'></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect  :showSelect="false" :imgUrl="token1.img" item='0' :balance="token1.balance"
+            <setselect  :showSelect="selectColor1" :imgUrl="token1.img" item='0' :balance="token1.balance"
                      :text="token1.name" @click="showSelect(0)" />           
           </div>
         </div>
@@ -23,34 +23,36 @@
                        v-model="token2Num" @input="cumpToken1"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :showSelect="false" :imgUrl="token2.img" item='1' :balance="token2.balance"
+            <setselect :showSelect="selectColor2" :imgUrl="token2.img" item='1' :balance="token2.balance"
                      :text="token2.name" @click="showSelect(1)"  />
           </div>
         </div>
-        <div class="Price_text"   v-show="login"> 
+        <div class="Price_text"   v-show="connectFlag"> 
             <span>Price: </span> 
             <span>{{spotPrice.toFixed(token1.decimals)}} </span>
                 <span> {{token1.name}} </span> 
                <span> per </span>
                <span> {{token2.name}} </span> 
                <img src="@/assets/img/icon_slect.png" alt="" @click="convert"></div>
-        <div class="whe" :class="login?'login_text':'outlogin'">
+        <div class="whe" :class="connectFlag?'login_text':'outlogin'">
           <div class="connect_btn clearfix">
-            <div class="whe fl_lt" v-show="!isApproved && login">
+            <div class="whe fl_lt" v-show="!isApproved && connectFlag">
               <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg">
-              <el-button class="from_botton" @click="confirmSwap"> <img class="whe_img"
-                v-show="!login"
+                 <el-button class="from_botton" v-show="!connectFlag" > <img class="whe_img"
                  src="@/assets/img/icon_my_wallet.svg"
-                 alt=""> {{login?'Swap':'Connect to a wallet'}}</el-button>
+                 alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}</el-button>
+            
+              <el-button class="from_botton" :loading="btnLoading1"      v-show="connectFlag"
+                         :disabled="btnDisabled1" @click="confirmSwap">Swap</el-button>
             </div>
           </div>       
         </div>
 
       </div>
     <div slot="footer"
-        v-show="login"
+        v-show="connectFlag"
          class="position">
       <div class="box_sizes connect_boxs">
         <div class="provider c_receove_Share ">
@@ -89,6 +91,7 @@
        :spotPrice='spotPrice'
        :swapFee='swapFee'
        :percentage='percentage'
+       @handleClosea ="isConfirm = false"
        />
     <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
   </div>
@@ -104,6 +107,7 @@ import {calcSpotPrice,
     calcOutGivenIn,
     calcInGivenOut,
     calcOutGivenInAfterPrice} from '../../utils/calc_comparisons'
+    import { mapState} from 'vuex'
 export default {
   data () {
     return {
@@ -124,8 +128,16 @@ export default {
       swapFee:0,
       spotPrice:0,
       percentage:0,
-      isConfirm:false
+      isConfirm:false,
+      selectColor1:false,
+      selectColor2:false,
+      btnLoading1:false,
+      btnDisabled1:true
+
     }
+  },
+  computed: {
+    ...mapState(['connectFlag'])
   },
   components: {
     container,
@@ -137,6 +149,14 @@ export default {
   created(){
 
   },
+  watch: {
+    token1Num() {
+      this.inputFlag();
+    },
+     token2Num() {
+      this.inputFlag();
+    }
+  },
   methods:{
     showSelect(index){
       this.isSelect = true
@@ -145,8 +165,15 @@ export default {
     changeCoin(token){
       let that = this
       this.isSelect = false
-      token.item==0?this.token1 = token:this.token2 = token 
+      if ( token.item==0) {
+          this.token1 = token;
+           this.selectColor1 = true;
+      } else {
+          this.token2 = token;
+          this.selectColor2 = true;
+      }
       that.getBalance(token)
+      this.inputFlag();
     },
     async getBalance(token){//获取余额
       let that = this
@@ -270,8 +297,16 @@ export default {
         })
       })
     },
-    confirmSwap(){
+    confirmSwap(){  
+     
       this.isConfirm = true
+    },
+    inputFlag () {
+         if (this.token1Num!=""&&this.token2Num!=""&& JSON.stringify(this.token1)!="{}"&&JSON.stringify(this.token2)!="{}") {
+              this.btnDisabled1 =false;
+      }  else {
+         this.btnDisabled1 =true;
+      }
     },
     convert(){
       let token1 = this.token1
@@ -280,9 +315,14 @@ export default {
       this.token2 = token1
     },
     async doswap(){
-      let that = this
+      let that = this;
+      this.isConfirm = false;
+      this.btnDisabled1 = true;
+      this.btnLoading1 = true;
       if(that.token1Num>that.token1Balance){
-        that.$layer.msg('兑换额不能大于流动性池余额')
+        this.$message.error('兑换额不能大于流动性池余额');
+         that.btnDisabled1 = false;
+          that.btnLoading1 = false;
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
@@ -298,7 +338,13 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              getConfirmedTransaction(res.txid)
+              getConfirmedTransaction(res.txid).then(()=>{
+                this.$message.success('成功');
+              }).catch((err)=>{
+                 console.log(err);
+              })
+            that.btnDisabled1 = false;
+            that.btnLoading1 = false;
           });
       }) 
     }
