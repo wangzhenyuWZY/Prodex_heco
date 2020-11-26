@@ -59,7 +59,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="input"
-                       :disabled="inputDisabled"
+                       :disabled="iSingle"
                        placeholder=""
                        v-model="token2Num"></frominput>
           </div>
@@ -168,7 +168,6 @@ export default {
       token2Num: '',
       token1: {},
       token2: {},
-      token3: {},
       pair: {},
       token: {},
       isSelect: false,
@@ -180,10 +179,11 @@ export default {
       isApproved: true,
       selectColor1: false,
       selectColor2: false,
-      inputDisabled: false,
       selectType: '',
       item: 1,
-      iSingle: false
+      iSingle: false,
+      token1Balance:0,
+      token2Balance:0
     }
   },
   components: {
@@ -193,16 +193,10 @@ export default {
     selctoken
   },
   created () {
-    this.init(0)
   },
   methods: {
-    init () {//初始化tronweb
-      let that = this
-      this.$initTronWeb().then(function (tronWeb) {
-        // that.checkBind()
-      })
-    },
     async getPairAddress () {
+      let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase()
@@ -215,6 +209,28 @@ export default {
         this.decimals = parseInt(res.constant_result[0], 16)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
+        this.getBalanceInPool(pair[0],this.token1).then((res)=>{
+          this.token1Balance = res
+          console.log('token1Balance===='+this.token1Balance)
+        })
+        this.getBalanceInPool(pair[0],this.token2).then((res)=>{
+          this.token2Balance = res
+          console.log('token2Balance===='+this.token2Balance)
+        })
+        allowance(token.address).then((res) => {
+          if (res) {
+            let approveBalance = window.tronWeb.toSun(res._hex)
+            if (approveBalance == 0) {
+              that.$message({
+                message: '未授权请先授权',
+                type: 'error'
+              });
+              that.isApproved = false
+            } else {
+              that.isApproved = true
+            }
+          }
+        })
       }
     },
     supply () {
@@ -237,7 +253,7 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          this.$message.success("SUCCESS!")
+          that.$message.success("SUCCESS!")
         });
       })
     },
@@ -267,20 +283,6 @@ export default {
           that.token1 = token
           that.selectColor1 = true;
           that.selectType = token.name;
-          allowance(that.token1.address).then((res) => {
-            if (res) {
-              let approveBalance = window.tronWeb.toSun(res._hex)
-              if (approveBalance == 0) {
-                that.$message({
-                  message: '未授权请先授权',
-                  type: 'error'
-                });
-                that.isApproved = false
-              } else {
-                that.isApproved = true
-              }
-            }
-          })
         } else {
           that.selectColor2 = true;
           this.token2 = token
@@ -291,8 +293,8 @@ export default {
       })
     },
     doApprove () {
-      if (this.token1.address && this.token2.address) {
-        approved(this.token1.address, this.pairAddress)
+      if (this.pair) {
+        approved(this.token1.address, this.pair.address)
       } else {
         this.$layer.msg('请选择交易对')
       }
@@ -308,6 +310,19 @@ export default {
           this.getPairAddress()
         }
       }
+    },
+    getBalanceInPool(pair,coin){//获取Pool中的余额
+      let that = this
+      return new Promise(function (resolve, reject) {
+        var functionSelector = 'getBalance(address)';
+        var parameter = [
+          {type: 'address', value: coin.address}
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
+          resolve(tokenBalanceInPool);
+        })
+      })
     },
     async getSpotPrice (address1, address2, name) {
       var functionSelector = 'getSpotPrice(address,address)';
@@ -345,15 +360,40 @@ export default {
       return true;
     },
     linkage (token) { // 联动
-      this.token3 = token;
+      let that = this
+      this.pair = token;
       this.isSelect = false;
-      this.token2.name = this.selectType == token.token1 ? token.token2 : token.token1;
+      this.token2.name = this.selectType == token.token1.name ? token.token2.name : token.token1.name;
       this.selectColor1 = true;
       this.selectColor2 = true;
-      this.inputDisabled = true;
+      this.iSingle = true;
+      this.getSpotPrice(token.token1.address, token.token2.address, 'justPrice')
+      this.getSpotPrice(token.token2.address, token.token1.address, 'reversePrice')
+      this.getBalanceInPool(this.pair,token.token1).then((res)=>{
+        this.token1Balance = res
+        console.log('token1Balance===='+this.token1Balance)
+      })
+      this.getBalanceInPool(this.pair,token.token2).then((res)=>{
+        this.token2Balance = res
+        console.log('token2Balance===='+this.token2Balance)
+      })
+      allowance(token.address).then((res) => {
+        if (res) {
+          let approveBalance = window.tronWeb.toSun(res._hex)
+          if (approveBalance == 0) {
+            that.$message({
+              message: '未授权请先授权',
+              type: 'error'
+            });
+            that.isApproved = false
+          } else {
+            that.isApproved = true
+          }
+        }
+      })
     },
     showSelect (index) {
-      if (index == 1 && this.inputDisabled) return;
+      if (index == 1 && this.iSingle) return;
       this.isSelect = true
       this.selectType = ""
       this.item = index

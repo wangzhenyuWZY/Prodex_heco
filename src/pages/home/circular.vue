@@ -1,156 +1,148 @@
 <template>
-  <div class="percentloop">
-    <div class="circle-left">
-      <div ref="leftcontent"></div>
+    <div class="processCircle">
+            <div class="grayCircle center">
+                <p>{{ percent }}%</p>
+            </div>
+            <section class="half left">
+                <div class="blueCircle"></div>
+            </section>
+            <section class="half right">
+                <div class="blueCircle"></div>
+            </section>
     </div>
-    <div class="circle-right">
-      <div ref="rightcontent"></div>
-    </div>
-    <div class="number">
-      {{ percent }} %
-    </div>
-  </div>
 </template>
-
 <script>
 export default {
-  props: {
-    percentNum: {
-      type: [String, Number],
-      default: 0
+    name: 'processCircle',
+    data() {
+        return {
+            percent: 1,
+            timeLimit: 5000
+        };
     },
-    speed: { // 建议取值为0-3
-      type: [String, Number],
-      default: 1
+    created() {
+        let gap = this.timeLimit / 100;
+        let clock = setInterval(() => {
+            if (this.percent < 100) {
+                let res = Math.floor(this.percent + 4);
+                this.percent = res >= 99 ? 99 : res;
+                if (this.percent > 40) {
+                    gap = 0.5;
+                }
+            } else {
+                clearInterval(clock);
+            }
+        }, 100);
     }
-  },
-  data () {
-    return {
-      percent: 0,
-      initDeg: 0,
-      timeId: null,
-      animationing: false
-    }
-  },
-  methods: {
-    transformToDeg (percent) {
-      let deg = 0
-      if (percent >= 100) {
-        deg = 360
-      } else {
-        deg = parseInt(360 * percent / 100)
-      }
-      return deg
-    },
-    transformToPercent (deg) {
-      let percent = 0
-      if (deg >= 360) {
-        percent = 100
-      } else {
-        percent = parseInt(100 * deg / 360)
-      }
-      return percent
-    },
-    rotateLeft (deg) { // 大于180时，执行的动画
-      this.$refs.leftcontent.style.transform = 'rotate(' + (deg - 180) + 'deg)'
-    },
-    rotateRight (deg) { // 小于180时，执行的动画
-      this.$refs.rightcontent.style.transform = 'rotate(' + deg + 'deg)'
-    },
-    goRotate (deg) {
-      this.animationing = true
-      this.timeId = setInterval(() => {
-        if (deg > this.initDeg) { // 递增动画
-          this.initDeg += Number(this.speed)
-          if (this.initDeg >= 180) {
-            this.rotateLeft(this.initDeg)
-            this.rotateRight(180) // 为避免前后两次传入的百分比转换为度数后的值不为步距的整数，可能出现的左右转动不到位的情况。
-          } else {
-            this.rotateRight(this.initDeg)
-          }
-        } else { // 递减动画
-          this.initDeg -= Number(this.speed)
-          if (this.initDeg >= 180) {
-            this.rotateLeft(this.initDeg)
-          } else {
-            this.rotateLeft(180) // 为避免前后两次传入的百分比转换为度数后的值不为步距的整数，可能出现的左右转动不到位的情况。
-            this.rotateRight(this.initDeg)
-          }
-        }
-        this.percent = this.transformToPercent(this.initDeg) // 百分比数据滚动动画
-        const remainer = Number(deg) - this.initDeg
-        if (Math.abs(remainer) < this.speed) {
-          this.initDeg += remainer
-          if (this.initDeg > 180) {
-            this.rotateLeft(deg)
-          } else {
-            this.rotateRight(deg)
-          }
-          this.animationFinished()
-        }
-      }, 10)
-    },
-    animationFinished () {
-      this.percent = this.percentNum // 百分比数据滚动动画
-      this.animationing = false
-      clearInterval(this.timeId)
-      this.$emit('animationFinished') // 动画完成的回调
-    }
-  },
-  created () {
-    this.goRotate(this.transformToDeg(this.percentNum))
-  },
-  watch: {
-    'percentNum': function (val) {
-      if (this.animationing) return
-      this.goRotate(this.transformToDeg(val))
-    }
-  }
-}
+};
 </script>
-
-<style scoped lang="scss">
-.percentloop {
-  position: relative;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  .circle-left, .circle-right {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 50%;
-    height: 100%;
-    background-color: red;
-    overflow: hidden;
-    &>div {
-      width: 100%;
-      height: 100%;
-      background-color: #8a8a8a;
-      transform-origin: right center;
-      /*transition: all .5s linear;*/
-    }
-  }
-  .circle-right {
-    left: 50%;
-    &>div {
-      transform-origin: left center;
-    }
-  }
-  .number {
-    position: absolute;
-    top: 9%;
-    bottom: 9%;
-    left: 9%;
-    right: 9%;
-    background-color: #fff;
-    border-radius: 50%;
-    overflow: hidden;
+<style lang="scss">
+.processCircle {
+    $maxl: 110px;
+    position: relative;
+    width: $maxl;
+    height: $maxl;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #000;
-  }
+    align-items: flex-end;
+    .half {
+        width: 51%;
+        height: 100%;
+        overflow: hidden;
+        position: absolute;
+        top: 0;
+    }
+    .center {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        p {
+            text-align: center;
+            margin: auto;
+            color: #384369;
+            font-size: 18px;
+            font-family: fzlt_bold;
+        }
+    }
+    @mixin circle($w) {
+        width: $w;
+        height: $w;
+        $wh: $w / 2;
+        border-radius: $wh;
+    }
+    .grayCircle {
+        @include circle(106px);
+        border: 0;
+        border: 6px solid #f4f4f4;
+    }
+    .blueCircle {
+        // border-image: linear-gradient(to right, #90b2ff, #6d91ff) 1 10;
+        @include circle($maxl);
+        border: 10px solid transparent;
+    }
+    .left {
+        left: 0;
+        .blueCircle {
+            border-top: 10px solid #6d91ff;
+            border-left: 10px solid #6d91ff;
+            transform: rotate(135deg);
+            animation: load_left 2s ease-in;
+            animation-fill-mode: forwards;
+        }
+    }
+    .right {
+        right: 0;
+        .blueCircle {
+            transform: rotate(135deg);
+            position: relative;
+            left: -$maxl / 2;
+            animation: load_right 3s ease-in;
+            animation-fill-mode: forwards;
+        }
+    }
+
+    @-webkit-keyframes load_left {
+        0% {
+            border-top: 10px solid #6d91ff;
+            border-left: 10px solid #6d91ff;
+            transform: rotate(150deg);
+        }
+        50% {
+            border-top: 10px solid #6d91ff;
+            border-left: 10px solid #6d91ff;
+            transform: rotate(315deg);
+        }
+        100% {
+            border-top: 10px solid #6d91ff;
+            border-left: 10px solid #6d91ff;
+            transform: rotate(315deg);
+        }
+    }
+    @-webkit-keyframes load_right {
+        0% {
+            transform: rotate(135deg);
+        }
+        50% {
+            border-bottom: 10px solid #90b2ff;
+            border-right: 10px solid #90b2ff;
+            transform: rotate(135deg);
+        }
+        100% {
+            border-bottom: 10px solid #6d91ff;
+            border-right: 10px solid #6d91ff;
+            transform: rotate(312deg);
+        }
+    }
+    .success {
+        width: 90px;
+        height: 90px;
+        position: relative;
+        margin: 0 auto;
+        img {
+            width: 100%;
+            height: auto;
+        }
+    }
 }
 </style>

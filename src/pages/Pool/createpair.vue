@@ -78,21 +78,21 @@
                alt="">
         </div>
         <div class="whe clearfix">
-          <el-button class="from_botton pair_mandate fl_lt" @click="handel">  Mandate</el-button>
-          <el-button class="from_botton pair_mandate pair_swap fl_rg"> Swap</el-button>
+          <el-button class="from_botton pair_mandate fl_lt" v-show="false"> Mandate</el-button>
+          <el-button class="from_botton pair_mandate pair_swap fl_rg" @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="Sponsors"
-                       v-model="value3"></frominput>
+                       v-model="sponsors"></frominput>
           </div>
           <div class="ctx_2 fl_lt">
             <frominput lable="FoxDex"
-                       v-model="value3"></frominput>
+                       v-model="foxDex"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <frominput lable="LP"
-                       v-model="value3"></frominput>
+                       v-model="lp"></frominput>
           </div>
         </div>
       </div>
@@ -151,7 +151,9 @@ export default {
       firstTokenWeight:'',
       secondTokenNum:'',
       secondTokenWeight:'', 
-      value3:'',
+      sponsors:0,
+      foxDex:0,
+      lp:0,
       BFactoryContract:null,
       firstCoinContract:null,
       bPoolContract:null,
@@ -177,13 +179,19 @@ export default {
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
+        that.getSwapFeeForDex()
         // that.checkBind(that.bPoolContract)
         // that.unBindCoin();
-        // that.finalize('TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9')
       })
     },
     async getBFactoryContract(){//链接BFactory合约
-      this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);         
+      this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);   
+    },
+    async getSwapFeeForDex(){   
+      var functionSelector = 'swapFeeForDex()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager,functionSelector,{}, parameter);
+      this.foxDex = parseInt(transaction.constant_result[0],16)
     },
     async createBPool () {//newBPool
       let that = this
@@ -197,6 +205,8 @@ export default {
             })
             if(res){
               that.bPoolContract = res
+              that.setSwapLpFee()
+              that.setSponsors()
               approved(that.token1.address,res).then(()=>{
                 let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
                 let weight = window.tronWeb.toBigNumber(that.firstTokenWeight*Math.pow(10,18)).toString(10)
@@ -213,6 +223,36 @@ export default {
         catch (error) {
           console.log(error);
         }
+    },
+    async setSwapLpFee(){//设置LP
+      if(this.lp==0){
+        return
+      }
+      var functionSelector = 'setSwapLpFee(uint256)';
+      var parameter = [{type: 'uint256', value: this.lp*Math.pow(10,18)}]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
+    },
+    async setSponsors(){//设置sponsors
+      if(this.sponsors==0){
+        return
+      }
+      var functionSelector = 'setSwapBuilderFee(uint256)';
+      var parameter = [{type: 'uint256', value: this.sponsors*Math.pow(10,18)}]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+              alert('success');
+          });
+      }) 
     },
     async finalize(address){
       let that = this
@@ -247,7 +287,6 @@ export default {
           if(name=='token2IsBind')
             that.token2IsBind = true
           if(that.token1IsBind && that.token2IsBind){
-            console.log(1111)
             that.finalize(that.bPoolContract)
           }  
         })

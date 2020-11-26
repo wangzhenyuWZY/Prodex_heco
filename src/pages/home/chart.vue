@@ -28,17 +28,21 @@ export default {
         let myChart = this.$echarts.init(document.getElementById('myChart'));
        let option = {
          
-
     xAxis: [
-      {splitLine: {show: false,},
+      {splitLine: {
+        show: false,
+        
+      },
         type: 'category',
         boundaryGap: false,
-        data: ['7月', '8月', '9月', '10月']
+        data: [ '1月','2月','3月','4月','5月','6月', '7月', '8月', '9月', '10月']
         
       },
     ],
     yAxis: [
-      {splitLine: {show: false,},
+      {splitLine: {
+        
+        show: false,},
       position:'right',
       type : 'value',
       splitArea : {show : true}
@@ -47,9 +51,10 @@ export default {
       type: 'value'
       },],
     series: [{
-        data: [520, 932, 301, 434],
+        data: [520, 932, 301, 434,300,412,522,333,666,771],
         type: 'line',
         areaStyle: {}
+        
        }]
     };
 
@@ -78,6 +83,7 @@ export default {
   color: #0F1730;
   line-height: 21px;
   margin: 0 32px;
+  
 
   .cp1{
     width: 63px;
