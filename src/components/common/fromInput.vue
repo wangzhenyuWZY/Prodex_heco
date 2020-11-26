@@ -101,10 +101,12 @@
     padding-left: 16px;
   }
   .from_input {
-
+    
     .input_lt {
       position: relative;
          display: flex;
+         background: #F4F5FA; 
+             border-radius: 16px;
       .input_max{
         width: 64px;
         height: 32px;

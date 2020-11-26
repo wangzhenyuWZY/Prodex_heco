@@ -29,22 +29,24 @@
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <el-button class="from_botton nav_btn ">Connect to a wallet</el-button>
+          <el-button class="from_botton nav_btn " v-if="!connectFlag">Connect to a wallet</el-button>
+          <div class="login_wallet" v-if="connectFlag">
+              <img class="wallet_img" src="@/assets/img/btn_work_wallet_nor.svg" alt="">
+              <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+               <span class="conversion">{{walletAddres.balance}}TRX</span>
+          </div>
         </div>
         <div class="nav_merge">
           <img src="@/assets/img/icon_merge.svg"
                alt="">
         </div>
-        <!-- <div class="nav-inp">1</div>
-      <div class="nav-ion1">2</div>
-      <div class="nav-ion2">3</div> -->
       </div>
     </div>
   </div>
 </template>
 
 <script>
-
+import {mapState} from "vuex"
 export default {
   data () {
     return {
@@ -79,7 +81,9 @@ export default {
       ],
     };
   },
-
+  computed: {
+    ...mapState(['walletAddres','connectFlag'])
+  },
 
   mounted () {
     try {
@@ -108,7 +112,6 @@ export default {
         for (let i = 0; i < this.tag.length; i++) {
           let el = this.tag[i].path + '';
           if (e.match(el) && el != '/') {
-            console.log(e.match(el) == e)
             this.navIndex = i;
             break;
           }
@@ -129,6 +132,15 @@ export default {
       return num1;
     },
   },
+  filters:{
+    address (n) {
+      if (!n) return '';
+      let pop  = n.slice(0, 6);
+      let len  =  n.substring(n.length-4);
+      let str = pop+'....' + len ;
+          return str;
+    }
+  }
 };
 </script>
 
@@ -215,5 +227,42 @@ export default {
 }
 .on {
   color: #ffffff;
+}
+.login_wallet{
+  height: 40px;
+  line-height: 40px;
+  border-radius: 28px;
+  border: 1px solid #0F1730;
+  color: #0F1730;
+  padding: 0 32px;
+  display: flex;
+  align-items: center;
+      cursor: pointer;
+
+  .wallet_icon{
+    font-size: 24px;
+    vertical-align: sub;
+   
+  }
+  .wallet_addrs{
+      font-size: 18px;
+      font-family: Roboto-MediumItalic, Roboto;
+       margin-left: 4px;
+       margin-right: 16px;
+  }
+  span{
+      vertical-align: sub;
+  }
+  .conversion{
+    padding: 0 16px;
+      height: 24px;
+      line-height: 24px;
+      background: #FF5D37;
+      border-radius: 28px;
+      font-size: 18px;
+      font-family: Roboto-MediumItalic, Roboto;
+      font-weight: normal;
+      color: #FFFFFF;
+  }
 }
 </style>

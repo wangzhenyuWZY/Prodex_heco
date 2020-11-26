@@ -14,7 +14,7 @@
       </div>
       <div class="pool-box2">
         <div class="pool-butt">
-          <samp class="pool-p">Your liquidity</samp>
+          <samp class="pool-p" >Your liquidity</samp>
           <div class="pool-butt1">
             <router-link to="/pool/pairs">
               <el-button class="from_botton red_button bottun_hei">Create a pair</el-button>
@@ -22,15 +22,15 @@
           </div>
           <div class="pool-butt2 ">
             <router-link to="/pool/connectpool">
-              <el-button class="from_botton bottun_hei">Add Liquidity</el-button>
+              <el-button class="from_botton bottun_hei" >Add Liquidity</el-button>
             </router-link>
           </div>
         </div>
-        <div class="pool_boxbg" v-show="false">
+        <div class="pool_boxbg" v-if="!connectFlag">
           <samp class="pool-p1">Connect to a wallet to view your liquidity.</samp>
           <samp class="pool-p2"> Don't see a pool you joined?<samp class="pool-p3"> Import it.</samp></samp>
         </div>
-        <div class="fees" v-show="true" >
+        <div class="fees" v-if="connectFlag" >
           <div class="fees_account">Acoout analytics and accrued fees <img  src="@/assets/img/icon_jump_green.png"
                  alt=""></div>
           <div class="cyrny_bg">
@@ -115,11 +115,15 @@
 </template>
 
 <script>
+import {mapActions,mapState} from 'vuex';
 export default {
  data() {
    return {
      show: false
    }
+ },
+ computed: {
+   ...mapState(['connectFlag','walletAddres'])
  },
 }
 </script>
@@ -184,6 +188,7 @@ export default {
     padding: 0 24px;
     padding-top: 16px;
     padding-bottom: 32px;
+    overflow: hidden;
     .rg{
       font-weight: bold;
     }

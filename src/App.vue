@@ -6,12 +6,29 @@
 </template>
 
 <script>
+import Vue from 'vue';
 import navBar from './components/common/Navbar'
+import {mapActions} from 'vuex'
+import initTronWeb from './utils/tronwebFn'
 export default {
   name: 'App',
   components:{
     navBar
+  },
+  created() {
+    this.init();
+  },
+  methods: {
+  ...mapActions(['connectWallett']),
+     async init () {
+    let troweb = await initTronWeb();
+    Vue.prototype.$initTronWeb =troweb;
+    this.connectWallett();
+
   }
+
+  },
+
 }
 </script>
 

@@ -4,9 +4,11 @@
       <div class="title"
            slot="title">
         <div class="lt_box">
+         <router-link  to="/pool">
           <span class="icon_box">
-            <i class="el-icon-back back_icon"></i>
-          </span>
+          <i class="el-icon-back back_icon"></i>
+        </span>
+        </router-link>
 
           <span class="content_text">Create a pair</span>
         </div>

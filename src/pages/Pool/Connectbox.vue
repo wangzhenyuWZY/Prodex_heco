@@ -4,9 +4,12 @@
     <div class="title"
          slot="title">
       <div class="lt_box">
-        <span class="icon_box">
+        <router-link  to="/pool">
+          <span class="icon_box">
           <i class="el-icon-back back_icon"></i>
         </span>
+        </router-link>
+        
         <span class="content_text">Add Liquidity</span>
       </div>
       <div class="rg_box">
@@ -19,9 +22,6 @@
          class="posting">
          <div class="xzk">
            <el-button class="xzk-but">Uni ETH-USDT <img src="../../assets/img/icon_down.svg" alt=""></el-button>
-           
-           
-           
          </div>
       <div class="setInput clearfix">
         <div class="ctx_1 fl_lt">

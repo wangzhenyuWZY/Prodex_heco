@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>我的钱包btn_work_wallet_nor@2x</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-4" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Pool_Add-Liquidity_Approve" transform="translate(-1503.000000, -25.000000)">
+            <g id="导航" transform="translate(40.000000, 12.000000)">
+                <g id="编组-4">
+                    <g transform="translate(1429.000000, 4.000000)">
+                        <g id="编组-2">
+                            <g id="编组-5" transform="translate(32.000000, 8.000000)">
+                                <g id="icon_wallet_black">
+                                    <g id="我的钱包btn_work_wallet_nor">
+                                        <g>
+                                            <rect id="Rectangle" x="0" y="0" width="24" height="24"></rect>
+                                            <g id="分组" transform="translate(2.000000, 1.000000)">
+                                                <path d="M19.4936717,9.40588534 L14.4116433,9.40588534 C12.8113312,9.40588534 11.5140219,10.7031946 11.5140219,12.3035067 C11.5140219,13.9038189 12.8113312,15.2011282 14.4116433,15.2011282 L19.4936717,15.2011282 L19.4936717,15.2011282" id="Path-29" stroke="#0F1730" stroke-width="1.52380952" stroke-linejoin="round"></path>
+                                                <circle id="椭圆形" fill="#0F1730" cx="14.5215333" cy="12.3035067" r="1.05263158"></circle>
+                                                <rect id="Rectangle" stroke="#0F1730" stroke-width="1.52380952" stroke-linecap="round" stroke-linejoin="round" x="0.929594494" y="5.25154475" width="18.5640772" height="14.103924" rx="1.05263158"></rect>
+                                                <polyline id="路径" stroke="#0F1730" stroke-width="1.52380952" stroke-linecap="round" stroke-linejoin="round" transform="translate(11.484357, 5.026233) rotate(-32.000000) translate(-11.484357, -5.026233) " points="7.49453193 2.4798617 15.4741817 2.4798617 15.4741817 7.57260376"></polyline>
+                                            </g>
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
