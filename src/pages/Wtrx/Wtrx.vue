@@ -130,7 +130,9 @@ export default {
       let that = this
       try {
         let res = await that.wtrxContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
-        that.wtrxBalance = window.tronWeb.fromSun(res)
+        that.wtrxBalance = window.tronWeb.fromSun(res);
+        this.inputdisabled1 = false
+        this.inputdisabled2 = false
       } catch (error) {
         console.log(error);
       }

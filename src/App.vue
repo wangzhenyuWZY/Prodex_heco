@@ -22,7 +22,6 @@ export default {
   ...mapActions(['connectWallett']),
      async init () {
     let troweb = await initTronWeb();
-    Vue.prototype.$initTronWeb =troweb;
     this.connectWallett();
 
   }

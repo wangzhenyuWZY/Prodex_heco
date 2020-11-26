@@ -5,10 +5,12 @@
          slot="title">
       <div class="lt_box">
         <span class="icon_box">
-          <i class="el-icon-back back_icon"></i>
+          <router-link to="/pool">
+           <i class="el-icon-back back_icon"></i>
+          </router-link>
         </span>
 
-        <span class="content_text">Add Liquidity</span>
+        <span class="content_text">Remove Liquidity</span>
       </div>
       <div class="rg_box">
         <img src="@/assets/img/icon_instructions.svg"

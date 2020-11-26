@@ -11,7 +11,7 @@ const Wtrx = ()=>import('../pages/Wtrx/Wtrx.vue')
 const Stake = ()=>import('../pages/Stake/Stake.vue')
 const Stakes = ()=>import('../pages/Stake/Selected.vue')
 const contexnt =()=>import('../pages/Pool/contexnt')
-const AddLiquidity =()=>import('../pages/Pool/AddLiquidity')
+const removeLiquidity =()=>import('../pages/Pool/removeLiquidity')
 const liquidity =()=>import('../pages/Pool/liquidity')
 const addfrombox =()=>import('../pages/Pool/addfrombox')
 const Connectbox =()=>import('../pages/Pool/Connectbox')
@@ -44,8 +44,8 @@ export default new VueRouter({
           component:selctoken
         },
         {
-          path:'AddLiquidity',
-          component:AddLiquidity
+          path:'removeLiquidity',
+          component:removeLiquidity
         },
         {
           path:'recevive',

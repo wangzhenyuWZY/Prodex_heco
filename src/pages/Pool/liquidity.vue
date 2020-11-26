@@ -93,10 +93,14 @@
                   <div class="accrued_btn clearfix">
                         
                     <div class=" btn_lt fl_lt"> 
-                      <el-button class="from_botton">Add</el-button>
+                      <router-link to="/pool/connectpool">
+                        <el-button class="from_botton">Add</el-button>
+                      </router-link>
                     </div>
                     <div class=" btn_lt fl_rg">  
-                      <el-button class="from_botton">Remove</el-button>
+                      <router-link to="/pool/removeLiquidity">
+                          <el-button class="from_botton">Remove</el-button>
+                      </router-link>
                     </div>
                   </div>
                 </div>
