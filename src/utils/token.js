@@ -56,6 +56,13 @@ export const pairList = [
         token2:'USDT',
         pair:'INVERST/USDT',
         decimals:18
+    },
+    {
+        address:'TS4NUt7q9GmqBpqZbzpFtxjkofcb7ERLXg',
+        token1:'FOX',
+        token2:'USDT',
+        pair:'FOX/USDT',
+        decimals:18
     }
 ]
 
