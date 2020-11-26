@@ -15,7 +15,7 @@ time, mark, audio, video {
  padding: 0;
  border: 0;
  font-size: 100%;
- font-family: roboto-regular;
+ font-family: Roboto-Regular, Roboto;
  vertical-align: baseline;
  box-sizing: border-box;
 
@@ -72,7 +72,7 @@ img{
     text-align: center;
     margin:0 auto;
     font-size: 20px;
-    font-family: roboto-regular;
+    font-family: Roboto-Regular, Roboto;
     color: #FFFFFF;
     cursor: pointer;
     user-select:none;
@@ -207,7 +207,7 @@ img{
 .box_sizes{
     background: #f4f5fa;
       border-radius: 16px;
-      font-family: roboto-regular;
+      font-family: Roboto-Regular, Roboto;
   }
   .change_red{
       color: #FF5D37;

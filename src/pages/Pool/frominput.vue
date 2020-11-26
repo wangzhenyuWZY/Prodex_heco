@@ -139,7 +139,7 @@
         > li {
           height: 32px;
           line-height: 32px;
-          font-family: roboto-regular;
+          font-family: Roboto-Regular, Roboto;
           color: #e5ebf2;
           span {
             display: inline-block;
@@ -163,13 +163,13 @@
     text-align: right;
     .from_size {
       font-size: 20px;
-      font-family: roboto-regular;
+      font-family: Roboto-Regular, Roboto;
       color: #b7bfc8;
       margin-left: 8px;
       margin-right: 6px;
     }
     .show_size {
-      font-family: roboto-regular;
+      font-family: Roboto-Regular, Roboto;
       color: #ed4d21;
     }
   }

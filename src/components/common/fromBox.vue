@@ -96,7 +96,7 @@ export default {
     text-align: right;
     .from_size {
       font-size: 20px;
-      font-family: roboto-regular;
+      font-family: Roboto-Regular, Roboto;
       color: #b7bfc8;
       margin-left: 8px;
       margin-right: 6px;
@@ -165,7 +165,7 @@ export default {
   background: #0f1522;
   border-radius: 16px;
   padding: 32px 0;
-  font-family: roboto-regular;
+  font-family: Roboto-Regular, Roboto;
   color: #e5ebf2;
   p {
     text-align: center;

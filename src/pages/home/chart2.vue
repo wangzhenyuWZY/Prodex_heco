@@ -104,7 +104,7 @@ let option = {
     width: 114px;
     height: 20px;
     font-size: 18px;
-    font-family: roboto-regular;
+    font-family: Roboto-Regular, Roboto;
     color: #0F1730;
     line-height: 21px;
     margin-left: 32px;
@@ -120,7 +120,7 @@ let option = {
         width: 72px;
         height: 20px;
         font-size: 18px;
-        font-family: roboto-regular;
+        font-family: Roboto-Regular, Roboto;
         color: #00CA8C;
         line-height: 21px;
     }

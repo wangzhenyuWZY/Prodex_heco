@@ -170,7 +170,7 @@ export default {
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: roboto-regular;
+    font-family: Roboto-Regular, Roboto;
     color: #0f1730;
     text-align: center;
   }

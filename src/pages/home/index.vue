@@ -319,7 +319,7 @@ import chart2 from './chart2.vue'
       width: 262px;
       height: 20px;
       font-size: 18px;
-      font-family: roboto-regular;
+      font-family: Roboto-Regular, Roboto;
       color: #A6AEB7;
       line-height: 21px;
       margin-top: 14px;
@@ -374,7 +374,6 @@ margin-top: 40px;
     margin-top: 53px;
     margin-left: 41px;
     float: left;
-    width: 110px;
     height: 22px;
     font-size: 20px;
     font-family: roboto-mediumitalic;
@@ -400,7 +399,7 @@ margin-top: 40px;
     width: 197px;
     height: 20px;
     font-size: 18px;
-    font-family: roboto-regular;
+    font-family: Roboto-Regular, Roboto;
     } 
   }
   }
@@ -442,8 +441,10 @@ margin-top: 40px;
 
 </style>
 <style  scoped>
-
-
+>>>.cell{
+  /* margin-left: 10px; */
+  
+}
   >>>.adddd{
     background-color: #F4F8FB;
     margin-left: 41px;
