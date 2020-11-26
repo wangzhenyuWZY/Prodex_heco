@@ -22,15 +22,19 @@
       <div slot="body"
            class="posting">
         <div class="xzk"
-            v-show="showFees(token1)"
+             v-show="showFees(token1)"
              @click="validation">
-          <div class="fees"> 
-            <span> 
-              <img src="@/assets/img/btc.svg" alt="">
-              <img v-show="showFees(token2)" src="@/assets/img/btc.svg" alt=""> 
-            </span> 
+          <div class="fees">
+            <span>
+              <img src="@/assets/img/btc.svg"
+                   alt="">
+              <img v-show="showFees(token2)"
+                   src="@/assets/img/btc.svg"
+                   alt="">
+            </span>
             <span class="fees_zies">Uni {{token1.name}}-{{token2.name}} </span>
-             <img src="@/assets/img/icon_down.svg" alt="">
+            <img src="@/assets/img/icon_down.svg"
+                 alt="">
           </div>
         </div>
         <div class="setInput clearfix">
@@ -93,10 +97,11 @@
             <el-button class="from_botton"
                        @click="doApprove">Approve {{token1.name}}</el-button>
           </div>
-        <div class="whe fl_rg">
-          <el-button class="from_botton black_botton" @click="supply">Supply</el-button>
+          <div class="whe fl_rg">
+            <el-button class="from_botton black_botton"
+                       @click="supply">Supply</el-button>
+          </div>
         </div>
-
       </div>
       <div slot="footer"
            class="position">
@@ -164,7 +169,7 @@ export default {
       token1: {},
       token2: {},
       token3: {},
-      pair:{},
+      pair: {},
       token: {},
       isSelect: false,
       item: 1,
@@ -177,8 +182,8 @@ export default {
       selectColor2: false,
       inputDisabled: false,
       selectType: '',
-      item:1,
-      iSingle:false
+      item: 1,
+      iSingle: false
     }
   },
   components: {
@@ -202,7 +207,7 @@ export default {
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase()
       })
-      if(pair){
+      if (pair) {
         this.pair = pair[0]
         var fun = 'decimals()';
         var par = []
@@ -212,14 +217,14 @@ export default {
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
       }
     },
-    supply(){
-      if(this.iSingle){
+    supply () {
+      if (this.iSingle) {
         this.joinswapExternAmountIn()
-      }else{
+      } else {
         this.joinPool()
       }
     },
-    async joinPool(){
+    async joinPool () {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
       var parameter = [
@@ -227,7 +232,7 @@ export default {
         { type: 'uint256[]', value: [that.token1Num * Math.pow(10, that.token1.decimals), that.token2Num * Math.pow(10, that.token2.decimals)] },
       ]
       console.log(parameter)
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -240,11 +245,11 @@ export default {
       let that = this
       var functionSelector = 'joinswapExternAmountIn(address,uint256,uint256)';
       var parameter = [
-          {type: 'address',value: that.token1.address},
-          {type: 'uint256', value: that.token1Num*Math.pow(10, that.token1.decimals)},
-          {type: 'uint256', value: 0}
+        { type: 'address', value: that.token1.address },
+        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'uint256', value: 0 }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR',functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR', functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -253,14 +258,14 @@ export default {
         });
       })
     },
-    changeCoin (token) { 
+    changeCoin (token) {
       let that = this
       this.isSelect = false
-      decimals(token.address).then((res)=>{
+      decimals(token.address).then((res) => {
         token.decimals = res
-        if(token.item==0){
+        if (token.item == 0) {
           that.token1 = token
-           that.selectColor1 = true;
+          that.selectColor1 = true;
           that.selectType = token.name;
           allowance(that.token1.address).then((res) => {
             if (res) {
@@ -281,9 +286,9 @@ export default {
           this.token2 = token
         }
         that.getBalance(token)
-      }).catch ((err)=>{
-          console.log(err);
-      }) 
+      }).catch((err) => {
+        console.log(err);
+      })
     },
     doApprove () {
       if (this.token1.address && this.token2.address) {
@@ -310,9 +315,9 @@ export default {
         { type: 'address', value: address1 },
         { type: 'address', value: address2 }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address,functionSelector,{}, parameter);
-      if(transaction){
-        name=='justPrice'?this.justPrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals):this.reversePrice=parseInt(transaction.constant_result[0],16)/Math.pow(10,this.decimals)
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+      if (transaction) {
+        name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.decimals)
       }
     },
     async checkBind () {//检查是否绑定
@@ -334,11 +339,11 @@ export default {
       }
     },
     showFees (n) {  // 是否显示联动框
-        if (JSON.stringify(n) == "{}") {
-              return false
-        } 
-        return true;
-    }, 
+      if (JSON.stringify(n) == "{}") {
+        return false
+      }
+      return true;
+    },
     linkage (token) { // 联动
       this.token3 = token;
       this.isSelect = false;
@@ -354,12 +359,12 @@ export default {
       this.item = index
     },
     sbmitBtn () {
-      if (this.showFees(this.token1)&& this.showFees(this.token2)) {  // 是否为空    
-          if (this.token1Num!=''&&this.token2Num!="") {
+      if (this.showFees(this.token1) && this.showFees(this.token2)) {  // 是否为空    
+        if (this.token1Num != '' && this.token2Num != "") {
 
-          }
+        }
       }
-       
+
     }
   }
 }
@@ -382,18 +387,17 @@ export default {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    .fees_zies{
+    .fees_zies {
       font-size: 20px;
       font-family: Roboto-Medium, Roboto;
       font-weight: 500;
       margin: 0 8px;
-
     }
     img {
       width: 32px;
       height: 32px;
     }
-    .fees_zies{
+    .fees_zies {
     }
     img:nth-child(2) {
       transform: translateX(-16px);
