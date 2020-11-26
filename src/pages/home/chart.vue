@@ -27,28 +27,31 @@ export default {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('myChart'));
        let option = {
-    xAxis: {
+         
+
+    xAxis: [
+      {splitLine: {show: false,},
         type: 'category',
         boundaryGap: false,
         data: ['7月', '8月', '9月', '10月']
-    },
+        
+      },
+    ],
     yAxis: [
-     {
+      {splitLine: {show: false,},
       position:'right',
       type : 'value',
       splitArea : {show : true}
-                },
+      },
       {
-        type: 'value'
-    },
-    ],
-    
+      type: 'value'
+      },],
     series: [{
         data: [520, 932, 301, 434],
         type: 'line',
         areaStyle: {}
-    }]
-};
+       }]
+    };
 
         // 绘制图表
         myChart.setOption(option);

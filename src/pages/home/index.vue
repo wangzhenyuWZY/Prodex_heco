@@ -18,7 +18,9 @@
           <chart/>
         </div>
         <div class="mian-box2">
-         <chart2 /> 
+
+         <!-- <chart2 />  -->
+         <circular />
         </div>
       </div>
 
@@ -42,7 +44,7 @@
     <el-table-column
       prop="address"
       label="name"
-      width="200">
+      width="170">
     </el-table-column>
     <el-table-column
       prop="assets"
@@ -67,7 +69,8 @@
     </el-table-column>
     <el-table-column
       prop="volume"
-      label="Price change(24hr)">
+      label="Price change(24hr)"
+      width="200">
     </el-table-column>
     </el-table>
     
@@ -100,7 +103,7 @@
     <el-table-column
       prop="address"
       label="name"
-      width="200">
+      width="170">
     </el-table-column>
     <el-table-column
       prop="assets"
@@ -125,7 +128,9 @@
     </el-table-column>
     <el-table-column
       prop="volume"
-      label="Price change(24hr)">
+      label="Price change(24hr)"
+      width="200"
+      >
     </el-table-column>
     </el-table>
     
@@ -140,11 +145,17 @@
  </div>
  <div class="c-box2" >
   <div class="b2-top">
-<samp class="top1">Transactions</samp> <div class="top-inp"><input type="text" placeholder="Please enter Top Tokens"></div>
+<samp class="top1">Transactions</samp>
+ <div class="top-inp">
+    <img  class="t-img" src="../../assets/img/sousuo.png" alt="">
+
+  <input type="text"  placeholder="Please enter Top Tokens">
+  </div>
   </div>
 
   <div class="table">
     <el-table
+     
       :data="tableData"
       header-cell-class-name="adddd"
       header-row-class-name="tabe_tr"
@@ -154,7 +165,7 @@
     <el-table-column
       prop="address"
       label="name"
-      width="200">
+      width="170">
     </el-table-column>
     <el-table-column
       prop="assets"
@@ -179,7 +190,8 @@
     </el-table-column>
     <el-table-column
       prop="volume"
-      label="Price change(24hr)">
+      label="Price change(24hr)"
+      width="200">
     </el-table-column>
     </el-table>
       </div>
@@ -195,11 +207,13 @@
 </template>
 
 <script>
+
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
+import circular from './circular'
 
  export default {
-  components: { chart, chart2 },
+  components: { chart, chart2,circular},
     data() {
       return {
         tableData: [{
@@ -284,8 +298,10 @@ import chart2 from './chart2.vue'
 </script>
 <style  lang="scss" scoped>
 .t-img{
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
+  margin-left: 207px;
+
 
 }
 
@@ -325,9 +341,7 @@ import chart2 from './chart2.vue'
       margin-top: 14px;
       margin-left: 280px;
   }
-  
 }
-
 .c-box1{
 width: 1200px;
 height: 1004px;
@@ -394,8 +408,8 @@ margin-top: 40px;
     border-radius: 28px;
     color: #A6AEB7;
     line-height: 21px;
-    margin-left: 207px;
-    margin-top: 14px;
+    // margin-left: 207px;
+    margin-top: 12px;
     width: 197px;
     height: 20px;
     font-size: 18px;
@@ -405,6 +419,7 @@ margin-top: 40px;
   }
 
   .pagin{
+    
     margin-left: 400px; 
     margin-top: 33px;
   }
@@ -416,6 +431,7 @@ margin-top: 40px;
   .tabe_tr{
     /* background-image: linear-gradient(131deg, #FFA61B 0%, #F3330E 100%) ; */
     height: 40px;
+  
   }
 }
 
@@ -442,7 +458,7 @@ margin-top: 40px;
 </style>
 <style  scoped>
 >>>.cell{
-  /* margin-left: 10px; */
+  margin-left: 30px;
   
 }
   >>>.adddd{
