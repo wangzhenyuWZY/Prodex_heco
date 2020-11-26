@@ -167,7 +167,7 @@ export default {
         this.$layer.msg('请选择交易对')
       }
     },
-    async getPairAddress(){
+    async getPairAddress(token){
       let that = this
       let pairname = this.token1.name+'/'+this.token2.name
       let pairname1 = this.token2.name+'/'+this.token1.name
