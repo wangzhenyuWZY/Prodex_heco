@@ -40,7 +40,9 @@
               <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg">
-                 <el-button class="from_botton" v-show="!connectFlag" > <img class="whe_img"
+                 <el-button class="from_botton" v-show="!connectFlag" 
+                 @click="btnClick"
+                 > <img class="whe_img"
                  src="@/assets/img/icon_my_wallet.svg"
                  alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}</el-button>
             
@@ -157,12 +159,23 @@ export default {
      token2Num() {
       this.inputFlag();
     }
+    
   },
   methods:{
+    btnClick () {
+      this.$popup({
+        click: () => {
+          // 点击按钮事件
+          this.$router.push('../../popup/popup')
+        }
+      })
+    },
+
     showSelect(index){
       this.isSelect = true
       this.item = index
     },
+    
     changeCoin(token){
       let that = this
       this.isSelect = false

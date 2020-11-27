@@ -10,12 +10,16 @@ import initTronWeb from './utils/tronwebFn'
 import layer from 'vue-layer'
 import 'vue-layer/lib/vue-layer.css';
 import store from './store/index';
+import Popup from './popup/popup';
+Vue.prototype.$popup = Popup.install
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$initTronWeb =initTronWeb;
 Vue.use(Element);
 Vue.config.productionTip = false
+
 // 引入echarts
 import echarts from 'echarts'
+
 Vue.prototype.$echarts = echarts 
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', () => {

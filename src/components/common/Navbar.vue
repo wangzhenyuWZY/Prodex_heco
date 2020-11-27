@@ -29,7 +29,7 @@
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <el-button class="from_botton nav_btn " v-if="!connectFlag">Connect to a wallet</el-button>
+          <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
           <div class="login_wallet" v-if="connectFlag">
               <img class="wallet_img" src="@/assets/img/btn_work_wallet_nor.svg" alt="">
               <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -106,6 +106,18 @@ export default {
   },
 
   methods: {
+     btnClick () {
+      this.$popup({
+        click: () => {
+          // 点击按钮事件 
+        
+          this.$router.push('../../popup/popup')
+
+        }
+      })
+    },
+
+
     handelActive (e, index) {
       if (e == '/') {
         this.navIndex = 0;

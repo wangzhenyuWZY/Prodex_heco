@@ -15,7 +15,7 @@
 
       <div class="mag_list">
         <div class="currency_list">
-         <button class="con-but"   > <img src="../../assets/img/conter.png" alt=""> Tronlink wallet</button>
+         <button class="con-but"   > <img src="../assets/img/conter.png" alt=""> Tronlink wallet</button>
         </div>
       </div>
       <div class="con-p"><samp class="con-p1">Haven't installed TronLink yet?<samp class="con-p2">Click here>></samp></samp></div>
@@ -25,12 +25,12 @@
 </template>
 
 <script>
-import tokenData from '../../utils/token'
+import tokenData from '../utils/token'
 export default {
   props: {
     showAlert: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     item: {
       type: Number,
@@ -62,7 +62,9 @@ export default {
   },
   methods: {
     handleClosea () {
-          this.$emit('closeAlert')
+          this.showAlert = !this.showAlert;
+          return true.showAlert;
+          // this.$emit('closeAlert')
     },
     filter (n) {
          if (this.selectType == '') { 
