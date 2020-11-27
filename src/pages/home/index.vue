@@ -118,7 +118,7 @@ export default {
               el.Liquidity = res2;
               arr.push(el);
          }
-          localStorage.setItem('pairList',JSON.stringify(arry));
+          localStorage.setItem('pairList',JSON.stringify(arr));
          this.pairList = arr;
       }
   },
