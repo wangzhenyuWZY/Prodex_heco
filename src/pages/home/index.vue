@@ -19,8 +19,8 @@
         </div>
         <div class="mian-box2">
 
-         <!-- <chart2 />  -->
-         <circular />
+         <chart2 /> 
+         <!-- <circular /> -->
         </div>
       </div>
 
@@ -291,7 +291,6 @@ import circular from './circular'
           myliquidity: '- -',
           volume: '$1.4M',
         }]
-        
       }
     }
   }
@@ -301,10 +300,7 @@ import circular from './circular'
   width: 22px;
   height: 22px;
   margin-left: 207px;
-
-
 }
-
 .c-top{
   margin: 0 auto;
   overflow: hidden;
@@ -321,8 +317,6 @@ import circular from './circular'
   font-weight: normal;
   color: #0F1730;
   line-height: 28px;
-  
-
 }
 .c-inp{
   margin-top: 16px ;
@@ -331,7 +325,6 @@ import circular from './circular'
   background: #FFFFFF;
   border-radius: 28px; 
   input{
-      
       width: 262px;
       height: 20px;
       font-size: 18px;
@@ -364,7 +357,6 @@ margin-top: 40px;
     color: #0F1730;
     line-height: 23px;
   }
-
 }
 .mian-box1,.mian-box2{
   width: 960px;
@@ -381,7 +373,6 @@ margin-top: 40px;
   overflow: hidden;
   margin-top: 24px;
   background: #FFFFFF;
- 
   .b2-top{
     height: 112px;
   .top1{
@@ -417,14 +408,11 @@ margin-top: 40px;
     } 
   }
   }
-
   .pagin{
-    
     margin-left: 400px; 
     margin-top: 33px;
   }
 .table{
-    
     height: 760px;
     background: #ffffff;
  
