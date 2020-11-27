@@ -102,5 +102,39 @@ const getConfirmedTransaction = (id) => {//轮询获取交易信息
     })
 }
 
-export {approved,decimals,getConfirmedTransaction,allowance}
+const getBalanceInPool = (pair,coin) =>{//获取单个币种在Pool中的余额
+    return new Promise(function (resolve, reject) {
+        var functionSelector = 'getBalance(address)';
+        var parameter = [
+            {type: 'address', value: coin.address}
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+            let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
+            resolve(tokenBalanceInPool);
+        })
+    })
+}
+const getMyBalanceInPool = (pair) =>{//获取Pool中我的LPtoken余额
+    return new Promise(function (resolve, reject) {
+        var functionSelector = 'balanceOf(address)';
+        var parameter = [
+            {type: 'address', value: window.tronWeb.defaultAddress.base58}
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+            let myBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+            resolve(myBalanceInPool);
+        })
+    })
+}
+const getLpBalanceInPool = (pair) =>{//获取LPtoken总额
+    return new Promise(function (resolve, reject) {
+        var functionSelector = 'totalSupply()';
+        var parameter = []
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
+            let lpTotal = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+            resolve(lpTotal);
+        })
+    })
+}
+export {approved,decimals,getConfirmedTransaction,allowance,getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool}
 export default initTronWeb;
