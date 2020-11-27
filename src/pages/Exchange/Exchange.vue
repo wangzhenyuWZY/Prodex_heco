@@ -95,6 +95,7 @@
        />
     <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
   </div>
+ 
 </template>
 
 <script>

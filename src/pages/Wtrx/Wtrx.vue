@@ -352,13 +352,14 @@ export default {
   height: 300px;
 }
 .wtrx-bottom p:nth-child(1) {
-  font-weight: normal;
+  font-family: Roboto-Medium, Roboto;
   font-size: 18px;
   margin-top: 48px;
   text-align: center;
   line-height: 21px;
 }
 .wtrx-bottom p:nth-child(2) {
+  font-family: Roboto-Regular, Roboto;
   margin-top: 8px;
   font-size: 18px;
   color: #878b97;
@@ -366,10 +367,12 @@ export default {
   line-height: 24px;
 }
 .wtrx-bottom p:nth-child(3) {
+  font-family: Roboto-Medium, Roboto;
   margin-top: 20px;
   text-align: center;
 }
 .wtrx-bottom p:nth-child(4) {
+  font-family: Roboto-Medium, Roboto;
   margin-top: 8px;
   color: #878b97;
   text-align: center;

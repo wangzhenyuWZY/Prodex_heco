@@ -123,8 +123,6 @@ export default {
   methods: {
     handleClosea () {
           this.$emit('closeAlert')
-
-     
     },
     filter (n) {
          if (this.selectType == '') { 
