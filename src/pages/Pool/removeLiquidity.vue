@@ -91,7 +91,7 @@
                       alt="">
                   <span>{{token1.name}}</span>
                 </div>
-                <div class="rg"> {{token1.balanceInPool}}</div>
+                <div class="rg"> {{token1BalanceInPool}}</div>
               </div>
               <div class="received ive_top">
                 <div class="lt">
@@ -99,7 +99,7 @@
                       alt="">
                   <span>{{token2.name}}</span>
                 </div>
-                <div class="rg">{{token2.balanceInPool}}</div>
+                <div class="rg">{{token2BalanceInPool}}</div>
               </div>
             </div>
             <div class="weth">
@@ -147,7 +147,9 @@ export default {
       decimals:0,
       pair:{},
       token1:{},
-      token2:{}
+      token2:{},
+      token1BalanceInPool:0,
+      token2BalanceInPool:0
     }
   },
   components: {
@@ -158,6 +160,8 @@ export default {
       this.pair = JSON.parse(this.$route.params.pair)
       this.token1 = this.pair.token1
       this.token2 = this.pair.token2
+      this.token1BalanceInPool = this.token1.balanceInPool
+      this.token2BalanceInPool = this.token2.balanceInPool
       this.getBalance()
     }
   },
@@ -218,6 +222,8 @@ export default {
       }else{
         this.percentage = 0
       }
+      this.token1BalanceInPool = this.token1.balanceInPool*percentage/100
+      this.token2BalanceInPool = this.token2.balanceInPool*percentage/100
       console.log('this.slidenum========'+this.slidenum)
     }
   }

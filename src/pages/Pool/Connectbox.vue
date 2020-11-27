@@ -12,6 +12,8 @@
           </router-link>
 
           <span class="content_text">Add Liquidity</span>
+          <el-button class="typeBtn" @click="iSingle=true" type="small">Single Token </el-button>
+          <el-button class="typeBtn" @click="iSingle=false" type="small">Double Token </el-button>
         </div>
         <div class="rg_box">
           <img src="@/assets/img/icon_instructions.svg"
@@ -42,11 +44,11 @@
             <frominput lable="input"
                        showmax
                        :balance='token1.balance'
-                       v-model="token1Num"></frominput>
+                       v-model="token1Num"
+                       @input="calcShare"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <setselect lable="321321"
-                       :showSelect="selectColor1"
                        :imgUrl="token1.img"
                        item='1'
                        :balance="token1.balance"
@@ -55,17 +57,15 @@
           </div>
         </div>
 
-        <div class="from_contentIcon">+</div>
-        <div class="setInput clearfix">
+        <div class="from_contentIcon" v-show="!iSingle">+</div>
+        <div class="setInput clearfix" v-show="!iSingle">
           <div class="ctx_1 fl_lt">
             <frominput lable="input"
-                       :disabled="iSingle"
                        placeholder=""
                        v-model="token2Num"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :showSelect="selectColor2"
-                       :imgUrl="token2.img"
+            <setselect :imgUrl="token2.img"
                        item='2'
                        :balance="token2.balance"
                        :text="token2.name"
@@ -85,7 +85,7 @@
                 <p>{{token2.name}} per {{token1.name}}</p>
               </li>
               <li>
-                <p>0</p>
+                <p>{{share}}%</p>
                 <p>Share of Pool</p>
               </li>
             </ul>
@@ -157,10 +157,12 @@
 </template>
 
 <script>
+import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
 import tokenData from '../../utils/token'
-import { decimals, allowance, approved } from '../../utils/tronwebFn'
+import { decimals, allowance, approved, getLpBalanceInPool } from '../../utils/tronwebFn'
+import {calcPoolOutGivenSingleIn} from '../../utils/calc_comparisons'
 export default {
   data () {
     return {
@@ -177,13 +179,16 @@ export default {
       reversePrice: 0,
       decimals: 18,
       isApproved: true,
-      selectColor1: false,
-      selectColor2: false,
       selectType: '',
       item: 1,
       iSingle: false,
       token1Balance:0,
-      token2Balance:0
+      token2Balance:0,
+      lpTotal:0,
+      denormalizedWeight:0,
+      totalDenormalizedWeight:0,
+      foxDex:0,
+      share:0
     }
   },
   components: {
@@ -204,6 +209,55 @@ export default {
     }
   },
   methods: {
+    calcShare(){
+      this.getShare()
+    },
+    getShare(){
+      let that = this
+      if(this.token1Num && this.token1Num!==0 && this.iSingle){
+        if(this.token1Balance&&this.denormalizedWeight&&this.lpTotal&&this.totalDenormalizedWeight){
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+          console.log('poolOut======'+poolOut)
+          this.share = (poolOut/this.lpTotal*100).toFixed(2)
+        }else{
+          getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
+            that.lpTotal = res
+          })
+          this.getDenormalizedWeight()//获取token1在pool中的权重
+          this.getTotalDenormalizedWeight()//获取lptoken总权重
+          this.getSwapFeeForDex()//获取swapfee
+        }
+      }else{
+        this.share = 0
+      }
+    },
+    async getDenormalizedWeight(){
+      var functionSelector = 'getDenormalizedWeight(address)';
+      var parameter = [
+        { type: 'address', value: this.token1.address }
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+      if (transaction) {
+        this.denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
+        console.log('this.denormalizedWeight========'+this.denormalizedWeight)
+      }
+    },
+    async getTotalDenormalizedWeight(){
+      var functionSelector = 'getTotalDenormalizedWeight()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+      if (transaction) {
+        this.totalDenormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
+        console.log('this.totalDenormalizedWeight========'+this.totalDenormalizedWeight)
+      }
+    },
+    async getSwapFeeForDex(){   
+      var functionSelector = 'swapFeeForDex()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager,functionSelector,{}, parameter);
+      this.foxDex = parseInt(transaction.constant_result[0],16)
+      console.log('this.foxDex========'+transaction.constant_result[0])
+    },
     async getPairAddress () {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
@@ -212,20 +266,15 @@ export default {
       })
       if (pair) {
         this.pair = pair[0]
-        var fun = 'decimals()';
-        var par = []
-        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(pair[0].address, fun, {}, par);
-        this.decimals = parseInt(res.constant_result[0], 16)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
-        // this.getBalanceInPool(pair[0],this.token1).then((res)=>{
-        //   this.token1Balance = res
-        //   console.log('token1Balance===='+this.token1Balance)
-        // })
-        // this.getBalanceInPool(pair[0],this.token2).then((res)=>{
+        this.getBalanceInPool(pair[0],this.token1).then((res)=>{//获取token1在pool中的总量
+          this.token1Balance = res
+        })
+        // this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
         //   this.token2Balance = res
-        //   console.log('token2Balance===='+this.token2Balance)
         // })
+        
         allowance(this.token1.address,pair[0].address).then((res) => {
           if (res) {
             let approveBalance = parseInt(res._hex,16)
@@ -294,7 +343,6 @@ export default {
         token.decimals = res
         if (token.item == 0) {
           that.token1 = token
-          that.selectColor1 = true;
           that.selectType = token.name;
         } else {
           that.selectColor2 = true;
@@ -345,7 +393,7 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.decimals)
+        name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
       }
     },
     async checkBind () {//检查是否绑定
@@ -358,7 +406,7 @@ export default {
       let str = JSON.stringify(this.token1);
       if (str != "{}") {
         this.isSelect = true;
-        this.selectType = this.token1.name
+        // this.selectType = this.token1.name
       } else {
         this.$message({
           message: '请先选择交易对',
@@ -373,37 +421,8 @@ export default {
       return true;
     },
     linkage (token) { // 联动
-      let that = this
-      this.pair = token;
       this.isSelect = false;
-      this.token2.name = this.selectType == token.token1.name ? token.token2.name : token.token1.name;
-      this.selectColor1 = true;
-      this.selectColor2 = true;
-      this.iSingle = true;
-      this.getSpotPrice(token.token1.address, token.token2.address, 'justPrice')
-      this.getSpotPrice(token.token2.address, token.token1.address, 'reversePrice')
-      // this.getBalanceInPool(this.pair,token.token1).then((res)=>{
-      //   this.token1Balance = res
-      //   console.log('token1Balance===='+this.token1Balance)
-      // })
-      // this.getBalanceInPool(this.pair,token.token2).then((res)=>{
-      //   this.token2Balance = res
-      //   console.log('token2Balance===='+this.token2Balance)
-      // })
-      allowance(token.token1.address,token.address).then((res) => {
-        if (res) {
-          let approveBalance = parseInt(res._hex,16)
-          if (approveBalance == 0) {
-            that.$message({
-              message: '未授权请先授权',
-              type: 'error'
-            });
-            that.isApproved = false
-          } else {
-            that.isApproved = true
-          }
-        }
-      })
+      this.getBasicInfo(token.token2)
     },
     showSelect (index) {
       if (index == 1 && this.iSingle) return;
@@ -521,5 +540,9 @@ export default {
 .currencyprices {
   width: 190px;
   text-align: right;
+}
+.typeBtn{
+  border-color:#409EFF;
+  border-radius:25px;
 }
 </style>
