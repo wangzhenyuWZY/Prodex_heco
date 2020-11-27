@@ -152,7 +152,7 @@ export default {
 .stake_slect {
   color: #0f1730;
   font-size: 18px;
-
+  margin-top: 50px;
   .ctx_1 {
     width: 397px;
     display: inline-block;

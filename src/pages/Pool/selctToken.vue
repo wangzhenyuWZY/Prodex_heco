@@ -112,7 +112,7 @@ export default {
          if (this.selectType == '') {
            return tokenData.tokenList
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1|| this.selectType == el.token2 )
+           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name )
             return arry;
          }
      }
@@ -130,7 +130,7 @@ export default {
          if (this.selectType == '') { 
               return n.name;
          } else {
-            return  this.selectType  == n.token1 ?  n.token2 : n.token1;
+            return  this.selectType  == n.token1.name ?  n.token2.name : n.token1.name;
          }
     },
     selectClick (e, index) {

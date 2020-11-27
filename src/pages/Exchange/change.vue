@@ -3,7 +3,7 @@
              :visible.sync="showAlert"
              width="480px"
              custom-class="dialog_recevive"
-             :before-close="handleClosea">
+             :before-close="handleClose">
     <span slot="title"
           class="select_size">
       <span>Confirm Swap</span>
@@ -102,8 +102,8 @@ export default {
 
   }
   , methods: {
-    handleClosea () {
-
+    handleClose () {
+        this.$emit('handleClosea')
     },
     doConfirm(){
       this.$emit('doConfirm')
