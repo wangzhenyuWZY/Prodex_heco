@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title=""
+  <el-dialog title=""    
              :visible.sync="showAlert"
              width="480px"
              custom-class="dialog_selct"
@@ -8,6 +8,7 @@
           class="select_size">
       <span>Connect to Wallet</span>
       <img class="select_title"
+     
            src="@/assets/img/icon_instructions.svg"
            alt="">
     </span>
@@ -66,21 +67,6 @@ export default {
           return true.showAlert;
           // this.$emit('closeAlert')
     },
-    filter (n) {
-         if (this.selectType == '') { 
-              return n.name;
-         } else {
-            return  this.selectType  == n.token1.name ?  n.token2.name : n.token1.name;
-         }
-    },
-    selectClick (e, index) {
-      e.item = this.item
-      if (this.selectType == '') {
-        this.$emit('change', e)
-      }  else {
-          this.$emit('linkage',e)
-      }
-    },
   }
 }
 </script>
@@ -97,17 +83,14 @@ export default {
     color: #878B97;
     line-height: 21px;
     margin-left: 32px;
-
 }
-.con-p1{
-    
-height: 21px;
-font-size: 18px;
-font-family: Roboto-Regular, Roboto;
-font-weight: 400;
-color: #878B97;
-line-height: 21px;
-
+.con-p1{   
+    height: 21px;
+    font-size: 18px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #878B97;
+    line-height: 21px;
 }
 .con-p2{
    
@@ -120,15 +103,13 @@ line-height: 21px;
 }
 .conter{
     margin-top: 40px;
-    
 }
 
 >>> .dialog_selct {
     width: 480px;
     height: 273px;
     background: #FFFFFF;
-    border-radius: 20px;
-    
+    border-radius: 20px; 
 }
 >>> .dialog_selct .el-icon-close {
   font-size: 28px;
@@ -174,17 +155,12 @@ line-height: 21px;
     font-weight: 500;
     color: #0F1730;
     line-height: 24px;
-   
-}
-.mag_list{
-  
 }
 .select_size {
   font-size: 20px;
   color: #0f1730;
   font-weight: normal;
 }
-
 .currency_list {
     width: 416px;
     height: 80px;
@@ -204,7 +180,6 @@ line-height: 21px;
     margin-top: 26px;
     margin-left: 123px;
 }
-
 
 .currency_list::-webkit-scrollbar {
   width: 8px;

@@ -141,7 +141,7 @@ export default {
            await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
             this.deposit(n);
           } else {
-              this.deposit(n);
+            this.deposit(n);
           }
         } else {
         }

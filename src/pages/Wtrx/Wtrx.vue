@@ -14,14 +14,15 @@
             <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
                    v-model="trxNum"
-                    :disabled="inputdisabled1"
+                  :disabled="inputdisabled1"
                    placeholder="Please enter the amout of TRX">
             <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
-              <el-button class="from_botton"
-                         :loading="btnLoading1"
-                         :disabled="btnDisabled1"
-                         @click="changeWtrx">Confim</el-button>
+              <el-button 
+              class="from_botton"
+                  :loading="btnLoading1"
+                  :disabled="btnDisabled1"
+                  @click="changeWtrx">Confim</el-button>
             </div>
 
           </div>
