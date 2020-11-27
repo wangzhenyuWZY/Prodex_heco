@@ -76,7 +76,7 @@ export default {
         },
         {
           path: "/stake",
-          name: "stake",
+          name: "Stake",
         },
       ],
     };

@@ -337,7 +337,8 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              getConfirmedTransaction(res.txid).then(()=>{
+              getConfirmedTransaction(res.txid).then((e)=>{
+                 
                 this.$message.success('成功');
               }).catch((err)=>{
                  console.log(err);
