@@ -114,7 +114,8 @@ export default {
           let approveBalance = window.tronWeb.toSun(res._hex)
           console.log('approveBalance====',approveBalance)
           if (approveBalance == 0) {
-            pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+           await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+           this.withdraw(x||this.total.shareToal)
           } else {
               this.withdraw(x||this.total.shareToal)
           }
@@ -132,9 +133,11 @@ export default {
         let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
+          console.log(approveBalance);
           if (approveBalance == 0) {
             console.log(this.poolList[this.poolIndex].lpToken)
-            pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+           await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+            this.deposit(n);
           } else {
               this.deposit(n);
           }
@@ -160,7 +163,8 @@ export default {
         this.total.decimals = await this.getContract.decimals().call(); // 精度
         let res = await this.toDecimal(balanceOf._hex);
         console.log(res);
-        this.total.balanceOf = res == 0 ? 0 : res / Math.pow(10,this.total.decimals);
+        // this.total.balanceOf = res == 0 ? 0 : res / Math.pow(10,this.total.decimals);
+        this.total.balanceOf = res 
       } catch (error) {
         console.log('getContracts==', error)
       }
@@ -181,7 +185,7 @@ export default {
       try {
         let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
         let res = await this.toDecimal(balanceOf._hex);
-        this.total.balanceOf = Math.pow(res, -this.total.decimals);
+        this.total.balanceOf =res;
         let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
         this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
       } catch (error) {
@@ -226,7 +230,7 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
-      n = n* Math.pow(10,this.total.decimals);
+      // n = n* Math.pow(10,this.total.decimals);
       let num = await this.MasterChefContract['deposit'](this.poolIndex, n).send(data);
       if (num) {
         this.updata();
