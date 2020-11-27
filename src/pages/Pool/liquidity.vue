@@ -47,7 +47,7 @@
             <img src="@/assets/img/icon_jump_green.png" alt="" />
           </div>
           <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index">
-            <div class="fees_curny clearfix" @click="show = !show">
+            <div class="fees_curny clearfix" @click="item.show = !item.show">
               <div class="curny_lt fl_lt">
                 <span class="lt_img">
                   <img src="@/assets/img/btc.svg" alt="" />
@@ -59,13 +59,13 @@
                 <span>Manage</span>
                 <img
                   src="@/assets/img/icon_down.png"
-                  :class="show ? 'actvimg' : 'liveimg'"
+                  :class="item.show ? 'actvimg' : 'liveimg'"
                   alt=""
                 />
               </div>
             </div>
 
-            <div class="box_sizes" :class="show ? 'transition' : 'hide_box'">
+            <div class="box_sizes" :class="item.show ? 'transition' : 'hide_box'">
               <div class="provider">
                 <div class="fees_share">
                   <div class="received">
@@ -133,17 +133,25 @@
 
 <script>
 import { mapActions, mapState } from "vuex";
-import {pairList} from "../../utils/token"
+import tokenData from "../../utils/token"
 export default {
   data() {
     return {
       show: false,
-      pairList:pairList
     };
   },
   computed: {
     ...mapState(["connectFlag", "walletAddres"]),
+    pairList(){
+      tokenData.pairList.forEach((item)=>{
+        item.show = false
+      })
+      return tokenData
+    }
   },
+  created(){
+
+  }
 };
 </script>
 
