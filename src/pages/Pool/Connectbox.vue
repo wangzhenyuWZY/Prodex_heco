@@ -193,11 +193,14 @@ export default {
     selctoken
   },
   created () {
-    debugger
     if(this.$route.params.pair){
       let pair = JSON.parse(this.$route.params.pair)
       this.token1 = pair.token1
-      this.token2 = pair.token1
+      this.token2 = pair.token2
+      this.token1.item = 0
+      this.token2.item = 1
+      this.getBasicInfo(this.token1)
+      this.getBasicInfo(this.token2)
     }
   },
   methods: {
@@ -215,17 +218,17 @@ export default {
         this.decimals = parseInt(res.constant_result[0], 16)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
-        this.getBalanceInPool(pair[0],this.token1).then((res)=>{
-          this.token1Balance = res
-          console.log('token1Balance===='+this.token1Balance)
-        })
-        this.getBalanceInPool(pair[0],this.token2).then((res)=>{
-          this.token2Balance = res
-          console.log('token2Balance===='+this.token2Balance)
-        })
+        // this.getBalanceInPool(pair[0],this.token1).then((res)=>{
+        //   this.token1Balance = res
+        //   console.log('token1Balance===='+this.token1Balance)
+        // })
+        // this.getBalanceInPool(pair[0],this.token2).then((res)=>{
+        //   this.token2Balance = res
+        //   console.log('token2Balance===='+this.token2Balance)
+        // })
         allowance(this.token1.address,pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = window.tronWeb.toSun(res._hex)
+            let approveBalance = parseInt(res._hex,16)
             if (approveBalance == 0) {
               that.$message({
                 message: '未授权请先授权',
@@ -281,9 +284,13 @@ export default {
       })
     },
     changeCoin (token) {
-      let that = this
       this.isSelect = false
+      this.getBasicInfo(token)
+    },
+    getBasicInfo(token){
+      let that = this
       decimals(token.address).then((res) => {
+        debugger
         token.decimals = res
         if (token.item == 0) {
           that.token1 = token
@@ -310,7 +317,7 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (token) {
-        let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+        let balance = parseInt(tokenBalance._hex,16)/Math.pow(10,token.decimals)
         token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
         if (this.token1.address && this.token2.address) {
           this.getPairAddress()
@@ -375,17 +382,17 @@ export default {
       this.iSingle = true;
       this.getSpotPrice(token.token1.address, token.token2.address, 'justPrice')
       this.getSpotPrice(token.token2.address, token.token1.address, 'reversePrice')
-      this.getBalanceInPool(this.pair,token.token1).then((res)=>{
-        this.token1Balance = res
-        console.log('token1Balance===='+this.token1Balance)
-      })
-      this.getBalanceInPool(this.pair,token.token2).then((res)=>{
-        this.token2Balance = res
-        console.log('token2Balance===='+this.token2Balance)
-      })
+      // this.getBalanceInPool(this.pair,token.token1).then((res)=>{
+      //   this.token1Balance = res
+      //   console.log('token1Balance===='+this.token1Balance)
+      // })
+      // this.getBalanceInPool(this.pair,token.token2).then((res)=>{
+      //   this.token2Balance = res
+      //   console.log('token2Balance===='+this.token2Balance)
+      // })
       allowance(token.token1.address,token.address).then((res) => {
         if (res) {
-          let approveBalance = window.tronWeb.toSun(res._hex)
+          let approveBalance = parseInt(res._hex,16)
           if (approveBalance == 0) {
             that.$message({
               message: '未授权请先授权',

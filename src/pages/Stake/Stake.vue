@@ -111,7 +111,7 @@ export default {
       try {
         let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
         if (res) {
-          let approveBalance = window.tronWeb.toSun(res._hex)
+          let approveBalance = parseInt(res._hex,16)
           console.log('approveBalance====',approveBalance)
           if (approveBalance == 0) {
            await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
@@ -132,7 +132,7 @@ export default {
         try {
         let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
         if (res) {
-          let approveBalance = window.tronWeb.toSun(res._hex)
+          let approveBalance = parseInt(res._hex,16)
           console.log(approveBalance);
           if (approveBalance == 0) {
             console.log(this.poolList[this.poolIndex].lpToken)

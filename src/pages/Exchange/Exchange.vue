@@ -208,7 +208,7 @@ export default {
         this.decimals = pair[0].decimals
         allowance(that.token1.address,pair[0].address).then((res)=>{
           if(res){
-            let approveBalance = window.tronWeb.toSun(res._hex)
+            let approveBalance = parseInt(res._hex,16)
             if (approveBalance == 0) {
               that.isApproved = false
             } else {
