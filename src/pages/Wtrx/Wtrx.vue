@@ -163,7 +163,7 @@ export default {
     getAllowance () {//查询授权
       let that = this;
       that.loading2(1);
-      allowance(ipConfig.wtrxAddress).then((res)=>{
+      allowance(ipConfig.wtrxAddress,ipConfig.wtrxAddress).then((res)=>{
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
           if (approveBalance == 0) {
