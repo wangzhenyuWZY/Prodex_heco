@@ -7,6 +7,7 @@
           <div class="text_one fl_lt">Earn FARM with FoxDex</div>
           <div class="fl_rg conted_btn">
             <el-button class="from_botton"> <img class="whe_img"
+                  
                    src="@/assets/img/icon_my_wallet.svg"
                    alt=""> Connect to a wallet</el-button>
           </div>
@@ -100,6 +101,7 @@ export default {
     }
   },
   methods: {
+  
     async init () {//初始化tronweb
       let that = this
       this.$initTronWeb().then(function (tronWeb) {
