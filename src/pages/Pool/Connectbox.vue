@@ -193,6 +193,12 @@ export default {
     selctoken
   },
   created () {
+    debugger
+    if(this.$route.params.pair){
+      let pair = JSON.parse(this.$route.params.pair)
+      this.token1 = pair.token1
+      this.token2 = pair.token1
+    }
   },
   methods: {
     async getPairAddress () {

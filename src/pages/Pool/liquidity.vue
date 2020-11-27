@@ -104,14 +104,10 @@
                   </div>
                   <div class="accrued_btn clearfix">
                     <div class="btn_lt fl_lt">
-                      <router-link to="/pool/connectpool">
-                        <el-button class="from_botton">Add</el-button>
-                      </router-link>
+                        <el-button class="from_botton" @click="toPool(item)">Add</el-button>
                     </div>
                     <div class="btn_lt fl_rg">
-                      <router-link to="/pool/removeLiquidity">
-                        <el-button class="from_botton">Remove</el-button>
-                      </router-link>
+                        <el-button class="from_botton" @click="toRemove(item)">Remove</el-button>
                     </div>
                   </div>
                 </div>
@@ -155,6 +151,22 @@ export default {
     this.getpairList()
   },
   methods:{
+    toPool(item){
+      this.$router.push({
+          name:"Connectbox",
+          params:{
+            pair:JSON.stringify(item)
+          }
+      })
+    },
+    toRemove(item){
+      this.$router.push({
+          name:"removeLiquidity",
+          params:{
+            pair:JSON.stringify(item)
+          }
+      })
+    },
     getpairList(){
       tokenData.pairList.forEach((item)=>{
         item.show = false

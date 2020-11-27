@@ -28,35 +28,43 @@ export default new VueRouter({
       children:[
         {
           path:'/',
+          name:'liquidity',
           component:liquidity
         },
       
         {
           path:'addpoll',
+          name:'addfrombox',
           component:addfrombox
         },
         {
           path:'connectpool',
+          name:'Connectbox',
           component:Connectbox
         },
         {
           path:'selctoken',
+          name:'selctoken',
           component:selctoken
         },
         {
           path:'removeLiquidity',
+          name:'removeLiquidity',
           component:removeLiquidity
         },
         {
           path:'recevive',
+          name:'recevive',
           component:recevive
         },
         {
           path:'willRecevive',
+          name:'willRecevive',
           component:willRecevive
         },
         {
           path:'pairs',
+          name:'createpair',
           component:createpair
         }
         
