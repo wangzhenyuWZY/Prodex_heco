@@ -46,7 +46,7 @@
         </li>
       </ul>
     </div>
-    <selected v-show="showModel"
+    <selected v-show="true"
          :farmtoal="total"
          @Approve="Approve"
          @amount="clickAmount"

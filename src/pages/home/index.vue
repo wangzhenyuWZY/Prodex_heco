@@ -31,43 +31,53 @@
        
       </div>
       <div class="table">
-        <el-table :data="tableData"
+        <el-table :data="pairList"
                   header-cell-class-name="adddd"
                   header-row-class-name="tabe_tr"
                   :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
                   cell-class-name="dddsadsa"
                   style="width: 100%">
-          <el-table-column prop="address"
+          <el-table-column prop="pair"
                            label="name"
-                           width="170">
+                           >
           </el-table-column>
-          <el-table-column prop="assets"
+          <el-table-column prop="token1.name"
                            label="Assets"
-                           width="200">
+                           >
+                             <template slot-scope="scope">
+                             <div>
+                               {{scope.row.token1Balance ?scope.row.token1Balance :""  }}
+                               {{scope.row.token1.name}}
+                             </div>
+                           </template>
           </el-table-column>
-          <el-table-column prop="swapfee"
+          <el-table-column prop="token2.name"
                            label="Symbol">
+                            <template slot-scope="scope">
+                             <div>
+                               {{scope.row.token2Balance ?scope.row.token2Balance :""  }}
+                               {{scope.row.token2.name}}
+                             </div>
+                           </template>
           </el-table-column>
-          <el-table-column prop="markrtcap"
-                           label="Liquidity">
+          <el-table-column prop="Liquidity"
+                           label="Liquidity" >
+                           <template slot-scope="scope">
+                             <div>
+                               {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
+                             </div>
+                           </template>
+                           <span ></span>
           </el-table-column>
-          <el-table-column prop="myliquidity"
-                           label="Volume(24hrs)">
-          </el-table-column>
-          <el-table-column prop="volume"
-                           label="Price">
-          </el-table-column>
-          <el-table-column prop="volume"
-                           label="Price change(24hr)"
-                           width="200">
-          </el-table-column>
+
         </el-table>
 
       </div>
       <div class="pagin">
         <el-pagination background
+          v-if="pairList.length>=10"
                        layout="prev, pager, next"
-                       :total="50">
+                       :total="pairList.length">
         </el-pagination>
       </div>
     </div>
@@ -80,88 +90,38 @@ import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
 import {pairList} from '../../utils/token'
+import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
     return {
-      tableData: [{
-        address: '1',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      },
-      {
-        address: '2',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      },
-      {
-        address: '3',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }, {
-        address: '4',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }, {
-        address: '5',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }, {
-        address: '6',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }, {
-        address: '7',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      },
-      {
-        address: '8',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }, {
-        address: '9',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      },
-      {
-        address: '10',
-        assets: '50% WETH',
-        swapfee: '0.4%',
-        markrtcap: '$83M',
-        myliquidity: '- -',
-        volume: '$1.4M',
-      }]
-
+        pairList:pairList,
     }
-  }
+  },
+  mounted() {
+    this.init();
+    let arry = localStorage.getItem('pairList');
+     if (arry) {
+      this.poopairListlList = JSON.parse(arry);
+    }
+  },
+  methods: {
+       async init () {
+         let arr = [];
+         for (let index = 0; index < this.pairList.length; index++) {
+           const el = this.pairList[index];
+              let res =   await  getBalanceInPool(el,el.token1);
+              let res1 =   await  getBalanceInPool(el,el.token2);
+              let res2=   await getLpBalanceInPool(el);
+              el.token1Balance = res;
+              el.token2Balance = res1;
+              el.Liquidity = res2;
+              arr.push(el);
+         }
+          localStorage.setItem('pairList',JSON.stringify(arr));
+         this.pairList = arr;
+      }
+  },
 }
 </script>
 <style  lang="scss" scoped>

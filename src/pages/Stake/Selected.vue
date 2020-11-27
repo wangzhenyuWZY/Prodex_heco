@@ -66,8 +66,8 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btn clearfix">
-          <el-button class="Approve1" @click="Approve">Approve</el-button>
-          <el-button class="Approve1 Approve2" @click="amount">Enter an amount</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :disabled="!connectFlag" @click="Approve">Withdrawal</el-button>
+          <el-button class="Approve1 from_botton fl_rg" :disabled="!connectFlag" @click="amount">Reward</el-button>
         </div>
         <div class="ftblod mrge12">Amount</div>
         <div class="box_sizes box_Price">
@@ -78,6 +78,7 @@
                  <frominput
                     showmax
                     :balance="farmtoal.balanceOf"
+                    :disabled ="!connectFlag"
                     v-model="test1"
                  />
                 </div>
@@ -87,7 +88,7 @@
           </div>
         </div>
          <div class="selt_btn clearfix">
-          <el-button class="Approve1" @click="stake">STAKE</el-button>
+          <el-button class="from_botton " :disabled="true" @click="stake">STAKE</el-button>
         </div>
       </div>
     </container>
@@ -378,12 +379,9 @@ export default {
     padding-bottom: 48px;
     .Approve1 {
       height: 56px;
-      width: 100%;
+      width:293px;
       border-radius: 25px;
-      color: #878b97;
       font-size: 20px;
-      border: none;
-      background: #f4f5fa;
     }
   }
   .Approve_btn {
@@ -393,10 +391,7 @@ export default {
       width: 293px;
       height: 56px;
       border-radius: 25px;
-      color: #878b97;
-      font-size: 20px;
-      border: none;
-      background: #f4f5fa;
+ 
     }
     .Approve2 {
       float: right;

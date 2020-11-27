@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="nav clearfix">
-      <div class="logo"><img src="../../assets/img/logo.png"
+      <div class="logo"><img src="../../assets/img/wtxlo.png"
              alt="" /></div>
       <div class="moble fl_lt" v-show="false">
         <div class="iconsv">
