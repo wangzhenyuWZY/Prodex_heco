@@ -1,12 +1,13 @@
 <template>
   <div class="pool-box">
     <div class="pool_bg clearfix">
-
       <div class="pool-box1">
         <p>Liquidity provider rewards</p>
-        <p>Liquidity providers earn a 0.3% fee on all trades proportional to their share of
-          the pool. Fees are added to the pool, accrue in real time and can be claimed
-          withdrawing your liquidity.</p>
+        <p>
+          Liquidity providers earn a 0.3% fee on all trades proportional to
+          their share of the pool. Fees are added to the pool, accrue in real
+          time and can be claimed withdrawing your liquidity.
+        </p>
         <p>Read more about providing liquidity</p>
       </div>
       <div class="pool-btn clearfix">
@@ -14,68 +15,75 @@
       </div>
       <div class="pool-box2">
         <div class="pool-butt">
-          <samp class="pool-p" >Your liquidity</samp>
+          <samp class="pool-p">Your liquidity</samp>
           <div class="pool-butt1">
             <router-link to="/pool/pairs">
-              <el-button class="from_botton red_button bottun_hei">Create a pair</el-button>
-            </router-link>  
+              <el-button class="from_botton red_button bottun_hei"
+                >Create a pair</el-button
+              >
+            </router-link>
           </div>
-          <div class="pool-butt2 ">
+          <div class="pool-butt2">
             <router-link to="/pool/connectpool">
-              <el-button class="from_botton bottun_hei" >Add Liquidity</el-button>
+              <el-button class="from_botton bottun_hei"
+                >Add Liquidity</el-button
+              >
             </router-link>
           </div>
         </div>
         <div class="pool_boxbg" v-if="!connectFlag">
-          <samp class="pool-p1">Connect to a wallet to view your liquidity.</samp>
-          <samp class="pool-p2"> Don't see a pool you joined?<samp class="pool-p3"> Import it.</samp></samp>
+          <samp class="pool-p1"
+            >Connect to a wallet to view your liquidity.</samp
+          >
+          <samp class="pool-p2">
+            Don't see a pool you joined?<samp class="pool-p3">
+              Import it.</samp
+            ></samp
+          >
         </div>
-        <div class="fees" v-if="connectFlag" >
-          <div class="fees_account">Acoout analytics and accrued fees <img  src="@/assets/img/icon_jump_green.png"
-                 alt=""></div>
-          <div class="cyrny_bg">
-            <div class="fees_curny clearfix" @click="show=!show">
+        <div class="fees" v-if="connectFlag">
+          <div class="fees_account">
+            Acoout analytics and accrued fees
+            <img src="@/assets/img/icon_jump_green.png" alt="" />
+          </div>
+          <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index">
+            <div class="fees_curny clearfix" @click="show = !show">
               <div class="curny_lt fl_lt">
                 <span class="lt_img">
-                  <img src="@/assets/img/btc.svg"
-                       alt="">
-                  <img src="@/assets/img/btc.svg"
-                       alt="">
+                  <img src="@/assets/img/btc.svg" alt="" />
+                  <img src="@/assets/img/btc.svg" alt="" />
                 </span>
-                <span class="curny_size">
-                  ETH/USDT
-                </span>
+                <span class="curny_size"> {{item.pair }} </span>
               </div>
               <div class="cyrny_rg fl_rg">
                 <span>Manage</span>
-                <img src="@/assets/img/icon_down.png"
-                      :class="show?'actvimg':'liveimg'"
-                     alt="">
+                <img
+                  src="@/assets/img/icon_down.png"
+                  :class="show ? 'actvimg' : 'liveimg'"
+                  alt=""
+                />
               </div>
             </div>
-  
-            <div class="box_sizes" :class="show?'transition':'hide_box'" >
-              <div class="provider ">
+
+            <div class="box_sizes" :class="show ? 'transition' : 'hide_box'">
+              <div class="provider">
                 <div class="fees_share">
                   <div class="received">
-                    <div class="lt ">
+                    <div class="lt">
                       <span>Your tatal pool token:</span>
                     </div>
                     <span class="rg">4.9345465</span>
                   </div>
                   <div class="received mrgtop16">
                     <div class="lt">
-                      <img src="@/assets/img/btc.svg"
-                           alt="">
+                      <img src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled ETH:</span>
                     </div>
                     <span class="rg">4.9345465</span>
                   </div>
                   <div class="received mrgtop16">
                     <div class="lt">
-                       <img class="lt_icon"
-                           src="@/assets/img/btc.svg"
-                           alt="">
+                      <img class="lt_icon" src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled USDT:</span>
                     </div>
                     <span class="rg">4.9345465</span>
@@ -88,48 +96,55 @@
                   </div>
                   <div class="accrued">
                     View accrued fees and analycis
-                    <img class="acrued_img"  src="@/assets/img/icon_jump_green.png" alt="">
+                    <img
+                      class="acrued_img"
+                      src="@/assets/img/icon_jump_green.png"
+                      alt=""
+                    />
                   </div>
                   <div class="accrued_btn clearfix">
-                        
-                    <div class=" btn_lt fl_lt"> 
+                    <div class="btn_lt fl_lt">
                       <router-link to="/pool/connectpool">
                         <el-button class="from_botton">Add</el-button>
                       </router-link>
                     </div>
-                    <div class=" btn_lt fl_rg">  
+                    <div class="btn_lt fl_rg">
                       <router-link to="/pool/removeLiquidity">
-                          <el-button class="from_botton">Remove</el-button>
+                        <el-button class="from_botton">Remove</el-button>
                       </router-link>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-         
           </div>
-            <div class="pool_it">
-              <samp class="pool-p2"> Don't see a pool you joined?<samp class="pool-p3"> Import it.</samp></samp>
-            </div>
+          <div class="pool_it">
+            <samp class="pool-p2">
+              Don't see a pool you joined?<samp class="pool-p3">
+                Import it.</samp
+              ></samp
+            >
+          </div>
         </div>
       </div>
     </div>
   </div>
-
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex';
+import { mapActions, mapState } from "vuex";
+import {pairList} from "../../utils/token"
 export default {
- data() {
-   return {
-     show: false
-   }
- },
- computed: {
-   ...mapState(['connectFlag','walletAddres'])
- },
-}
+  data() {
+    return {
+      show: false,
+      pairList:pairList
+    };
+  },
+  computed: {
+    ...mapState(["connectFlag", "walletAddres"]),
+  },
+};
 </script>
 
 <style lang="scss" scoped>
@@ -157,6 +172,7 @@ export default {
     }
   }
   .cyrny_bg {
+    margin-bottom:10px;
     background: #f4f5fa;
     border-radius: 0 0 16px 16px;
   }
@@ -188,51 +204,48 @@ export default {
       font-weight: bold;
     }
   }
-  .fees_share{
+  .fees_share {
     padding: 0 24px;
     padding-top: 16px;
     padding-bottom: 32px;
     overflow: hidden;
-    .rg{
+    .rg {
       font-weight: bold;
     }
   }
-  .accrued{
+  .accrued {
     margin-top: 24px;
     text-align: center;
-      .acrued_img{
-        width: 24px;
-        height: 24px;
-      }
-     
+    .acrued_img {
+      width: 24px;
+      height: 24px;
+    }
   }
-  .accrued_btn{
+  .accrued_btn {
     margin-top: 27px;
-     .btn_lt{
-        width: 270px;
-      }
+    .btn_lt {
+      width: 270px;
+    }
   }
-  .hide_box{
-  height: 0;
-   overflow: hidden;
-  transition:height .3s;
+  .hide_box {
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s;
   }
-  .actvimg{
+  .actvimg {
     transform: rotate(180deg);
-      transition:transform .3s;
+    transition: transform 0.3s;
   }
-  .transition{
-   height: 315px;
-    transition: height 0.3s ;
+  .transition {
+    height: 315px;
+    transition: height 0.3s;
   }
-  .liveimg{
-     transform: rotate(0deg);
-      transition:transform .3s;
+  .liveimg {
+    transform: rotate(0deg);
+    transition: transform 0.3s;
   }
-  .pool_it{
+  .pool_it {
     padding: 16px 0 32px 24px;
-
   }
 }
-
 </style>

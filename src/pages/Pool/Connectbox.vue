@@ -217,7 +217,7 @@ export default {
           this.token2Balance = res
           console.log('token2Balance===='+this.token2Balance)
         })
-        allowance(token.address).then((res) => {
+        allowance(pair[0].address).then((res) => {
           if (res) {
             let approveBalance = window.tronWeb.toSun(res._hex)
             if (approveBalance == 0) {
