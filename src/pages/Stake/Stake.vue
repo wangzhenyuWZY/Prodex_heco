@@ -39,7 +39,9 @@
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
-            <div class="prizes">18,000 USD in prizes</div>
+            <div class="prizes">
+              <!-- 18,000 USD in prizes -->
+            </div>
           </div>
         </li>
       </ul>
@@ -110,6 +112,7 @@ export default {
         let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
+          console.log('approveBalance====',approveBalance)
           if (approveBalance == 0) {
             pproved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
           } else {
@@ -157,7 +160,7 @@ export default {
         this.total.decimals = await this.getContract.decimals().call(); // 精度
         let res = await this.toDecimal(balanceOf._hex);
         console.log(res);
-        this.total.balanceOf = res == 0 ? 0 : Math.pow(res, -this.total.decimals);
+        this.total.balanceOf = res == 0 ? 0 : res / Math.pow(10,this.total.decimals);
       } catch (error) {
         console.log('getContracts==', error)
       }
@@ -168,8 +171,10 @@ export default {
       await this.tokenPerBlock();
       let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
       this.showModel = true;
-      this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
-
+       this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
+      let res = this.total.shareToal/ Math.pow(10,this.total.decimals);
+      debugger
+      console.log(res);
       this.pendingTokens();
     },
     async updata () { // 提现 抵押 更新 余额  抵押数
@@ -195,7 +200,7 @@ export default {
           let res1 = await window.tronWeb.contract().at(res.lpToken);
            let res2 = await res1.name().call();
            res.name = res2;
-           console.log(res);
+           console.log(res1)
           arry.push(res);
         }
          localStorage.setItem('farmList',JSON.stringify(arry));
@@ -214,7 +219,6 @@ export default {
     async deposit (n) { // 质押  
       // （1）PoolInfo[]数组的序号
       // （2）质押的数量,为0的时候只领取奖励，不进行质押
-      //  let c = Math.pow(n,this.total.decimals);
       let data = {  // 使用send来执行non-pure或modify智能合约方法，这些方法确实修改了区块链，消耗资源（bandwidth 和 energy）并且还广播到网络。
         // feeLimit:100000000,  //调用合约方法消耗最大数量的SUN。上限是 1000 TRX。(1TRX = 1,000,000SUN)
         // callValue:window.tronWeb.toSun(that.trxNum), // 本次调用往合约转账的SUN。
@@ -222,6 +226,7 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
+      n = n* Math.pow(10,this.total.decimals);
       let num = await this.MasterChefContract['deposit'](this.poolIndex, n).send(data);
       if (num) {
         this.updata();

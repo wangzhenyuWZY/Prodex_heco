@@ -1,5 +1,6 @@
 <template>
   <div class="stake_slect">
+    <h3 class="selct_top">Earn FARM with FoxDex</h3>
     <container top="24">
       <!-- top="0" -->
       <div class="title"
@@ -12,7 +13,7 @@
         </div>
       </div>
       <div slot="body">
-        <div class="select_top clearfix">
+        <div class="select_top clearfix" v-show="!connectFlag">
           <p class="top__size">You haven't connected a wallet.</p>
           <p class="top__btn">
             <el-button class="from_botton"> <img class="whe_img"
@@ -95,7 +96,7 @@
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
-
+import {mapState} from 'vuex'
 export default {
   props: {
      farmtoal:{
@@ -107,6 +108,9 @@ export default {
         balanceOf:0
        }
      }
+  },
+  computed: {
+    ...mapState(['connectFlag'])
   },
   data () {
     return {
@@ -153,6 +157,12 @@ export default {
   color: #0f1730;
   font-size: 18px;
   margin-top: 50px;
+  .selct_top{
+    margin-bottom: 14px;
+    text-align: center;
+    font-size: 24px;
+    font-family: Roboto-MediumItalic, Roboto;
+  }
   .ctx_1 {
     width: 397px;
     display: inline-block;
