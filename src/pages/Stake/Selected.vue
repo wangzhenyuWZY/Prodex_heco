@@ -66,8 +66,8 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btn clearfix">
-          <el-button class="Approve1 from_botton fl_lt" :disabled="!connectFlag" @click="Approve">Withdrawal</el-button>
-          <el-button class="Approve1 from_botton fl_rg" :disabled="!connectFlag" @click="amount">Reward</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag2" :disabled="Withdrawal" @click="Approve">Withdrawal</el-button>
+          <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag3" :disabled="reward" @click="amount">Reward</el-button>
         </div>
         <div class="ftblod mrge12">Amount</div>
         <div class="box_sizes box_Price">
@@ -79,6 +79,7 @@
                     showmax
                     :balance="farmtoal.balanceOf"
                     :disabled ="!connectFlag"
+                  
                     v-model="test1"
                  />
                 </div>
@@ -88,7 +89,7 @@
           </div>
         </div>
          <div class="selt_btn clearfix">
-          <el-button class="from_botton " :disabled="true" @click="stake">STAKE</el-button>
+          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">STAKE</el-button>
         </div>
       </div>
     </container>
@@ -106,12 +107,42 @@ export default {
         shareToal:0,
         uniswaplp:0,
         maxamount:0,
-        balanceOf:0
+        balanceOf:0,
+        btnFlag1:false,
+        btnFlag2:false,
+        btnFlag3:false
        }
      }
   },
   computed: {
-    ...mapState(['connectFlag'])
+    ...mapState(['connectFlag']),
+    reward () {
+          if (this.connectFlag && this.farmtoal.uniswaplp!=0)  {
+              if (!this.farmtoal.btnFlag2) {
+                  return false
+                }
+                return true
+          }
+          return true
+    },
+    Withdrawal () {
+         if (this.connectFlag && this.farmtoal.shareToal!=0)  {
+           if (!this.farmtoal.btnFlag3) {
+           return false
+         }
+         return true
+         }
+          return true;
+    },
+    stakes () {
+      if (this.connectFlag && this.test1!=''){
+         if (!this.farmtoal.btnFlag1) {
+           return false
+         }
+         return true
+      } 
+           return true;
+    }
   },
   data () {
     return {
@@ -147,7 +178,7 @@ export default {
     },
     stake () {
       this.$emit('stake',this.test1)
-    }
+    },
     
   },
 }
