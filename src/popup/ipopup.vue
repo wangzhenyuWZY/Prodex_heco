@@ -15,8 +15,8 @@
     <div class="conter">
 
       <div class="mag_list">
-        <div class="currency_list">
-         <button class="con-but"   > <img src="../assets/img/conter.png" alt=""> Tronlink wallet</button>
+        <div class="currency_list" @click="tlink" >
+         <button class="con-but"> <img src="../assets/img/conter.png" alt=""> Tronlink wallet</button>
         </div>
       </div>
       <div class="con-p"><samp class="con-p1">Haven't installed TronLink yet?<samp class="con-p2">Click here>></samp></samp></div>
@@ -59,14 +59,21 @@ export default {
      }
   },
   created () {
-    console.log('showAlert====================', this.showAlert)
+    // console.log('showAlert====================', this.showAlert)
   },
   methods: {
     handleClosea () {
-          this.showAlert = !this.showAlert;
-          return true.showAlert;
-          // this.$emit('closeAlert')
+      console.log("点击关闭");
+      this.showAlert = false;
+      return this.showAlert;
+      // this.$emit('closeAlert')
     },
+    tlink(){
+      console.log("点击登入跳转");
+      this.showAlert = false;
+      return this.showAlert;
+      this.$router.push('../../home/index')
+    }
   }
 }
 </script>
