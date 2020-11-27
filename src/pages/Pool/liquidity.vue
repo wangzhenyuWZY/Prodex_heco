@@ -160,6 +160,8 @@ export default {
       })
     },
     toRemove(item){
+      item.token1.balanceInPool = this.token1Balance*this.share
+      item.token2.balanceInPool = this.token2Balance*this.share
       this.$router.push({
           name:"removeLiquidity",
           params:{

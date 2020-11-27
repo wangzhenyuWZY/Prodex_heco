@@ -17,7 +17,7 @@
              alt="" />
       </div>
     </div>
-    <div slot="body">
+    <div slot="body" style="padding-bottom:40px;">
       <!-- 滑块部分开始 -->
       <div class="box_top clearfix"><span>Acoout</span><span>Detailed</span></div>
       <div class="box_sizes ">
@@ -89,21 +89,21 @@
                   <img class="lt_icon"
                       src="@/assets/img/icon_wen.svg"
                       alt="">
-                  <span>ETH</span>
+                  <span>{{token1.name}}</span>
                 </div>
-                <div class="rg"> --</div>
+                <div class="rg"> {{token1.balanceInPool}}</div>
               </div>
               <div class="received ive_top">
                 <div class="lt">
                   <img src="@/assets/img/icon_wen.svg"
                       alt="">
-                  <span>USDT</span>
+                  <span>{{token2.name}}</span>
                 </div>
-                <div class="rg">--</div>
+                <div class="rg">{{token2.balanceInPool}}</div>
               </div>
             </div>
             <div class="weth">
-              <el-button class="weth_btn" @click="exitPool">Receive WETH</el-button>
+              <el-button class="weth_btn" @click="exitPool">Receive {{pair.pair}}</el-button>
             </div>
           </div>
         </div>
@@ -122,7 +122,7 @@
             </div>
           </div>
         </div>
-        <div class="Approve_btn clearfix">
+        <div class="Approve_btn clearfix" hidden>
               <el-button class="Approve1" @click="approveLpToken">Approve</el-button>
               <el-button class="Approve1 Approve2" >Enter an amount</el-button>
         </div>
@@ -145,46 +145,47 @@ export default {
       slidenum:0,
       percentage:0,
       decimals:0,
-      pairAddress:'TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9',
+      pair:{},
+      token1:{},
+      token2:{}
     }
   },
   components: {
     container,
   },
   created(){
-    this.init()
+    if(this.$route.params.pair){
+      this.pair = JSON.parse(this.$route.params.pair)
+      this.token1 = this.pair.token1
+      this.token2 = this.pair.token2
+      this.getBalance()
+    }
   },
   methods:{
-    init () {//初始化tronweb
-      let that = this
-      this.$initTronWeb().then(function (tronWeb) {
-        that.getBalance()
-      })
-    },
     async getBalance(){
       let that = this
       var functionSelector = 'balanceOf(address)';
       var parameter = [
         {type: 'address', value: window.tronWeb.defaultAddress.base58}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,functionSelector,{}, parameter);
       if(transaction){
         var fun = 'decimals()';
         var par = []
-        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pairAddress,fun,{}, par);
+        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,fun,{}, par);
         that.decimals = parseInt(res.constant_result[0],16)
         that.maxBalance = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.decimals)
-        console.log(parseInt(transaction.constant_result[0],16))
+        console.log('that.maxBalance======'+that.maxBalance)
       }
     },
     async approveLpToken(){
       let that = this
       var functionSelector = 'approve(address,uint256)';
       var parameter = [
-        {type:'address',value:that.pairAddress},
+        {type:'address',value:that.pair.address},
         {type:'uint256',value:'100000000000000000000'}
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{shouldPollResponse:true}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.addrss,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -201,7 +202,7 @@ export default {
           {type: 'uint256[]', value:[0,0] }
       ]
       console.log(parameter)
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pairAddress,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
@@ -217,7 +218,7 @@ export default {
       }else{
         this.percentage = 0
       }
-      console.log(this.slidenum)
+      console.log('this.slidenum========'+this.slidenum)
     }
   }
 }
