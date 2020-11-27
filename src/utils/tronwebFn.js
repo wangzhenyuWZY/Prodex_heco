@@ -22,28 +22,11 @@ const initTronWeb = () => {//初始化tronweb
         }, 100);
     });
 }
-const bPoolAllowance = (coinAddress) => {//BPool查询授权
-    return new Promise(function (resolve, reject) {
-        try {
-            var functionSelector = 'allowance(address,address)';
-            var parameter = [
-                {type: 'address', value: window.tronWeb.defaultAddress.base58},
-                {type: 'address', value: coinAddress}
-            ]
-            window.tronWeb.transactionBuilder.triggerConstantContract(coinAddress,functionSelector,{}, parameter).then((transaction)=>{
-                resolve(transaction)
-            })
-        } catch (error) {
-            console.log(error);
-            reject()
-        }
-    })
-}
-const allowance = (coinAddress) => {//查询授权
+const allowance = (coinAddress,contractAddress) => {//查询授权
     return new Promise(function (resolve, reject) {
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["allowance"](window.tronWeb.defaultAddress.base58, coinAddress).call().then((res)=>{
+                Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
                     resolve(res)
                 })
             })
@@ -53,15 +36,14 @@ const allowance = (coinAddress) => {//查询授权
         }
     })
 }
-// const bPoolApproved = (coinAddress,contractAddress) => {//BPool查询授权
+// const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
 //     return new Promise(function (resolve, reject) {
 //         try {
-//             var functionSelector = 'approve(address,uint256)';
+//             var functionSelector = 'allowance(address,uint256)';
 //             var parameter = [
-//                 {type: 'address', value: contractAddress},
-//                 {type: 'address', value: '10000000000000000'}
+//                 {type: 'address', value: coinAddress}
 //             ]
-//             window.tronWeb.transactionBuilder.triggerConstantContract(coinAddress,functionSelector,{}, parameter).then((transaction)=>{
+//             window.tronWeb.transactionBuilder.triggerConstantContract(contractAddress,functionSelector,{}, parameter).then((transaction)=>{
 //                 resolve(transaction)
 //             })
 //         } catch (error) {
@@ -74,7 +56,7 @@ const approved = (coinAddress,contractAddress) => {//授权
     return new Promise(function (resolve, reject) {
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["approve"](contractAddress,'10000000000000000').send({shouldPollResponse:true}).then((res)=>{
+                Contract["approve"](contractAddress,'100000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
                         alert('授权成功')
                         resolve(1);
@@ -120,5 +102,5 @@ const getConfirmedTransaction = (id) => {//轮询获取交易信息
     })
 }
 
-export {approved,decimals,getConfirmedTransaction,allowance,bPoolAllowance}
+export {approved,decimals,getConfirmedTransaction,allowance}
 export default initTronWeb;

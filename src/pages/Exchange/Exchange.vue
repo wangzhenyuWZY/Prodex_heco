@@ -206,7 +206,7 @@ export default {
       if(pair&&pair.length>0){
         this.pair = pair[0]
         this.decimals = pair[0].decimals
-        allowance(that.token1.address).then((res)=>{
+        allowance(that.token1.address,pair.address).then((res)=>{
           if(res){
             let approveBalance = window.tronWeb.toSun(res._hex)
             if (approveBalance == 0) {
@@ -337,7 +337,8 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              getConfirmedTransaction(res.txid).then(()=>{
+              getConfirmedTransaction(res.txid).then((e)=>{
+                 
                 this.$message.success('成功');
               }).catch((err)=>{
                  console.log(err);
