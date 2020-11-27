@@ -192,6 +192,8 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager,functionSelector,{}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0],16)
+      debugger
+      console.log('this.foxDex========'+transaction.constant_result[0])
     },
     async createBPool () {//newBPool
       let that = this

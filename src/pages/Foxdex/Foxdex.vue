@@ -1,16 +1,16 @@
 <template>
-<div class="container">
+<div class="cont">
 
-    <connect/>
-
+   
+<h2>foxdex页面</h2>
 </div>
 
 </template>
 
 <script>
-import connect from '../Exchange/connect.vue'
+
 export default {
-  components: { connect },
+  
 
 }
 </script>
