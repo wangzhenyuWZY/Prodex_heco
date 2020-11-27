@@ -213,11 +213,19 @@ export default {
       this.getShare()
     },
     getShare(){
-      if(this.token1Num && this.token1Num!==0){
+      let that = this
+      if(this.token1Num && this.token1Num!==0 && this.iSingle){
         if(this.token1Balance&&this.denormalizedWeight&&this.lpTotal&&this.totalDenormalizedWeight){
           let poolOut = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
           console.log('poolOut======'+poolOut)
           this.share = (poolOut/this.lpTotal*100).toFixed(2)
+        }else{
+          getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
+            that.lpTotal = res
+          })
+          this.getDenormalizedWeight()//获取token1在pool中的权重
+          this.getTotalDenormalizedWeight()//获取lptoken总权重
+          this.getSwapFeeForDex()//获取swapfee
         }
       }else{
         this.share = 0
@@ -262,12 +270,6 @@ export default {
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0],this.token1).then((res)=>{//获取token1在pool中的总量
           this.token1Balance = res
-          getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
-            that.lpTotal = res
-          })
-          this.getDenormalizedWeight()//获取token1在pool中的权重
-          this.getTotalDenormalizedWeight()//获取lptoken总权重
-          this.getSwapFeeForDex()//获取swapfee
         })
         // this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
         //   this.token2Balance = res
