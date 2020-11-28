@@ -63,9 +63,34 @@
 <script>
 
 export default {
+  props:{
+      showAlert: {
+        type: Boolean,
+        default: false,
+      },
+      token1Num: {
+        type: [String,Number],
+        default: '0',
+      },
+      token2Num: {
+        type: [String,Number],
+        default: '0',
+      },
+      t1Per: {
+        type: [String,Number],
+        default: '0',
+      },
+      t2Per: {
+        type: [String,Number],
+        default: '0',
+      },
+      reciveLptoken: {
+        type: [String,Number,Object],
+        default: '0',
+      },
+  },    
   data () {
     return {
-      showAlert: true
 
     }
   },
@@ -78,7 +103,7 @@ export default {
   }
   , methods: {
     handleClosea () {
-
+      this.$emit('close')
     }
   },
 }

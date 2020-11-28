@@ -6,12 +6,14 @@
         <div class="input_lt">
           <input
             class="globle_input"
+            :class="className"
             type="number"
             :placeholder="placeholder"
             @keyup="hadelClick"
             :value="value"
             :disabled ="disabled"
             ref="input"
+            onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
             :maxlength="maxlength"
           />
           <div class="input_max" v-if="showmax" @click="setValue">MAX</div>
@@ -73,10 +75,17 @@
   },
   methods: {
     hadelClick(e) {
-      this.$emit("input", e.target.value);
+        let value = e.target.value+'';
+        if (value.indexOf(".") != -1) {
+          let str = value.split(".");
+            if (str[1].length >8) {
+              value =str[0]+'.' +str[1].slice(0,8);
+              this.$refs.input.value = value;
+            }
+        }
+      this.$emit("input", Number(value));
       if (this.hadelClicks) {
-      this.$emit('hadelClick',e.target.value);
-
+        this.$emit('hadelClick',Number(value));
       }
     },
     setValue () {
