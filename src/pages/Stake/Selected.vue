@@ -16,7 +16,8 @@
         <div class="select_top clearfix" v-show="!connectFlag">
           <p class="top__size">You haven't connected a wallet.</p>
           <p class="top__btn">
-            <el-button class="from_botton"> <img class="whe_img"
+            <el-button class="from_botton" @click="butlink"> <img class="whe_img"
+                  
                    src="@/assets/img/icon_my_wallet.svg"
                    alt=""> Connect to a wallet</el-button>
           </p>
@@ -182,6 +183,17 @@ export default {
     handelInit() {
       this.test1 = '';
       $emit('back')
+    },
+    butlink(){
+      console.log("点击了");
+       this.$popup({
+        click: () => {
+          // 点击按钮事件 
+        
+          this.$router.push('../../popup/popup')
+
+        }
+      })
     }
     
   },

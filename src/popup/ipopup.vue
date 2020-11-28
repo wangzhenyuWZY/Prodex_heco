@@ -27,6 +27,7 @@
 
 <script>
 import tokenData from '../utils/token'
+import {mapState} from 'vuex'
 export default {
   props: {
     showAlert: {
@@ -49,6 +50,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(["connectFlag",]),
      tokenList () {
          if (this.selectType == '') {
            return tokenData.tokenList
@@ -59,21 +61,20 @@ export default {
      }
   },
   created () {
+
     // console.log('showAlert====================', this.showAlert)
   },
   methods: {
     handleClosea () {
       console.log("点击关闭");
-      this.showAlert = false;
-      return this.showAlert;
+      this.showAlert = false
       // this.$emit('closeAlert')
     },
     tlink(){
-      console.log("点击登入跳转");
+      console.log("登入跳转");
+      // if(this.connectFlag = false){}
       //链接钱包.....
-      this.showAlert = false;
-      return this.showAlert;
-    
+     
     }
   }
 }

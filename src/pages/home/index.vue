@@ -184,7 +184,7 @@ export default {
       margin: 32px 24px;
       height: 22px;
       font-size: 20px;
-      font-family: roboto-mediumitalic;
+      font-family: Roboto-Regular, Roboto;
       font-weight: normal;
       color: #0f1730;
       line-height: 23px;
@@ -215,8 +215,8 @@ export default {
       float: left;
       height: 22px;
       font-size: 20px;
-      font-family: roboto-mediumitalic;
-      font-weight: normal;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 500;
       color: #0f1730;
       line-height: 23px;
     }

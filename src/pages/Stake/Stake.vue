@@ -496,6 +496,8 @@ ul {
         font-size: 18px;
         font-family: roboto-mediumitalic;
         font-weight: normal;
+        color: #0F1730;
+        line-height: 21px;
       }
     }
     .stake_btn {
