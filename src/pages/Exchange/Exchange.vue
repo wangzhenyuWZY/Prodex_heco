@@ -194,7 +194,7 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if(token){
-        let balance = parseFloat(window.tronWeb.fromSun(tokenBalance))
+        let balance = parseInt(tokenBalance._hex,16)/Math.pow(10,token.decimals)
         token.item==0?that.token1.balance=balance:that.token2.balance=balance
         if(this.token1.address && this.token2.address){
           this.getPairAddress(token)
