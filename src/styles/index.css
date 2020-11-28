@@ -87,10 +87,14 @@ img{
 }
 .from_botton:hover ,.from_botton:focus{
     color: #fff ;
-}
-.from_botton.is-disabled, .from_botton.is-disabled:focus, .from_botton.is-disabled:hover{
+}.from_botton.is-disabled:focus{
     background: #F4F5FA;
 
+    color: #878B97;
+}
+.from_botton.is-disabled,.from_botton.is-disabled:hover{
+    background: #F4F5FA;
+    border: 1px solid #f4f5fa;
     color: #878B97;
 }
 
