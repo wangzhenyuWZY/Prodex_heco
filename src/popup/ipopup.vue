@@ -70,9 +70,10 @@ export default {
     },
     tlink(){
       console.log("点击登入跳转");
+      //链接钱包.....
       this.showAlert = false;
       return this.showAlert;
-      this.$router.push('../../home/index')
+    
     }
   }
 }
