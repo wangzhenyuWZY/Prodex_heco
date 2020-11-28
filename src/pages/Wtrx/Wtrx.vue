@@ -3,7 +3,7 @@
     <div class="wtrx">
       <div class="wtrx-box">
         <div class="wtrx-top">
-          <h3>WTRX Exchange</h3>
+          <span>WTRX Exchange</span>
         </div>
 
         <div class="wtrx-box1">
@@ -46,7 +46,7 @@
         </div>
 
         <div class="wtrx-bottom">
-          <p>what is WTRX?</p>
+          <p>What is WTRX?</p>
           <p>TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.
             <br> DepositTRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.
           </p>
@@ -249,9 +249,14 @@ export default {
   justify-content: center;
 }
 .wtrx-top {
-  margin-top: 120px;
+  margin-top: 40px;
   font-size: 24px;
-  font-weight: bold;
+  height: 28px;
+  font-family: Roboto-Medium, Roboto;
+  font-weight: 500;
+  color: #0F1730;
+  line-height: 28px;
+    
 }
 .wtrx-left {
   margin-right: 15px;
@@ -266,20 +271,54 @@ export default {
   flex-direction: column;
   align-items: center;
   .trx {
-    margin-top: 49px;
-    font-size: 20px;
+    margin-top: 49px;  
+  height: 28px;
+  font-size: 24px;
+  font-family: Roboto-Medium, Roboto;
+  font-weight: 500;
+  color: #0F1730;
+  line-height: 28px;
   }
   .trx-a {
     margin-top: 40px;
 
     .trx-a1 {
+      height: 21px;
       font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+      
+        .trx-a2 {
+      height: 21px;
+      font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+      
+    }
     }
   }
   .trx-b {
     margin-top: 48px;
     .trx-b1 {
+      height: 21px;
       font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+      .trx-b2 {
+      height: 21px;
+      font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+      
+    }
     }
   }
 }
@@ -290,8 +329,8 @@ export default {
   margin-top: 12px;
   font-size: 16px;
   font-family: Roboto-Regular, Roboto;
-
-  color: #878b97;
+  font-weight: 400;
+  color: #878B97;
   line-height: 18px;
   width: 320px;
   height: 48px;
@@ -308,22 +347,56 @@ export default {
   flex-direction: column;
   align-items: center;
   .wtrx1 {
-    margin-top: 49px;
-    font-size: 20px;
+    margin-top: 49px;  
+  height: 28px;
+  font-size: 24px;
+  font-family: Roboto-Medium, Roboto;
+  font-weight: 500;
+  color: #0F1730;
+  line-height: 28px;
   }
   .wtrx-a {
-    margin-top: 40px;
+    margin-top: 39px;
 
-    .wtrx-a1 {
+    .wtrx-a1{
+      height: 21px;
       font-size: 18px;
-    
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+    .wtrx-a2{
+
+      
+      height: 21px;
+      font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+
+    }
     }
   }
   .wtrx-b {
     margin-top: 48px;
-    .wtrx-b1 {
+    .wtrx-b1{
+      height: 21px;
       font-size: 18px;
-    }
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+    .wtrx-b2{
+
+      height: 21px;
+      font-size: 18px;
+      font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
+      color: #0F1730;
+      line-height: 21px;
+     }
+    } 
   }
 }
 
@@ -354,13 +427,17 @@ export default {
 }
 .wtrx-bottom p:nth-child(1) {
   font-family: Roboto-Medium, Roboto;
+  font-weight: 400;
   font-size: 18px;
   margin-top: 48px;
   text-align: center;
   line-height: 21px;
+  color: #0F1730;
 }
 .wtrx-bottom p:nth-child(2) {
+
   font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
   margin-top: 8px;
   font-size: 18px;
   color: #878b97;
@@ -368,12 +445,16 @@ export default {
   line-height: 24px;
 }
 .wtrx-bottom p:nth-child(3) {
+  
   font-family: Roboto-Medium, Roboto;
-  margin-top: 20px;
+  font-weight: 500;
+  margin-top: 24px;
+  color: #0F1730;
   text-align: center;
 }
 .wtrx-bottom p:nth-child(4) {
-  font-family: Roboto-Medium, Roboto;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
   margin-top: 8px;
   color: #878b97;
   text-align: center;

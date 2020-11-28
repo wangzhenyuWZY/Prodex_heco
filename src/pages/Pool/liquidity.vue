@@ -211,6 +211,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .bottun_hei {
   height: 48px;
 }

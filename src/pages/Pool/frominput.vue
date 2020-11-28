@@ -191,12 +191,12 @@
   border-radius: 16px;
   font-size: 40px;
   padding-left: 16px;
-  font-weight: normal;
+  font-weight: 500;
   color: #FF5D37;
 }
 .globle_input::placeholder{
   
-font-weight: normal;
+font-weight: 500;
 color: #A6AEB7;
 font-size: 40px;
 }

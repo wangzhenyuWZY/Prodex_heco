@@ -99,8 +99,8 @@
 .from_data {
   .from_lable {
     font-size: 20px;
-    font-family: roboto-mediumitalic;
-    font-weight: normal;
+    font-family: Roboto-Medium, Roboto;
+    font-weight: 500;
     color: #0F1730;
     margin-bottom: 12px;
     padding-left: 16px;
@@ -204,7 +204,7 @@
   border-radius: 16px;
   font-size: 40px;
   padding-left: 16px;
-  font-weight: normal;
+  font-weight: 500;
   color: #FF5D37;
   flex: 1;
 }

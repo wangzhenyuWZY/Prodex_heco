@@ -64,7 +64,7 @@ export default {
   .from_lable {
     font-size: 20px;
     font-family: Roboto-Regular, Roboto;
-    font-weight: normal;
+    font-weight: 400;
     color: #e5ebf2;
     margin-bottom: 16px;
     padding-left: 16px;
