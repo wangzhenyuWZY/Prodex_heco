@@ -1,4 +1,5 @@
 <template>
+<div class="removeLq">
   <container top="32">
     <!-- top="0" -->
     <div class="title"
@@ -44,43 +45,6 @@
         <i class="el-icon-back tran_icon"></i>
       </div>
       <!-- end -->
-      <!-- <div class="setInput clearfix">
-        <div class="ctx_1 fl_lt">
-          <frominput lable="From"
-                     v-model="value1"></frominput>
-        </div>
-        <div class="ctx_2 fl_lt">
-          <frominput lable="From"
-                     v-model="value2"> </frominput>
-        </div>
-        <div class="ctx_3 fl_lt">
-          <setselect text="深圳" />
-        </div>
-      </div> -->
-
-      <!-- <div class="from_contentIcon">+</div> -->
-      <!-- <div class="setInput clearfix">
-        <div class="ctx_1 fl_lt">
-          <frominput lable="From"
-                     v-model="value3"></frominput>
-        </div>
-        <div class="ctx_2 fl_lt">
-          <frominput lable="From"
-                     v-model="value4"> </frominput>
-        </div>
-        <div class="ctx_3 fl_lt">
-          <setselect text="深圳" />
-        </div>
-      </div> -->
-      <!-- 提交按钮 -->
-      <!-- <div class="margintop">
-        <v-button height="50"
-                  @click="showAlert = true">
-          <img src="@/assets/img/icon_my_wallet.svg"
-               alt="">
-          <span>Connect to a wallet</span>
-        </v-button>
-      </div> -->
         <div class="box_sizes">
           <div class="provider Receive">
             <div class="">
@@ -103,7 +67,8 @@
               </div>
             </div>
             <div class="weth">
-              <el-button class="weth_btn" @click="exitPool">Receive {{pair.pair}}</el-button>
+              <el-button class="weth_btn" @click="showAlert = true">Receive {{pair.pair}}</el-button>
+              
             </div>
           </div>
         </div>
@@ -128,11 +93,21 @@
         </div>
     </div>
   </container>
+  <recevive
+      :showAlert ='showAlert'
+      @change="exitPool"
+      :token1 ="token1"
+      :token2 ="token2"
+      @close="showAlert = false"
+  />
+</div>
+
 </template>
 
 <script>
 import { container ,frominput,setselect} from '../../components/index'
 import {decimals} from '../../utils/tronwebFn'
+import recevive from './recevive'
 export default {
   data () {
     return {
@@ -149,15 +124,20 @@ export default {
       token1:{},
       token2:{},
       token1BalanceInPool:0,
-      token2BalanceInPool:0
+      token2BalanceInPool:0,
+      showAlert:false,
     }
   },
   components: {
     container,
+    recevive
   },
   created(){
-    if(this.$route.params.pair){
-      this.pair = JSON.parse(this.$route.params.pair)
+    let setData =  sessionStorage.getItem('toRemove'); 
+    let paramsData = this.$route.params.pair;
+    if(this.$route.params.pair||setData){
+      let totatlData = this.$route.params.pair|| setData
+      this.pair = JSON.parse(totatlData);
       this.token1 = this.pair.token1
       this.token2 = this.pair.token2
       this.token1BalanceInPool = this.token1.balanceInPool
@@ -366,7 +346,7 @@ color: #0F1730;
   padding: 24px 32px;
 }
 .weth {
-  width: 200px;
+ text-align: center;
   margin: 0 auto;
   margin-top: 16px;
   .weth_btn {
@@ -375,8 +355,7 @@ color: #0F1730;
     border: 1px solid #ff5d37;
     font-size: 20px;
     color: #fe613c;
-    padding: 0;
-    width: 200px;
+    padding: 0 32px;
     height: 32px;
   }
 }

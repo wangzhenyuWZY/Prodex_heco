@@ -2,6 +2,7 @@
   <el-dialog title=""
              :visible.sync="showAlert"
              width="480px"
+             :close-on-click-modal="false"
              custom-class="dialog_recevive"
              :before-close="handleClosea">
     <span slot="title"
@@ -24,7 +25,7 @@
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
                    alt="">
-              <span>ETH Deoosited</span>
+              <span>{{token1.name}} Deoosited</span>
             </div>
             <span class="rg">0.000000233456</span>
           </div>
@@ -32,7 +33,7 @@
             <div class="lt">
               <img src="@/assets/img/btc.svg"
                    alt="">
-              <span>USDT Deoosited</span>
+              <span>{{token2.name}} Deoosited</span>
             </div>
             <span class="rg">4.9345465</span>
           </div>
@@ -52,16 +53,16 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn">Confirm Supply</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickHadel">Confirm Supply</el-button>
   </el-dialog>
 </template>
 
 <script>
 
 export default {
+  props:['showAlert','token1','token2'],
   data () {
     return {
-      showAlert: true
 
     }
   },
@@ -74,7 +75,10 @@ export default {
   }
   , methods: {
     handleClosea () {
-
+        this.$emit('close')
+    },
+    clickHadel () {
+      this.$emit('change')
     }
   },
 }

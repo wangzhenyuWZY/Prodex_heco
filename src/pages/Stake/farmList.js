@@ -4,6 +4,7 @@
     lpToken:'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C',
     perBlockToken: "1950000000000000000"
     
+    
   },
   {
     name:'Dai Stablecoin',
