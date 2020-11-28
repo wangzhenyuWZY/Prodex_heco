@@ -64,5 +64,16 @@ export default {
 </script>
 
 <style lang="scss" >
+  
+.globle_title{
+  
+    height: 28px;
+    font-size: 24px;
+    font-family: Roboto-MediumItalic, Roboto;
+    font-weight: normal;
+    color: #0F1730;
+    line-height: 28px;
+  
+}
 @import '@/styles/pool.scss'
 </style>

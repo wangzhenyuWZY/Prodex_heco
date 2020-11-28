@@ -20,6 +20,7 @@
     height: 20px;
     font-size: 18px;
     font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
     color: #a6aeb7;
     line-height: 21px;
     margin-top: 32px;
@@ -29,6 +30,7 @@
     height: 20px;
     font-size: 18px;
     font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
     color: #a6aeb7;
     line-height: 21px;
     margin-top: 32px;
@@ -38,6 +40,7 @@
       height: 20px;
       font-size: 18px;
       font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
       color: #ff5d37;
       line-height: 21px;
     }
@@ -51,14 +54,12 @@
     padding-top: 35px;
     .pool-p {
     margin: auto 0;
-    width: 130px;
-    height: 28px;
+    height: 22px;
     font-size: 20px;
-    font-family: roboto-mediumitalic;
-    font-weight: normal;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 500;
     color: #0F1730;
     line-height: 23px;
-
      }
     .pool-butt1 {
       margin-left: 76px;
@@ -104,7 +105,9 @@
   padding-top: 40px;
   margin-left: 32px;
   font-size: 20px;
+  
   font-family: Roboto-Regular, Roboto;
+  font-weight: 500;
   color: #eeeef0;
   line-height: 23px;
 }
@@ -114,6 +117,7 @@
   margin-left: 32px;
   font-size: 18px;
   font-family: Roboto-Regular, Roboto;
+  font-weight:400;
   color: #eeeef0;
   line-height: 21px;
 }
@@ -122,6 +126,7 @@
   font-size: 18px;
   margin-left: 32px;
   font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
   color: #e5ebf2;
   line-height: 21px;
   text-decoration: underline;

@@ -12,8 +12,8 @@
 
     <div class="box_sizes">
       <div class="provider receive__Pool">
-        <div class="title__num">0.00034875787</div>
-        <div class="">ETHUSDT Pool Tokens</div>
+        <div class="title__num">{{popsData.reciveLptoken}}</div>
+        <div class="">{{popsData.token1.name}}{{popsData.token2.name}} Pool Tokens</div>
       </div>
     </div>
     <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
@@ -25,30 +25,30 @@
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
                    alt="">
-              <span>{{token1.name}} Deoosited</span>
+              <span>{{popsData.token1.name}} Deoosited</span>
             </div>
-            <span class="rg">0.000000233456</span>
+            <span class="rg">{{popsData.token1Num}}</span>
           </div>
           <div class="received mrge24">
             <div class="lt">
               <img src="@/assets/img/btc.svg"
                    alt="">
-              <span>{{token2.name}} Deoosited</span>
+              <span>{{popsData.token2.name}} Deoosited</span>
             </div>
-            <span class="rg">4.9345465</span>
+            <span class="rg">{{popsData.token2Num}}</span>
           </div>
           <div class="received mrge12">
             <div class="lt">
-              <span>USDT Deoosited</span>
+              <span>Rates</span>
             </div>
-            <span class="">4.9345465</span>
+            <span class="">1{{popsData.token1.name}}={{popsData.justPrice}} {{popsData.token2.name}}</span>
           </div>
-          <div class="conversion mrge24">1USDT=0.02034564 ETH</div>
+          <div class="conversion mrge24">1{{popsData.token2.name}}={{popsData.reversePrice}} {{popsData.token1.name}}</div>
           <div class="received">
             <div class="lt">
               <span>Share of pool</span>
             </div>
-            <span class="">0.000040532%</span>
+            <span class="">{{}}%</span>
           </div>
         </div>
       </div>
@@ -60,7 +60,19 @@
 <script>
 
 export default {
-  props:['showAlert','token1','token2'],
+  props:{
+    showAlert: {
+      type: Boolean,
+      default: false,
+    },
+    popsData: {
+      type: Object,
+      default: {
+        token1:{},
+        token2:{}
+      },
+    }
+  },
   data () {
     return {
 

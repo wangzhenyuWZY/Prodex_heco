@@ -71,6 +71,22 @@ function calcSingleInGivenPoolOut(tokenBalanceIn, tokenWeightIn, poolSupply, tot
     const tokenAmountIn = tokenAmountInAfterFee.div(Decimal(1).sub(zar));
     return tokenAmountIn;
 }
+function getTokenInGivenPoolOut(
+    tokenBalanceIn,
+    tokenInAmount,
+    tokenBalanceOut,
+    tokenOutAmount,
+    poolSupply
+) {
+    const perIn = Decimal(tokenBalanceIn);
+    const perOut = Decimal(tokenBalanceOut);
+    const addInAmount = Decimal(tokenInAmount).div(perIn);
+    const addOutAmount = Decimal(tokenOutAmount).div(perOut);
+    if (addInAmount > addOutAmount) {
+        return Decimal(tokenOutAmount).div(Decimal(tokenBalanceIn)).mul(poolSupply);
+    }
+    return Decimal(tokenInAmount).div(Decimal(tokenBalanceOut)).mul(poolSupply);
+}
 
 module.exports = {
     calcSpotPrice,
@@ -79,5 +95,6 @@ module.exports = {
     calcPoolOutGivenSingleIn,
     calcSingleInGivenPoolOut,
     calcRelativeDiff,
-    calcOutGivenInAfterPrice
+    calcOutGivenInAfterPrice,
+    getTokenInGivenPoolOut
 };
