@@ -12,8 +12,12 @@
           </router-link>
 
           <span class="content_text">Add Liquidity</span>
-          <el-button class="typeBtn" @click="iSingle=true" type="small">Single Token </el-button>
-          <el-button class="typeBtn" @click="iSingle=false" type="small">Double Token </el-button>
+          <el-button class="typeBtn"
+                     @click="iSingle=true"
+                     type="small">Single Token </el-button>
+          <el-button class="typeBtn"
+                     @click="iSingle=false"
+                     type="small">Double Token </el-button>
         </div>
         <div class="rg_box">
           <img src="@/assets/img/icon_instructions.svg"
@@ -57,8 +61,10 @@
           </div>
         </div>
 
-        <div class="from_contentIcon" v-show="!iSingle">+</div>
-        <div class="setInput clearfix" v-show="!iSingle">
+        <div class="from_contentIcon"
+             v-show="!iSingle">+</div>
+        <div class="setInput clearfix"
+             v-show="!iSingle">
           <div class="ctx_1 fl_lt">
             <frominput lable="input"
                        placeholder=""
@@ -99,6 +105,8 @@
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton black_botton"
+                       :loading="charm.btnLoading1"
+                       :disabled="charm.disabled1"
                        @click="supply">Supply</el-button>
           </div>
         </div>
@@ -162,7 +170,7 @@ import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
 import tokenData from '../../utils/token'
 import { decimals, allowance, approved, getLpBalanceInPool } from '../../utils/tronwebFn'
-import {calcPoolOutGivenSingleIn} from '../../utils/calc_comparisons'
+import { calcPoolOutGivenSingleIn } from '../../utils/calc_comparisons'
 export default {
   data () {
     return {
@@ -182,13 +190,18 @@ export default {
       selectType: '',
       item: 1,
       iSingle: false,
-      token1Balance:0,
-      token2Balance:0,
-      lpTotal:0,
-      denormalizedWeight:0,
-      totalDenormalizedWeight:0,
-      foxDex:0,
-      share:0
+      token1Balance: 0,
+      token2Balance: 0,
+      lpTotal: 0,
+      denormalizedWeight: 0,
+      totalDenormalizedWeight: 0,
+      foxDex: 0,
+      share: 0,
+      charm: {
+        btnLoading1: false,
+        disabled1: true,
+        subimt: false
+      }
     }
   },
   components: {
@@ -198,7 +211,7 @@ export default {
     selctoken
   },
   created () {
-    if(this.$route.params.pair){
+    if (this.$route.params.pair) {
       let pair = JSON.parse(this.$route.params.pair)
       this.token1 = pair.token1
       this.token2 = pair.token2
@@ -208,55 +221,63 @@ export default {
       this.getBasicInfo(this.token2)
     }
   },
+  watch: {
+    token1Num () {
+      this.validity();
+    },
+    token2Num () {
+      this.validity();
+    }
+  },
   methods: {
-    calcShare(){
+    calcShare () {
       this.getShare()
     },
-    getShare(){
+    getShare () {
       let that = this
-      if(this.token1Num && this.token1Num!==0 && this.iSingle){
-        if(this.token1Balance&&this.denormalizedWeight&&this.lpTotal&&this.totalDenormalizedWeight){
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
-          console.log('poolOut======'+poolOut)
-          this.share = (poolOut/this.lpTotal*100).toFixed(2)
-        }else{
-          getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
+      if (this.token1Num && this.token1Num !== 0 && this.iSingle) {
+        if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+          console.log('poolOut======' + poolOut)
+          this.share = (poolOut / this.lpTotal * 100).toFixed(2)
+        } else {
+          getLpBalanceInPool(this.pair).then((res) => {//获取lptoken总量
             that.lpTotal = res
           })
           this.getDenormalizedWeight()//获取token1在pool中的权重
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
         }
-      }else{
+      } else {
         this.share = 0
       }
     },
-    async getDenormalizedWeight(){
+    async getDenormalizedWeight () {
       var functionSelector = 'getDenormalizedWeight(address)';
       var parameter = [
         { type: 'address', value: this.token1.address }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        this.denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
-        console.log('this.denormalizedWeight========'+this.denormalizedWeight)
+        this.denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+        console.log('this.denormalizedWeight========' + this.denormalizedWeight)
       }
     },
-    async getTotalDenormalizedWeight(){
+    async getTotalDenormalizedWeight () {
       var functionSelector = 'getTotalDenormalizedWeight()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        this.totalDenormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
-        console.log('this.totalDenormalizedWeight========'+this.totalDenormalizedWeight)
+        this.totalDenormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+        console.log('this.totalDenormalizedWeight========' + this.totalDenormalizedWeight)
       }
     },
-    async getSwapFeeForDex(){   
+    async getSwapFeeForDex () {
       var functionSelector = 'swapFeeForDex()';
       var parameter = []
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager,functionSelector,{}, parameter);
-      this.foxDex = parseInt(transaction.constant_result[0],16)
-      console.log('this.foxDex========'+transaction.constant_result[0])
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
+      this.foxDex = parseInt(transaction.constant_result[0], 16)
+      console.log('this.foxDex========' + transaction.constant_result[0])
     },
     async getPairAddress () {
       let that = this
@@ -264,20 +285,21 @@ export default {
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase()
       })
+      debugger ;
       if (pair) {
         this.pair = pair[0]
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
-        this.getBalanceInPool(pair[0],this.token1).then((res)=>{//获取token1在pool中的总量
+        this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
           this.token1Balance = res
         })
         // this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
         //   this.token2Balance = res
         // })
-        
-        allowance(this.token1.address,pair[0].address).then((res) => {
+
+        allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex,16)
+            let approveBalance = parseInt(res._hex, 16)
             if (approveBalance == 0) {
               that.$message({
                 message: '未授权请先授权',
@@ -291,7 +313,37 @@ export default {
         })
       }
     },
+    charm1 (n) {
+      if (n) {
+        this.charm.btnLoading1 = true;
+        this.charm1.disabled1 = true;
+      } else {
+        this.charm.btnLoading1 = false;
+        this.charm1.disabled1 = false;
+      }
+
+    },
+    validity () {
+      if (!this.charm.subimt) {
+        if (this.iSingle) { //  单1流动性
+          if (this.token1Num != '' && JSON.stringify(this.token1) != '{}' && JSON.stringify(this.token2) != '{}') {
+            this.charm.disabled1 = false
+          } else {
+           this.charm.disabled1 = true
+          }
+        } else { //  双向
+          if (this.token1Num != '' && JSON.stringify(this.token1) != '{}' && this.token2Num != '' && JSON.stringify(this.token2) != '{}') {
+            this.charm.disabled1 = false
+          } else {
+          this.charm.disabled1 = true
+          }
+
+        }
+      }
+
+    },
     supply () {
+      this.charm1(1);
       if (this.iSingle) {
         this.joinswapExternAmountIn()
       } else {
@@ -306,14 +358,25 @@ export default {
         { type: 'uint256[]', value: [that.token1Num * Math.pow(10, that.token1.decimals), that.token2Num * Math.pow(10, that.token2.decimals)] },
       ]
       console.log(parameter)
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
-      if (!transaction.result || !transaction.result.result)
+      try {
+        let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
+        if (!transaction.result || !transaction.result.result)
+          that.charm1();
         return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          that.$message.success("SUCCESS!")
-        });
-      })
+        window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+            that.$message.success("SUCCESS!")
+            that.charm1();
+          }).catch((err) => {
+            console.log(err);
+            that.charm1();
+          });
+        })
+      } catch (error) {
+        console.log(error);
+        that.charm1();
+      }
+
     },
     async joinswapExternAmountIn () {
       let that = this
@@ -323,23 +386,34 @@ export default {
         { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
         { type: 'uint256', value: 0 }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR', functionSelector, {}, parameter);
-      if (!transaction.result || !transaction.result.result)
-        return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          alert('success');
-        });
-      })
+      try {
+        let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR', functionSelector, {}, parameter);
+        if (!transaction.result || !transaction.result.result)
+          that.charm1();
+          return console.error('Unknown error: ' + transaction, null, 2);
+        window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+            that.$message.success('success');
+            that.charm1();
+          }).catch(err => {
+            that.charm1();
+            console.log(err);
+          });
+        })
+      } catch (error) {
+        console.log(error);
+          that.charm1();
+      }
+
     },
     changeCoin (token) {
       this.isSelect = false
       this.getBasicInfo(token)
     },
-    getBasicInfo(token){
-      let that = this
+    getBasicInfo (token) {
+      let that = this;
+    
       decimals(token.address).then((res) => {
-        debugger
         token.decimals = res
         if (token.item == 0) {
           that.token1 = token
@@ -352,6 +426,7 @@ export default {
       }).catch((err) => {
         console.log(err);
       })
+      this.validity();
     },
     doApprove () {
       if (this.pair) {
@@ -365,22 +440,22 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (token) {
-        let balance = parseInt(tokenBalance._hex,16)/Math.pow(10,token.decimals)
+        let balance = parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)
         token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
         if (this.token1.address && this.token2.address) {
           this.getPairAddress()
         }
       }
     },
-    getBalanceInPool(pair,coin){//获取Pool中的余额
+    getBalanceInPool (pair, coin) {//获取Pool中的余额
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getBalance(address)';
         var parameter = [
-          {type: 'address', value: coin.address}
+          { type: 'address', value: coin.address }
         ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
+          let tokenBalanceInPool = parseInt(transaction.constant_result[0], 16) / Math.pow(10, coin.decimals)
           resolve(tokenBalanceInPool);
         })
       })
@@ -495,6 +570,9 @@ export default {
     color: #0f1730;
   }
 }
+.connect_btn {
+  display: flex;
+}
 .pre_list {
   margin-top: 12px;
   li {
@@ -541,8 +619,8 @@ export default {
   width: 190px;
   text-align: right;
 }
-.typeBtn{
-  border-color:#409EFF;
-  border-radius:25px;
+.typeBtn {
+  border-color: #409eff;
+  border-radius: 25px;
 }
 </style>
