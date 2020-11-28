@@ -261,19 +261,21 @@ export default {
     async getPairAddress () {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
+      let pairname1 = this.token2.name + '/' + this.token1.name
       let pair = tokenData.pairList.filter((item) => {
-        return item.pair == pairname.toUpperCase()
+        return item.pair == pairname.toUpperCase() || pairname1.toUpperCase()
       })
       if (pair) {
         this.pair = pair[0]
+        console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0],this.token1).then((res)=>{//获取token1在pool中的总量
           this.token1Balance = res
         })
-        // this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
-        //   this.token2Balance = res
-        // })
+        this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
+          this.token2Balance = res
+        })
         
         allowance(this.token1.address,pair[0].address).then((res) => {
           if (res) {
@@ -297,6 +299,26 @@ export default {
       } else {
         this.joinPool()
       }
+    },
+    getMyPoolInfo(){
+      getLpBalanceInPool(item).then((res)=>{
+        that.lpTotal = res
+        if(that.myBalanceInPool){
+          that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
+        }
+      })
+      getBalanceInPool(item,item.token1).then((res)=>{
+        that.token1Balance = res
+      })
+      getBalanceInPool(item,item.token2).then((res)=>{
+        that.token2Balance = res
+      })
+      getMyBalanceInPool(item).then((res)=>{
+        that.myBalanceInPool = res
+        if(that.lpTotal){
+          that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
+        }
+      })
     },
     async joinPool () {
       let that = this
@@ -345,7 +367,6 @@ export default {
           that.token1 = token
           that.selectType = token.name;
         } else {
-          that.selectColor2 = true;
           this.token2 = token
         }
         that.getBalance(token)
@@ -406,7 +427,7 @@ export default {
       let str = JSON.stringify(this.token1);
       if (str != "{}") {
         this.isSelect = true;
-        // this.selectType = this.token1.name
+        this.selectType = this.token1.name
       } else {
         this.$message({
           message: '请先选择交易对',
@@ -422,7 +443,17 @@ export default {
     },
     linkage (token) { // 联动
       this.isSelect = false;
-      this.getBasicInfo(token.token2)
+      if(token.token1.name==this.selectType){
+        this.token1 = token.token1
+        this.token2 = token.token2
+      }else{
+        this.token2 = token.token1
+        this.token1 = token.token2
+      }
+      this.token1.item = 0
+      this.token2.item = 1
+      this.getBasicInfo(this.token1)
+      this.getBasicInfo(this.token2)
     },
     showSelect (index) {
       if (index == 1 && this.iSingle) return;

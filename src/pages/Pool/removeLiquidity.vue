@@ -24,18 +24,18 @@
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">
-            <div class="between">{{percentage}}%</div>
+            <div class="between">{{slidenum}}%</div>
             <div class="demonstration">
-              <el-slider :show-tooltip="false" :max="maxBalance"
+              <el-slider :show-tooltip="false" :max="100"
                          v-model="slidenum" @change="changeSlide"
                          ></el-slider>
             </div>
           </div>
           <ul class="setSlider">
-            <li @click="slidenum=maxBalance*0.25;percentage=25">25%</li>
-            <li @click="slidenum=maxBalance*0.5;percentage=50">50%</li>
-            <li @click="slidenum=maxBalance*0.75;percentage=75">75%</li>
-            <li @click="slidenum=maxBalance;percentage=100">MAX</li>
+            <li @click="changeSlide(25)">25%</li>
+            <li @click="changeSlide(50)">50%</li>
+            <li @click="changeSlide(75)">75%</li>
+            <li @click="changeSlide(100)">MAX</li>
           </ul>
         </div>
       </div>
@@ -195,15 +195,18 @@ export default {
           });
       }) 
     },
-    changeSlide(){
-      let percentage = parseInt(this.slidenum/this.maxBalance*100)
-      if(percentage){
-        this.percentage = percentage
-      }else{
-        this.percentage = 0
+    changeSlide(num){
+      // let percentage = parseInt(this.slidenum/this.maxBalance*100)
+      // if(percentage){
+      //   this.percentage = percentage
+      // }else{
+      //   this.percentage = 0
+      // }
+      if(num){
+        this.slidenum = num
       }
-      this.token1BalanceInPool = this.token1.balanceInPool*percentage/100
-      this.token2BalanceInPool = this.token2.balanceInPool*percentage/100
+      this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
+      this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
       console.log('this.slidenum========'+this.slidenum)
     }
   }
