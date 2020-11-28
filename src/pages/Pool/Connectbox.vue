@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="connect_pd">
     <container top="32"
-               pdd>
+               pdd >
       <div class="title"
            slot="title">
         <div class="lt_box">
@@ -227,6 +227,9 @@ export default {
       this.validity();
     },
     token2Num () {
+      this.validity();
+    },
+    iSingle () {
       this.validity();
     }
   },
@@ -551,6 +554,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.connect_pd{
+  padding-bottom: 100px;
+}
 .xzk {
   height: 56px;
   border-radius: 16px;

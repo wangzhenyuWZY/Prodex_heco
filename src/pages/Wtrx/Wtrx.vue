@@ -15,6 +15,7 @@
             <input type="number"
                    v-model="trxNum"
                   :disabled="inputdisabled1"
+                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
                    placeholder="Please enter the amout of TRX">
             <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
@@ -34,6 +35,7 @@
             <input type="number"
                    v-model="wtrxNum"
                    :disabled = "inputdisabled1"
+                     onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
                    placeholder="Please enter the amout of TRX">
             <div class="wtrx-b"> <samp class="wtrx-b1">You will get TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
@@ -82,6 +84,7 @@ export default {
   },
   watch: {
     trxNum (value) {
+     this.trxNum= this.inputType(this.trxNum)
       if (value != '') {
         if (value <= parseInt(this.trxBalance)) {
           this.btnDisabled1 = false;
@@ -93,6 +96,7 @@ export default {
       }
     },
     wtrxNum (value) {
+       this.wtrxNum= this.inputType(this.wtrxNum)
       if (value != '') {
         if (value <= parseInt(this.wtrxBalance)) {
           this.btnDisabled2 = false;
@@ -224,6 +228,15 @@ export default {
         this.btnDisabled2 = false;
       }
 
+    },
+    inputType (n) {
+         if (n.indexOf(".") != -1) {
+          let str = n.split(".");
+            if (str[1].length >8) {
+             return n =str[0]+'.' +str[1].slice(0,8);
+            }
+        }
+        return n;
     }
   },
   mounted () {

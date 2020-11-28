@@ -154,6 +154,7 @@ export default {
   },
   watch: {
     token1Num() {
+      console.log(this.token1Num);
       this.inputFlag();
     },
      token2Num() {
