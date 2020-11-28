@@ -62,6 +62,7 @@
           <div class="ctx_1 fl_lt">
             <frominput lable="input"
                        placeholder=""
+                       @input="calcToken1Num"
                        v-model="token2Num"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -209,16 +210,20 @@ export default {
     }
   },
   methods: {
+    calcToken1Num(){
+      if(this.token1Balance&&this.token2Balance){
+        this.token1Num = this.token2Num/this.token2Balance*this.token1Balance
+      }
+    },
     calcShare(){
       this.getShare()
     },
     getShare(){
       let that = this
-      if(this.token1Num && this.token1Num!==0 && this.iSingle){
+      if(this.token1Num && this.token1Num!==0){
         if(this.token1Balance&&this.denormalizedWeight&&this.lpTotal&&this.totalDenormalizedWeight){
           let poolOut = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
-          console.log('poolOut======'+poolOut)
-          this.share = (poolOut/this.lpTotal*100).toFixed(2)
+          this.share = (poolOut/this.lpTotal*100).toFixed(2) 
         }else{
           getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
             that.lpTotal = res
@@ -229,6 +234,9 @@ export default {
         }
       }else{
         this.share = 0
+      }
+      if(this.token1Balance&&this.token2Balance){
+        this.token2Num = this.token1Num/this.token1Balance*this.token2Balance
       }
     },
     async getDenormalizedWeight(){
@@ -306,12 +314,6 @@ export default {
         if(that.myBalanceInPool){
           that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
         }
-      })
-      getBalanceInPool(item,item.token1).then((res)=>{
-        that.token1Balance = res
-      })
-      getBalanceInPool(item,item.token2).then((res)=>{
-        that.token2Balance = res
       })
       getMyBalanceInPool(item).then((res)=>{
         that.myBalanceInPool = res
