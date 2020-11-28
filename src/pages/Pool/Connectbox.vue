@@ -157,6 +157,7 @@
     <recevive
       :showAlert ='confirmPop'
       :popsData = 'popsData'
+      @change='supply'
       @close="confirmPop = false"
     />           
   </div>
@@ -239,7 +240,7 @@ export default {
     }, 
     calcToken1Num(){
       if(this.token1Balance&&this.token2Balance){
-        this.token1Num = this.token2Num/this.token2Balance*this.token1Balance
+        this.token1Num = parseInt(this.token2Num/this.token2Balance*this.token1Balance)
       }
     },
     calcShare(){
@@ -261,7 +262,7 @@ export default {
         this.share = 0
       }
       if(this.token1Balance&&this.token2Balance){
-        this.token2Num = this.token1Num/this.token1Balance*this.token2Balance
+        this.token2Num = parseInt(this.token1Num/this.token1Balance*this.token2Balance)
       }
     },
     async getToken2DenormalizedWeight(){
@@ -353,6 +354,7 @@ export default {
       } else {
         this.joinPool()
       }
+      this.confirmPop = false
     },
     getMyPoolInfo(){
       getLpBalanceInPool(item).then((res)=>{
