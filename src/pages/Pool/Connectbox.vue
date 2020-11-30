@@ -20,8 +20,12 @@
                      type="small">Double Token </el-button>
         </div>
         <div class="rg_box">
-          <img src="@/assets/img/icon_instructions.svg"
-               alt="" />
+          <el-tooltip class="item" 
+                  effect="dark" 
+                  content="Right Center 提示文字" 
+                  placement="right">
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>
         </div>
       </div>
 
