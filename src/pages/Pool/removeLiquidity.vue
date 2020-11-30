@@ -20,7 +20,7 @@
     </div>
     <div slot="body" style="padding-bottom:40px;">
       <!-- 滑块部分开始 -->
-      <div class="box_top clearfix"><span>Acoout</span><span>Detailed</span></div>
+      <div class="box_top clearfix"><span>Acoout</span><span @click="showAlert1 =true">Detailed</span></div>
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">
@@ -102,9 +102,15 @@
       :token2Num ="token2BalanceInPool"
       :justPrice = "justPrice"
       :reversePrice = "reversePrice"
-      :clickFn ="approveLpToken"
+      :clickFn ="exitPool"
       @close="showAlert = false"
   />
+   <removealert
+      :isShow="showAlert1"
+      :alertType="alertType"
+      @close="showAlert1 = false"
+
+   />
 </div>
 
 </template>
@@ -112,6 +118,7 @@
 <script>
 import { container ,frominput,setselect} from '../../components/index'
 import recevive from './willRecevive'
+import removealert from './valret';
 export default {
   data () {
     return {
@@ -130,12 +137,15 @@ export default {
       token2BalanceInPool:0,
       showAlert:false,
       justPrice:0,
-      reversePrice:0
+      reversePrice:0,
+      showAlert1:false,
+      alertType:'waiting' // success  waiting
     }
   },
   components: {
     container,
-    recevive
+    recevive,
+    removealert
   },
   created(){
     let setData =  sessionStorage.getItem('toRemove'); 

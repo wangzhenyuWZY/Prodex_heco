@@ -104,7 +104,7 @@ export default {
   },
   methods: {
     initColse () {
-
+        this.showModel = false;
     },
     async init () {//初始化tronweb
       let that = this
@@ -299,7 +299,7 @@ export default {
       let arr = this.total.shareToal * Math.pow(10, this.total.decimals); 
       let n =  arr || 0;
       let num ;
-        n = n -1;
+        n = n;
         if (x===0) n = 0;
         n= n+'';
         console.log('withdraw====',n)
