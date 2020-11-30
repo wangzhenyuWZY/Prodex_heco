@@ -2,8 +2,9 @@ import * as types from './action-types';
 
 
  const action = {
-   async connectWallett ({commit}) {
-     console.log('获取钱包')
+   async connectWallett ({commit},flag) {
+       if (flag === false) return;
+       console.log(flag);
         try {
             let res= await window.tronWeb.trx.getAccount(window.tronWeb.defaultAddress.base58);
             console.log(res);

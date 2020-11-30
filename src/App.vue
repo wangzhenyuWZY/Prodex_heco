@@ -21,15 +21,8 @@ export default {
   methods: {
   ...mapActions(['connectWallett']),
      async init () {
-       try {
-         console.log('222')
-      let troweb = await initTronWeb();
-        this.connectWallett();
-
-       } catch (error) {
-         
-       }
-
+        await initTronWeb();
+          this.connectWallett();
   }
 
   },
