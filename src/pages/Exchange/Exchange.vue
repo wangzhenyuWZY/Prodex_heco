@@ -99,7 +99,6 @@
                 </div>
                 <span class="rg">{{token2Num}} {{token2.name}}</span>
               </div>
-<<<<<<< HEAD
               <span class="rg">{{token2Num}} {{token2.name}}</span>
             </div>
             <div class="received setmage">
@@ -111,37 +110,10 @@
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>          
-=======
-              <div class="received setmage">
-                <div class="lt">
-                  <span>Price Impacte
-
-                    <el-tooltip class="item"
-                                effect="dark"
-                                content="Right Center 提示文字"
-                                placement="right">
-                      <img src="@/assets/img/icon_instructions.svg"
-                           alt="">
-                    </el-tooltip>
-
->>>>>>> b9c5577585b57c8d5f987dcb1291d53435f50ecf
                   </span>
                 </div>
                 <span class="rec_red">{{percentage}}%</span>
               </div>
-<<<<<<< HEAD
-              <span class="rec_red">{{percentage}}%</span>
-            </div>
-            <div class="received">
-              <div class="lt">
-                <span>Liquidity Provider Fee 
-                  <el-tooltip placement="right">
-                  <div slot="content" class="slotp3"> 
-                       Right Center 提示文字<br> 
-                      </div>
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>   
-=======
               <div class="received">
                 <div class="lt">
                   <span>Liquidity Provider Fee
@@ -152,7 +124,6 @@
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
                     </el-tooltip>
->>>>>>> b9c5577585b57c8d5f987dcb1291d53435f50ecf
                   </span>
                 </div>
                 <span class="">{{swapFee}} {{token1.name}}</span>
@@ -162,7 +133,7 @@
             </div>
           </div>
         </div>
-      </div>
+        
     </container>
     <change v-if="isConfirm"
             @doConfirm="doswap"
@@ -494,7 +465,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-<<<<<<< HEAD
 
 .slotp{ 
     height: 76px;
@@ -503,15 +473,6 @@ export default {
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;
-=======
-.slotp {
-  height: 76px;
-  font-size: 16px;
-  font-family: Roboto-Regular, Roboto;
-  font-weight: 400;
-  color: #eeeef0;
-  line-height: 19px;
->>>>>>> b9c5577585b57c8d5f987dcb1291d53435f50ecf
 }
 .whe {
   width: 320px;
