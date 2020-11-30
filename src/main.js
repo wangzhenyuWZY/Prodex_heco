@@ -30,23 +30,23 @@ FastClick.prototype.focus = function (targetElement) {
   targetElement.focus();
 };
 // 监听PC浏览器波场钱包
-window.addEventListener('message', function (e) {
-  if (e.data.message && e.data.message.action == "tabReply") { // 初始化完成
-    console.log("tabReply event", e.data.message.data.data.address)
-    // store.dispatch('connectWallett',e.data.message.data.data.address);
-    if (e.data.message.data.data.node.chain == '_'){ // 主链
-        console.log("tronLink currently selects the main chain")
-    }else{ // 侧链
-        console.log("tronLink currently selects the side chain")
-    }
-    if (e.data.message && e.data.message.action == "setAccount") {
-            console.log("setAccount event", e.data.message)
-            console.log("current address:", e.data.message.data.address)
+// window.addEventListener('message', function (e) {
+//   if (e.data.message && e.data.message.action == "tabReply") { // 初始化完成
+//     console.log("tabReply event", e.data.message.data.data.address)
+//     // store.dispatch('connectWallett',e.data.message.data.data.address);
+//     if (e.data.message.data.data.node.chain == '_'){ // 主链
+//         console.log("tronLink currently selects the main chain")
+//     }else{ // 侧链
+//         console.log("tronLink currently selects the side chain")
+//     }
+//     if (e.data.message && e.data.message.action == "setAccount") {
+//             console.log("setAccount event", e.data.message)
+//             console.log("current address:", e.data.message.data.address)
 
-        }
-}
+//         }
+// }
 
-})
+// })
 if (!IsPc()) {
   require('./utils/dpi.js');
 }

@@ -116,6 +116,7 @@
 </template>
 
 <script>
+const Decimal = require('decimal.js');
 import { container ,frominput,setselect} from '../../components/index'
 import recevive from './willRecevive'
 import removealert from './valret';
@@ -157,7 +158,7 @@ export default {
       this.token2 = this.pair.token2
       this.token1BalanceInPool = this.token1.balanceInPool
       this.token2BalanceInPool = this.token2.balanceInPool
-      // this.getBalance()
+      this.getBalance()
       this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
       this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
     }
@@ -171,7 +172,7 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,functionSelector,{}, parameter);
       if(transaction){
-        that.maxBalance = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.pair.decimals)
+        that.maxBalance = parseInt(transaction.constant_result[0],16)
       }
     },
     async approveLpToken(){
@@ -193,8 +194,12 @@ export default {
     async exitPool(){
       let that = this
       var functionSelector = 'exitPool(uint256,uint256[])';
+      console.log('this.maxBalance====='+this.maxBalance)
+      let slidenum = Decimal(that.slidenum).div(100)
+      let maxBalance = Decimal(this.maxBalance)
+      let num = Decimal(slidenum).mul(Decimal(maxBalance)).toString()
       var parameter = [
-          {type: 'uint256', value: that.slidenum*Math.pow(10,that.pair.decimals)+''},
+          {type: 'uint256', value: num},
           {type: 'uint256[]', value:[0,0] }
       ]
       console.log(parameter)

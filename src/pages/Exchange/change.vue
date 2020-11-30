@@ -37,7 +37,7 @@
     <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
       <div class="Price_text" > 
             <span>Price: </span> 
-            <span>{{spotPrice}} </span>
+            <span>{{spotPrice.toFixed(8)}} </span>
                 <span> {{token1.name}} </span> 
                <span> per </span>
                <span> {{token2.name}} </span> 
@@ -93,6 +93,9 @@ export default {
       showAlert: true
 
     }
+  },
+  watch: {
+  
   },
   components: {
     // vButton: vbutton,

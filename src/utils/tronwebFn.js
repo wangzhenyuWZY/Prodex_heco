@@ -1,3 +1,4 @@
+import { Message } from 'element-ui';
 const initTronWeb = () => {//初始化tronweb
     return new Promise(function (resolve, reject) {
         let tries = 0;
@@ -27,6 +28,7 @@ const allowance = (coinAddress,contractAddress) => {//查询授权
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
+                
                     resolve(res)
                 })
             })
@@ -58,7 +60,11 @@ const approved = (coinAddress,contractAddress) => {//授权
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["approve"](contractAddress,'100000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
-                        alert('授权成功')
+                        Message({
+                            showClose: true,
+                            message: '授权成功',
+                            type: 'success'
+                        })
                         resolve(1);
                     }
                 })
@@ -121,7 +127,7 @@ const getMyBalanceInPool = (pair) =>{//获取Pool中我的LPtoken余额
             {type: 'address', value: window.tronWeb.defaultAddress.base58}
         ]
         window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-            let myBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+            let myBalanceInPool = parseInt(transaction.constant_result[0],16)
             resolve(myBalanceInPool);
         })
     })
@@ -131,7 +137,7 @@ const getLpBalanceInPool = (pair) =>{//获取LPtoken总额
         var functionSelector = 'totalSupply()';
         var parameter = []
         window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-            let lpTotal = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+            let lpTotal = parseInt(transaction.constant_result[0],16)
             resolve(lpTotal);
         })
     })

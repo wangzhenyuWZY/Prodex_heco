@@ -184,6 +184,7 @@
 </template>
 
 <script>
+const Decimal = require('decimal.js');
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
@@ -276,7 +277,8 @@ export default {
       }
     },
     confirmSupply(){//输出的lptoken数量
-      this.reciveLptoken = getTokenInGivenPoolOut(this.token1Num,this.token1Balance,this.token2Num,this.token2Balance,this.lpTotal)
+      let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
+      this.reciveLptoken = reciveLptoken
       this.popsData = {
         reciveLptoken:this.reciveLptoken,
         token1Num:this.token1Num,
@@ -299,9 +301,21 @@ export default {
         //   this.token1Num = (this.token1Num*Math.pow(10,Math.abs(differ))).toFixed(6)
         // }
       }
+      
     },
     calcShare(){
-      this.getShare()
+        if(this.token1Balance&&this.token2Balance){
+          this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
+          // let differ = this.token1.decimals-this.token2.decimals
+          // if(differ!==0 && differ>0){
+          //   this.token2Num = (this.token2Num/Math.pow(10,Math.abs(differ))).toFixed(6)
+          // }else if(differ!==0 && differ<0){
+          //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
+          // }
+        }
+      if(this.pair){
+        this.getShare()
+      }
     },
     getShare () {
       let that = this
@@ -318,15 +332,7 @@ export default {
       } else {
         this.share = 0
       }
-      if(this.token1Balance&&this.token2Balance){
-        this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
-        // let differ = this.token1.decimals-this.token2.decimals
-        // if(differ!==0 && differ>0){
-        //   this.token2Num = (this.token2Num/Math.pow(10,Math.abs(differ))).toFixed(6)
-        // }else if(differ!==0 && differ<0){
-        //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
-        // }
-      }
+      
     },
     async getToken2DenormalizedWeight(){
       var functionSelector = 'getDenormalizedWeight(address)';
@@ -380,7 +386,8 @@ export default {
           console.log('this.token1Balance====='+res)
           this.token1Balance = res
           getMyBalanceInPool(pair[0]).then((res)=>{
-            that.myBalanceInPool = res
+            that.myBalanceInPool = res/Math.pow(10,this.pair.decimals)
+            console.log('that.myBalanceInPool========'+that.myBalanceInPool   )
             if(that.lpTotal){
               that.myShare = (that.myBalanceInPool/that.lpTotal).toFixed(4)
             }
@@ -390,7 +397,9 @@ export default {
           console.log('this.token2Balance====='+res)
           this.token2Balance = res
           getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
-            that.lpTotal = res
+            console.log('lptoken======='+res)
+            // that.lpTotal = Decimal(res).div(Math.pow(10,this.pair.decimals))
+            that.lpTotal = Decimal(res)
             if(that.myBalanceInPool){
               that.myShare = (that.myBalanceInPool/that.lpTotal).toFixed(4)
             }
@@ -401,10 +410,10 @@ export default {
           if (res) {
             let approveBalance = parseInt(res._hex, 16)
             if (approveBalance == 0) {
-              that.$message({
-                message: '未授权请先授权',
-                type: 'error'
-              });
+              // that.$message({
+              //   message: '未授权请先授权',
+              //   type: 'error'
+              // });
               that.isApproved = false
             } else {
               that.isApproved = true
@@ -455,17 +464,16 @@ export default {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
       var parameter = [
-        { type: 'uint256', value: '1000000000000000000' },
-        { type: 'uint256[]', value: [that.token1Num * Math.pow(10, that.token1.decimals), that.token2Num * Math.pow(10, that.token2.decimals)] },
+        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
+        { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10,that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10,that.token2.decimals)).toString()] },
       ]
       console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
         if (!transaction.result || !transaction.result.result){
-              that.charm1();
+            that.charm1();
             return console.error('Unknown error: ' + transaction, null, 2);
-          }
-          
+        }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success("SUCCESS!")
@@ -490,10 +498,13 @@ export default {
         { type: 'uint256', value: 0 }
       ]
       try {
-        let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract('THyjBqMKwx9RVqqiuMeFDjKw4LYqPui4uR', functionSelector, {}, parameter);
-        if (!transaction.result || !transaction.result.result)
+        console.log('走到1')
+        let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
+        console.log('走到2',transaction)
+        if (!transaction.result || !transaction.result.result){
           that.charm1();
           return console.error('Unknown error: ' + transaction, null, 2);
+        }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success('success');
@@ -504,7 +515,8 @@ export default {
           });
         })
       } catch (error) {
-        console.log(error);
+        console.log('走到3')
+        console.log(111,error);
           that.charm1();
       }
 
@@ -557,6 +569,7 @@ export default {
           { type: 'address', value: coin.address }
         ]
         window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
+          debugger
           let tokenBalanceInPool = parseInt(transaction.constant_result[0], 16) / Math.pow(10, coin.decimals)
           resolve(tokenBalanceInPool);
         })
