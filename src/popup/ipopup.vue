@@ -1,64 +1,56 @@
 <template>
-  <el-dialog title=""    
+  <el-dialog title=""
              :visible.sync="showAlert"
              width="480px"
              custom-class="dialog_selct"
+             :close-on-click-modal="false"
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
       <span>Connect to Wallet</span>
       <img class="select_title"
-     
            src="@/assets/img/icon_instructions.svg"
            alt="">
     </span>
     <div class="conter">
 
       <div class="mag_list">
-        <div class="currency_list" @click="tlink" >
-         <button class="con-but"> <img src="../assets/img/conter.png" alt=""> Tronlink wallet</button>
+        <div class="currency_list"
+             @click="tlink">
+          <button class="con-but"> <img src="../assets/img/conter.png"
+                 alt=""> Tronlink wallet <i class="el-icon-loading"
+               v-show="connect!=null"></i> </button>
         </div>
       </div>
-      <div class="con-p"><samp class="con-p1">Haven't installed TronLink yet?<samp class="con-p2">Click here>></samp></samp></div>
-      
+      <div class="con-p">
+        <samp class="con-p1">Haven't installed TronLink yet?
+          <samp class="con-p2">Click here>></samp>
+        </samp>
+
+      </div>
+
     </div>
   </el-dialog>
 </template>
 
 <script>
 import tokenData from '../utils/token'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
+import store from '../store/index'
+import { Notification } from 'element-ui';
 export default {
-  props: {
-    showAlert: {
-      type: Boolean,
-      default: true,
-    },
-    item: {
-      type: Number,
-      default: 1,
-    },
-    selectType:{
-      type:String,
-      default:''
-    }
-  },
   data () {
     return {
       value: '',
+      showAlert: false,
+      connect: null,
+      index: 1
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
-    ...mapState(["connectFlag",]),
-     tokenList () {
-         if (this.selectType == '') {
-           return tokenData.tokenList
-         } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name )
-            return arry;
-         }
-     }
+    ...mapState(["connectFlag"])
+
   },
   created () {
 
@@ -70,58 +62,89 @@ export default {
       this.showAlert = false
       // this.$emit('closeAlert')
     },
-    tlink(){
-       if(this.showAlert = true){
-          this.showAlert = false
-         
-      alert("登入成功");
-      }
-      // if(this.connectFlag = false){}
-      //链接钱包.....
+    tlink () {
+      this.connectWill();
+
+    },
+    connectWill () {
+      let that = this
+      this.connect = setInterval(async () => {
+        this.index += 1;
+        if (this.index > 10) {
+          clearInterval(this.connect);
+          this.index = 0;
+          this.connect = null;
+          that.showAlert = false;
+          Notification({
+            title: '连接失败',
+            message: '请检查钱包',
+            position: 'bottom-right',
+            type: 'error'
+          });
+          that.showAlert = false;
+          return;
+        }
+        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
+            clearInterval(this.connect);
+            store.dispatch('connectWallett');
+            this.index = 0;
+            this.connect = null;
+            that.showAlert = false;
+            Notification({
+              title: '连接成功',
+              message: '请检查钱包',
+              position: 'bottom-right',
+              type: 'success'
+            });
+
+          }
+
+      }, 1000)
+    },
+    show () {
+      this.showAlert = true;
     }
   }
 }
 </script>
 <style lang="scss" scoped>
-
 </style>
 <style  scoped>
-.con-p{
-    width: 349px;
-    height: 21px;
-    font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 400;
-    color: #878B97;
-    line-height: 21px;
-    margin-left: 32px;
+.con-p {
+  width: 349px;
+  height: 21px;
+  font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #878b97;
+  line-height: 21px;
+  margin-left: 32px;
 }
-.con-p1{   
-    height: 21px;
-    font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 400;
-    color: #878B97;
-    line-height: 21px;
+.con-p1 {
+  height: 21px;
+  font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #878b97;
+  line-height: 21px;
 }
-.con-p2{
-   
-    height: 21px;
-    font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 400;
-    color: #FA403D;
-    line-height: 21px;
+.con-p2 {
+  height: 21px;
+  font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #fa403d;
+  line-height: 21px;
 }
-.conter{
-    margin-top: 40px;
+.conter {
+  margin-top: 40px;
 }
 
 >>> .dialog_selct {
-    width: 480px;
-    height: 273px;
-    background: #FFFFFF;
-    border-radius: 20px; 
+  width: 480px;
+  height: 273px;
+  background: #ffffff;
+  border-radius: 20px;
 }
 >>> .dialog_selct .el-icon-close {
   font-size: 28px;
@@ -161,12 +184,12 @@ export default {
   margin-bottom: 33px;
 }
 .select_title {
-    height: 24px;
-    font-size: 20px;
-    font-family: Roboto-Medium, Roboto;
-    font-weight: 500;
-    color: #0F1730;
-    line-height: 24px;
+  height: 24px;
+  font-size: 20px;
+  font-family: Roboto-Medium, Roboto;
+  font-weight: 500;
+  color: #0f1730;
+  line-height: 24px;
 }
 .select_size {
   font-size: 20px;
@@ -174,23 +197,23 @@ export default {
   font-weight: normal;
 }
 .currency_list {
-    width: 416px;
-    height: 80px;
-    background: #F4F8FB;
-    border-radius: 16px; 
-    overflow-y: scroll;
-    margin-bottom: 32px;
+  width: 416px;
+  height: 80px;
+  background: #f4f8fb;
+  border-radius: 16px;
+  overflow-y: scroll;
+  margin-bottom: 32px;
 }
-.con-but{
-    background: #F4F8FB;
-    height: 24px;
-    font-size: 20px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 400;
-    color: #0F1730;
-    line-height: 24px;
-    margin-top: 26px;
-    margin-left: 123px;
+.con-but {
+  background: #f4f8fb;
+  height: 24px;
+  font-size: 20px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #0f1730;
+  line-height: 24px;
+  margin-top: 26px;
+  margin-left: 123px;
 }
 
 .currency_list::-webkit-scrollbar {

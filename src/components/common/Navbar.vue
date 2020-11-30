@@ -108,9 +108,9 @@ export default {
   methods: {
      btnClick () {
       this.$popup({
+        // showAlert:true,
         click: () => {
           // 点击按钮事件 
-        
           this.$router.push('../../popup/popup')
 
         }

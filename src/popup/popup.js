@@ -11,7 +11,7 @@ Popup.install = function (data) {
   document.body.appendChild(instance.$el)
 
   Vue.nextTick(() => {
-    instance.show = true
+    instance.showAlert = true
     // show 和弹窗组件里的show对应，用于控制显隐
   })
 }

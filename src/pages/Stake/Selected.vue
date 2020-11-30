@@ -42,7 +42,9 @@
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
               </div>
-              <div class="rg"> <span class="text_color">APR:</span> <span class="ftblod">322.16%</span> </div>
+              <div class="rg"> 
+                <span class="text_color">APR:</span> <span class="ftblod">322.16%</span>
+                 </div>
             </div>
           </div>
         </div>
@@ -66,7 +68,7 @@
           </div>
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
-        <div class="Approve_btn clearfix">
+        <div class="Approve_btns clearfix">
           <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">Withdrawal</el-button>
           <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">Reward</el-button>
         </div>
@@ -431,7 +433,7 @@ export default {
       font-size: 20px;
     }
   }
-  .Approve_btn {
+  .Approve_btns {
     margin-top: 32px;
     margin-bottom: 40px;
     .Approve1 {

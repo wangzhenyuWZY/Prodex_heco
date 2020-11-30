@@ -105,6 +105,16 @@ export default {
   methods: {
     initColse () {
         this.showModel = false;
+        this.total = {
+        farmTotal: 0, // 总数
+        shareToal: 0, // 抵押数量
+        uniswaplp: 0, // 计算用户收益
+        balanceOf: 0, // 钱包余额
+        decimals: 0, // 精度 查询减 发送合约加
+        btnFlag1: false,
+        btnFlag2: false,
+        btnFlag3: false
+      }
     },
     async init () {//初始化tronweb
       let that = this
@@ -212,8 +222,9 @@ export default {
       await this.tokenPerBlock();
       let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
       let res = await this.toDecimal(userInfo.amount._hex);
-      this.total.shareToal = res / Math.pow(10, this.total.decimals);
       await this.pendingTokens();
+      this.total.shareToal = res / Math.pow(10, this.total.decimals);
+
       console.log(res);
     },
     async updata () { // 提现 抵押 更新 余额  抵押数
