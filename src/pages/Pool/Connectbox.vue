@@ -84,11 +84,11 @@
             <div class="box_title">Prices and pool share</div>
             <ul class="pre_list clearfix">
               <li>
-                <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
+                <p>{{justPrice?justPrice.toFixed(6):'--'}}</p>
                 <p>{{token1.name}} per {{token2.name}}</p>
               </li>
               <li>
-                <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
+                <p>{{reversePrice?reversePrice.toFixed(6):'--'}}</p>
                 <p>{{token2.name}} per {{token1.name}}</p>
               </li>
               <li>
@@ -136,7 +136,7 @@
                 <div class="lt">
                   <span>Your pool share:</span>
                 </div>
-                <span class="rg">{{myShare}}%</span>
+                <span class="rg">{{myShare*100}}%</span>
               </div>
               <div class="received mrge12">
                 <div class="lt">
@@ -170,6 +170,7 @@
           @linkage="linkage"
     />
     <recevive
+      v-if="confirmPop"
       :showAlert ='confirmPop'
       :popsData = 'popsData'
       @change='supply(1)'
@@ -256,6 +257,19 @@ export default {
     }
   },
   methods: {
+    checkSupply(){
+      if(!this.token1Num || this.token1Num=='' || this.token1Num==0){
+        that.$message({
+          message: '请输入添加数量',
+          type: 'error'
+        });
+      }else if(this.token1Num>this.token1.balance){
+        that.$message({
+          message: '钱包余额不足',
+          type: 'error'
+        });
+      }
+    },
     confirmSupply(){//输出的lptoken数量
       this.reciveLptoken = getTokenInGivenPoolOut(this.token1Num,this.token1Balance,this.token2Num,this.token2Balance,this.lpTotal)
       this.popsData = {
@@ -272,7 +286,13 @@ export default {
     }, 
     calcToken1Num(){
       if(this.token1Balance&&this.token2Balance){
-        this.token1Num = parseInt(this.token2Num/this.token2Balance*this.token1Balance)
+        this.token1Num = (this.token2Num/this.token2Balance*this.token1Balance).toFixed(6)
+        // let differ = this.token2.decimals-this.token1.decimals
+        // if(differ!==0 && differ>0){
+        //   this.token1Num = (this.token1Num/Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }else if(differ!==0 && differ<0){
+        //   this.token1Num = (this.token1Num*Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }
       }
     },
     calcShare(){
@@ -294,7 +314,13 @@ export default {
         this.share = 0
       }
       if(this.token1Balance&&this.token2Balance){
-        this.token2Num = parseInt(this.token1Num/this.token1Balance*this.token2Balance)
+        this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
+        // let differ = this.token1.decimals-this.token2.decimals
+        // if(differ!==0 && differ>0){
+        //   this.token2Num = (this.token2Num/Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }else if(differ!==0 && differ<0){
+        //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }
       }
     },
     async getToken2DenormalizedWeight(){
@@ -338,15 +364,15 @@ export default {
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
       let pair = tokenData.pairList.filter((item) => {
-        return item.pair == pairname.toUpperCase() || pairname1.toUpperCase()
+        return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
-      debugger ;
       if (pair) {
         this.pair = pair[0]
         console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
+          console.log('this.token1Balance====='+res)
           this.token1Balance = res
           getMyBalanceInPool(pair[0]).then((res)=>{
             that.myBalanceInPool = res
@@ -356,6 +382,7 @@ export default {
           })
         })
         this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
+          console.log('this.token2Balance====='+res)
           this.token2Balance = res
           getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
             that.lpTotal = res
@@ -418,20 +445,6 @@ export default {
         this.joinPool()
       }
       this.confirmPop = false
-    },
-    getMyPoolInfo(){
-      getLpBalanceInPool(item).then((res)=>{
-        that.lpTotal = res
-        if(that.myBalanceInPool){
-          that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
-        }
-      })
-      getMyBalanceInPool(item).then((res)=>{
-        that.myBalanceInPool = res
-        if(that.lpTotal){
-          that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
-        }
-      })
     },
     async joinPool () {
       let that = this
@@ -552,7 +565,24 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+        if(name == 'justPrice'){
+          let justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          let differ = this.token1.decimals-this.token2.decimals
+          if(differ!==0 && differ>0){
+            this.justPrice = justPrice/Math.pow(10,Math.abs(differ))
+          }else if(differ!==0 && differ<0){
+            this.justPrice = justPrice*Math.pow(10,Math.abs(differ))
+          }
+        }else{
+          let reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          let differ = this.token2.decimals-this.token1.decimals
+          if(differ!==0 && differ>0){
+            this.reversePrice = reversePrice/Math.pow(10,Math.abs(differ))
+          }else if(differ!==0 && differ<0){
+            this.reversePrice = reversePrice*Math.pow(10,Math.abs(differ))
+          }
+        }
+        // name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
       }
     },
     async checkBind () {//检查是否绑定
