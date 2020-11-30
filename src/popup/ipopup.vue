@@ -74,7 +74,6 @@ export default {
       console.log("登入跳转");
       // if(this.connectFlag = false){}
       //链接钱包.....
-     
     }
   }
 }
