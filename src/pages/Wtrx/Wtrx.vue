@@ -109,7 +109,7 @@ export default {
     }
   },
   created () {
-    this.init()
+    this.init();
   },
   methods: {
     init () {//初始化tronweb

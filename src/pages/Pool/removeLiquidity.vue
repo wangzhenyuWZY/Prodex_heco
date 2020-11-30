@@ -98,6 +98,9 @@
       @change="exitPool"
       :token1 ="token1"
       :token2 ="token2"
+      :token1Num ="token1BalanceInPool"
+      :token2Num ="token2BalanceInPool"
+      :clickFn ="approveLpToken"
       @close="showAlert = false"
   />
 </div>
@@ -107,7 +110,7 @@
 <script>
 import { container ,frominput,setselect} from '../../components/index'
 import {decimals} from '../../utils/tronwebFn'
-import recevive from './recevive'
+import recevive from './willRecevive'
 export default {
   data () {
     return {

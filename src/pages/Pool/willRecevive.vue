@@ -11,23 +11,23 @@
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
           <div class="received ">
-            <span class="rg ftblod">0.000000233456</span>
+            <span class="rg ftblod">{{token1Num}}</span>
             <div class="lt ">
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
                    alt="">
-              <span>ETH</span>
+              <span>{{token1.name}}</span>
             </div>
             
           </div>
           <div class="add">+</div>
                   <div class="received ">
-            <span class="rg ftblod">0.000000233456</span>
+            <span class="rg ftblod">{{token1Num}}</span>
             <div class="lt ">
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
                    alt="">
-              <span>USDT</span>
+              <span>{{token2.name}}</span>
             </div>
           </div>
       </div>
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn">Confirm</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickFn  ">Confirm</el-button>
   </el-dialog>
 </template>
 
@@ -83,6 +83,17 @@ export default {
       t2Per: {
         type: [String,Number],
         default: '0',
+      },
+      token1:{
+        type:Object,
+        default:{}
+      },
+      clickFn:{
+        type:Function
+      },
+      token2:{
+        type:Object,
+        default:{}
       },
       reciveLptoken: {
         type: [String,Number,Object],
