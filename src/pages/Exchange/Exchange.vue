@@ -6,124 +6,151 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="From"
-                       v-model="token1Num" @input='cumpToken2'></frominput>
+                       v-model="token1Num"
+                       @input='cumpToken2'></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect  :showSelect="selectColor1" :imgUrl="token1.img" item='0' :balance="token1.balance"
-                     :text="token1.name" @click="showSelect(0)" />           
+            <setselect :showSelect="  JSON.stringify(token1)!='{}'"
+                       :imgUrl="token1.img"
+                       item='0'
+                       :balance="token1.balance"
+                       :text="token1.name"
+                       @click="showSelect(0)" />
           </div>
         </div>
 
         <div class="from_contentIcon">
-          <i class="el-icon-back tran_icon"></i>
+          <i class="el-icon-back cursor tran_icon"
+             @click="purples"></i>
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
-                       v-model="token2Num" @input="cumpToken1"></frominput>
+                       v-model="token2Num"
+                       @input="cumpToken1"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :showSelect="selectColor2" :imgUrl="token2.img" item='1' :balance="token2.balance"
-                     :text="token2.name" @click="showSelect(1)"  />
+            <setselect :showSelect="JSON.stringify(token2)!='{}'"
+                       :imgUrl="token2.img"
+                       item='1'
+                       :balance="token2.balance"
+                       :text="token2.name"
+                       @click="showSelect(1)" />
           </div>
         </div>
-        <div class="Price_text"   v-show="connectFlag"> 
-            <span>Price: </span> 
-            <span>{{spotPrice.toFixed(token1.decimals)}} </span>
-                <span> {{token1.name}} </span> 
-               <span> per </span>
-               <span> {{token2.name}} </span> 
-               <img src="@/assets/img/icon_slect.png" alt="" @click="convert"></div>
-        <div class="whe" :class="connectFlag?'login_text':'outlogin'">
+        <div class="Price_text"
+             v-show="connectFlag">
+          <span>Price: </span>
+          <span>{{spotPrice.toFixed(token1.decimals)}} </span>
+          <span> {{token1.name}} </span>
+          <span> per </span>
+          <span> {{token2.name}} </span>
+          <img src="@/assets/img/icon_slect.png"
+               alt=""
+               @click="convert">
+        </div>
+        <div class="whe"
+             :class="connectFlag?'login_text':'outlogin'">
           <div class="connect_btn clearfix">
-            <div class="whe fl_lt" v-show="!isApproved && connectFlag">
-              <el-button class="from_botton" @click="doApprove">Approve {{token1.name}}</el-button>
+            <div class="whe fl_lt"
+                 v-show="!isApproved && connectFlag">
+              <el-button class="from_botton"
+                         @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg">
-                 <el-button class="from_botton" v-show="!connectFlag" 
-                 @click="btnClick"
-                 > <img class="whe_img"
-                 src="@/assets/img/icon_my_wallet.svg"
-                 alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}</el-button>
-            
-              <el-button class="from_botton" :loading="btnLoading1"      v-show="connectFlag"
-                         :disabled="btnDisabled1" @click="confirmSwap">Swap</el-button>
+              <el-button class="from_botton"
+                         v-show="!connectFlag"
+                         @click="btnClick"> <img class="whe_img"
+                     src="@/assets/img/icon_my_wallet.svg"
+                     alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}</el-button>
+
+              <el-button class="from_botton"
+                         :loading="btnLoading1"
+                         v-show="connectFlag"
+                         :disabled="btnDisabled1"
+                         @click="confirmSwap">Swap</el-button>
             </div>
-          </div>       
+          </div>
         </div>
 
       </div>
-    <div slot="footer"
-        v-show="connectFlag"
-         class="position">
-      <div class="box_sizes connect_boxs">
-        <div class="provider c_receove_Share ">
-          <div class="">
-            <div class="received">
-              <div class="lt">
-                <span>Minimum received 
-                <el-tooltip placement="right">
-                  <div slot="content" class="slotp"> 
-                      Your transaction will revert if<br> 
-                      there is a large,unfavorable <br>
-                      price movement before it is 
-                      <br>confirmed.</div>
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
+      <div slot="footer"
+           v-show="connectFlag"
+           class="position">
+        <div class="box_sizes connect_boxs">
+          <div class="provider c_receove_Share ">
+            <div class="">
+              <div class="received">
+                <div class="lt">
+                  <span>Minimum received
+                    <el-tooltip placement="right">
+                      <div slot="content"
+                           class="slotp">
+                        Your transaction will revert if<br>
+                        there is a large,unfavorable <br>
+                        price movement before it is
+                        <br>confirmed.
+                      </div>
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
                   </span>
+                </div>
+                <span class="rg">{{token2Num}} {{token2.name}}</span>
               </div>
-              <span class="rg">{{token2Num}} {{token2.name}}</span>
-            </div>
-            <div class="received setmage">
-              <div class="lt">
-                <span>Price Impacte 
+              <div class="received setmage">
+                <div class="lt">
+                  <span>Price Impacte
 
-                  <el-tooltip class="item" 
-                  effect="dark" 
-                  content="Right Center 提示文字" 
-                  placement="right">
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
-                
+                    <el-tooltip class="item"
+                                effect="dark"
+                                content="Right Center 提示文字"
+                                placement="right">
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
+
                   </span>
+                </div>
+                <span class="rec_red">{{percentage}}%</span>
               </div>
-              <span class="rec_red">{{percentage}}%</span>
-            </div>
-            <div class="received">
-              <div class="lt">
-                <span>Liquidity Provider Fee 
-                  <el-tooltip class="item" 
-                  effect="dark" 
-                  
-                  content="Right Center 提示文字" 
-                  placement="right">
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
+              <div class="received">
+                <div class="lt">
+                  <span>Liquidity Provider Fee
+                    <el-tooltip class="item"
+                                effect="dark"
+                                content="Right Center 提示文字"
+                                placement="right">
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
                   </span>
+                </div>
+                <span class="">{{swapFee}} {{token1.name}}</span>
               </div>
-              <span class="">{{swapFee}} {{token1.name}}</span>
+              <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
+                     alt=""></div>
             </div>
-             <div class="fees_account">View pair analytics <img  src="@/assets/img/icon_jump_green.png"
-                 alt=""></div>
           </div>
         </div>
       </div>
-    </div>
     </container>
     <change v-if="isConfirm"
-       @doConfirm="doswap" 
-       :token1='token1'
-       :token2='token2'
-       :token1Num='token1Num'
-       :token2Num='token2Num'
-       :spotPrice='spotPrice'
-       :swapFee='swapFee'
-       :percentage='percentage'
-       @handleClosea ="isConfirm = false"
-       />
-    <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
+            @doConfirm="doswap"
+            :token1='token1'
+            :token2='token2'
+            :token1Num='token1Num'
+            :token2Num='token2Num'
+            :spotPrice='spotPrice'
+            :swapFee='swapFee'
+            :percentage='percentage'
+            @handleClosea="isConfirm = false" />
+    <selctoken :showAlert='isSelect'
+               :item='item'
+               @closeAlert="isSelect=false"
+               @change="changeCoin" />
   </div>
- 
+
 </template>
 
 <script>
@@ -131,37 +158,42 @@ import { container, frominput, setselect } from '../../components/index'
 import change from './change'
 import selctoken from '../Pool/selctToken';
 import tokenData from '../../utils/token'
-import {approved,decimals,getConfirmedTransaction,allowance} from '../../utils/tronwebFn'
-import {calcSpotPrice,
-    calcOutGivenIn,
-    calcInGivenOut,
-    calcOutGivenInAfterPrice} from '../../utils/calc_comparisons'
-    import { mapState} from 'vuex'
+import { approved, decimals, getConfirmedTransaction, allowance } from '../../utils/tronwebFn'
+import {
+  calcSpotPrice,
+  calcOutGivenIn,
+  calcInGivenOut,
+  calcOutGivenInAfterPrice
+} from '../../utils/calc_comparisons'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
-      token1:{},
-      token2:{},
-      token1Num:null,
-      token2Num:null,
-      login:true,
-      isApproved:true,
-      isSelect:false,
-      item:0,
-      pair:{},
-      decimals:18,
-      token1Balance:0,
-      token2Balance:0,
-      token1Weight:0,
-      token2Weight:0,
-      swapFee:0,
-      spotPrice:0,
-      percentage:0,
-      isConfirm:false,
-      selectColor1:false,
-      selectColor2:false,
-      btnLoading1:false,
-      btnDisabled1:true
+      token1: {},
+      token2: {},
+      token1Num: '',
+      token2Num: '',
+      login: true,
+      isApproved: true,
+      isSelect: false,
+      item: 0,
+      pair: {},
+      decimals: 18,
+      token1Balance: 0,
+      token2Balance: 0,
+      token1Weight: 0,
+      token2Weight: 0,
+      swapFee: 0,
+      spotPrice: 0,
+      percentage: 0,
+      isConfirm: false,
+      selectColor1: false,
+      selectColor2: false,
+      btnLoading1: false,
+      btnDisabled1: true,
+      purple: false,
+      btnsbmit:false
+
 
     }
   },
@@ -175,20 +207,20 @@ export default {
     change,
     selctoken
   },
-  created(){
+  created () {
 
   },
   watch: {
-    token1Num() {
+    token1Num () {
       console.log(this.token1Num);
       this.inputFlag();
     },
-     token2Num() {
+    token2Num () {
       this.inputFlag();
     }
-    
+
   },
-  methods:{
+  methods: {
     btnClick () {
       this.$popup({
         click: () => {
@@ -197,59 +229,81 @@ export default {
         }
       })
     },
+    purples () {  // 箭头切换
+      this.purple = !this.purple;
+      let arr = JSON.parse(JSON.stringify(this.token1));
+      let arr1 = JSON.parse(JSON.stringify(this.token2));
+      if (this.purple) {
+        this.token1 = arr1;
+        this.token2 = arr;
 
-    showSelect(index){
+      } else {
+        this.token2 = arr;
+        this.token1 = arr1;
+      }
+      this.token1Num = '';
+      this.token2Num = '';
+      this.percentage = 0;
+      this.swapFee = 0;
+      this.spotPrice = 0;
+      this.inputFlag();
+      this.getPairAddress()
+
+    },
+    showSelect (index) {
       this.isSelect = true
       this.item = index
     },
-    
-    changeCoin(token){
+
+    changeCoin (token) {
       let that = this
       this.isSelect = false
-      if ( token.item==0) {
-          this.token1 = token;
-           this.selectColor1 = true;
+
+
+      if (token.item == 0) {
+        this.token1 = token;
+        //  this.selectColor1 = true;
       } else {
-          this.token2 = token;
-          this.selectColor2 = true;
+        this.token2 = token;
+        // this.selectColor2 = true;
       }
       that.getBalance(token)
       this.inputFlag();
     },
-    async getBalance(token){//获取余额
+    async getBalance (token) {//获取余额
       let that = this
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
-      if(token){
-        let balance = parseInt(tokenBalance._hex,16)/Math.pow(10,token.decimals)
-        token.item==0?that.token1.balance=balance:that.token2.balance=balance
-        if(this.token1.address && this.token2.address){
+      if (token) {
+        let balance = parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)
+        token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
+        if (this.token1.address && this.token2.address) {
           this.getPairAddress(token)
         }
       }
     },
-    doApprove(){
-      if(this.token1.address && this.token2.address){
-        approved(this.token1.address,this.pair.address).then((res)=>{
+    doApprove () {
+      if (this.token1.address && this.token2.address) {
+        approved(this.token1.address, this.pair.address).then((res) => {
           this.isApproved = true
         })
-      }else{
+      } else {
         this.$layer.msg('请选择交易对')
       }
     },
-    async getPairAddress(){
+    async getPairAddress () {
       let that = this
-      let pairname = this.token1.name+'/'+this.token2.name
-      let pairname1 = this.token2.name+'/'+this.token1.name
-      let pair = tokenData.pairList.filter((item)=>{
-        return item.pair==pairname.toUpperCase() || item.pair==pairname1.toUpperCase()
+      let pairname = this.token1.name + '/' + this.token2.name
+      let pairname1 = this.token2.name + '/' + this.token1.name
+      let pair = tokenData.pairList.filter((item) => {
+        return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
-      if(pair&&pair.length>0){
+      if (pair && pair.length > 0) {
         this.pair = pair[0]
         this.decimals = pair[0].decimals
-        allowance(that.token1.address,pair[0].address).then((res)=>{
-          if(res){
-            let approveBalance = parseInt(res._hex,16)
+        allowance(that.token1.address, pair[0].address).then((res) => {
+          if (res) {
+            let approveBalance = parseInt(res._hex, 16)
             if (approveBalance == 0) {
               that.isApproved = false
             } else {
@@ -257,152 +311,167 @@ export default {
             }
           }
         })
-        this.getBalanceInPool(pair[0],this.token1).then((res)=>{
+        this.getBalanceInPool(pair[0], this.token1).then((res) => {
           this.token1Balance = res
           this.getSpotPrice()
         })
-        this.getBalanceInPool(pair[0],this.token2).then((res)=>{
+        this.getBalanceInPool(pair[0], this.token2).then((res) => {
           this.token2Balance = res
           this.getSpotPrice()
         })
-        this.getWeight(pair[0],this.token1).then((res)=>{
+        this.getWeight(pair[0], this.token1).then((res) => {
           this.token1Weight = res
           this.getSpotPrice()
         })
-        this.getWeight(pair[0],this.token2).then((res)=>{
+        this.getWeight(pair[0], this.token2).then((res) => {
           this.token2Weight = res
           this.getSpotPrice()
         })
-        this.getSwapFee(pair[0]).then((res)=>{
+        this.getSwapFee(pair[0]).then((res) => {
           this.swapFee = res
           this.getSpotPrice()
         })
       }
     },
-    cumpToken1(){//计算兑换的token1
-      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee&&this.token1Num){
-        let token1Num = calcInGivenOut(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token2Num,this.swapFee)
+    cumpToken1 () {//计算兑换的token1
+      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
+        let token1Num = calcInGivenOut(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token2Num, this.swapFee)
         this.token1Num = token1Num.toFixed(this.token1.decimals)
       }
     },
-    cumpToken2(){//计算兑换的token2
-      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee&&this.token1Num){
-        let token2Num = calcOutGivenIn(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token1Num,this.swapFee)
+    cumpToken2 () {//计算兑换的token2
+      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
+        let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(this.token2.decimals)
-        let afterPrice = calcOutGivenInAfterPrice(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.token1Num,this.swapFee)
-        this.percentage = ((afterPrice-this.spotPrice)/this.spotPrice*100).toFixed(2)
+        let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
+        this.percentage = ((afterPrice - this.spotPrice) / this.spotPrice * 100).toFixed(2)
       }
     },
-    getSpotPrice(){//计算token1的价格
-      if(this.token1Balance&&this.token1Weight&&this.token2Balance&&this.token2Weight&&this.swapFee){
-        this.spotPrice = calcSpotPrice(this.token1Balance,this.token1Weight,this.token2Balance,this.token2Weight,this.swapFee)
+    getSpotPrice () {//计算token1的价格
+      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee) {
+        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.swapFee)
       }
-      if(this.token1Num){
+      if (this.token1Num) {
         this.cumpToken2()
       }
     },
-    getBalanceInPool(pair,coin){//获取Pool中的余额
+    getBalanceInPool (pair, coin) {//获取Pool中的余额
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getBalance(address)';
         var parameter = [
-          {type: 'address', value: coin.address}
+          { type: 'address', value: coin.address }
         ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-          let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
+          let tokenBalanceInPool = parseInt(transaction.constant_result[0], 16) / Math.pow(10, coin.decimals)
           resolve(tokenBalanceInPool);
         })
       })
     },
-    getWeight(pair,coin){//获取权重
+    getWeight (pair, coin) {//获取权重
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getNormalizedWeight(address)';
         var parameter = [
-          {type: 'address', value: coin.address}
+          { type: 'address', value: coin.address }
         ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-          let weight = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
+          let weight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, pair.decimals)
           resolve(weight);
         })
       })
     },
-    getSwapFee(pair){//获取swapfee
+    getSwapFee (pair) {//获取swapfee
       let that = this
       return new Promise(function (resolve, reject) {
         var functionSelector = 'getSwapFee()';
         var parameter = []
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-          let swapFee = parseInt(transaction.constant_result[0],16)/Math.pow(10,pair.decimals)
+        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
+          let swapFee = parseInt(transaction.constant_result[0], 16) / Math.pow(10, pair.decimals)
           resolve(swapFee);
         })
       })
     },
-    confirmSwap(){  
+    submitInit () {
+      this.btnDisabled1 = false;
+      this.btnLoading1 = false;
+        this.btnsbmit = false;
+    },
+    confirmSwap () {
       this.isConfirm = true
     },
     inputFlag () {
-         if (this.token1Num!=""&&this.token2Num!=""&& JSON.stringify(this.token1)!="{}"&&JSON.stringify(this.token2)!="{}") {
-              this.btnDisabled1 =false;
-      }  else {
-         this.btnDisabled1 =true;
+      if (this.btnsbmit) return;
+      if (this.token1Num != "" && this.token2Num != "" && JSON.stringify(this.token1) != "{}" && JSON.stringify(this.token2) != "{}") {
+        this.btnDisabled1 = false;
+      } else {
+        this.btnDisabled1 = true;
       }
     },
-    convert(){
+    convert () {
       let token1 = this.token1
       let token2 = this.token2
       this.token1 = token2
       this.token2 = token1
     },
-    async doswap(){
+    async doswap () {
       let that = this;
       this.isConfirm = false;
       this.btnDisabled1 = true;
       this.btnLoading1 = true;
-      if(that.token1Num>that.token1Balance){
+      this.btnsbmit = true;
+      if (that.token1Num > that.token1Balance) {
         this.$message.error('兑换额不能大于流动性池余额');
-         that.btnDisabled1 = false;
-          that.btnLoading1 = false;
+        that.btnDisabled1 = false;
+        that.btnLoading1 = false;
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       var parameter = [
-        {type:'address',value:that.token1.address},
-        {type:'uint256',value:that.token1Num*Math.pow(10,that.token1.decimals)},
-        {type:'address',value:that.token2.address},
-        {type:'uint256',value:0},
-        {type:'uint256',value:'1000000000000000000000000'}
+        { type: 'address', value: that.token1.address },
+        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'address', value: that.token2.address },
+        { type: 'uint256', value: 0 },
+        { type: 'uint256', value: '1000000000000000000000000' }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              getConfirmedTransaction(res.txid).then((e)=>{
-                this.$message.success('成功');
-              }).catch((err)=>{
-                 console.log(err);
-              })
-            that.btnDisabled1 = false;
-            that.btnLoading1 = false;
-          });
-      }) 
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+          getConfirmedTransaction(res.txid).then((e) => {
+            that.$message.success('交易成功');
+            that.token1Num = 0;
+            that.token2Num = 0;
+            that.getBalance(that.token1)
+            that.getBalance(that.token2)
+           that.submitInit()
+          }).catch((err) => {
+            console.log(err);
+              that.submitInit()
+          })
+
+        }).catch((err) => {
+          cosnole.log(err);
+         that.submitInit()
+        });
+      }).catch(err=>{
+        console.log(err);
+         that.submitInit()
+      })
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-
-.slotp{
-  
-height: 76px;
-font-size: 16px;
-font-family: Roboto-Regular, Roboto;
-font-weight: 400;
-color: #EEEEF0;
-line-height: 19px;
-
+.slotp {
+  height: 76px;
+  font-size: 16px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #eeeef0;
+  line-height: 19px;
 }
 .whe {
   width: 320px;
@@ -627,20 +696,19 @@ line-height: 19px;
       font-weight: bold;
     }
   }
-
 }
-  .Price_text{
-    font-size: 20px;
-    color: #0F1730;
-    margin-top: 49px;
-    margin-bottom: 17px;
-    text-align: center;
-    >img{
-        vertical-align: sub;
-        margin-left: 4px;
-    }
+.Price_text {
+  font-size: 20px;
+  color: #0f1730;
+  margin-top: 49px;
+  margin-bottom: 17px;
+  text-align: center;
+  > img {
+    vertical-align: sub;
+    margin-left: 4px;
   }
-  .connectbox {
+}
+.connectbox {
   padding: 0 24px 24px 24px;
   margin-top: 24px;
   .box_title {
@@ -668,63 +736,61 @@ line-height: 19px;
     }
   }
 }
-.connect_boxs{
-    background: #F4F5FA;
-    border-radius: 0 0 20px 20px;
-    position: absolute;
-    bottom: -275px;
-    left: 0;
-    width: 690px;
-    z-index: 0;
-    border-radius: 16px;
+.connect_boxs {
+  background: #f4f5fa;
+  border-radius: 0 0 20px 20px;
+  position: absolute;
+  bottom: -275px;
+  left: 0;
+  width: 690px;
+  z-index: 0;
+  border-radius: 16px;
 }
 
-.metitle{
+.metitle {
   height: 72px;
   line-height: 72px;
-  border-bottom: 1px solid #E5EBF2;
+  border-bottom: 1px solid #e5ebf2;
   font-weight: normal;
-    color: #0F1730;
-    font-size: 20px;
-    
+  color: #0f1730;
+  font-size: 20px;
 }
-.connect_currency{
+.connect_currency {
   display: flex;
-  justify-content: flex-start
+  justify-content: flex-start;
 }
-.c_receove_Share{
+.c_receove_Share {
   padding: 24px 40px;
   padding-top: 40px;
 }
-.currencyprices{
+.currencyprices {
   width: 190px;
   text-align: right;
 }
 
-.setmage{
-    margin: 20px 0;
+.setmage {
+  margin: 20px 0;
 }
- .fees_account {
-    height: 56px;
-    line-height: 56px;
-    border-radius: 16px;
-    padding-left: 24px;
-    margin-top: 25px;
-    margin-bottom: 32px;
-    border: 1px solid #0f1730;
-    position: relative;
-    cursor: pointer;
-    img {
-      position: absolute;
-      top: 12px;
-      right: 24px;
-    }
+.fees_account {
+  height: 56px;
+  line-height: 56px;
+  border-radius: 16px;
+  padding-left: 24px;
+  margin-top: 25px;
+  margin-bottom: 32px;
+  border: 1px solid #0f1730;
+  position: relative;
+  cursor: pointer;
+  img {
+    position: absolute;
+    top: 12px;
+    right: 24px;
   }
-  .rec_red{
-
-color: #FF5D37;
-  }
-  .outlogin{
-      margin-top: 48px;
-  }
+}
+.rec_red {
+  color: #ff5d37;
+}
+.outlogin {
+  margin-top: 48px;
+}
 </style>

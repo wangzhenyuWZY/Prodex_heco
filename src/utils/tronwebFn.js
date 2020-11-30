@@ -1,3 +1,4 @@
+import { Message } from 'element-ui';
 const initTronWeb = () => {//初始化tronweb
     return new Promise(function (resolve, reject) {
         let tries = 0;
@@ -27,6 +28,7 @@ const allowance = (coinAddress,contractAddress) => {//查询授权
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
+                
                     resolve(res)
                 })
             })
@@ -58,7 +60,11 @@ const approved = (coinAddress,contractAddress) => {//授权
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["approve"](contractAddress,'100000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
-                        alert('授权成功')
+                        Message({
+                            showClose: true,
+                            message: '授权成功',
+                            type: 'success'
+                        })
                         resolve(1);
                     }
                 })

@@ -400,10 +400,10 @@ export default {
           if (res) {
             let approveBalance = parseInt(res._hex, 16)
             if (approveBalance == 0) {
-              that.$message({
-                message: '未授权请先授权',
-                type: 'error'
-              });
+              // that.$message({
+              //   message: '未授权请先授权',
+              //   type: 'error'
+              // });
               that.isApproved = false
             } else {
               that.isApproved = true
