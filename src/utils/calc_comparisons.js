@@ -78,14 +78,13 @@ function getTokenInGivenPoolOut(
     tokenOutAmount,
     poolSupply
 ) {
-    const perIn = Decimal(tokenBalanceIn);
-    const perOut = Decimal(tokenBalanceOut);
-    const addInAmount = Decimal(tokenInAmount).div(perIn);
-    const addOutAmount = Decimal(tokenOutAmount).div(perOut);
-    if (addInAmount > addOutAmount) {
-        return Decimal(tokenOutAmount).div(Decimal(tokenBalanceIn)).mul(poolSupply);
+    console.log(tokenBalanceIn,tokenInAmount,tokenBalanceOut,tokenOutAmount,poolSupply)
+    const perIn = Decimal(tokenInAmount).div(Decimal(tokenBalanceIn));
+    const perOut = Decimal(tokenOutAmount).div(Decimal(tokenBalanceOut));
+    if (perIn > perOut) {
+        return perOut.mul(poolSupply);
     }
-    return Decimal(tokenInAmount).div(Decimal(tokenBalanceOut)).mul(poolSupply);
+    return perIn.mul(poolSupply);
 }
 
 module.exports = {

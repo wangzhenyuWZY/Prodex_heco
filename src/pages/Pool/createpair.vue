@@ -38,7 +38,7 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput lable="weight(1-50)"
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -59,7 +59,7 @@
                        v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput lable="weight(1-50)"
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">

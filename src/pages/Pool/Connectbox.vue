@@ -276,7 +276,7 @@ export default {
       }
     },
     confirmSupply(){//输出的lptoken数量
-      let reciveLptoken = getTokenInGivenPoolOut(this.token1Num,this.token1Balance,this.token2Num,this.token2Balance,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
+      let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
       this.reciveLptoken = reciveLptoken
       this.popsData = {
         reciveLptoken:this.reciveLptoken,
