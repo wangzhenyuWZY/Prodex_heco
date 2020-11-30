@@ -60,6 +60,14 @@ import tokenData from '../../utils/token'
       itemToken:{}
     };
   },
+  watch: {
+    text: {
+    handler(newName, oldName) {
+      console.log('obj.a changed');
+    },
+    deep: true
+  }
+  },
   created(){
     console.log('imgurl=====',this.imgUrl)
   },
