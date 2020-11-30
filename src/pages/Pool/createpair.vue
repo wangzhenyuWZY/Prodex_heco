@@ -9,11 +9,9 @@
           <i class="el-icon-back back_icon"></i>
         </span>
         </router-link>
-
           <span class="content_text">Create a pair</span>
         </div>
         <div class="rg_box">
-          
           <el-tooltip class="item" 
                   effect="dark" 
                   content="Right Center 提示文字" 
