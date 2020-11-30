@@ -61,19 +61,45 @@
           <div class="">
             <div class="received">
               <div class="lt">
-                <span>Minimum received <img src="@/assets/img/icon_instructions.svg" alt=""></span>
+                <span>Minimum received 
+                <el-tooltip placement="right">
+                  <div slot="content" class="slotp"> 
+                      Your transaction will revert if<br> 
+                      there is a large,unfavorable <br>
+                      price movement before it is 
+                      <br>confirmed.</div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>
+                  </span>
               </div>
               <span class="rg">{{token2Num}} {{token2.name}}</span>
             </div>
             <div class="received setmage">
               <div class="lt">
-                <span>Price Impacte <img src="@/assets/img/icon_instructions.svg" alt=""></span>
+                <span>Price Impacte 
+
+                  <el-tooltip class="item" 
+                  effect="dark" 
+                  content="Right Center 提示文字" 
+                  placement="right">
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>
+                
+                  </span>
               </div>
               <span class="rec_red">{{percentage}}%</span>
             </div>
             <div class="received">
               <div class="lt">
-                <span>Liquidity Provider Fee <img src="@/assets/img/icon_instructions.svg" alt=""></span>
+                <span>Liquidity Provider Fee 
+                  <el-tooltip class="item" 
+                  effect="dark" 
+                  
+                  content="Right Center 提示文字" 
+                  placement="right">
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>
+                  </span>
               </div>
               <span class="">{{swapFee}} {{token1.name}}</span>
             </div>
@@ -367,6 +393,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+.slotp{
+  
+height: 76px;
+font-size: 16px;
+font-family: Roboto-Regular, Roboto;
+font-weight: 400;
+color: #EEEEF0;
+line-height: 19px;
+
+}
 .whe {
   width: 320px;
   margin: 0 auto;

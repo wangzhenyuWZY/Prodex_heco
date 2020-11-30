@@ -7,9 +7,13 @@
     <span slot="title"
           class="select_size">
       <span>Select a token</span>
-      <img class="select_title"
-           src="@/assets/img/icon_instructions.svg"
-           alt="">
+      <el-tooltip placement="right">
+                  <div slot="content" class="slotp"> 
+                    Find a token by searching for <br> 
+                    its name or symbol or by <br>
+                    pasting its address below.</div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>
     </span>
     <div class="conter">
 
@@ -145,6 +149,14 @@ export default {
 </script>
 
 <style  scoped>
+.slotp{
+    height: 57px;
+    font-size: 16px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #EEEEF0;
+    line-height: 19px;
+}
 >>> .dialog_selct {
   border-radius: 20px;
 }
