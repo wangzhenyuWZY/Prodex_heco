@@ -22,7 +22,7 @@
           </div>
           <div class="add">+</div>
                   <div class="received ">
-            <span class="rg ftblod">{{token1Num}}</span>
+            <span class="rg ftblod">{{token2Num}}</span>
             <div class="lt ">
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
@@ -36,7 +36,7 @@
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">
-          <div class="received mrge32">
+          <div class="received mrge32" v-show="false">
             <div class="lt ">
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
@@ -49,9 +49,9 @@
             <div class="lt">
               <span class="ftblod">Price</span>
             </div>
-            <span class="ftblod">1ETH=499.165 USDT</span>
+            <span class="ftblod">1{{token1.name}}={{justPrice.toFixed(6)}} {{token2.name}}</span>
           </div>
-          <div class="conversion ftblod">1USDT=0.02034564 ETH</div>
+          <div class="conversion ftblod">1{{token2.name}}={{reversePrice.toFixed(6)}} {{token1.name}}</div>
          
         </div>
       </div>
@@ -99,6 +99,14 @@ export default {
         type: [String,Number,Object],
         default: '0',
       },
+      justPrice: {
+        type: [String,Number],
+        default: '0',
+      },
+      reversePrice: {
+        type: [String,Number],
+        default: '0',
+      }
   },    
   data () {
     return {

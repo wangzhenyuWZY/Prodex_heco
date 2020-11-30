@@ -48,7 +48,7 @@
             <div class="lt">
               <span>Share of pool</span>
             </div>
-            <span class="">{{}}%</span>
+            <span class="">{{popsData.share}}%</span>
           </div>
         </div>
       </div>

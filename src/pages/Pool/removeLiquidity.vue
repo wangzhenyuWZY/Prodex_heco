@@ -100,6 +100,8 @@
       :token2 ="token2"
       :token1Num ="token1BalanceInPool"
       :token2Num ="token2BalanceInPool"
+      :justPrice = "justPrice"
+      :reversePrice = "reversePrice"
       :clickFn ="exitPool"
       @close="showAlert = false"
   />
@@ -115,7 +117,6 @@
 
 <script>
 import { container ,frominput,setselect} from '../../components/index'
-import {decimals} from '../../utils/tronwebFn'
 import recevive from './willRecevive'
 import removealert from './valret';
 export default {
@@ -129,13 +130,14 @@ export default {
       maxBalance:0,
       slidenum:0,
       percentage:0,
-      decimals:0,
       pair:{},
       token1:{},
       token2:{},
       token1BalanceInPool:0,
       token2BalanceInPool:0,
       showAlert:false,
+      justPrice:0,
+      reversePrice:0,
       showAlert1:false,
       alertType:'waiting' // success  waiting
     }
@@ -155,7 +157,9 @@ export default {
       this.token2 = this.pair.token2
       this.token1BalanceInPool = this.token1.balanceInPool
       this.token2BalanceInPool = this.token2.balanceInPool
-      this.getBalance()
+      // this.getBalance()
+      this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
+      this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
     }
   },
   methods:{
@@ -167,12 +171,7 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,functionSelector,{}, parameter);
       if(transaction){
-        var fun = 'decimals()';
-        var par = []
-        let res = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,fun,{}, par);
-        that.decimals = parseInt(res.constant_result[0],16)
-        that.maxBalance = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.decimals)
-        console.log('that.maxBalance======'+that.maxBalance)
+        that.maxBalance = parseInt(transaction.constant_result[0],16)/Math.pow(10,that.pair.decimals)
       }
     },
     async approveLpToken(){
@@ -195,7 +194,7 @@ export default {
       let that = this
       var functionSelector = 'exitPool(uint256,uint256[])';
       var parameter = [
-          {type: 'uint256', value: that.slidenum*Math.pow(10,that.decimals)+''},
+          {type: 'uint256', value: that.slidenum*Math.pow(10,that.pair.decimals)+''},
           {type: 'uint256[]', value:[0,0] }
       ]
       console.log(parameter)
@@ -209,19 +208,24 @@ export default {
       }) 
     },
     changeSlide(num){
-      // let percentage = parseInt(this.slidenum/this.maxBalance*100)
-      // if(percentage){
-      //   this.percentage = percentage
-      // }else{
-      //   this.percentage = 0
-      // }
       if(num){
         this.slidenum = num
       }
       this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
       this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
       console.log('this.slidenum========'+this.slidenum)
-    }
+    },
+    async getSpotPrice (address1, address2, name) {
+      var functionSelector = 'getSpotPrice(address,address)';
+      var parameter = [
+        { type: 'address', value: address1 },
+        { type: 'address', value: address2 }
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+      if (transaction) {
+        name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+      }
+    },
   }
 }
 </script>
