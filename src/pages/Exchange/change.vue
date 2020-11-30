@@ -199,7 +199,7 @@ export default {
   color: #0f1730;
 }
 .from_contentIcon{
-  margin: 15px 0;
+  margin: 16px 0;
 }
 .changeicon{
   color: #878B97;

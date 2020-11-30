@@ -100,7 +100,7 @@
       .input_max{
         position: absolute;
         right: 16px;
-        top: 28px;
+        top: 24px;
         width: 64px;
         line-height: 32px;
         text-align: center;
@@ -117,7 +117,7 @@
       justify-items: center;
       margin-left: 20px;
       width: 201px;
-      height: 88px;
+      height: 80px;
       background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
@@ -165,8 +165,8 @@
       font-size: 20px;
       font-family: Roboto-Regular, Roboto;
       color: #b7bfc8;
-      margin-left: 8px;
-      margin-right: 6px;
+      // margin-left: 8px;
+      // margin-right: 6px;
     }
     .show_size {
       font-family: Roboto-Regular, Roboto;
@@ -184,7 +184,7 @@
 .globle_input {
   box-sizing: border-box;
   outline: none;
-  height: 88px;
+  height: 80px;
   background: #F4F5FA;
   width: 100%;
   border: none;

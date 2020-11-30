@@ -132,19 +132,22 @@
   text-decoration: underline;
 }
 .title {
-  height: 71px;
-  line-height: 71px;
+  height: 104px;
+  line-height: 104px;
   border-bottom: 1px solid #e5ebf2;
-  padding: 0 32px;
+  padding: 0 24px;
   overflow: hidden;
   display: flex;
   justify-content: space-between;
   .content_text {
+    
+    height: 24px;
     font-size: 20px;
-    font-family: roboto-mediumitalic;
+    font-family: Roboto-MediumItalic, Roboto;
     font-weight: normal;
-    color: #0f1730;
-    margin-left: 12px;
+    color: #070A0E;
+    line-height: 24px;
+    margin-left: 8px;
   }
   img {
     vertical-align: middle;

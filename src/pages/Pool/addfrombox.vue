@@ -70,6 +70,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .whe {
   width: 320px;
   margin: 0 auto;

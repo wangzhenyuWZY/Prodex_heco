@@ -521,7 +521,7 @@ export default {
     padding: 50px 38px 32px 39px;
   }
   .from_contentIcon {
-    margin: 24px 0;
+    margin: 16px 0;
     .tran_icon {
       transform: rotate(-90deg);
       color: #0f1730;
@@ -604,7 +604,7 @@ export default {
       background: #0f1730;
     }
     .from_contentIcon {
-      margin: 24px 0;
+      margin: 16px 0;
       .tran_icon {
         transform: rotate(-90deg);
         color: #0f1730;

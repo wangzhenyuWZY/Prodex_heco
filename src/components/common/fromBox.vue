@@ -96,10 +96,12 @@ export default {
     text-align: right;
     .from_size {
       font-size: 20px;
+      
       font-family: Roboto-Regular, Roboto;
+      font-weight: 400;
       color: #b7bfc8;
-      margin-left: 8px;
-      margin-right: 6px;
+      // margin-left: 8px;
+      // margin-right: 6px;
     }
   }
   .from_icon {

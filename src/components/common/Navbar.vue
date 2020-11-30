@@ -2,7 +2,10 @@
   <div>
     <div class="nav clearfix">
       <div class="logo"><img src="../../assets/img/wtxlo.png"
-             alt="" /></div>
+             alt="" />
+             <!-- <span class="logop">FoxDex</span> -->
+             </div>
+             
       <div class="moble fl_lt" v-show="false">
         <div class="iconsv">
           <el-dropdown trigger="click" size="medium">
@@ -158,6 +161,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.logop{
+  
+height: 38px;
+font-size: 32px;
+font-family: Roboto-MediumItalic, Roboto;
+font-weight: normal;
+color: #05C98E;
+line-height: 38px;
+}
 .iconsv{
   margin-left: 50px;
 }
@@ -167,6 +179,7 @@ export default {
   vertical-align: sub;
 }
 .nav {
+
   /* width: 1920px; */
   line-height: 72px;
   height: 72px;
@@ -218,15 +231,15 @@ export default {
   position: relative;
 }
 .active {
-  color: #0f1522;
+  color: #05C98E;
 }
 .active-bar {
   position: absolute;
   left: 0px;
   bottom: 15px;
   width: 40px;
-  height: 4px;
-  background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
+  height: 3px;
+  background: #05C98E;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -244,8 +257,9 @@ export default {
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
-  border: 1px solid #0F1730;
-  color: #0F1730;
+  
+background: #19242E;
+  color:#05C98E;
   padding: 0 32px;
   display: flex;
   align-items: center;
@@ -266,7 +280,7 @@ export default {
       vertical-align: sub;
   }
   .conversion{
-    padding: 0 16px;
+      padding: 0 16px;
       height: 24px;
       line-height: 24px;
       background: #FF5D37;
