@@ -30,9 +30,9 @@
         <div class="Price_text"   v-show="connectFlag"> 
             <span>Price: </span> 
             <span>{{spotPrice.toFixed(token1.decimals)}} </span>
-                <span> {{token1.name}} </span> 
+                <span> {{token2.name}} </span> 
                <span> per </span>
-               <span> {{token2.name}} </span> 
+               <span> {{token1.name}} </span> 
                <img src="@/assets/img/icon_slect.png" alt="" @click="convert"></div>
         <div class="whe" :class="connectFlag?'login_text':'outlogin'">
           <div class="connect_btn clearfix">
