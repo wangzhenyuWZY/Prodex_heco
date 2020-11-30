@@ -1,19 +1,19 @@
 <template>
   <el-dialog 
     title=""
-    :visible.sync="showAlert"
+    :visible.sync="isShow"
     width="480px"
     custom-class="dialog_meeage"
     :before-close="handleClosea">
       <div class="alert_type">
         <img class="success"
-            :class="dataType == 'failure'?'failure':''"
-            :src="dataTypes[dataType]"
+            :class="alertType == 'failure'?'failure':''"
+            :src="dataTypes[alertType]"
             alt="">
       </div>
       <!-- waiting -->
       <div
-          v-if="dataType == 'waiting'">
+          v-if="alertType == 'waiting'">
         <div class="alert_size">Connect successfully</div>
         <div class="alert_dtail">Supplying 0.01 ETH and 4.99255 USDT</div>
         <div class="alert_waring">Confirm this transaction in your wallet</div>
@@ -22,12 +22,12 @@
       <!-- end waiting -->
       <!-- success -->
       <div 
-          v-if="dataType == 'success'">
+          v-if="alertType == 'success'">
         <div class="alert_size">Connect successfully</div>
         <div class="alert_success">View on Etherscan</div>
         <div class="alert_button"
-            v-show="dataType == 'success'">
-          <el-button class="from_botton">Close</el-button>
+            v-show="alertType == 'success'">
+          <el-button class="from_botton" @click="handleClosea">Close</el-button>
         </div>
       </div>
   </el-dialog>
@@ -39,6 +39,16 @@ import waiting from '@/assets/img/icon_waiting.svg';
 import failure from '@/assets/img/icon_faile.svg';
 
 export default {
+  props:{
+      isShow:{
+        type:Boolean,
+        default:false
+      },
+      alertType:{
+        type:String,
+        default:'success'
+      }
+  },
   data () {
     return {
       test: '12',
@@ -47,7 +57,6 @@ export default {
         b: 2,
         c: 3
       },
-      dataType: 'success',
       test1: '0',
       showAlert: true,
       dataTypes: {
@@ -59,7 +68,7 @@ export default {
   },
   methods: {
     handleClosea () {
-
+         this.$emit('close')
     }
   },
 }

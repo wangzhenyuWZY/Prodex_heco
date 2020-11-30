@@ -162,14 +162,21 @@
     </container>
     <selctoken :showAlert='isSelect'
                :item='item'
-               :selectType="selectType"
                @closeAlert="isSelect=false"
                @change="changeCoin"
-               @linkage="linkage" />
+                />
+      <!--单币种流动性弹窗 -->
+    <selctoken
+          :showAlert ="isSelect1"
+          :item='item'
+          :selectType="selectType"
+          @closeAlert="isSelect1=false"
+          @linkage="linkage"
+    />
     <recevive
       :showAlert ='confirmPop'
       :popsData = 'popsData'
-      @change='supply'
+      @change='supply(1)'
       @close="confirmPop = false"
     />           
   </div>
@@ -193,6 +200,7 @@ export default {
       pair: {},
       token: {},
       isSelect: false,
+      isSelect1:false,
       item: 1,
       pairAddress: null,
       justPrice: 0,
@@ -439,9 +447,11 @@ export default {
       console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
-        if (!transaction.result || !transaction.result.result)
-          that.charm1();
-        return console.error('Unknown error: ' + transaction, null, 2);
+        if (!transaction.result || !transaction.result.result){
+              that.charm1();
+            return console.error('Unknown error: ' + transaction, null, 2);
+          }
+          
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success("SUCCESS!")
@@ -556,9 +566,10 @@ export default {
       console.log("检查==========" + window.tronWeb.toDecimal(transaction.constant_result[0]))
     },
     validation (n) {
+
       let str = JSON.stringify(this.token1);
       if (str != "{}") {
-        this.isSelect = true;
+        this.isSelect1 = true;
         this.selectType = this.token1.name
       } else {
         this.$message({
@@ -574,7 +585,7 @@ export default {
       return true;
     },
     linkage (token) { // 联动
-      this.isSelect = false;
+      this.isSelect1 = false;
       if(token.token1.name==this.selectType){
         this.token1 = token.token1
         this.token2 = token.token2

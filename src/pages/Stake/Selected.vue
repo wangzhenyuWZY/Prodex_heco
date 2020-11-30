@@ -182,7 +182,7 @@ export default {
     },
     handelInit() {
       this.test1 = '';
-      $emit('back')
+      this.$emit('back')
     },
     butlink(){
       console.log("点击了");
