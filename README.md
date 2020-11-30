@@ -19,6 +19,7 @@ yarn build
 ```
 yarn lint
 ```
-
+###  bignumber
+https://github.com/MikeMcl/bignumber.js
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
