@@ -335,10 +335,12 @@ export default {
           this.getSpotPrice()
         })
         this.getWeight(pair[0], this.token1).then((res) => {
+          debugger
           this.token1Weight = res
           this.getSpotPrice()
         })
         this.getWeight(pair[0], this.token2).then((res) => {
+          debugger
           this.token2Weight = res
           this.getSpotPrice()
         })
@@ -402,7 +404,7 @@ export default {
     getWeight (pair, coin) {//获取权重
       let that = this
       return new Promise(function (resolve, reject) {
-        var functionSelector = 'getNormalizedWeight(address)';
+        var functionSelector = 'getDenorm(address)';
         var parameter = [
           { type: 'address', value: coin.address }
         ]

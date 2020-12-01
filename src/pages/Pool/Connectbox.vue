@@ -97,11 +97,11 @@
             <div class="box_title">Prices and pool share</div>
             <ul class="pre_list clearfix">
               <li>
-                <p>{{justPrice?justPrice.toFixed(6):'--'}}</p>
+                <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
                 <p>{{token1.name}} per {{token2.name}}</p>
               </li>
               <li>
-                <p>{{reversePrice?reversePrice.toFixed(6):'--'}}</p>
+                <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
                 <p>{{token2.name}} per {{token1.name}}</p>
               </li>
               <li>
@@ -325,6 +325,9 @@ export default {
       this.confirmPop = true
     }, 
     calcToken1Num(){
+      if(this.token2Num<=0){
+        return
+      }
       if(this.token1Balance&&this.token2Balance){
         this.token1Num = (this.token2Num/this.token2Balance*this.token1Balance).toFixed(6)
         // let differ = this.token2.decimals-this.token1.decimals
@@ -337,6 +340,9 @@ export default {
       
     },
     calcShare(){
+      if(this.token1Num<=0){
+        return
+      }
         if(this.token1Balance&&this.token2Balance){
           this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
           // let differ = this.token1.decimals-this.token2.decimals
@@ -346,7 +352,7 @@ export default {
           //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
           // }
         }
-      if(this.pair){
+      if(this.pair.address){
         this.getShare()
       }
     },
@@ -368,7 +374,7 @@ export default {
       
     },
     async getToken2DenormalizedWeight(){
-      var functionSelector = 'getDenormalizedWeight(address)';
+      var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token2.address }
       ]
@@ -379,7 +385,7 @@ export default {
       }
     },
     async getToken1DenormalizedWeight(){
-      var functionSelector = 'getDenormalizedWeight(address)';
+      var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token1.address }
       ]
