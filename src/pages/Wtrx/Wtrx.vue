@@ -2,11 +2,7 @@
   <div class="container">
     <div class="wtrx">
       <div class="wtrx-box">
-        <div class="wtrx-top">
-          <span>WTRX Exchange</span>
-        </div>
-
-        <div class="wtrx-box1">
+  <div class="wtrx-box1">
           <div class="wtrx-left">
             <samp class="trx">TRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.png"
@@ -251,26 +247,19 @@ export default {
 .wtrx-box {
   height: 800px;
   /* background: #cccc; */
+  padding-top: 120px;
+
   margin: 0 auto;
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 .wtrx-box1 {
-  margin-top: 40px;
+  // margin-top: 40px;
   display: flex;
   justify-content: center;
 }
-.wtrx-top {
-  margin-top: 40px;
-  font-size: 24px;
-  height: 28px;
-  font-family: Roboto-Medium, Roboto;
-  font-weight: 500;
-  color: #0F1730;
-  line-height: 28px;
-    
-}
+
 .wtrx-left {
   margin-right: 15px;
   border-radius: 20px;

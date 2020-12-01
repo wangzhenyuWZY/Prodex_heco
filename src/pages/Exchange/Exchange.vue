@@ -508,21 +508,23 @@ export default {
     line-height: 19px;
 }
 .whe {
-  width: 320px;
+  width: 440px;
   margin: 0 auto;
-  padding-bottom: 48px;
+  // padding-bottom: 48px;
+  margin-bottom: 48px;
 }
 .whe_img {
   vertical-align: sub;
 }
 
 .ctx_1 {
-  width: 316px;
+  width: 268px;
+  height: 72px;
   display: inline-block;
 }
 
 .ctx_3 {
-  width: 180px;
+  width: 160px;
   display: inline-block;
   margin-left: 12px;
 }
@@ -598,7 +600,7 @@ export default {
 .received {
   display: flex;
   justify-content: space-between;
-  color: #0f1730;
+  color: #A6AEB7;
 
   span {
     display: inline-block;
@@ -610,6 +612,7 @@ export default {
     margin-right: 8px;
   }
   .rg {
+    
   }
   .setColr {
     color: #ff5d37;
@@ -635,7 +638,8 @@ export default {
   padding: 50px 38px 32px 39px;
 }
 .from_contentIcon {
-  margin: 16px 0;
+  margin-top:16px;
+  margin-bottom:12px;
   .tran_icon {
     transform: rotate(-90deg);
     color: #0f1730;
@@ -730,8 +734,8 @@ export default {
 .Price_text {
   font-size: 20px;
   color: #0f1730;
-  margin-top: 49px;
-  margin-bottom: 17px;
+  margin-top: 41px;
+  margin-bottom: 16px;
   text-align: center;
   > img {
     vertical-align: sub;
@@ -767,13 +771,14 @@ export default {
   }
 }
 .connect_boxs {
-  background: #f4f5fa;
+  
+  background: #070A0E;
   border-radius: 0 0 20px 20px;
   position: absolute;
   bottom: -275px;
   left: 0;
-  width: 690px;
-  z-index: 0;
+  width: 480px;
+  z-index: -1;
   border-radius: 16px;
 }
 
@@ -802,19 +807,21 @@ export default {
   margin: 20px 0;
 }
 .fees_account {
-  height: 56px;
-  line-height: 56px;
+  height: 48px;
+  line-height: 48px;
   border-radius: 16px;
-  padding-left: 24px;
-  margin-top: 25px;
-  margin-bottom: 32px;
-  border: 1px solid #0f1730;
+  padding-left: 20px;
+  margin-top: 48px;
+  margin-bottom: 24px;
+  color: #A6AEB7;
+ 
+  border: 1px solid #A6AEB7;
   position: relative;
   cursor: pointer;
   img {
     position: absolute;
-    top: 12px;
-    right: 24px;
+    top: 8px;
+    right: 16px;
   }
 }
 .rec_red {
