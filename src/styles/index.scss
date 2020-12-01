@@ -72,12 +72,11 @@ img{
 .from_botton{
     display: block;
     width: 100%;
-    background: linear-gradient(136deg, #FDAB2B 0%, #DF0019 100%);
     border-radius: 32px;
     height: 56px;
     text-align: center;
     margin:0 auto;
-    font-size: 20px;
+    font-size: 18px;
     font-family: Roboto-Regular, Roboto;
     color: #FFFFFF;
     cursor: pointer;
@@ -153,6 +152,26 @@ img{
     background: none;
     border: 1px solid #0F1730;
     color: #0F1730;
+}
+.green_btn{
+    background: #05C98E ;
+    padding: 0 12px;
+    
+}　
+.green_btn:active,.green_btn:focus,.green_btn:hover{
+    color: #FFFFFF;
+    background: #05C98E;
+    border: none;
+}
+.fff_button{
+    padding: 0 12px;
+    color: #070A0E;
+    background: #F6F7FB;
+}
+.fff_button:active,.fff_button:focus,.fff_button:hover{
+    color: #070A0E;
+    background: #F6F7FB;
+    border: none;
 }
 .fl_lt{
     float: left;

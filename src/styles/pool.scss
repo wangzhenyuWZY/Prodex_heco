@@ -132,19 +132,17 @@
   text-decoration: underline;
 }
 .title {
-  height: 104px;
-  line-height: 104px;
+  height: 96px;
+  line-height: 96px;
   border-bottom: 1px solid #e5ebf2;
-  padding: 0 24px;
+  padding: 0 20px;
   overflow: hidden;
-  display: flex;
-  justify-content: space-between;
+ 
   .content_text {
     
     height: 24px;
-    font-size: 20px;
+    font-size: 18px;
     font-family: Roboto-MediumItalic, Roboto;
-    font-weight: normal;
     color: #070A0E;
     line-height: 24px;
     margin-left: 8px;

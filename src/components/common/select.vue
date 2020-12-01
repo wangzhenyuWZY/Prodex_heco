@@ -1,6 +1,6 @@
 <template>
 <div class="input_select">
-  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}">Balance:{{balance}}</div>
+  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"><span>Balance:</span> <span class="balance_size">{{balance}}</span> </div>
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
         <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="imgUrl" alt=""> </span>
@@ -29,7 +29,7 @@ import tokenData from '../../utils/token'
       },
       showSelect: {
         type: Boolean,
-        default: true,
+        default: false,
       },
       text: {
         type: String,
@@ -104,7 +104,7 @@ import tokenData from '../../utils/token'
       align-items: center;
       justify-items: center;
       min-width: 100%;
-      height: 80px;
+      height: 72px;
       background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
@@ -144,7 +144,7 @@ import tokenData from '../../utils/token'
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    padding-right: 12px;
+    padding-right: 8px;
     text-align: right;
     .spimg{
       img{
@@ -153,7 +153,7 @@ import tokenData from '../../utils/token'
       }
     }
     .from_size {
-      font-size: 20px;
+      font-size: 18px;
       font-family: Roboto-Regular, Roboto;
       color: #0F1730;
       // margin-left: 8px;
@@ -161,7 +161,7 @@ import tokenData from '../../utils/token'
     }
     .show_size {
       font-family: Roboto-Regular, Roboto;
-      color: #ed4d21;
+      color: #05C98E;
     }
   }
   .from_icon {
@@ -169,17 +169,21 @@ import tokenData from '../../utils/token'
    
     border-radius: 50%;
     img{
-        width: 40px;
-    height: 40px;
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
     }
   }
   .from_lable{
-    font-size: 20px;
-    
+    font-size: 16px;
+    height: 16px;
     font-family: Roboto-Regular, Roboto;
     font-weight: 400;
     color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
+    .balance_size{
+        color: #0F1730;
+    }
   }
 </style>

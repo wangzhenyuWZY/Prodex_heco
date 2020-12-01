@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+             width="100%"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"

@@ -4,22 +4,26 @@
                pdd >
       <div class="title"
            slot="title">
-        <div class="lt_box">
-          <router-link to="/pool">
+        <div class="lt_box  fl_lt">
+          <router-link to="/pool" class="fl_lt">
             <span class="icon_box">
               <i class="el-icon-back back_icon"></i>
             </span>
           </router-link>
-
-          <span class="content_text">Add Liquidity</span>
-          <el-button class="typeBtn"
+          <span class="content_text fl_lt">Add Liquidity</span>
+          <div class="text_btn conct_btn fl_lt">
+               <el-button class="from_botton connect_btns  green_btn "
                      @click="iSingle=true"
                      type="small">Single Token </el-button>
-          <el-button class="typeBtn1"
+          </div>
+         <div class="text_btn fl_lt">
+              <el-button class=" from_botton  fff_button connect_btns"
                      @click="iSingle=false"
                      type="small">Double Token </el-button>
+         </div>
+        
         </div>
-        <div class="rg_box">
+        <div class="rg_box  fl_rg">
           <el-tooltip class="item" 
                   effect="dark" 
                   content="Right Center 提示文字" 
@@ -42,7 +46,7 @@
                    src="@/assets/img/btc.svg"
                    alt="">
             </span>
-            <span class="fees_zies">Uni {{token1.name}}-{{token2.name}} </span>
+            <span class="fees_zies">{{token1.name}}-{{token2.name}} </span>
             <img src="@/assets/img/icon_down.svg"
                  alt="">
           </div>
@@ -55,10 +59,11 @@
                        v-model="token1Num"
                        @input="calcShare"></frominput>
           </div>
-          <div class="ctx_3 fl_lt">
+          <div class="ctx_3s fl_lt">
             <setselect lable="321321"
                        :imgUrl="token1.img"
                        item='1'
+                       :showSelect ="JSON.stringify(token1)!='{}'"
                        :balance="token1.balance"
                        :text="token1.name"
                        @click="showSelect(0)" />
@@ -72,13 +77,17 @@
           <div class="ctx_1 fl_lt">
             <frominput lable="input"
                        placeholder=""
+                       showmax
+                     
+                       :balance='token2.balance'
                        @input="calcToken1Num"
                        v-model="token2Num"></frominput>
           </div>
-          <div class="ctx_3 fl_lt">
+          <div class="ctx_3s fl_lt">
             <setselect :imgUrl="token2.img"
                        item='2'
                        :balance="token2.balance"
+                         :showSelect ="JSON.stringify(token2)!='{}'"
                        :text="token2.name"
                        @click="showSelect(1)" />
           </div>
@@ -117,7 +126,7 @@
         </div>
       </div>
       <div slot="footer"
-           class="position">
+           class="position clearfix" v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
             <div class="">
@@ -699,7 +708,7 @@ export default {
 
 
 .connect_pd{
-  margin-top: 128px;
+  margin-top: 120px;
   padding-bottom: 100px;
 }
 .xzk {
@@ -710,7 +719,7 @@ export default {
   .fees {
     height: 56px;
     border-radius: 16px;
-    border: 1px solid #0f1730;
+    border: 1px solid #070A0E;
     color: #0f1730;
     text-align: center;
     line-height: 56px;
@@ -719,14 +728,14 @@ export default {
     justify-content: center;
     cursor: pointer;
     .fees_zies {
-      font-size: 20px;
+      font-size: 18px;
       font-family: Roboto-Medium, Roboto;
       font-weight: 500;
       margin: 0 8px;
     }
     img {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
     }
     .fees_zies {
     }
@@ -734,6 +743,13 @@ export default {
       transform: translateX(-16px);
     }
   }
+}
+
+.lt_box{
+  overflow: hidden;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 .from_contentIcon{
   margin-top: 16px;
@@ -750,9 +766,8 @@ export default {
 }
 .connectbox {
   padding: 0 24px 24px 24px;
-  margin-top: 16px;
-  width: 512px;
-  height: 127px;
+  margin-top: 24px;
+  height: 134px;
   .box_title {
     line-height: 50px;
     border-bottom: 1px solid #e5ebf2;
@@ -764,8 +779,9 @@ export default {
  
   }
 }
-.connect_btn {
-  display: flex;
+.conct_btn{
+margin-left: 12px;
+margin-right: 8px;
 }
 .pre_list {
   margin-top: 12px;
@@ -782,31 +798,43 @@ export default {
     p:nth-child(2) {
       color: #878b97;
       margin-top: 8px;
+      font-size: 16px;
     }
   }
 }
+.position{
+    max-width: 480px;
+}
 .connect_boxs {
   border-radius: 0 0 24px 24px;
+      width: 100%;
   position: absolute;
-  bottom: 29px;
+  font-size: 16px;
+  bottom: 59px;
   left: 0;
-  width: 560px;
-  height: 259px;
+
+  height: 210px;
   background: #070A0E;
   z-index: -1;
 }
+.connect_btns{
+  height: 48px;
+  font-size: 14px;
+border-radius: 12px;
+line-height: 48px;
+}
+.connect_btn{
+  display: flex;
 
+}
 .metitle {
 
-margin-top: 12px;
-  height: 66px;
-  line-height: 66px;
+  margin-top: 12px;
+  height: 62px;
+  line-height: 62px;
   border-bottom: 1px solid #e5ebf2;
   font-weight: normal;
   color: #E5EBF2;
-  font-size: 20px;
-  font-family: Roboto-Medium, Roboto;
-  font-weight: 500;
 
 }
 .rex{
@@ -817,32 +845,37 @@ color: #A6AEB7;
 
 }
 .ctx_1 {
-  width: 316px;
+  max-width: 268px;
   display: inline-block;
+}
+.text_btn{
+  max-width: 104px;
+}
+.text_btn1{
+  
+}
+.setInput{
+  display: flex;
+  .ctx_1{
+    flex: 1;
+  }
+.ctx_3s {
+  min-width: 160px;
+  display: inline-block;
+  margin-left: 12px;
+}
 }
 
-.ctx_3 {
-  width: 180px;
-  display: inline-block;
-  
-}
 .lt1,.lt2,.lt3{
   
-  height: 21px;
-  font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
-  font-weight: 400;
+  height: 17px;
   color: #A6AEB7;
-  margin-top: 12px;
+  font-size: 16px;
 }
 .rg1,.rg2,.rg3{
-  margin-top: 12px;
-height: 21px;
-font-size: 18px;
-font-family: Roboto-Regular, Roboto;
-font-weight: 400;
+height: 17px;
 color: #E5EBF2;
-line-height: 21px;
+font-size: 16px;
 
 }
 
@@ -852,7 +885,7 @@ line-height: 21px;
   justify-content: flex-start;
 }
 .c_receove_Share {
-  padding: 24px 40px;
+  padding: 24px 20px;
 }
 .currencyprices {
   width: 190px;

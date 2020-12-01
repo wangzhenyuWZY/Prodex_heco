@@ -496,7 +496,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+@import '../../styles/color.scss';
 .slotp{ 
     height: 76px;
     font-size: 16px;
@@ -569,14 +569,14 @@ export default {
 }
 .lt_box {
   .back_icon {
-    color: #fff;
-    width: 32px;
-    height: 32px;
-    text-align: center;
-    line-height: 32px;
-    border-radius: 50%;
-    background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
-    cursor: pointer;
+    color: #070A0E;
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        border-radius: 50%;
+          background: #F4F6FC;
+        cursor: pointer;
   }
 }
 .margintop {
@@ -600,7 +600,6 @@ export default {
 
   span {
     display: inline-block;
-    font-size: 20px;
   }
   img {
     width: 24px;

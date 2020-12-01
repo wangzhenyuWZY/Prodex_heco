@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'element-ui/lib/theme-chalk/index.css'
-import './styles/index.css'
+import './styles/index.scss'
 import Element from 'element-ui';
 import FastClick from 'fastclick'
 import router from './routers'
