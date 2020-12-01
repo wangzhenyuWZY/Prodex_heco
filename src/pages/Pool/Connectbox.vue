@@ -366,7 +366,7 @@ export default {
       
     },
     async getToken2DenormalizedWeight(){
-      var functionSelector = 'getDenormalizedWeight(address)';
+      var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token2.address }
       ]
@@ -377,7 +377,7 @@ export default {
       }
     },
     async getToken1DenormalizedWeight(){
-      var functionSelector = 'getDenormalizedWeight(address)';
+      var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token1.address }
       ]
