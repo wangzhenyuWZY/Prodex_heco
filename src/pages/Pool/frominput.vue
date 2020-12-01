@@ -6,7 +6,8 @@
         <div class="input_lt">
           <input
             class="globle_input"
-            type="text"
+            :min="0"
+            type="number"
             placeholder="0.0"
             @keyup="hadelClick"
             @keydown="hadeldown"
@@ -62,7 +63,6 @@
   },
   methods: {
     hadelClicks(e) {
-      
       this.$emit("input", e.target.value);
     },
     setValue () {
