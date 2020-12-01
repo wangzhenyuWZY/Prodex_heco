@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .totalModel{
-  width: 560px;
+  max-width: 480px;
   margin: 0 auto;
   position: relative;
 

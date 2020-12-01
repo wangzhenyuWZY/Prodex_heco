@@ -10,14 +10,18 @@
               <i class="el-icon-back back_icon"></i>
             </span>
           </router-link>
-
           <span class="content_text">Add Liquidity</span>
-          <el-button class="typeBtn"
+          <span class="text_btn ">
+               <el-button class="from_botton red_button"
                      @click="iSingle=true"
                      type="small">Single Token </el-button>
-          <el-button class="typeBtn1"
+          </span>
+         <span class="text_btn">
+              <el-button class="typeBtn1"
                      @click="iSingle=false"
                      type="small">Double Token </el-button>
+         </span>
+        
         </div>
         <div class="rg_box">
           <el-tooltip class="item" 
@@ -784,7 +788,12 @@ color: #A6AEB7;
   width: 316px;
   display: inline-block;
 }
-
+.text_btn{
+  max-width: 104px;
+}
+.text_btn1{
+  
+}
 .ctx_3 {
   width: 180px;
   display: inline-block;

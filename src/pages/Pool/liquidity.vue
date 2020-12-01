@@ -236,6 +236,7 @@ export default {
     }
   }
   .cyrny_bg {
+    overflow: hidden;
     margin-bottom:10px;
     background: #f4f5fa;
     border-radius: 0 0 16px 16px;
