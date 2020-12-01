@@ -4,11 +4,9 @@
                pdd >
       <div class="title"
            slot="title">
-        <div class="lt_box  fl_lt">
-          <router-link to="/pool" class="fl_lt">
-            <span class="icon_box">
+        <div class="lt_box  ">
+          <router-link to="/pool" class="disa">
               <i class="el-icon-back back_icon"></i>
-            </span>
           </router-link>
           <span class="content_text fl_lt">Add Liquidity</span>
           <div class="text_btn conct_btn fl_lt">
@@ -92,7 +90,7 @@
                        @click="showSelect(1)" />
           </div>
         </div>
-        <div class="box_sizes">
+        <div class="box_sizes"  v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
           <div class="provider connectbox">
             <div class="box_title">Prices and pool share</div>
             <ul class="pre_list clearfix">
@@ -126,20 +124,20 @@
         </div>
       </div>
       <div slot="footer"
-           class="position clearfix" v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
+           class="position " v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
             <div class="">
               <div class="received metitle ">
-                <div class="lt ">
+                <div class=" ">
                   Your position
                 </div>
                 <div class="rg connect_currency">
-                  <div class="">
+                  <div class="metits">
                     <img class="lt_icon"
                          src="@/assets/img/btc.svg"
                          alt="">
-                    <span>{{token1.name}}/{{token2.name}}</span>
+                    <span class="setsize">{{token1.name}}/{{token2.name}}</span>
                   </div>
                   <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
 
@@ -726,6 +724,10 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+    >span{
+      display: flex;
+      align-items: center;
+    }
     cursor: pointer;
     .fees_zies {
       font-size: 18px;
@@ -750,6 +752,8 @@ export default {
   display: flex;
   justify-items: center;
   align-items: center;
+  height: 100%;
+  flex: 1;
 }
 .from_contentIcon{
   margin-top: 16px;
@@ -764,10 +768,15 @@ export default {
 .whe_img {
   vertical-align: sub;
 }
+.metit{
+  // width: 30%;
+}
+.setsize{
+  font-size: 14px;
+}
 .connectbox {
   padding: 0 24px 24px 24px;
   margin-top: 24px;
-  height: 134px;
   .box_title {
     line-height: 50px;
     border-bottom: 1px solid #e5ebf2;
@@ -778,6 +787,11 @@ export default {
 
  
   }
+}
+
+.disa{
+  display: flex;
+  align-items: center;
 }
 .conct_btn{
 margin-left: 12px;
@@ -804,11 +818,23 @@ margin-right: 8px;
 }
 .position{
     max-width: 480px;
+    margin-top: -40px;
+    position: relative;
+}
+.position::after{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  width:100%;
+  height: 40px;
+  background:#FFFFFF;
+  border-radius: 0 0 24px 24px;
 }
 .connect_boxs {
   border-radius: 0 0 24px 24px;
       width: 100%;
-  position: absolute;
+  // position: absolute;
   font-size: 16px;
   bottom: 59px;
   left: 0;
@@ -835,6 +861,7 @@ line-height: 48px;
   border-bottom: 1px solid #e5ebf2;
   font-weight: normal;
   color: #E5EBF2;
+  display: flex;
 
 }
 .rex{
@@ -845,7 +872,7 @@ color: #A6AEB7;
 
 }
 .ctx_1 {
-  max-width: 268px;
+  // max-width: 268px;
   display: inline-block;
 }
 .text_btn{
@@ -878,18 +905,29 @@ color: #E5EBF2;
 font-size: 16px;
 
 }
-
+.title{
+  display: flex;
+}
 
 .connect_currency {
-  display: flex;
-  justify-content: flex-start;
+ overflow: hidden;
+ flex: 1;
+ display: flex;
+ justify-content: center;
+ 
 }
 .c_receove_Share {
   padding: 24px 20px;
 }
 .currencyprices {
-  width: 190px;
+  // width: 190px;
   text-align: right;
+  width: 40%;
+}
+.metits{
+  width: 60%;
+  font-size: 16px;
+  text-align: center;
 }
 .typeBtn {
   width: 136px;
@@ -913,4 +951,62 @@ font-size: 18px;
   font-weight: 400;
 
 }
+@media screen and (max-width:750px) {
+    .connect_pd{
+      margin:0;
+      padding:0;
+      padding-top: 10px;
+    }
+ .setInput .ctx_3s{
+      min-width:  3.2rem;
+    }
+    .from_contentIcon{
+        margin: 0;
+    }
+    .position{
+      width: 100%;
+    }
+    .received span{
+        font-size: 16px;
+    }
+     .title{
+    display: flex;
+    .content_text{
+          width: 54px;
+    font-size: 16px;
+
+    }
+    }
+}
+@media screen and (max-width:475px)  { 
+ 
+  .conct_btn{
+    // margin-left: 50px;
+  }
+  .lt_box{
+    flex-wrap: wrap;
+  }
+   .pre_list{
+     li{
+       width: 50%;
+     }
+     li:nth-child(3) {
+       width: 100%;
+       margin-top: 10px;
+     }
+   }
+   .connect_btns{
+     font-size: 12px;
+   }
+ }
+//  @media screen and (max-width:375px){
+// .conct_btn{
+//     margin-left:15px;
+//   }
+//  }
+//   @media screen and (max-width:320px){
+// .conct_btn{
+//     margin-left:9px;
+//   }
+//  }
 </style>

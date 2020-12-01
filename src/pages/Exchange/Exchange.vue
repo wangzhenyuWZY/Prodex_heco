@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <div class="globle_title">Exchange</div>
     <container top="40">
       <div slot="body">
         <div class="setInput clearfix">

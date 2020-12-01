@@ -45,4 +45,18 @@ export default {
     padding: 0 20px;
   }
 }
+@media screen and (max-width: 750px)  {
+  .totalModel{
+    max-width: 100%;
+  }
+    .setpdd{
+      // padding: 0 0.4rem ;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+    }
+    
+}
+@media screen and (max-width: 375px)  { 
+
+}
 </style>

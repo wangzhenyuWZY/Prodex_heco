@@ -186,4 +186,24 @@ import tokenData from '../../utils/token'
         color: #0F1730;
     }
   }
+  @media screen and (max-width:750px) {
+    .input_content{
+      height: 1.4rem;
+    }
+    .from_select .from_size{
+      font-size: 0.35rem;
+    }
+    .from_lable{
+      margin-bottom: 0.2rem;
+      padding-left: 0.2rem;
+    }
+     .from_select{
+      padding-right: 0.1rem;
+      img{
+        width: 0.7rem;
+        height: auto;
+      }
+      
+    }
+}
 </style>

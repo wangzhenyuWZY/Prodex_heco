@@ -244,13 +244,15 @@ img{
   .change_red{
       color: #FF5D37;
   }
-
+// element
+.el-dialog__wrapper{
+    overflow: hidden;
+}
 @media screen and (max-width: 750px) {
     html,body{
-        font: 28px/1 Roboto,PingFang SC,Hiragino Sans GB,Heiti SC,Microsoft YaHei,WenQuanYi Micro Hei,serif;
         height: 100%;
-        max-width: 750px;
-        width: 750px;
+        // max-width: 480px;
+        // width: 480px;
         text-size-adjust: 100%;
         text-rendering: optimizeLegibility;
     }

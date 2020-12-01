@@ -119,12 +119,13 @@
     .input_lt {
       position: relative;
          display: flex;
+         justify-items: center;
+         align-items: center;
          background: #F4F5FA; 
              border-radius: 16px;
       .input_max{
         width: 64px;
         height: 28px;
-        margin-top: 22px;
         margin-right: 16px;
         line-height: 28px;
         text-align: center;
@@ -240,5 +241,27 @@ font-size: 40px;
   100% {
     transform: scale(1, 1);
   }
+}
+@media screen and (max-width:750px) {
+    .globle_input{
+      height: 1.4rem;
+       padding-left: 0.2rem;
+      font-size: 0.55rem;
+    }
+    .from_data .from_input .input_lt .input_max{
+       width: 1.2rem;
+       height: 0.58rem;
+       line-height: 0.58rem;
+       font-size: 0.3rem;
+       margin-right: 0.2rem;
+    }
+     .from_data .from_lable{
+      margin-bottom: 0.2rem;
+      padding-left: 0.2rem;
+    }
+    .from_lable{
+      font-size: 14px;
+    }
+   
 }
 </style>
