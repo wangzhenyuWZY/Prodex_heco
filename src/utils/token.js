@@ -101,7 +101,7 @@ export const pairList = [
         decimals:18
     },
     {
-        address:'TAAjPzxyQ6wqHobeVNDB2grz9QKf89E7Ti',
+        address:'TVNbQPKtGn2WXWCFxBVWivBTMcnDumPDCE',
         token1:{ 
             name:'WTRX',
             address:'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',

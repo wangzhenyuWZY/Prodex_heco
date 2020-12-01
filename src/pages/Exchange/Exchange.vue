@@ -201,7 +201,7 @@ export default {
       btnsbmit:false,
       showAlert1:false,
       alertType:'success',
-
+      isPair:true
     }
   },
   computed: {
@@ -311,6 +311,7 @@ export default {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
+        this.isPair = true
         this.pair = pair[0]
         this.decimals = pair[0].decimals
         allowance(that.token1.address, pair[0].address).then((res) => {
@@ -343,15 +344,31 @@ export default {
           this.swapFee = res
           this.getSpotPrice()
         })
+      }else {
+        this.isPair = false
       }
     },
     cumpToken1 () {//计算兑换的token1
+      if(!this.isPair){
+        this.$message({
+          message: '交易对不存在',
+          type: 'error'
+        });
+        return
+      }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
         let token1Num = calcInGivenOut(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token2Num, this.swapFee)
         this.token1Num = token1Num.toFixed(this.token1.decimals)
       }
     },
     cumpToken2 () {//计算兑换的token2
+      if(!this.isPair){
+        this.$message({
+          message: '交易对不存在',
+          type: 'error'
+        });
+        return
+      }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(this.token2.decimals)
@@ -425,6 +442,7 @@ export default {
       let token2 = this.token2
       this.token1 = token2
       this.token2 = token1
+      this.getPairAddress()
     },
     async doswap () {
       let that = this;

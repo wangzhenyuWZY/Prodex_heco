@@ -29,7 +29,7 @@
             </div>
             <span class="rg">{{popsData.token1Num}}</span>
           </div>
-          <div class="received mrge24">
+          <div class="received mrge24" v-show="popsData.token2Num>0">
             <div class="lt">
               <img src="@/assets/img/btc.svg"
                    alt="">
