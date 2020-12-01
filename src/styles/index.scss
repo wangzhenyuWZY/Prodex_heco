@@ -261,12 +261,19 @@ img{
         justify-content: space-around !important;
     }
 }
-@font-face {
-    font-family: roboto;
-
-    src:url('./font-face/roboto-medium.ttf'), 
-    url('./font-face/roboto-mediumitalic.ttf'),
-    url('./font-face/Roboto-Normal.ttf'),
-    url('./font-face/roboto-thin.ttf'); 
-
+@font-face { // 正常
+    font-family: roboto; 
+    src:url('./font-face/Roboto-Normal.ttf');
+}
+@font-face {  // 粗体
+    font-family: roboto-mediumitalic; 
+    src:url('./font-face/roboto-medium.ttf');
+}
+@font-face { // 细体
+    font-family: roboto-thin; 
+    src: url('./font-face/roboto-thin.ttf'); 
+}
+@font-face {  // 加粗斜体
+    font-family: roboto-mediumitalice;
+    src:  url('./font-face/roboto-mediumitalic.ttf');
 }

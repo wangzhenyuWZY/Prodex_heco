@@ -59,17 +59,18 @@
                          @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg">
-              <el-button class="from_botton"
+              <span> <el-button class="from_botton"
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
                      src="@/assets/img/icon_my_wallet.svg"
-                     alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}</el-button>
+                     alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}
+                     </el-button></span>
 
-              <el-button class="from_botton"
+             <span>  <el-button class="from_botton"
                          :loading="btnLoading1"
-                         v-show="connectFlag"
+                         v-show="connectFlag" 
                          :disabled="btnDisabled1"
-                         @click="confirmSwap">Swap</el-button>
+                         @click="confirmSwap">Swap</el-button></span>
             </div>
           </div>
         </div>
@@ -86,7 +87,8 @@
                   <span>Minimum received
                     <el-tooltip placement="right">
                       <div slot="content"
-                           class="slotp">
+                      
+                           class="">
                         Your transaction will revert if<br>
                         there is a large,unfavorable <br>
                         price movement before it is
@@ -497,6 +499,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
+
 .slotp{ 
     height: 76px;
     font-size: 16px;
@@ -504,6 +507,8 @@ export default {
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;
+  
+background: #FFFFFF;
 }
 .whe {
   width: 440px;

@@ -39,7 +39,7 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  class="lab1" lable="weight(1-50)"
+            <frominput  lable="weight(1-50)"
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -111,7 +111,7 @@
                   <span>Minimum received <img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
-                <span class="rg">441.4 aDAI</span>
+                <span class="rgs">441.4 aDAI</span>
               </div>
               <div class="received setmage">
                 <div class="lt">
@@ -383,6 +383,17 @@ export default {
 }
 </script>
 
+<style  scoped>
+/* >>>.rgs{
+  
+height: 19px;
+font-size: 16px;
+font-family: Roboto-Regular, Roboto;
+font-weight: 400;
+color: #FFFFFF;
+line-height: 19px;
+} */
+</style>
 <style lang="scss" scoped>
 .createpair {
   margin-top: 120px;
@@ -526,8 +537,7 @@ export default {
       vertical-align: sub;
       margin-right: 8px;
     }
-    .rg {
-    }
+    
     .setColr {
       color: #ff5d37;
     }
