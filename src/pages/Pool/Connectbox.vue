@@ -707,8 +707,8 @@ export default {
 .whe {
   width: 293px;
   margin: 0 auto;
-  padding-bottom: 56px;
-  margin-top: 48px;
+  padding-bottom: 48px;
+  margin-top: 40px;
 }
 .whe_img {
   vertical-align: sub;
@@ -751,9 +751,9 @@ export default {
   }
 }
 .connect_boxs {
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 24px 24px;
   position: absolute;
-  bottom: 0;
+  bottom: 29px;
   left: 0;
   width: 560px;
   height: 259px;
@@ -763,6 +763,7 @@ export default {
 
 .metitle {
 
+margin-top: 12px;
   height: 66px;
   line-height: 66px;
   border-bottom: 1px solid #e5ebf2;
@@ -791,6 +792,7 @@ color: #A6AEB7;
   
 }
 .lt1,.lt2,.lt3{
+  
   height: 21px;
   font-size: 18px;
   font-family: Roboto-Regular, Roboto;
@@ -808,6 +810,7 @@ color: #E5EBF2;
 line-height: 21px;
 
 }
+
 
 .connect_currency {
   display: flex;
