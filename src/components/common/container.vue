@@ -15,7 +15,7 @@ export default {
   props:{
     top:{
       type:String,
-      default:'96'
+      default:'72'
     },
     pdd:{
       type:Boolean,
@@ -29,6 +29,7 @@ export default {
 .totalModel{
   max-width: 480px;
   margin: 0 auto;
+
   position: relative;
 
 }

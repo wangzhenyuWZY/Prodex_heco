@@ -218,14 +218,14 @@ export default {
 .fees {
   color: #0f1730;
   font-size: 18px;
-  padding: 0 32px;
+  padding: 0 20px;
   .fees_account {
     height: 56px;
     line-height: 56px;
     border-radius: 16px;
     padding-left: 24px;
     margin-top: 32px;
-    margin-bottom: 32px;
+    margin-bottom: 24px;
     border: 1px solid #0f1730;
     position: relative;
     cursor: pointer;

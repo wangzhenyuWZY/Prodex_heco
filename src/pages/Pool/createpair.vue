@@ -1,6 +1,7 @@
 <template>
   <div class="container createpair">
-    <container top="32">
+    <container top="40"
+    >
       <div class="title"
            slot="title">
         <div class="lt_box">
@@ -38,7 +39,7 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput lable="weight(1-50)"
+            <frominput  class="lab1" lable="weight(1-50)"
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -362,24 +363,26 @@ export default {
 
 <style lang="scss" scoped>
 .createpair {
+  margin-top: 120px;
+
   .whe {
-    margin-top: 48px;
+    // margin-top: 48px;
   }
   .whe_img {
     vertical-align: sub;
   }
 
   .ctx_1 {
-    width: 196px;
+    width: 160px;
     display: inline-block;
   }
   .ctx_2 {
-    width: 194px;
+    width: 96px;
     display: inline-block;
     margin: 0 12px;
   }
   .ctx_3 {
-    width: 196px;
+    width: 160px;
     display: inline-block;
     margin: 0;
   }
@@ -460,6 +463,7 @@ export default {
     padding-bottom: 55px;
   }
   .lt_box {
+    // height: 96px;
     .back_icon {
        color: #070A0E;
         width: 40px;
