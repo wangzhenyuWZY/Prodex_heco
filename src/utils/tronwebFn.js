@@ -65,7 +65,7 @@ const approved = (coinAddress,contractAddress) => {//授权
                             message: '授权成功',
                             type: 'success'
                         })
-                        resolve(1);
+                        resolve(res);
                     }
                 })
             })

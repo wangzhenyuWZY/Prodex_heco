@@ -138,6 +138,7 @@
 </template>
 
 <script>
+const Decimal = require('decimal.js');
 import { container,frominput,setselect } from '../../components/index'
 import selctoken from './selctToken';
 import ipConfig from '../../config/ipconfig.bak'
@@ -203,7 +204,7 @@ export default {
         try {
           if(this.BFactoryContract){
             let res = await that.BFactoryContract["newBPool"]().send({
-              feeLimit:100000000,
+              feeLimit:1000000000,
               callValue:0,
               tokenId:0,
               shouldPollResponse:true
@@ -212,16 +213,18 @@ export default {
               that.bPoolContract = res
               that.setSwapLpFee()
               that.setSponsors()
-              approved(that.token1.address,res).then(()=>{
-                let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
-                let weight = window.tronWeb.toBigNumber(that.firstTokenWeight*Math.pow(10,18)).toString(10)
+              console.log('授权地址===='+that.bPoolContract)
+              approved(that.token1.address,that.bPoolContract).then(()=>{
+                let number = Decimal(that.firstTokenNum).mul(Decimal(Math.pow(10, that.token1.decimals))).toString()
+                let weight = Decimal(that.firstTokenWeight).mul(Decimal(Math.pow(10,18))).toString()
                 that.bindCoin(that.token1.address,number,weight,'token1IsBind')
+                approved(that.token2.address,that.bPoolContract).then(()=>{
+                  let number = Decimal(that.secondTokenNum).mul(Decimal(Math.pow(10, that.token2.decimals))).toString()
+                  let weight = Decimal(that.secondTokenWeight).mul(Decimal(Math.pow(10,18))).toString()
+                  that.bindCoin(that.token2.address,number,weight,'token2IsBind')
+                })
               })
-              approved(that.token2.address,res).then(()=>{
-                let number = window.tronWeb.toBigNumber(that.secondTokenNum*Math.pow(10, that.token2.decimals)).toString(10)
-                let weight = window.tronWeb.toBigNumber(that.secondTokenWeight*Math.pow(10,18)).toString(10)
-                that.bindCoin(that.token2.address,number,weight,'token2IsBind')
-              })
+              
             }
           }
         }
@@ -280,6 +283,7 @@ export default {
           {type: 'uint256', value: balance},
           {type: 'uint256', value: weight},
       ]
+      console.log('绑定地址===='+that.bPoolContract)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
@@ -287,6 +291,7 @@ export default {
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
       if(res){
         getConfirmedTransaction(res.txid).then((result)=>{
+          console.log('result11========='+result)
           if(name=='token1IsBind')
             that.token1IsBind = true
           if(name=='token2IsBind')
