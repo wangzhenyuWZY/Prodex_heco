@@ -329,7 +329,7 @@ export default {
           this.share = (poolOut/this.lpTotal*100).toFixed(2) 
         }else{
           this.getToken1DenormalizedWeight()//获取token1在pool中的权重
-          // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
+          this.getToken2DenormalizedWeight()//获取token2在pool中的权重
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
         }
@@ -346,6 +346,7 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
         this.token2denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
+        console.log("token2权重======="+this.token2denormalizedWeight)
       }
     },
     async getToken1DenormalizedWeight(){
@@ -356,6 +357,7 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
         this.denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
+        console.log("token1权重======="+this.denormalizedWeight)
       }
     },
     async getTotalDenormalizedWeight () {
@@ -390,10 +392,11 @@ export default {
           console.log('this.token1Balance====='+res)
           this.token1Balance = res
           getMyBalanceInPool(pair[0]).then((res)=>{
-            that.myBalanceInPool = res/Math.pow(10,this.pair.decimals)
+            that.myBalanceInPool = Decimal(res).div(Math.pow(10,this.pair.decimals))
             console.log('that.myBalanceInPool========'+that.myBalanceInPool   )
             if(that.lpTotal){
-              that.myShare = (that.myBalanceInPool/that.lpTotal).toFixed(4)
+              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toFixed(4).toString()
+              console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toString())
             }
           })
         })
@@ -405,7 +408,8 @@ export default {
             // that.lpTotal = Decimal(res).div(Math.pow(10,this.pair.decimals))
             that.lpTotal = Decimal(res)
             if(that.myBalanceInPool){
-              that.myShare = (that.myBalanceInPool/that.lpTotal).toFixed(4)
+              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toFixed(4).toString()
+              console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)))
             }
           })
         })
@@ -573,7 +577,6 @@ export default {
           { type: 'address', value: coin.address }
         ]
         window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
-          debugger
           let tokenBalanceInPool = parseInt(transaction.constant_result[0], 16) / Math.pow(10, coin.decimals)
           resolve(tokenBalanceInPool);
         })
@@ -711,8 +714,8 @@ export default {
 .whe {
   width: 293px;
   margin: 0 auto;
-  padding-bottom: 56px;
-  margin-top: 48px;
+  padding-bottom: 48px;
+  margin-top: 40px;
 }
 .whe_img {
   vertical-align: sub;
@@ -755,9 +758,9 @@ export default {
   }
 }
 .connect_boxs {
-  border-radius: 0 0 20px 20px;
+  border-radius: 0 0 24px 24px;
   position: absolute;
-  bottom: 0;
+  bottom: 29px;
   left: 0;
   width: 560px;
   height: 259px;
@@ -767,6 +770,7 @@ export default {
 
 .metitle {
 
+margin-top: 12px;
   height: 66px;
   line-height: 66px;
   border-bottom: 1px solid #e5ebf2;
@@ -800,6 +804,7 @@ color: #A6AEB7;
   
 }
 .lt1,.lt2,.lt3{
+  
   height: 21px;
   font-size: 18px;
   font-family: Roboto-Regular, Roboto;
@@ -817,6 +822,7 @@ color: #E5EBF2;
 line-height: 21px;
 
 }
+
 
 .connect_currency {
   display: flex;
