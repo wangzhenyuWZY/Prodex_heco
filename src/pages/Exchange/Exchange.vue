@@ -42,7 +42,7 @@
         <div class="Price_text"
              v-show="connectFlag">
           <span>Price: </span>
-          <span>{{spotPrice.toFixed(token1.decimals)}} </span>
+          <span>{{spotPrice.toFixed(4)}} </span>
           <span> {{token1.name}} </span>
           <span> per </span>
           <span> {{token2.name}} </span>
@@ -373,7 +373,7 @@ export default {
       }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
-        this.token2Num = token2Num.toFixed(this.token2.decimals)
+        this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.percentage = ((afterPrice - this.spotPrice) / this.spotPrice * 100).toFixed(2)
       }
