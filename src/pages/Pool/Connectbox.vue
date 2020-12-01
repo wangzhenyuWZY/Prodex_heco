@@ -412,7 +412,7 @@ export default {
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
-      if (pair) {
+      if (pair && pair.length>0) {
         this.pair = pair[0]
         console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
@@ -435,8 +435,6 @@ export default {
           console.log('this.token2Balance====='+res)
           this.token2Balance = res
           getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
-            console.log('lptoken======='+res)
-            // that.lpTotal = Decimal(res).div(Math.pow(10,this.pair.decimals))
             that.lpTotal = Decimal(res)
             if(that.myBalanceInPool){
               that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
