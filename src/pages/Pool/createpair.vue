@@ -218,6 +218,10 @@ export default {
     },
     async createBPool () {//newBPool
       let that = this
+      this.$message({
+        message: '成功，请等待区块确认',
+        type: 'error'
+      });
         try {
           if(this.BFactoryContract){
             let res = await that.BFactoryContract["newBPool"]().send({

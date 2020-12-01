@@ -6,7 +6,6 @@ function calcRelativeDiff(expected, actual) {
 
 //计算A->B的价格（用于展示）
 function calcSpotPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut, tokenWeightOut, swapFee) {
-    debugger
     const numer = Decimal(tokenBalanceIn).div(Decimal(tokenWeightIn));
     const denom = Decimal(tokenBalanceOut).div(Decimal(tokenWeightOut));
     const ratio = numer.div(denom);

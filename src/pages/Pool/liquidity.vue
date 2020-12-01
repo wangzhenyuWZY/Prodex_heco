@@ -46,7 +46,7 @@
             Acoout analytics and accrued fees
             <img src="@/assets/img/icon_jump_green.png" alt="" />
           </div>
-          <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index">
+          <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index" v-show="parseFloat(item.myBalanceInPool)>0">
             <div class="fees_curny clearfix" @click="toggleDrop(item)">
               <div class="curny_lt fl_lt">
                 <span class="lt_img">
@@ -72,27 +72,27 @@
                     <div class="lt">
                       <span>Your tatal pool token:</span>
                     </div>
-                    <span class="rg">{{myBalanceInPool}}</span>
+                    <span class="rg">{{item.myBalanceInPool}}</span>
                   </div>
                   <div class="received mrgtop16">
                     <div class="lt">
                       <img src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled {{item.token1.name}}:</span>
                     </div>
-                    <span class="rg">{{token1Balance*share}}</span>
+                    <span class="rg">{{token1Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received mrgtop16">
                     <div class="lt">
                       <img class="lt_icon" src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled {{item.token2.name}}:</span>
                     </div>
-                    <span class="rg">{{token2Balance*share}}</span>
+                    <span class="rg">{{token2Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received mrgtop16">
                     <div class="lt">
                       <span>Your pool share:</span>
                     </div>
-                    <span class="rg">{{share*100}}%</span>
+                    <span class="rg">{{(share*100).toFixed(2)}}%</span>
                   </div>
                   <div class="accrued">
                     View accrued fees and analycis
@@ -128,6 +128,7 @@
 </template>
 
 <script>
+const Decimal = require('decimal.js');
 import { mapActions, mapState } from "vuex";
 import tokenData from "../../utils/token"
 import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
@@ -148,9 +149,18 @@ export default {
     
   },
   created(){
-    this.getpairList()
+    this.init()
+  },
+  mounted(){
+    
   },
   methods:{
+    init () {//初始化tronweb
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.getpairList()
+      })
+    },
     toPool(item){
       this.$router.push({
           name:"Connectbox",
@@ -160,8 +170,8 @@ export default {
       })
     },
     toRemove(item){
-      item.token1.balanceInPool = this.token1Balance*this.share
-      item.token2.balanceInPool = this.token2Balance*this.share
+      item.token1.balanceInPool = this.token1Balance
+      item.token2.balanceInPool = this.token2Balance
       sessionStorage.setItem('toRemove',JSON.stringify(item));
       console.log('sessionStorage')
       this.$router.push({
@@ -172,11 +182,14 @@ export default {
       })
     },
     getpairList(){
+      let that = this
       tokenData.pairList.forEach((item)=>{
         item.show = false
+        getMyBalanceInPool(item).then((res)=>{
+          item.myBalanceInPool = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()
+          that.pairList.push(item)
+        })
       })
-      console.log(tokenData.pairList)
-      this.pairList = tokenData.pairList
     },
     toggleDrop(item){
       let that = this
@@ -187,24 +200,23 @@ export default {
       item.show = !item.show
       if(item.show){
         getLpBalanceInPool(item).then((res)=>{
-          that.lpTotal = res
-          if(that.myBalanceInPool){
-            that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
-          }
-        })
-        getBalanceInPool(item,item.token1).then((res)=>{
-          that.token1Balance = res
-        })
-        getBalanceInPool(item,item.token2).then((res)=>{
-          that.token2Balance = res
-        })
-        getMyBalanceInPool(item).then((res)=>{
-          that.myBalanceInPool = res
+          that.lpTotal = Decimal(res).div(Math.pow(10,18))
           if(that.lpTotal){
-            that.share = (that.myBalanceInPool/that.lpTotal).toFixed(4)
+            that.share = Decimal(item.myBalanceInPool).div(that.lpTotal)
+            that.getBalance(item)
           }
         })
+        
       }
+    },
+    getBalance(item){
+      let that = this
+      getBalanceInPool(item,item.token1).then((res)=>{
+        that.token1Balance = Decimal(res).mul(that.share)
+      })
+      getBalanceInPool(item,item.token2).then((res)=>{
+        that.token2Balance = Decimal(res).mul(that.share)
+      })
     }
   }
 };

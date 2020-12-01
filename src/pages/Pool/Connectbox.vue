@@ -293,12 +293,12 @@ export default {
     },
     checkSupply(){
       if(!this.token1Num || this.token1Num=='' || this.token1Num==0){
-        that.$message({
+        this.$message({
           message: '请输入添加数量',
           type: 'error'
         });
       }else if(this.token1Num>this.token1.balance){
-        that.$message({
+        this.$message({
           message: '钱包余额不足',
           type: 'error'
         });
