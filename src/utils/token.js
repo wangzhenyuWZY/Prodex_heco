@@ -99,6 +99,25 @@ export const pairList = [
         },
         pair:'FOX/USDT',
         decimals:18
+    },
+    {
+        address:'TAAjPzxyQ6wqHobeVNDB2grz9QKf89E7Ti',
+        token1:{ 
+            name:'WTRX',
+            address:'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
+            img:'111',
+            balance:0,
+            decimals:6
+        },
+        token2:{ 
+            name:'FOX',
+            address:'TE9oQF7Y8tbq5Lqdfr9S47QNXHt7GRcHh4',
+            img:'',
+            balance:0,
+            decimals:12
+        },
+        pair:'WTRX/FOX',
+        decimals:18
     }
 ]
 
