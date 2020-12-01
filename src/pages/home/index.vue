@@ -1,12 +1,12 @@
 <template>
   <div class="container">
-    <div class="c-top">
-      <samp class="c-mp">FoxDex Protocol Analytics</samp>
+    <!-- <div class="c-top"> -->
+      <!-- <samp class="c-mp">FoxDex Protocol Analytics</samp> -->
       <!-- <div class="c-inp">
       <input type="text" placeholder="Search FoxDex pairs and tokens">  
       </div> -->
 
-    </div>
+    <!-- </div> -->
     <!-- <div class="c-box1">
       <div class="box1-p">
         <span class="bpa">ETH Price:<samp class="bpa1">{{ 389.98 }}</samp></span>
@@ -125,29 +125,32 @@ export default {
 }
 </script>
 <style  lang="scss" scoped>
+.container{
+  margin-top: 120px;
+}
 .t-img {
   width: 22px;
   height: 22px;
   margin-left: 207px;
 }
 
-.c-top {
-  margin: 0 auto;
-  overflow: hidden;
-  width: 800px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.c-mp {
-  margin-top: 40px;
-  height: 27px;
-  font-size: 24px;
-  font-family: Roboto-Medium, Roboto;
-  font-weight: normal;
-  color: #0f1730;
-  line-height: 28px;
-}
+// .c-top {
+//   margin: 0 auto;
+//   overflow: hidden;
+//   width: 800px;
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+// }
+// .c-mp {
+//   margin-top: 40px;
+//   height: 27px;
+//   font-size: 24px;
+//   font-family: Roboto-Medium, Roboto;
+//   font-weight: normal;
+//   color: #0f1730;
+//   line-height: 28px;
+// }
 .c-inp {
   margin-top: 16px;
   width: 800px;
@@ -199,6 +202,7 @@ export default {
   }
 }
 .c-box2 {
+  // margin-top: 120px;
   width: 1200px;
   margin: 0 auto;
   height: 960px;
