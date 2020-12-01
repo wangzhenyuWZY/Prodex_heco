@@ -861,7 +861,7 @@ line-height: 21px;
 .typeBtn {
   width: 136px;
   height: 48px;
-  background: #05C98E;
+  background: #fff;
   border-radius: 16px;
   margin-left: 23px;
   
@@ -872,7 +872,7 @@ font-size: 18px;
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #ffffff;
+  background: #05C98E;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;

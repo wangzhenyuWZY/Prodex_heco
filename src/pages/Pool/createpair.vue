@@ -177,6 +177,25 @@ export default {
   methods: {
     handel() {
       // this.login = !this.login
+      if(!this.firstTokenNum || this.firstTokenNum==0 || this.firstTokenNum=='' || !this.secondTokenNum || this.secondTokenNum==0 || this.secondTokenNum==''){
+        this.$message({
+          message: '请输入添加数量',
+          type: 'error'
+        });
+        return
+      }else if(!this.firstTokenWeight || this.firstTokenWeight==0 || this.firstTokenWeight=='' || !this.secondTokenWeight || this.secondTokenWeight==0 || this.secondTokenWeight==''){
+        this.$message({
+          message: '请输入权重',
+          type: 'error'
+        });
+        return
+      }else if((this.firstTokenWeight+this.secondTokenWeight)>50){
+        this.$message({
+          message: '权重相加不能大于50',
+          type: 'error'
+        });
+        return
+      }
       this.createBPool()
     },
     init () {//初始化tronweb
@@ -196,8 +215,6 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager,functionSelector,{}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0],16)
-      debugger
-      console.log('this.foxDex========'+transaction.constant_result[0])
     },
     async createBPool () {//newBPool
       let that = this
@@ -214,14 +231,15 @@ export default {
               that.setSwapLpFee()
               that.setSponsors()
               console.log('授权地址===='+that.bPoolContract)
+              // that.bPoolContract = 'TDfFD4aeK6582o9YFfjScGubtJDrHB1pyf'
               approved(that.token1.address,that.bPoolContract).then(()=>{
-                let number = Decimal(that.firstTokenNum).mul(Decimal(Math.pow(10, that.token1.decimals))).toString()
-                let weight = Decimal(that.firstTokenWeight).mul(Decimal(Math.pow(10,18))).toString()
-                that.bindCoin(that.token1.address,number,weight,'token1IsBind')
                 approved(that.token2.address,that.bPoolContract).then(()=>{
-                  let number = Decimal(that.secondTokenNum).mul(Decimal(Math.pow(10, that.token2.decimals))).toString()
-                  let weight = Decimal(that.secondTokenWeight).mul(Decimal(Math.pow(10,18))).toString()
-                  that.bindCoin(that.token2.address,number,weight,'token2IsBind')
+                  let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
+                  let weight = window.tronWeb.toBigNumber(that.firstTokenWeight*Math.pow(10,18)).toString(10)
+                  that.bindCoin(that.token1.address,number,weight,'token1IsBind')
+                  let number2 = window.tronWeb.toBigNumber(that.secondTokenNum*Math.pow(10, that.token2.decimals)).toString(10)
+                  let weight2 = window.tronWeb.toBigNumber(that.secondTokenWeight*Math.pow(10,18)).toString(10)
+                  that.bindCoin(that.token2.address,number2,weight2,'token2IsBind')
                 })
               })
               
