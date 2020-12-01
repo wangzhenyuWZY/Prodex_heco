@@ -12,18 +12,18 @@
             alt="">
       </div>
       <!-- waiting -->
-      <div
+      <!-- <div
           v-if="alertType == 'waiting'">
-        <div class="alert_size">Connect successfully</div>
-        <div class="alert_dtail">Supplying 0.01 ETH and 4.99255 USDT</div>
+        <div class="alert_size">Waiting For Confirmation</div>
+        <div class="alert_dtail">Supplying {{token1Num}} {{token1.name}} and {{token2Num}} {{token2.name}}</div>
         <div class="alert_waring">Confirm this transaction in your wallet</div>
-      </div>
+      </div> -->
 
       <!-- end waiting -->
       <!-- success -->
       <div 
           v-if="alertType == 'success'">
-        <div class="alert_size">Connect successfully</div>
+        <div class="alert_size">Transaction Submitted</div>
         <div class="alert_success">View on Etherscan</div>
         <div class="alert_button"
             v-show="alertType == 'success'">
@@ -47,7 +47,23 @@ export default {
       alertType:{
         type:String,
         default:'success'
-      }
+      },
+      token1Num:{
+        type:[String,Number],
+        default:0
+      },
+      token2Num:{
+        type:[String,Number],
+        default:0
+      },
+      // token1:{
+      //   type:Object,
+      //   default:{}
+      // },
+      // token2:{
+      //   type:Object,
+      //   default:{}
+      // }
   },
   data () {
     return {

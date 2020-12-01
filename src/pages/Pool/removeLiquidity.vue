@@ -20,7 +20,7 @@
     </div>
     <div slot="body" style="padding-bottom:40px;">
       <!-- 滑块部分开始 -->
-      <div class="box_top clearfix"><span>Acoout</span><span @click="showAlert1 =true">Detailed</span></div>
+      <div class="box_top clearfix"><span>Acoout</span><span>Detailed</span></div>
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">
@@ -108,8 +108,7 @@
    <removealert
       :isShow="showAlert1"
       :alertType="alertType"
-      @close="showAlert1 = false"
-
+      @close="closeAlert"
    />
 </div>
 
@@ -140,7 +139,7 @@ export default {
       justPrice:0,
       reversePrice:0,
       showAlert1:false,
-      alertType:'waiting' // success  waiting
+      alertType:'success' // success  waiting
     }
   },
   components: {
@@ -164,6 +163,10 @@ export default {
     }
   },
   methods:{
+    closeAlert(){
+      this.showAlert1 = false
+      window.location.reload()
+    },
     async getBalance(){
       let that = this
       var functionSelector = 'balanceOf(address)';
@@ -193,8 +196,7 @@ export default {
     },
     async exitPool(){
       let that = this
-      var functionSelector = 'exitPool(uint256,uint256[])';
-      console.log('this.maxBalance====='+this.maxBalance)
+      var functionSelector = 'exitPool(uint256,uint256[])'
       let slidenum = Decimal(that.slidenum).div(100)
       let maxBalance = Decimal(this.maxBalance)
       let num = Decimal(slidenum).mul(Decimal(maxBalance)).toString()
@@ -202,13 +204,13 @@ export default {
           {type: 'uint256', value: num},
           {type: 'uint256[]', value:[0,0] }
       ]
-      console.log(parameter)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              alert('success');
+              that.showAlert = false
+              that.showAlert1 =true
           });
       }) 
     },

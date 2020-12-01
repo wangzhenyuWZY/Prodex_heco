@@ -149,6 +149,11 @@
                :item='item'
                @closeAlert="isSelect=false"
                @change="changeCoin" />
+    <removealert
+      :isShow="showAlert1"
+      :alertType="alertType"
+      @close="closeAlert"
+    />  
   </div>
 
 </template>
@@ -159,6 +164,7 @@ import change from './change'
 import selctoken from '../Pool/selctToken';
 import tokenData from '../../utils/token'
 import { approved, decimals, getConfirmedTransaction, allowance } from '../../utils/tronwebFn'
+import removealert from '../Pool/valret'
 import {
   calcSpotPrice,
   calcOutGivenIn,
@@ -192,8 +198,9 @@ export default {
       btnLoading1: false,
       btnDisabled1: true,
       purple: false,
-      btnsbmit:false
-
+      btnsbmit:false,
+      showAlert1:false,
+      alertType:'success',
 
     }
   },
@@ -205,7 +212,8 @@ export default {
     frominput,
     setselect,
     change,
-    selctoken
+    selctoken,
+    removealert
   },
   created () {
 
@@ -221,6 +229,10 @@ export default {
 
   },
   methods: {
+    closeAlert(){
+      this.showAlert1 = false
+      window.location.reload()
+    },
     btnClick () {
       this.$popup({
         click: () => {
@@ -439,6 +451,7 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+          that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
             that.$message.success('交易成功');
             that.token1Num = 0;
@@ -452,7 +465,7 @@ export default {
           })
 
         }).catch((err) => {
-          cosnole.log(err);
+          console.log(err);
          that.submitInit()
         });
       }).catch(err=>{
