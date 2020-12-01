@@ -132,7 +132,7 @@
                          alt="">
                     <span>{{token1.name}}/{{token2.name}}</span>
                   </div>
-                  <div class="currencyprices">{{myBalanceInPool}}</div>
+                  <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
 
                 </div>
               </div>
@@ -140,19 +140,19 @@
                 <div class="lt1">
                   <span>Your pool share:</span>
                 </div>
-                <span class="rg1">{{myShare*100}}%</span>
+                <span class="rg1">{{(myShare*100).toFixed(2)}}%</span>
               </div>
               <div class="received mrge12">
                 <div class="lt2">
                   <span>{{token1.name}}:</span>
                 </div>
-                <span class="rg2">{{token1Balance*myShare}}</span>
+                <span class="rg2">{{myToken1Balance}}</span>
               </div>
               <div class="received">
                 <div class="lt3">
                   <span>{{token2.name}}:</span>
                 </div>
-                <span class="rg3">{{token2Balance*myShare}}</span>
+                <span class="rg3">{{myToken2Balance}}</span>
               </div>
             </div>
           </div>
@@ -179,7 +179,16 @@
       :popsData = 'popsData'
       @change='supply(1)'
       @close="confirmPop = false"
-    />           
+    />  
+    <removealert
+      :isShow="showAlert1"
+      :alertType="alertType"
+      :token1Num="token1Num"
+      :token2Num="token2Num"
+      :token1 = "token1"
+      :token2 = "token2"
+      @close="closeAlert"
+   />         
   </div>
 </template>
 
@@ -192,6 +201,7 @@ import tokenData from '../../utils/token'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool  } from '../../utils/tronwebFn'
 import {calcPoolOutGivenSingleIn,getTokenInGivenPoolOut} from '../../utils/calc_comparisons'
 import recevive from './recevive'
+import removealert from './valret';
 
 export default {
   data () {
@@ -227,10 +237,14 @@ export default {
       },
       token2denormalizedWeight:0,
       myShare:0,
+      myToken1Balance:0,
+      myToken2Balance:0,
       myBalanceInPool:0,
       reciveLptoken:0,
       confirmPop:false,
-      popsData:{}
+      popsData:{},
+      showAlert1:false,
+      alertType:'success'
     }
   },
   components: {
@@ -238,7 +252,8 @@ export default {
     frominput,
     setselect,
     selctoken,
-    recevive
+    recevive,
+    removealert
   },
   created () {
     if (this.$route.params.pair) {
@@ -263,6 +278,10 @@ export default {
     }
   },
   methods: {
+    closeAlert(){
+      this.showAlert1 = false
+      window.location.reload()
+    },
     checkSupply(){
       if(!this.token1Num || this.token1Num=='' || this.token1Num==0){
         that.$message({
@@ -277,12 +296,17 @@ export default {
       }
     },
     confirmSupply(){//输出的lptoken数量
-      let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
-      this.reciveLptoken = reciveLptoken
+      if(this.iSingle){
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
+      }else{
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
+        this.reciveLptoken = reciveLptoken.toFixed(6)
+      }
       this.popsData = {
         reciveLptoken:this.reciveLptoken,
         token1Num:this.token1Num,
-        token2Num:this.token2Num,
+        token2Num:this.iSingle?0:this.token2Num,
         t1Per:this.justPrice,
         t2Per:this.reversePrice,
         token1:this.token1,
@@ -388,10 +412,12 @@ export default {
           console.log('this.token1Balance====='+res)
           this.token1Balance = res
           getMyBalanceInPool(pair[0]).then((res)=>{
-            that.myBalanceInPool = Decimal(res).div(Math.pow(10,this.pair.decimals))
+            that.myBalanceInPool = Decimal(res)
             console.log('that.myBalanceInPool========'+that.myBalanceInPool   )
             if(that.lpTotal){
-              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toFixed(4).toString()
+              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
+              that.myToken1Balance = Decimal(that.token1Balance).mul(Decimal(that.myShare)).toFixed(6)
+              that.myToken2Balance = Decimal(that.token2Balance).mul(Decimal(that.myShare)).toFixed(6)
               console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toString())
             }
           })
@@ -404,7 +430,9 @@ export default {
             // that.lpTotal = Decimal(res).div(Math.pow(10,this.pair.decimals))
             that.lpTotal = Decimal(res)
             if(that.myBalanceInPool){
-              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toFixed(4).toString()
+              that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
+              that.myToken1Balance = Decimal(that.token1Balance).mul(Decimal(that.myShare)).toFixed(6)
+              that.myToken2Balance = Decimal(that.token2Balance).mul(Decimal(that.myShare)).toFixed(6)
               console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)))
             }
           })
@@ -482,9 +510,11 @@ export default {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success("SUCCESS!")
             that.charm1();
+            that.showAlert1 = true
           }).catch((err) => {
             console.log(err);
             that.charm1();
+            that.showAlert1 = true
           });
         })
       } catch (error) {
@@ -513,9 +543,11 @@ export default {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success('success');
             that.charm1();
+            that.showAlert1 = true
           }).catch(err => {
             that.charm1();
             console.log(err);
+            that.showAlert1 = true
           });
         })
       } catch (error) {

@@ -41,9 +41,9 @@
             <div class="lt">
               <span>Rates</span>
             </div>
-            <span class="">1{{popsData.token1.name}}={{popsData.justPrice}} {{popsData.token2.name}}</span>
+            <span class="">1{{popsData.token1.name}}={{popsData.t1Per.toFixed(6)}} {{popsData.token2.name}}</span>
           </div>
-          <div class="conversion mrge24">1{{popsData.token2.name}}={{popsData.reversePrice}} {{popsData.token1.name}}</div>
+          <div class="conversion mrge24">1{{popsData.token2.name}}={{popsData.t2Per.toFixed(6)}} {{popsData.token1.name}}</div>
           <div class="received">
             <div class="lt">
               <span>Share of pool</span>
