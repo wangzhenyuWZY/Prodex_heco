@@ -110,7 +110,7 @@
     font-size: 20px;
     font-family: Roboto-Medium, Roboto;
     font-weight: 500;
-    color: #0F1730;
+    color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
   }
@@ -124,7 +124,7 @@
       .input_max{
         width: 64px;
         height: 32px;
-        margin-top: 28px;
+        margin-top: 24px;
         margin-right: 16px;
         line-height: 32px;
         text-align: center;
@@ -141,7 +141,7 @@
       justify-items: center;
       margin-left: 20px;
       width: 201px;
-      height: 88px;
+      height: 80px;
       background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
@@ -187,8 +187,8 @@
       font-size: 20px;
       font-family: Roboto-Regular, Roboto;
       color: #b7bfc8;
-      margin-left: 8px;
-      margin-right: 6px;
+      // margin-left: 8px;
+      // margin-right: 6px;
     }
     .show_size {
       font-family: Roboto-Regular, Roboto;
@@ -206,7 +206,7 @@
 .globle_input {
   box-sizing: border-box;
   outline: none;
-  height: 88px;
+  height: 80px;
   background: #F4F5FA;
   width: 100%;
   border: none;

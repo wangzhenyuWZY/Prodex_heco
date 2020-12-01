@@ -27,7 +27,7 @@ export default {
 
 <style lang="scss" scoped>
 .totalModel{
-width: 690px;
+  width: 560px;
   margin: 0 auto;
   position: relative;
 
@@ -42,7 +42,7 @@ width: 690px;
   box-sizing: border-box;
   // margin-top: 115px;
   .modelBg {
-    padding: 0 40px;
+    padding: 0 24px;
   }
 }
 </style>

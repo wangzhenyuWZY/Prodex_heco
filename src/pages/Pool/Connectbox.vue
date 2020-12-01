@@ -15,7 +15,7 @@
           <el-button class="typeBtn"
                      @click="iSingle=true"
                      type="small">Single Token </el-button>
-          <el-button class="typeBtn"
+          <el-button class="typeBtn1"
                      @click="iSingle=false"
                      type="small">Double Token </el-button>
         </div>
@@ -137,22 +137,22 @@
                 </div>
               </div>
               <div class="received mrge12 mrgtop16">
-                <div class="lt">
+                <div class="lt1">
                   <span>Your pool share:</span>
                 </div>
-                <span class="rg">{{myShare*100}}%</span>
+                <span class="rg1">{{myShare*100}}%</span>
               </div>
               <div class="received mrge12">
-                <div class="lt">
+                <div class="lt2">
                   <span>{{token1.name}}:</span>
                 </div>
-                <span class="">{{token1Balance*myShare}}</span>
+                <span class="rg2">{{token1Balance*myShare}}</span>
               </div>
               <div class="received">
-                <div class="lt">
+                <div class="lt3">
                   <span>{{token2.name}}:</span>
                 </div>
-                <span class="">{{token2Balance*myShare}}</span>
+                <span class="rg3">{{token2Balance*myShare}}</span>
               </div>
             </div>
           </div>
@@ -192,6 +192,7 @@ import tokenData from '../../utils/token'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool  } from '../../utils/tronwebFn'
 import {calcPoolOutGivenSingleIn,getTokenInGivenPoolOut} from '../../utils/calc_comparisons'
 import recevive from './recevive'
+
 export default {
   data () {
     return {
@@ -663,7 +664,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
+
 .connect_pd{
+  margin-top: 128px;
   padding-bottom: 100px;
 }
 .xzk {
@@ -699,6 +703,10 @@ export default {
     }
   }
 }
+.from_contentIcon{
+  margin-top: 16px;
+  margin-bottom: 12px;
+}
 .whe {
   width: 293px;
   margin: 0 auto;
@@ -710,12 +718,18 @@ export default {
 }
 .connectbox {
   padding: 0 24px 24px 24px;
-  margin-top: 24px;
+  margin-top: 16px;
+  width: 512px;
+  height: 127px;
   .box_title {
     line-height: 50px;
     border-bottom: 1px solid #e5ebf2;
-    font-size: 20px;
-    color: #0f1730;
+    font-size: 18px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #0F1730;
+
+ 
   }
 }
 .connect_btn {
@@ -742,20 +756,62 @@ export default {
 .connect_boxs {
   border-radius: 0 0 20px 20px;
   position: absolute;
-  bottom: 30px;
+  bottom: 0;
   left: 0;
-  width: 690px;
+  width: 560px;
+  height: 259px;
+  background: #070A0E;
   z-index: -1;
 }
 
 .metitle {
-  height: 72px;
-  line-height: 72px;
+
+  height: 66px;
+  line-height: 66px;
   border-bottom: 1px solid #e5ebf2;
   font-weight: normal;
-  color: #0f1730;
+  color: #E5EBF2;
   font-size: 20px;
+  font-family: Roboto-Medium, Roboto;
+  font-weight: 500;
+
 }
+.rex{
+  font-size: 18px;
+font-family: Roboto-Regular, Roboto;
+font-weight: 400;
+color: #A6AEB7;
+
+}
+.ctx_1 {
+  width: 316px;
+  display: inline-block;
+}
+
+.ctx_3 {
+  width: 180px;
+  display: inline-block;
+  
+}
+.lt1,.lt2,.lt3{
+  height: 21px;
+  font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+  color: #A6AEB7;
+  margin-top: 12px;
+}
+.rg1,.rg2,.rg3{
+  margin-top: 12px;
+height: 21px;
+font-size: 18px;
+font-family: Roboto-Regular, Roboto;
+font-weight: 400;
+color: #E5EBF2;
+line-height: 21px;
+
+}
+
 .connect_currency {
   display: flex;
   justify-content: flex-start;
@@ -768,7 +824,25 @@ export default {
   text-align: right;
 }
 .typeBtn {
-  border-color: #409eff;
-  border-radius: 25px;
+  width: 136px;
+  height: 48px;
+  background: #05C98E;
+  border-radius: 16px;
+  margin-left: 23px;
+  
+font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+}
+.typeBtn1 {
+  width: 136px;
+  height: 48px;
+  background: #ffffff;
+  border-radius: 16px;
+  margin-left: 8px;
+  font-size: 18px;
+  font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
+
 }
 </style>

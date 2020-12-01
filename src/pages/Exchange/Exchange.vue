@@ -5,17 +5,18 @@
       <div slot="body">
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput lable="From"
-                       v-model="token1Num"
-                       @input='cumpToken2'></frominput>
+          <frominput 
+            lable="From"
+            v-model="token1Num" 
+            @input='cumpToken2'>
+            </frominput>
           </div>
           <div class="ctx_3 fl_lt">
-            <setselect :showSelect="  JSON.stringify(token1)!='{}'"
-                       :imgUrl="token1.img"
-                       item='0'
-                       :balance="token1.balance"
-                       :text="token1.name"
-                       @click="showSelect(0)" />
+            <setselect  
+            :showSelect="selectColor1" 
+            :imgUrl="token1.img" item='0' 
+            :balance="token1.balance"
+            :text="token1.name" @click="showSelect(0)" />           
           </div>
         </div>
 
@@ -98,18 +99,17 @@
                 </div>
                 <span class="rg">{{token2Num}} {{token2.name}}</span>
               </div>
-              <div class="received setmage">
-                <div class="lt">
-                  <span>Price Impacte
-
-                    <el-tooltip class="item"
-                                effect="dark"
-                                content="Right Center 提示文字"
-                                placement="right">
-                      <img src="@/assets/img/icon_instructions.svg"
-                           alt="">
-                    </el-tooltip>
-
+              <span class="rg">{{token2Num}} {{token2.name}}</span>
+            </div>
+            <div class="received setmage">
+              <div class="lt">
+                <span>Price Impacte 
+                    <el-tooltip placement="right">
+                  <div slot="content" class="slotp2"> 
+                       Right Center 提示文字<br> 
+                      </div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>          
                   </span>
                 </div>
                 <span class="rec_red">{{percentage}}%</span>
@@ -133,7 +133,7 @@
             </div>
           </div>
         </div>
-      </div>
+        
     </container>
     <change v-if="isConfirm"
             @doConfirm="doswap"
@@ -465,13 +465,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.slotp {
-  height: 76px;
-  font-size: 16px;
-  font-family: Roboto-Regular, Roboto;
-  font-weight: 400;
-  color: #eeeef0;
-  line-height: 19px;
+
+.slotp{ 
+    height: 76px;
+    font-size: 16px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #EEEEF0;
+    line-height: 19px;
 }
 .whe {
   width: 320px;
@@ -483,16 +484,12 @@ export default {
 }
 
 .ctx_1 {
-  width: 397px;
+  width: 316px;
   display: inline-block;
 }
-.ctx_2 {
-  width: 138px;
-  display: inline-block;
-  margin: 0 16px;
-}
+
 .ctx_3 {
-  width: 190px;
+  width: 180px;
   display: inline-block;
   margin-left: 12px;
 }
@@ -500,6 +497,7 @@ export default {
   height: 36px;
   font-size: 32px;
   font-family: Roboto-Regular, Roboto;
+  font-weight: 400;
   color: #0f1730;
   text-align: center;
 }
@@ -605,7 +603,7 @@ export default {
   padding: 50px 38px 32px 39px;
 }
 .from_contentIcon {
-  margin: 24px 0;
+  margin: 16px 0;
   .tran_icon {
     transform: rotate(-90deg);
     color: #0f1730;
@@ -688,7 +686,7 @@ export default {
     background: #0f1730;
   }
   .from_contentIcon {
-    margin: 24px 0;
+    margin: 16px 0;
     .tran_icon {
       transform: rotate(-90deg);
       color: #0f1730;

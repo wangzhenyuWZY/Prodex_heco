@@ -104,7 +104,7 @@ import tokenData from '../../utils/token'
       align-items: center;
       justify-items: center;
       min-width: 100%;
-      height: 88px;
+      height: 80px;
       background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
@@ -136,6 +136,7 @@ import tokenData from '../../utils/token'
         max-height: 100%;
         transition: max-height 0.1s ease-in;
         transform-origin: 50% 0;
+        
       }
     }
       .from_select {
@@ -155,8 +156,8 @@ import tokenData from '../../utils/token'
       font-size: 20px;
       font-family: Roboto-Regular, Roboto;
       color: #0F1730;
-      margin-left: 8px;
-      margin-right: 6px;
+      // margin-left: 8px;
+      // margin-right: 6px;
     }
     .show_size {
       font-family: Roboto-Regular, Roboto;
@@ -174,8 +175,10 @@ import tokenData from '../../utils/token'
   }
   .from_lable{
     font-size: 20px;
-    font-weight: normal;
-    color: #0F1730;
+    
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
+    color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
   }

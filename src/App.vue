@@ -35,14 +35,19 @@ html, body, #app{
   width: 100%;
   height: 100%;
   overflow: hidden;
+  
 
 }
 #app{
-   background: url(./assets/img/bg.png) no-repeat;
-   background-size: cover;
+  //  background: url(./assets/img/bg.png) 
+   background-image: url(./assets/img/BG1.png);
+   background-repeat: no-repeat;
+   background-size: 100% 400px;
+  //  background-size: cover;
 }
 html{
-   background: #FFFFFF;
+  //  background: #FFFFFF;
+  background: #F6F7FB;
 }
 
 

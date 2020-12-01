@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="globle_title">Pool</div>
+    <!-- <div class="globle_title">Pool</div> -->
       <!-- <addfrombox/> -->
       <!-- <connectbox/> -->
       <!-- <selctoken/> -->
@@ -66,7 +66,7 @@ export default {
 <style lang="scss" >
   
 .globle_title{
-  
+    // margin-top: 128px;
     height: 28px;
     font-size: 24px;
     font-family: Roboto-MediumItalic, Roboto;

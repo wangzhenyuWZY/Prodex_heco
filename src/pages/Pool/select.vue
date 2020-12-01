@@ -75,7 +75,7 @@
       align-items: center;
       justify-items: center;
       min-width: 100%;
-      height: 88px;
+      height: 80px;
       background: #F4F5FA;
       border-radius: 16px;
       cursor: pointer;
@@ -120,8 +120,8 @@
       font-size: 20px;
       font-family: Roboto-Regular, Roboto;
       color: #0F1730;
-      margin-left: 8px;
-      margin-right: 6px;
+      // margin-left: 8px;
+      // margin-right: 6px;
     }
     .show_size {
       font-family: Roboto-Regular, Roboto;
