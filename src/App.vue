@@ -42,7 +42,7 @@ html, body, #app{
   //  background: url(./assets/img/bg.png) 
    background-image: url(./assets/img/BG1.png);
    background-repeat: no-repeat;
-   background-size: 100% 400px;
+   background-size: 100% 380px;
   //  background-size: cover;
 }
 html{

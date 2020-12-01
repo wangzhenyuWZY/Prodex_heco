@@ -107,9 +107,9 @@
 <style lang="scss" scoped>
 .from_data {
   .from_lable {
-    font-size: 20px;
-    font-family: Roboto-Medium, Roboto;
-    font-weight: 500;
+    font-size: 16px;
+    font-family: Roboto-Regular, Roboto;
+    font-weight: 400;
     color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
@@ -123,15 +123,15 @@
              border-radius: 16px;
       .input_max{
         width: 64px;
-        height: 32px;
-        margin-top: 24px;
+        height: 28px;
+        margin-top: 22px;
         margin-right: 16px;
-        line-height: 32px;
+        line-height: 28px;
         text-align: center;
         cursor: pointer;
-        background: #0F1730;
+        background: #070A0E;
         border-radius: 18px;
-        font-size: 16px;
+        font-size: 14px;
         color: #FFFFFF;
       }
     }
@@ -181,7 +181,7 @@
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    padding-right: 18px;
+    padding-right: 8px;
     text-align: right;
     .from_size {
       font-size: 20px;
@@ -206,15 +206,15 @@
 .globle_input {
   box-sizing: border-box;
   outline: none;
-  height: 80px;
-  background: #F4F5FA;
+  height: 72px;
+background: #F6F7FB;
   width: 100%;
   border: none;
   border-radius: 16px;
-  font-size: 40px;
+  font-size: 26px;
   padding-left: 16px;
   font-weight: 500;
-  color: #FF5D37;
+  color: #070A0E;
   flex: 1;
 }
 .globle_input::placeholder{

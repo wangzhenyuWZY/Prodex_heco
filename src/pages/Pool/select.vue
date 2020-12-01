@@ -114,7 +114,7 @@
     align-items: center;
     justify-content: flex-end;
     width: 100%;
-    padding-right: 12px;
+    padding-right: 8px;
     text-align: right;
     .from_size {
       font-size: 20px;

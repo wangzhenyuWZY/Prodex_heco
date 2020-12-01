@@ -301,13 +301,13 @@ export default {
     }
     .lt_box {
       .back_icon {
-        color: #fff;
-        width: 32px;
-        height: 32px;
+        color: #070A0E;
+        width: 40px;
+        height: 40px;
         text-align: center;
-        line-height: 32px;
+        line-height: 40px;
         border-radius: 50%;
-        background: linear-gradient(136deg, #fdab2b 0%, #df0019 100%);
+          background: #F4F6FC;
         cursor: pointer;
       }
     }
