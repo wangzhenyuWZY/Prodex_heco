@@ -1,6 +1,6 @@
 <template>
-  <div class="container">
-    <container top="40">
+  <div class="container exchange">
+    <container top="40" :mobile="true">
       <div slot="body">
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -496,6 +496,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
+.exchange{
+
 .slotp{ 
     height: 76px;
     font-size: 16px;
@@ -505,7 +507,7 @@ export default {
     line-height: 19px;
 }
 .whe {
-  width: 440px;
+  width: 100%;
   margin: 0 auto;
   // padding-bottom: 48px;
   margin-bottom: 48px;
@@ -521,7 +523,7 @@ export default {
 }
 
 .ctx_3 {
-  width: 160px;
+  max-width: 160px;
   display: inline-block;
   margin-left: 12px;
 }
@@ -767,17 +769,7 @@ export default {
     }
   }
 }
-.connect_boxs {
-  
-  background: #070A0E;
-  border-radius: 0 0 20px 20px;
-  position: absolute;
-  bottom: -275px;
-  left: 0;
-  width: 480px;
-  z-index: -1;
-  border-radius: 16px;
-}
+
 
 .metitle {
   height: 72px;
@@ -826,5 +818,44 @@ export default {
 }
 .outlogin {
   margin-top: 48px;
+}
+.position{
+    max-width: 480px;
+    margin-top: -70px;
+    position: relative;
+}
+.position::after{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  width:100%;
+  height: 40px;
+  background:#FFFFFF;
+  border-radius: 0 0 24px 24px;
+}
+.connect_boxs {
+  
+  background: #070A0E;
+  border-radius: 0 0 20px 20px;
+width: 100%;
+  z-index: -1;
+  border-radius: 16px;
+}
+}
+
+@media screen and (max-width:750px) {
+    .exchange{
+      .setInput{
+        display: flex;
+        .ctx_1{
+              flex: 1;
+          }
+           .ctx_3{
+              min-width: 3.2rem;
+          }
+      }
+     
+    }
 }
 </style>
