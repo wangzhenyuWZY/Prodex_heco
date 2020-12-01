@@ -264,15 +264,11 @@ img{
     }
 }
 @font-face {
-
-    /* font-properties */
-
     font-family: roboto;
 
     src:url('./font-face/roboto-medium.ttf'), 
-
     url('./font-face/roboto-mediumitalic.ttf'),
-
-    url('./font-face/Roboto-Normal.ttf'); /* IE9 */
+    url('./font-face/Roboto-Normal.ttf'),
+    url('./font-face/roboto-thin.ttf'); 
 
 }

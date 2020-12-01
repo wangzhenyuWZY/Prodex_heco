@@ -291,12 +291,12 @@ export default {
     },
     checkSupply(){
       if(!this.token1Num || this.token1Num=='' || this.token1Num==0){
-        that.$message({
+        this.$message({
           message: '请输入添加数量',
           type: 'error'
         });
       }else if(this.token1Num>this.token1.balance){
-        that.$message({
+        this.$message({
           message: '钱包余额不足',
           type: 'error'
         });
@@ -410,7 +410,7 @@ export default {
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
-      if (pair) {
+      if (pair && pair.length>0) {
         this.pair = pair[0]
         console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
@@ -433,8 +433,6 @@ export default {
           console.log('this.token2Balance====='+res)
           this.token2Balance = res
           getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
-            console.log('lptoken======='+res)
-            // that.lpTotal = Decimal(res).div(Math.pow(10,this.pair.decimals))
             that.lpTotal = Decimal(res)
             if(that.myBalanceInPool){
               that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
@@ -932,7 +930,7 @@ font-size: 16px;
 .typeBtn {
   width: 136px;
   height: 48px;
-  background: #05C98E;
+  background: #fff;
   border-radius: 16px;
   margin-left: 23px;
   
@@ -943,7 +941,7 @@ font-size: 18px;
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #ffffff;
+  background: #05C98E;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;

@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div >
+    <div class="bimg"></div>
     <div class="nav clearfix">
       <div class="logo"><img src="../../assets/img/wtxlo.png"
              alt="" />
@@ -185,12 +186,23 @@ line-height: 38px;
   color: #05C98E;
   vertical-align: sub;
 }
+.bimg{
+  position: absolute;
+  width: 100%;
+  height: 380px;
+  background-image: url(../../assets/img/BG1.png);
+  background-repeat: no-repeat;
+  background-size: 100% 380px;
+  z-index: -1;
+}
 .nav {
-
+  position: relative;
+   
   /* width: 1920px; */
   line-height: 72px;
   height: 72px;
 }
+
 .nav-butt {
   // width: 119px;
 }
