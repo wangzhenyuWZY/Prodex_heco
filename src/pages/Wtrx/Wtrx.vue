@@ -292,15 +292,7 @@ export default {
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-      
-        .trx-a2 {
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
+      color: #0f1730;
       line-height: 21px;
 
       .trx-a2 {
@@ -323,14 +315,13 @@ export default {
       color: #0f1730;
       line-height: 21px;
       .trx-b2 {
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-      
-    }
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
     }
   }
 }
@@ -359,13 +350,13 @@ export default {
   flex-direction: column;
   align-items: center;
   .wtrx1 {
-    margin-top: 49px;  
-  height: 28px;
-  font-size: 24px;
-  font-family: roboto-mediumitalic;
-  font-weight: 500;
-  color: #0F1730;
-  line-height: 28px;
+    margin-top: 49px;
+    height: 28px;
+    font-size: 24px;
+    font-family: Roboto-Medium, Roboto;
+    font-weight: 500;
+    color: #0f1730;
+    line-height: 28px;
   }
   .wtrx-a {
     margin-top: 39px;
@@ -377,17 +368,14 @@ export default {
       font-weight: 400;
       color: #0f1730;
       line-height: 21px;
-    .wtrx-a2{
-
-      
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-
-    }
+      .wtrx-a2 {
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
     }
   }
   .wtrx-b {
@@ -399,16 +387,15 @@ export default {
       font-weight: 400;
       color: #0f1730;
       line-height: 21px;
-    .wtrx-b2{
-
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-     }
-    } 
+      .wtrx-b2 {
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
+    }
   }
 }
 
@@ -438,7 +425,7 @@ export default {
   height: 300px;
 }
 .wtrx-bottom p:nth-child(1) {
-  font-family: roboto-mediumitalic;
+  font-family: oboto-mediumitalic;
   font-weight: 400;
   font-size: 18px;
   margin-top: 48px;
@@ -447,8 +434,7 @@ export default {
   color: #0f1730;
 }
 .wtrx-bottom p:nth-child(2) {
-
-  font-family:roboto;
+  font-family:Roboto-Medium, Roboto;
   font-weight: 400;
   margin-top: 8px;
   font-size: 18px;
@@ -457,7 +443,6 @@ export default {
   line-height: 24px;
 }
 .wtrx-bottom p:nth-child(3) {
-  
   font-family: roboto-mediumitalic;
   font-weight: 500;
   margin-top: 24px;
@@ -465,7 +450,7 @@ export default {
   text-align: center;
 }
 .wtrx-bottom p:nth-child(4) {
-  font-family: roboto;
+  font-family: Roboto-Medium, Roboto;
   font-weight: 400;
   margin-top: 8px;
   color: #878b97;
@@ -527,6 +512,5 @@ export default {
       }
     }
   }
-}
 }
 </style>
