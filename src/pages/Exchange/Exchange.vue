@@ -529,14 +529,6 @@ export default {
   width: 268px;
   display: inline-block;
 }
-<<<<<<< HEAD
-.from_botton{
-  // background: #05C98E;
-  color: #FFFFFF;
-
-}
-=======
->>>>>>> c486ef03a0ab3df28b4a73446d6c6341b5dba6ed
 .ctx_3 {
   min-width: 160px;
   font-family: roboto-mediumitalic;
