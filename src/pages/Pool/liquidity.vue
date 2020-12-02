@@ -336,4 +336,20 @@ export default {
     padding: 16px 0 32px 24px;
   }
 }
+@media screen and (max-width: 750px) {
+   .removeLq{
+       .pool-box{
+    width: 100%;
+    // padding: 0 0.4rem ;
+    margin-top: 10px;
+  }
+    .pool-box1{
+      p:nth-child(2){
+        font-size: 0.4rem;
+     }
+    } 
+   }
+
+}
+
 </style>

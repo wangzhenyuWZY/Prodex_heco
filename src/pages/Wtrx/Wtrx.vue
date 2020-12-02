@@ -2,7 +2,7 @@
   <div class="container">
     <div class="wtrx">
       <div class="wtrx-box">
-  <div class="wtrx-box1">
+        <div class="wtrx-box1">
           <div class="wtrx-left">
             <samp class="trx">TRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.png"
@@ -10,16 +10,15 @@
             <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
                    v-model="trxNum"
-                  :disabled="inputdisabled1"
-                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
+                   :disabled="inputdisabled1"
+                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
                    placeholder="Please enter the amout of TRX">
             <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
-              <el-button 
-              class="from_botton"
-                  :loading="btnLoading1"
-                  :disabled="btnDisabled1"
-                  @click="changeWtrx">Confim</el-button>
+              <el-button class="from_botton"
+                         :loading="btnLoading1"
+                         :disabled="btnDisabled1"
+                         @click="changeWtrx">Confim</el-button>
             </div>
 
           </div>
@@ -30,8 +29,8 @@
             <div class="wtrx-a"> <samp class="wtrx-a1">WTRX Balance:</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
             <input type="number"
                    v-model="wtrxNum"
-                   :disabled = "inputdisabled1"
-                     onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
+                   :disabled="inputdisabled1"
+                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
                    placeholder="Please enter the amout of TRX">
             <div class="wtrx-b"> <samp class="wtrx-b1">You will get TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
@@ -57,7 +56,7 @@
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-import { approved,allowance } from '../../utils/tronwebFn'
+import { approved, allowance } from '../../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -69,8 +68,8 @@ export default {
       wtrxNum: null,
       btnDisabled1: true,
       btnDisabled2: true,
-      inputdisabled1:true,
-      inputdisabled2:true,
+      inputdisabled1: true,
+      inputdisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
     };
@@ -80,7 +79,7 @@ export default {
   },
   watch: {
     trxNum (value) {
-     this.trxNum= this.inputType(this.trxNum)
+      this.trxNum = this.inputType(this.trxNum)
       if (value != '') {
         if (value <= parseInt(this.trxBalance)) {
           this.btnDisabled1 = false;
@@ -92,7 +91,7 @@ export default {
       }
     },
     wtrxNum (value) {
-       this.wtrxNum= this.inputType(this.wtrxNum)
+      this.wtrxNum = this.inputType(this.wtrxNum)
       if (value != '') {
         if (value <= parseInt(this.wtrxBalance)) {
           this.btnDisabled2 = false;
@@ -152,7 +151,7 @@ export default {
           this.getWtrx();
           this.gettrx();
         }
-       this.loading1();
+        this.loading1();
       } catch (error) {
         if (error == "Confirmation declined by user") {
           alert('拒绝合约');
@@ -164,7 +163,7 @@ export default {
     getAllowance () {//查询授权
       let that = this;
       that.loading2(1);
-      allowance(ipConfig.wtrxAddress,ipConfig.wtrxAddress).then((res)=>{
+      allowance(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then((res) => {
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
           if (approveBalance == 0) {
@@ -194,10 +193,10 @@ export default {
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function () {
             alert('success');
-             that.getWtrx();
+            that.getWtrx();
             that.gettrx();
             that.loading2(0);
-           
+
           });
         });
       } catch (error) {
@@ -226,13 +225,13 @@ export default {
 
     },
     inputType (n) {
-         if (n.indexOf(".") != -1) {
-          let str = n.split(".");
-            if (str[1].length >8) {
-             return n =str[0]+'.' +str[1].slice(0,8);
-            }
+      if (n.indexOf(".") != -1) {
+        let str = n.split(".");
+        if (str[1].length > 8) {
+          return n = str[0] + '.' + str[1].slice(0, 8);
         }
-        return n;
+      }
+      return n;
     }
   },
   mounted () {
@@ -276,13 +275,14 @@ export default {
   flex-direction: column;
   align-items: center;
   .trx {
-    margin-top: 49px;  
-  height: 28px;
-  font-size: 24px;
-  font-family: roboto-mediumitalic;
-  font-weight: 500;
-  color: #0F1730;
-  line-height: 28px;
+    margin-top: 49px;
+    height: 28px;
+    font-size: 24px;
+    font-family: roboto-mediumitalic;
+    font-weight: 500;
+    color: #0f1730;
+    line-height: 28px;
+ 
   }
   .trx-a {
     margin-top: 40px;
@@ -292,18 +292,17 @@ export default {
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: 400;
-      color: #0F1730;
+      color: #0f1730;
       line-height: 21px;
-      
-        .trx-a2 {
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-      
-    }
+
+      .trx-a2 {
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
     }
   }
   .trx-b {
@@ -313,17 +312,16 @@ export default {
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: 400;
-      color: #0F1730;
+      color: #0f1730;
       line-height: 21px;
       .trx-b2 {
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-      
-    }
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
     }
   }
 }
@@ -335,7 +333,7 @@ export default {
   font-size: 16px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
-  color: #878B97;
+  color: #878b97;
   line-height: 18px;
   width: 320px;
   height: 48px;
@@ -352,56 +350,52 @@ export default {
   flex-direction: column;
   align-items: center;
   .wtrx1 {
-    margin-top: 49px;  
-  height: 28px;
-  font-size: 24px;
-  font-family: roboto-mediumitalic;
-  font-weight: 500;
-  color: #0F1730;
-  line-height: 28px;
+    margin-top: 49px;
+    height: 28px;
+    font-size: 24px;
+    font-family: roboto-mediumitalic;
+    font-weight: 500;
+    color: #0f1730;
+    line-height: 28px;
   }
   .wtrx-a {
     margin-top: 39px;
 
-    .wtrx-a1{
+    .wtrx-a1 {
       height: 21px;
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: 400;
-      color: #0F1730;
+      color: #0f1730;
       line-height: 21px;
-    .wtrx-a2{
-
-      
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-
-    }
+      .wtrx-a2 {
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
     }
   }
   .wtrx-b {
     margin-top: 48px;
-    .wtrx-b1{
+    .wtrx-b1 {
       height: 21px;
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: 400;
-      color: #0F1730;
+      color: #0f1730;
       line-height: 21px;
-    .wtrx-b2{
-
-      height: 21px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: 400;
-      color: #0F1730;
-      line-height: 21px;
-     }
-    } 
+      .wtrx-b2 {
+        height: 21px;
+        font-size: 18px;
+        font-family: Roboto-Regular, Roboto;
+        font-weight: 400;
+        color: #0f1730;
+        line-height: 21px;
+      }
+    }
   }
 }
 
@@ -431,34 +425,32 @@ export default {
   height: 300px;
 }
 .wtrx-bottom p:nth-child(1) {
-  font-family: roboto-mediumitalic;
+  font-family: oboto-mediumitalic;
   font-weight: 400;
   font-size: 18px;
   margin-top: 48px;
   text-align: center;
   line-height: 21px;
-  color: #0F1730;
+  color: #0f1730;
 }
 .wtrx-bottom p:nth-child(2) {
-
-  font-family:roboto;
+  font-family:Roboto-Medium, Roboto;
   font-weight: 400;
   margin-top: 8px;
   font-size: 18px;
-  color: #878b97;
+  color: #878B97;
   text-align: center;
   line-height: 24px;
 }
 .wtrx-bottom p:nth-child(3) {
-  
   font-family: roboto-mediumitalic;
   font-weight: 500;
   margin-top: 24px;
-  color: #0F1730;
+  color: #0f1730;
   text-align: center;
 }
 .wtrx-bottom p:nth-child(4) {
-  font-family: roboto;
+  font-family: Roboto-Medium, Roboto;
   font-weight: 400;
   margin-top: 8px;
   color: #878b97;
@@ -475,5 +467,50 @@ export default {
   vertical-align: middle;
   display: inline-block;
   margin-top: -2px;
+}
+
+@media screen and (max-width: 750px) {
+  .wtrx {
+    .wtrx-box1 {
+      flex-wrap: wrap;
+      .wtrx-right {
+        margin: 0;
+        font-size: 0.5rem;
+        .wtrx-a {
+          margin-top: 20px;
+        }
+        .trx-b {
+          margin-top: 1rem;
+        }
+      }
+      .wtrx-left {
+        margin: 0;
+        margin-bottom: 20px;
+        font-size: 0.5rem;
+        .trx-b {
+          margin-top: 1rem;
+        }
+        .trx-a {
+          margin-top: 20px;
+        }
+        .trx-a2 {
+        }
+      }
+    }
+    .wtrx-box{
+        padding-top: 10px;
+        height: 100%;
+    }
+    .wtrx-bottom{
+      width: 100%;
+      font-size: 0.4rem;
+      p:nth-child(2),p:nth-child(4){
+          font-size: 0.3rem;
+      }
+      p:nth-child(4){
+        padding-bottom: 1rem;
+      }
+    }
+  }
 }
 </style>

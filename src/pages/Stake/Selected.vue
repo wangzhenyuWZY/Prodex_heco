@@ -311,6 +311,7 @@ export default {
         line-height: 40px;
         border-radius: 50%;
           background: #F4F6FC;
+          font-size: 18px;
         cursor: pointer;
       }
     }
@@ -420,7 +421,7 @@ export default {
       border-radius: 28px;
       border: 1px solid#05C98E;
       font-size: 20px;
-      color: #fe613c;
+      color:#05C98E;
       padding: 0;
       width: 200px;
       height: 32px;

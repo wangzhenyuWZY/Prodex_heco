@@ -1,25 +1,16 @@
 <template>
   <div >
-    <div class="bimg"></div>
+    <div class="bimg"> </div>
     <div class="nav clearfix">
-      <div class="logo"><img src="../../assets/img/wtxlo.png"
-             alt="" />
-             <!-- <span class="logop">FoxDex</span> -->
-             </div>
+      <span class="logop">FoxDex</span>
+     
              
-      <div class="moble fl_lt" v-show="false">
-        <div class="iconsv">
-          <el-dropdown trigger="click" size="medium">
-            <span class="el-dropdown-link">
-              <i class="el-icon-menu icons"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-for="(el,index) in tag" :key="el.path+index">{{el.name}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </div>
+      <div class="moble fl_lt" >
+        <!-- <div class="iconsv">
+          
+        </div> -->
       </div>
-      <div class="nav-header fl_lt" v-show="true">
+      <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
              ref="header">
           <span v-for="(idx, index) in tag"
@@ -27,7 +18,6 @@
                 @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
-
         <div class="active-bar"
              :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
@@ -37,12 +27,18 @@
           <div class="login_wallet" v-if="connectFlag">
               <img class="wallet_img" src="@/assets/img/btn_work_wallet_nor.svg" alt="">
               <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-               <span class="conversion">{{walletAddres.balance}}TRX</span>
+               <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
           </div>
         </div>
-        <div class="nav_merge">
-          <img src="@/assets/img/icon_merge.svg"
-               alt="">
+        <div class="nav_merge" v-show="!moble">
+         <el-dropdown trigger="click" size="medium" @command="handleCommand">
+            <span class="el-dropdown-link">
+              <i class="el-icon-menu icons"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item v-for="(el,index) in tag" :key="el.path+index" :command="el.path">{{el.name}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
       </div>
     </div>
@@ -51,12 +47,14 @@
 
 <script>
 import {mapState} from "vuex"
+import {IsPc} from '../../utils/index';
 export default {
   data () {
     return {
       key: "0",
       navIndex: 0,
       childrenNode: [],
+      moble:true,
       tag: [
         {
           path: '/',
@@ -84,6 +82,9 @@ export default {
         },
       ],
     };
+  },
+  created() {
+    this.moble = IsPc();
   },
   computed: {
     ...mapState(['walletAddres','connectFlag'])
@@ -135,10 +136,14 @@ export default {
 
         }
       }
-
+      console.log(e)
       this.key = this.setActive(this.navIndex);
       this.$router.push(e);
 
+    },
+    handleCommand (res) {
+      this.$router.push(res);
+          console.log(res);
     },
     setActive (n) {
       let num = 0;
@@ -163,20 +168,22 @@ export default {
 
 <style lang="scss" scoped>
 .logop{
-  
-height: 38px;
-font-size: 32px;
-font-family: roboto-mediumitalic;
-font-weight: normal;
-color: #05C98E;
-line-height: 38px;
+  float: left;
+  margin-top: 15px;
+  height: 38px;
+  font-size: 32px;
+  font-family: roboto-mediumitalice;;
+  color: #05C98E;
+  line-height: 38px;
+  margin-left: 116px;
+  margin-right: 22px;
 }
 .iconsv{
   margin-left: 50px;
 }
 .icons {
   font-size: 34px;
-  color: #0f1730;
+  color: #05C98E;
   vertical-align: sub;
 }
 .bimg{
@@ -221,7 +228,7 @@ line-height: 38px;
 .nav-ion1 {
   width: 50px;
   height: 40px;
-  background: pink;
+  // background: pink;
 }
 .nav-ion2 {
   width: 50px;
@@ -230,16 +237,15 @@ line-height: 38px;
 }
 
 .logo {
-  float: left;
-  width: 35px;
-  height: 35px;
-  margin-left: 33px;
+  // float: left;
+  // width: 35px;
+  // height: 35px;
+  // margin-left: 33px;
 }
 .logo img {
   width: 100%;
 }
 .nav-header {
-  
   color: #495169;
   position: relative;
 
@@ -270,6 +276,7 @@ line-height: 38px;
   color: #ffffff;
 }
 .login_wallet{
+  margin-top: 18px;
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
@@ -306,4 +313,33 @@ line-height: 38px;
       color: #FFFFFF;
   }
 }
+.nav_btn{
+  margin-top: 17px;
+  margin-right: 8px;
+}
+@media screen and (max-width: 750px)  {
+  .nav-right{
+    padding-right: 17px;
+      .nav_merge{
+        margin-left: 14px;
+    }
+    .login_wallet{
+      padding: 0 20px;
+    }
+      .wallet_addrs{
+    margin: 0;
+  }
+  .nav_btn{
+    width: 100%;
+    padding: 0 0.25rem;
+    font-size: 0.4rem;
+  }
+  }
+  .content_text{
+    display: none;
+  }
+
+    
+}
+
 </style>

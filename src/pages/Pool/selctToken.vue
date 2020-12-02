@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+             :width="!mobile?'100%':'480px'"
              custom-class="dialog_selct"
              :before-close="handleClosea">
     <span slot="title"
@@ -18,9 +18,9 @@
     <div class="conter">
 
       <div class="search__box">
-        <el-input class="search__input"
-                  v-model="filterName"
-                  placeholder="Search name or paste address"></el-input>
+        <!-- <el-input class="search__input"
+                  v-model="value"
+                  placeholder="Search name or paste address"></el-input> -->
       </div>
       <div class="select_size select__bases"
            hidden>
@@ -92,6 +92,7 @@
 
 <script>
 import tokenData from '../../utils/token'
+import {IsPc} from '../../utils/index'
 export default {
   props: {
     showAlert: {
@@ -109,6 +110,7 @@ export default {
   },
   data () {
     return {
+      mobile: IsPc(),
       filterName: '',
       iSort:0,
       // tokenList: tokenData.tokenList,
@@ -180,6 +182,7 @@ export default {
 }
 >>> .dialog_selct {
   border-radius: 20px;
+  
 }
 >>> .dialog_selct .el-icon-close {
   font-size: 28px;
@@ -307,5 +310,16 @@ export default {
 }
 .currency_list::-webkit-scrollbar-thumb {
   border-radius: 4px;
+}
+@media screen and (max-width:750px) {
+   
+    >>> .dialog_selct {
+      border-radius: 20px 20px 0 0;
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      overflow: hidden;
+      
+    }
 }
 </style>

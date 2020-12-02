@@ -39,7 +39,8 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  class="flab" lable="weight"
+            <frominput  lable="weight"
+                    placeholder="1-50" 
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -60,7 +61,8 @@
                        v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  lable="weigh"
+            <frominput lable="weight"
+                      placeholder="1-50"
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -82,20 +84,24 @@
                alt="">
         </div>
         <div class="whe clearfix">
-          <el-button class="from_botton pair_mandate fl_lt" v-show="false"> Mandate</el-button>
-          <el-button class="from_botton pair_mandate pair_swap fl_rg" @click="handel"> Swap</el-button>
+         
+           <span class="pair_mandate" v-show="false">  <el-button class="from_botton  " > Mandate</el-button> </span>
+          <el-button class="from_botton pair_mandate pair_swap " @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="Sponsors"
+             placeholder="Please Enter" 
                        v-model="sponsors"></frominput>
           </div>
           <div class="ctx_2 fl_lt">
             <frominput lable="FoxDex"
+             placeholder="Please Enter" 
                        v-model="foxDex"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <frominput lable="LP"
+             placeholder="Please Enter" 
                        v-model="lp"></frominput>
           </div>
         </div>
@@ -391,6 +397,11 @@ line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
+.from_botton{
+  width: 210px;
+  margin-top: 24px;
+  background: #05C98E;
+}
 .from_lable{
   // width: 200px;
   // padding-left: -16px;
@@ -402,7 +413,8 @@ line-height: 19px;
   margin-top: 120px;
 
   .whe {
-    // margin-top: 48px;
+    margin-top: 16px;
+    display: flex;
   }
   .whe_img {
     vertical-align: sub;
@@ -440,7 +452,7 @@ line-height: 19px;
       font-size: 20px;
       font-weight: bold;
       color: #0f1730;
-
+      
     }
     .pair_mag {
       margin-top: 12px;
@@ -448,7 +460,8 @@ line-height: 19px;
     }
   }
   .pair_mandate{
-    width: 289px;
+    display: inline-block;
+    width: 48%;
   }
   .from_contentIcon {
     height: 36px;
@@ -497,7 +510,7 @@ line-height: 19px;
   }
   .pair_input{
     margin-top: 40px;
-    padding-bottom: 55px;
+    padding-bottom: 48px;
   }
   .lt_box {
     //width: 440px;
@@ -588,7 +601,7 @@ line-height: 19px;
       border-radius: 28px;
       border: 1px solid#05C98E;
       font-size: 20px;
-      color: #fe613c;
+      color:#05C98E;
       padding: 0;
       width: 200px;
       height: 32px;
@@ -730,7 +743,9 @@ line-height: 19px;
     width: 190px;
     text-align: right;
   }
+.whe{
 
+}
   .setmage {
     margin: 20px 0;
   }
@@ -757,4 +772,44 @@ line-height: 19px;
     margin-top: 48px;
   }
 }
+@media screen and (max-width: 750px) {
+   .createpair {
+     .ctx_1{
+       width: 40%;
+     }
+     .whe{
+       display: flex;
+       margin-top: 17px;
+     }
+     .pair_input{
+       padding-bottom: 20px;
+     }
+      .ctx_2{
+       width: 22%;
+       margin: 0 8px;
+     }
+      .ctx_3{
+       width: 30%;
+     }
+     .pair_mandate{
+       width: 70%;
+     }
+     .pair_mandate{
+       height: 1rem;
+     }
+     .Price_text{
+       font-size: 0.4rem;
+       margin-top: 20px;
+     }
+      .pair_ved {
+          .pair_title{
+            font-size: 0.4rem;
+          }
+          p{
+            font-size: 0.35rem;
+          }
+      } 
+   } 
+}
+
 </style>

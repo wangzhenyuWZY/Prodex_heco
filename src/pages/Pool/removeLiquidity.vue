@@ -48,7 +48,7 @@
         <div class="box_sizes">
           <div class="provider Receive">
             <div class="">
-              <div class="received">
+              <div class="received mobilerece">
                 <div class="lt">
                   <img class="lt_icon"
                       src="@/assets/img/icon_wen.svg"
@@ -305,6 +305,7 @@ color: #0F1730;
         line-height: 40px;
         border-radius: 50%;
           background: #F4F6FC;
+          font-size: 18px;
         cursor: pointer;
   }
 }
@@ -383,7 +384,7 @@ color: #0F1730;
     border-radius: 28px;
     border: 1px solid#05C98E;
     font-size: 20px;
-    color: #fe613c;
+    color:#05C98E;
     padding: 0 32px;
     height: 32px;
   }
@@ -445,5 +446,47 @@ color: #0F1730;
   .el-slider__runway {
     background: #0f1730;
   }
+}
+@media screen and (max-width: 750px) {
+  .removeLq{
+      .add_marg {
+        padding: 0.5rem 0.4rem;
+      }
+      .box_slider{
+        .between{
+          font-size:1rem;
+          line-height: 1.3;
+          width: 35%;
+        }
+      }
+      .setSlider{
+          li{
+            width: 22%;
+            // height: 0.7rem;
+            line-height: 0.74rem;
+            font-size: 0.35rem;
+          }
+        
+      }
+  .mobilerece{
+    span{
+      font-size: 0.37rem;
+    }
+  }
+  }
+  .weth{
+    .weth_btn{
+      font-size: 0.37rem;
+    }
+  }
+  .Receive{
+     padding: 0.5rem 0.4rem;
+  }
+    .box_top{
+            span{
+            font-size: 0.4rem;
+
+            }
+          }
 }
 </style>

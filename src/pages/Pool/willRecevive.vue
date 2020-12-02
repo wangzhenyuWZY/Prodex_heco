@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+             :width="!mobile?'90%':'480px'"
              custom-class="dialog_recevive"
              :before-close="handleClosea">
     <span slot="title"
@@ -45,7 +45,7 @@
             </div>
             <span class="rg ftblod">0.000000233456</span>
           </div>
-          <div class="received mrge12">
+          <div class="received mobiles mrge12">
             <div class="lt">
               <span class="ftblod">Price</span>
             </div>
@@ -61,7 +61,7 @@
 </template>
 
 <script>
-
+import {IsPc} from '../../utils/index'
 export default {
   props:{
       showAlert: {
@@ -110,7 +110,7 @@ export default {
   },    
   data () {
     return {
-
+        mobile: IsPc()
     }
   },
   components: {
@@ -153,7 +153,7 @@ export default {
 .title__num {
   font-size: 40px;
   font-weight: normal;
-  color: #fe613c;
+  color:#05C98E;
   margin-bottom: 8px;
 }
 .receive__Pool {
@@ -195,5 +195,16 @@ export default {
 font-size: 24px;
 color: #878B97;
 margin: 10px 0;
+}
+@media screen and (max-width: 750px) {
+  .receove_Share{
+    padding: 18px;
+  }
+  .conversion{
+    font-size: 0.37rem;
+  }
+  .mobiles   span{
+        font-size: 0.37rem;
+    }
 }
 </style>

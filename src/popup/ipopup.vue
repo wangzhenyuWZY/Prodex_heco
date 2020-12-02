@@ -133,7 +133,7 @@ export default {
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
-  color: #fa403d;
+  color: #05C98E;
   line-height: 21px;
 }
 .conter {

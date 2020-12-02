@@ -102,14 +102,14 @@
   height: 187px;
   background: url(../../assets/img/bg_pool.png) no-repeat;
   background-size: cover;
-  background-size: 480px 187px;
+  background-size: 100% 187px;
 }
 .pool-box1 p:nth-child(1) {
   box-sizing: content-box;
   padding-top: 32px;
   margin-left: 20px;
   font-size: 20px;
-  font-family: roboto-mediumitalic, Roboto;
+  font-family: roboto-mediumitalice;
   font-weight: normal;
   color: #FFFFFF;
   line-height: 24px;
@@ -140,9 +140,10 @@
   height: 72px;
   line-height: 72px;
   border-bottom: 1px solid #e5ebf2;
-  padding: 0 20px;
+  padding: 12px 20px;
   overflow: hidden;
- 
+  display: flex;
+  align-items: center;
   .content_text {
     height: 24px;
     
@@ -220,3 +221,8 @@
     margin-bottom: 8px;
   }
 }
+.lt_box{
+  flex: 1;
+}
+
+

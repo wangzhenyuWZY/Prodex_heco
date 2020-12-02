@@ -130,7 +130,7 @@ export default {
 }
 .alert_success {
   font-size: 18px;
-  color: #fe613c;
+  color:#05C98E;
   margin-top: 12px;
   margin-bottom: 48px;
 }

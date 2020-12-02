@@ -63,7 +63,7 @@ export default {
 .from_data {
   .from_lable {
     font-size: 20px;
-    font-family: roboto-mediumitalic;
+    font-family: roboto;
     font-weight: 400;
     color: #e5ebf2;
     margin-bottom: 16px;

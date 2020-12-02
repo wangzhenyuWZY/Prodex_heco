@@ -1,7 +1,6 @@
 <template>
-  <div class="container">
-    <div class="globle_title">Exchange</div>
-    <container top="40">
+  <div class="container exchange">
+    <container top="40" :mobile="!isPc">
       <div slot="body">
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -77,19 +76,17 @@
 
       </div>
       <div slot="footer"
-           v-show="connectFlag"
+           v-show="connectFlag&&JSON.stringify(token1)!='{}'&&JSON.stringify(token2)!='{}'"
            class="position">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
             <div class="">
               <div class="received">
-                <div class="lt">
+                <div class="lt1">
                   <span>Minimum received
-                    <el-tooltip placement="right">
+                    <el-tooltip placement="right"   effect="light">
                       <div slot="content"
-                      effect="light"
-                      
-                           class="slott">
+                           >
                         Your transaction will revert if<br>
                         there is a large,unfavorable <br>
                         price movement before it is
@@ -102,13 +99,13 @@
                 </div>
                 <span class="rg">{{token2Num}} {{token2.name}}</span>
               </div>
-              <span class="rg">{{token2Num}} {{token2.name}}</span>
+            
             </div>
             <div class="received setmage">
               <div class="lt">
                 <span>Price Impacte 
                     <el-tooltip placement="right" effect="light">
-                  <div slot="content" class="slotp2"> 
+                  <div slot="content" > 
                        Right Center 提示文字<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
@@ -117,11 +114,11 @@
                 </div>
                 <span class="rec_red">{{percentage}}%</span>
               </div>
-              <div class="received">
+              <div class="received"  >
                 <div class="lt">
                   <span>Liquidity Provider Fee
                     <el-tooltip class="item"
-                                effect="dark"
+                              effect="light"
                                 content="Right Center 提示文字"
                                 placement="right">
                       <img src="@/assets/img/icon_instructions.svg"
@@ -129,7 +126,7 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <span class="">{{swapFee}} {{token1.name}}</span>
+                <span class="setspan">{{swapFee}} {{token1.name}}</span>
               </div>
               <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
                      alt=""></div>
@@ -147,6 +144,7 @@
             :spotPrice='spotPrice'
             :swapFee='swapFee'
             :percentage='percentage'
+            :mobile="!isPc"
             @handleClosea="isConfirm = false" />
     <selctoken :showAlert='isSelect'
                :item='item'
@@ -175,6 +173,7 @@ import {
   calcOutGivenInAfterPrice
 } from '../../utils/calc_comparisons'
 import { mapState } from 'vuex'
+import {IsPc} from '../../utils/index'
 export default {
   data () {
     return {
@@ -204,7 +203,8 @@ export default {
       btnsbmit:false,
       showAlert1:false,
       alertType:'success',
-      isPair:true
+      isPair:true,
+      isPc:IsPc()
     }
   },
   computed: {
@@ -501,6 +501,9 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
+.exchange{
+  margin-top: 120px;
+
 .slott{
   background-color: #fff;
 }
@@ -514,7 +517,7 @@ export default {
     background: #FFFFFF;
 }
 .whe {
-  width: 440px;
+  width: 100%;
   margin: 0 auto;
   // padding-bottom: 48px;
   margin-bottom: 48px;
@@ -525,14 +528,15 @@ export default {
 
 .ctx_1 {
   width: 268px;
-  height: 72px;
   display: inline-block;
 }
 .from_botton{
   background: #05C98E;
+  color: #FFFFFF;
+
 }
 .ctx_3 {
-  width: 160px;
+  min-width: 160px;
   font-family: roboto-mediumitalic;
   display: inline-block;
   margin-left: 12px;
@@ -617,7 +621,7 @@ export default {
   img {
     width: 24px;
     height: 24px;
-    vertical-align: sub;
+    vertical-align: middle;
     margin-right: 8px;
   }
   .rg {
@@ -668,11 +672,18 @@ export default {
     border-radius: 28px;
     border: 1px solid#05C98E;
     font-size: 20px;
-    color: #fe613c;
+    color:#05C98E;
     padding: 0;
     width: 200px;
     height: 32px;
   }
+}
+.setInput{
+  display: flex;
+  .ctx_1 {
+    flex: 1;
+  }
+  
 }
 .mount_title {
   font-size: 20px;
@@ -740,6 +751,9 @@ export default {
     }
   }
 }
+.setspan{
+  line-height: 24px;
+}
 .Price_text {
   font-size: 20px;
   color: #0f1730;
@@ -779,17 +793,6 @@ export default {
     }
   }
 }
-.connect_boxs {
-  
-  background: #070A0E;
-  border-radius: 0 0 20px 20px;
-  position: absolute;
-  bottom: -275px;
-  left: 0;
-  width: 480px;
-  z-index: -1;
-  border-radius: 16px;
-}
 
 .metitle {
   height: 72px;
@@ -804,8 +807,9 @@ export default {
   justify-content: flex-start;
 }
 .c_receove_Share {
-  padding: 24px 40px;
-  padding-top: 40px;
+  padding: 0 20px;
+  padding-top: 50px;
+  padding-bottom: 1px;
 }
 .currencyprices {
   width: 190px;
@@ -813,17 +817,15 @@ export default {
 }
 
 .setmage {
-  margin: 20px 0;
+  margin: 18px 0;
 }
 .fees_account {
   height: 48px;
   line-height: 48px;
   border-radius: 16px;
-  padding-left: 20px;
-  margin-top: 48px;
-  margin-bottom: 24px;
+  margin: 24px 0;
+  padding-left: 25px;
   color: #A6AEB7;
- 
   border: 1px solid #A6AEB7;
   position: relative;
   cursor: pointer;
@@ -834,9 +836,65 @@ export default {
   }
 }
 .rec_red {
+  line-height: 24px;
   color:#05C98E;
+  // margin-top: 30px;
+
 }
 .outlogin {
   margin-top: 48px;
+}
+.position{
+    max-width: 480px;
+    margin-top: -70px;
+    position: relative;
+}
+.position::after{
+  content: '';
+  position: absolute;
+  top:0;
+  left: 0;
+  width:100%;
+  height: 40px;
+  background:#FFFFFF;
+  border-radius: 0 0 24px 24px;
+}
+.connect_boxs {
+  
+  background: #070A0E;
+  border-radius: 0 0 20px 20px;
+  width: 100%;
+  z-index: -1;
+  border-radius: 16px;
+}
+}
+
+@media screen and (max-width:750px) {
+    .exchange{
+      padding-bottom: 30px;
+      .setInput{
+        display: flex;
+        .ctx_1{
+              flex: 1;
+          }
+           .ctx_3{
+              min-width: 3.2rem;
+          }
+      }
+      .c_receove_Share{
+        padding-bottom: 20px;
+      }
+      .received{
+            font-size: 0.4rem;
+      }
+      .setmage{
+        margin: 8px 0;
+      }
+      .fees_account{
+        margin: 0; margin-top: 24px;
+        font-size: 0.4rem;
+      }
+     
+    }
 }
 </style>

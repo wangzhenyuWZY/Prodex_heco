@@ -85,7 +85,7 @@
 .from_data {
   .from_lable {
     font-size: 20px;
-    font-family: roboto-mediumitalic;
+    font-family: roboto;
     font-weight: normal;
     color: #0F1730;
     margin-bottom: 12px;
