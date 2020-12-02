@@ -534,6 +534,7 @@ ul {
   }
   .stake{
     ul{
+      margin-top: 0;
       grid-template-columns: repeat(auto-fit, minmax(8.26rem, 2fr));
       li{
             display: block;

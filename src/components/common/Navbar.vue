@@ -345,7 +345,7 @@ export default {
     }
     .login_wallet{
       padding: 0 20px;
-      margin-top: 4px;
+      margin-top: 5px;
     }
       .wallet_addrs{
     margin: 0;
@@ -354,6 +354,8 @@ export default {
     width: 100%;
     padding: 0 0.25rem;
     font-size: 0.4rem;
+  }.nav_btn{
+    margin-top: 0;
   }
  
   }

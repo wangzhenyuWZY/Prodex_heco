@@ -343,6 +343,9 @@ export default {
     width: 100%;
     // padding: 0 0.4rem ;
   }
+    .pool-box2{
+      min-block-size: inherit; 
+    }
     .pool-box1{
       p:nth-child(2){
         font-size: 0.4rem;
