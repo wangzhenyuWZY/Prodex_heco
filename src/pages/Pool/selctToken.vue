@@ -109,21 +109,26 @@ export default {
   data () {
     return {
       mobile: IsPc(),
+      filterName: '',
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
-     tokenList () {
+     tokenList(){
+         let filtername = this.filterName
          if (this.selectType == '') {
-           return tokenData.tokenList
+           return tokenData.tokenList.filter((el) => {
+             return el.name.includes(filtername.toUpperCase())
+           })
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name )
-            return arry;
-         }
+           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           return arry.filter((el) => {
+             return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
+           })
+         } 
      }
   },
   created () {
-    console.log('showAlert====================', this.showAlert)
   },
   methods: {
     handleClosea () {
@@ -153,7 +158,7 @@ export default {
 .slotp{
     height: 57px;
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;
@@ -186,7 +191,7 @@ export default {
 }
 >>> .search__input .el-input__inner {
   border-radius: 32px;
-  border: 1px solid #ff5d37;
+  border: 1px solid#05C98E;
   border-radius: 32px;
   padding-left: 77px;
   font-size: 18px;
@@ -277,7 +282,7 @@ export default {
 }
 .Change_rg {
   font-size: 18px;
-  color: #ff5d37;
+  color:#05C98E;
 }
 .currency_list::-webkit-scrollbar {
   width: 8px;

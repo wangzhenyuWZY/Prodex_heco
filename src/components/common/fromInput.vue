@@ -108,7 +108,7 @@
 .from_data {
   .from_lable {
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #878B97;
     margin-bottom: 12px;
@@ -162,7 +162,7 @@
         > li {
           height: 32px;
           line-height: 32px;
-          font-family: Roboto-Regular, Roboto;
+          font-family: roboto-mediumitalic;
           color: #e5ebf2;
           span {
             display: inline-block;
@@ -186,13 +186,13 @@
     text-align: right;
     .from_size {
       font-size: 20px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       color: #b7bfc8;
       // margin-left: 8px;
       // margin-right: 6px;
     }
     .show_size {
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       color: #ed4d21;
     }
   }

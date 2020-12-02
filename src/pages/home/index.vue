@@ -161,7 +161,7 @@ export default {
     width: 262px;
     height: 20px;
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #a6aeb7;
     line-height: 21px;
     margin-top: 14px;
@@ -187,7 +187,7 @@ export default {
       margin: 32px 24px;
       height: 22px;
       font-size: 20px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: normal;
       color: #0f1730;
       line-height: 23px;
@@ -219,7 +219,7 @@ export default {
       float: left;
       height: 22px;
       font-size: 20px;
-      font-family: Roboto-Regular, Roboto;
+      font-family:roboto-mediumitalice;
       font-weight: 500;
       color: #0f1730;
       line-height: 23px;
@@ -242,7 +242,7 @@ export default {
         width: 197px;
         height: 20px;
         font-size: 18px;
-        font-family: Roboto-Regular, Roboto;
+        font-family: roboto-mediumitalic;
       }
     }
   }
@@ -280,6 +280,7 @@ export default {
 <style  scoped>
 >>> .cell {
   margin-left: 30px;
+  
 }
 >>> .adddd {
   background-color: #f4f8fb;

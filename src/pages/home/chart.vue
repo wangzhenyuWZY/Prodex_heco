@@ -79,7 +79,7 @@ export default {
   width: 72px;
   height: 20px;
   font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   color: #0F1730;
   line-height: 21px;
   margin: 0 32px;
@@ -98,7 +98,7 @@ export default {
       width: 68px;
       height: 20px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       color: #F75C40;
       line-height: 21px;
 

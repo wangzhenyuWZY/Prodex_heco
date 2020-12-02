@@ -241,8 +241,6 @@ export default {
               that.bPoolContract = res
               that.setSwapLpFee()
               that.setSponsors()
-              console.log('授权地址===='+that.bPoolContract)
-              // that.bPoolContract = 'TDfFD4aeK6582o9YFfjScGubtJDrHB1pyf'
               approved(that.token1.address,that.bPoolContract).then(()=>{
                 approved(that.token2.address,that.bPoolContract).then(()=>{
                   let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
@@ -312,7 +310,6 @@ export default {
           {type: 'uint256', value: balance},
           {type: 'uint256', value: weight},
       ]
-      console.log('绑定地址===='+that.bPoolContract)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
@@ -320,7 +317,6 @@ export default {
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
       if(res){
         getConfirmedTransaction(res.txid).then((result)=>{
-          console.log('result11========='+result)
           if(name=='token1IsBind')
             that.token1IsBind = true
           if(name=='token2IsBind')
@@ -394,13 +390,20 @@ export default {
   
 height: 19px;
 font-size: 16px;
-font-family: Roboto-Regular, Roboto;
+font-family: roboto-mediumitalic;
 font-weight: 400;
 color: #FFFFFF;
 line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
+.from_lable{
+  // width: 200px;
+  // padding-left: -16px;
+}
+.title{
+  // height: 72px;
+}
 .createpair {
   margin-top: 10px;
 
@@ -444,6 +447,7 @@ line-height: 19px;
       font-size: 20px;
       font-weight: bold;
       color: #0f1730;
+
     }
     .pair_mag {
       margin-top: 12px;
@@ -457,7 +461,7 @@ line-height: 19px;
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #0f1730;
     text-align: center;
   }
@@ -478,7 +482,7 @@ line-height: 19px;
     }
     span:nth-child(2) {
       float: right;
-      color: #ff5d37;
+      color:#05C98E;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -491,7 +495,7 @@ line-height: 19px;
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #ff5d37;
+      color:#05C98E;
       width: 144px;
     }
     .demonstration {
@@ -504,15 +508,17 @@ line-height: 19px;
     padding-bottom: 55px;
   }
   .lt_box {
-    // height: 96px;
+    //width: 440px;
+    //height: 72px;
+    // background: #000;
     .back_icon {
        color: #070A0E;
         width: 40px;
         height: 40px;
         text-align: center;
-        line-height: 40px;
+        // line-height: 40px;
         border-radius: 50%;
-          background: #F4F6FC;
+        background: #F4F6FC;
         cursor: pointer;
     }
   }
@@ -547,7 +553,7 @@ line-height: 19px;
     }
     
     .setColr {
-      color: #ff5d37;
+      color:#05C98E;
     }
   }
   .setSlider {
@@ -588,7 +594,7 @@ line-height: 19px;
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid #ff5d37;
+      border: 1px solid#05C98E;
       font-size: 20px;
       color: #fe613c;
       padding: 0;
@@ -633,7 +639,7 @@ line-height: 19px;
     }
     .el-slider__button::before {
       content: "";
-      background: #ff5d37;
+      background:#05C98E;
       width: 20px;
       height: 20px;
       line-height: 32px;
@@ -755,7 +761,7 @@ line-height: 19px;
     }
   }
   .rec_red {
-    color: #ff5d37;
+    color:#05C98E;
   }
   .outlogin {
     margin-top: 48px;

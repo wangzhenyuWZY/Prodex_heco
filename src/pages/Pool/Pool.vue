@@ -69,7 +69,7 @@ export default {
     // margin-top: 128px;
     height: 28px;
     font-size: 24px;
-    font-family: Roboto-MediumItalic, Roboto;
+    font-family: roboto-mediumitalic, Roboto;
     font-weight: normal;
     color: #0F1730;
     line-height: 28px;

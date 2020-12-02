@@ -220,7 +220,6 @@ export default {
       }
       this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
       this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
-      console.log('this.slidenum========'+this.slidenum)
     },
     async getSpotPrice (address1, address2, name) {
       var functionSelector = 'getSpotPrice(address,address)';
@@ -238,6 +237,9 @@ export default {
 </script>
 
 <style lang="scss"  >
+.removeLq{
+  margin-top: 120px;
+}
 .ctx_1 {
   width: 397px;
   display: inline-block;
@@ -255,7 +257,7 @@ export default {
 .from_contentIcon {
   height: 36px;
   font-size: 32px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
 color: #0F1730;
   text-align: center;
 }
@@ -276,7 +278,7 @@ color: #0F1730;
   }
   span:nth-child(2) {
     float: right;
-    color: #ff5d37;
+    color:#05C98E;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -286,7 +288,7 @@ color: #0F1730;
   .between {
     font-size: 56px;
     font-weight: normal;
-    color: #ff5d37;
+    color:#05C98E;
     width: 144px;
   }
   .demonstration {
@@ -339,7 +341,7 @@ color: #0F1730;
   .rg {
   }
   .setColr {
-    color: #ff5d37;
+    color:#05C98E;
   }
 }
 .setSlider {
@@ -380,7 +382,7 @@ color: #0F1730;
   .weth_btn {
     background: none;
     border-radius: 28px;
-    border: 1px solid #ff5d37;
+    border: 1px solid#05C98E;
     font-size: 20px;
     color: #fe613c;
     padding: 0 32px;
@@ -425,7 +427,7 @@ color: #0F1730;
   }
   .el-slider__button::before {
     content: "";
-    background: #ff5d37;
+    background:#05C98E;
     width: 20px;
     height: 20px;
     line-height: 32px;

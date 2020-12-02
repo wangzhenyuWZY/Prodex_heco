@@ -78,8 +78,7 @@ img{
     margin:0 auto;
     padding: 0;
     font-size: 18px;
-    background: #05C98E;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto;
     color: #FFFFFF;
     cursor: pointer;
     user-select:none;
@@ -108,19 +107,19 @@ img{
     border: 1px solid #0F1730;
     background: none;
     color:#FF5D37;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 
 }
 .nav_btn{
     width: 240px;
   height: 40px;
   border-radius: 28px;
-  border: 1px solid #FF5D37;
+  border: 1px solid#05C98E;
   background: none;
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: normal;
-  color: #FF5D37;
+  color:#05C98E;
   padding: 0;
 }
 
@@ -132,18 +131,18 @@ img{
 .nav_btn:hover{
     color:#FF5D37;
     background: none;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 }
 
 .red_button:hover{
     background: none;
-    border: 1px solid #FF5D37;
-    color: #FF5D37;
+    border: 1px solid#05C98E;
+    color:#05C98E;
 }
 .nav_btn:active {
     color:#FF5D37;
     background: none;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 }
 .black_botton:active{
     color: #0F1730;
@@ -244,7 +243,7 @@ img{
       font-family: Roboto-Regular, Roboto;
   }
   .change_red{
-      color: #FF5D37;
+      color:#05C98E;
   }
 // element
 .el-dialog__wrapper{
@@ -274,7 +273,7 @@ img{
 }
 @font-face { // 细体
     font-family: roboto-thin; 
-    src: url('./font-face/roboto-thin.ttf'); 
+    src:url('./font-face/roboto-thin.ttf'); 
 }
 @font-face {  // 加粗斜体
     font-family: roboto-mediumitalice;

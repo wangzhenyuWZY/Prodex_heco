@@ -173,7 +173,7 @@ export default {
   
 height: 38px;
 font-size: 32px;
-font-family: Roboto-MediumItalic, Roboto;
+font-family: roboto-mediumitalic;
 font-weight: normal;
 color: #05C98E;
 line-height: 38px;
@@ -246,11 +246,15 @@ line-height: 38px;
   width: 100%;
 }
 .nav-header {
+  
   color: #495169;
   position: relative;
+
 }
 .active {
+  font-family: roboto-mediumitalic;
   color: #05C98E;
+
 }
 .active-bar {
   position: absolute;
@@ -276,8 +280,7 @@ line-height: 38px;
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
-  
-background: #19242E;
+  background: #19242E;
   color:#05C98E;
   padding: 0 32px;
   display: flex;
@@ -291,7 +294,7 @@ background: #19242E;
   }
   .wallet_addrs{
       font-size: 18px;
-      font-family: Roboto-MediumItalic, Roboto;
+      font-family: roboto-mediumitalic;
        margin-left: 4px;
        margin-right: 16px;
   }
@@ -302,10 +305,10 @@ background: #19242E;
       padding: 0 16px;
       height: 24px;
       line-height: 24px;
-      background: #FF5D37;
+      background:#05C98E;
       border-radius: 28px;
       font-size: 18px;
-      font-family: Roboto-MediumItalic, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: normal;
       color: #FFFFFF;
   }
