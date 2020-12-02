@@ -48,7 +48,7 @@
             :balance="token1.balance"
             @click="showSelect(0)"
             :imgUrl="token1.img"
-                       :text="token1.name" />
+            :text="token1.name" />
           </div>
         </div>
 
@@ -397,11 +397,6 @@ line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
-.from_botton{
-  width: 210px;
-  margin-top: 24px;
-  background: #05C98E;
-}
 .from_lable{
   // width: 200px;
   // padding-left: -16px;
@@ -774,6 +769,7 @@ line-height: 19px;
 }
 @media screen and (max-width: 750px) {
    .createpair {
+     margin-top: 0;
      .from_botton{
        margin-top: 0;
      }

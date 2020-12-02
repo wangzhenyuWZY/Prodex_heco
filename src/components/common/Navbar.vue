@@ -166,13 +166,13 @@ export default {
 <style lang="scss" scoped>
 .logop{
   float: left;
-  margin-top: 15px;
+  // margin-top: 8px;
   height: 38px;
   font-size: 32px;
   font-family: roboto-mediumitalice;;
   color: #05C98E;
   line-height: 38px;
-  margin-left: 116px;
+  // margin-left: 116px;
   margin-right: 22px;
 }
 .iconsv{
@@ -197,7 +197,7 @@ export default {
   position: relative;
    
   /* width: 1920px; */
-  // line-height: 72px;
+  line-height: 72px;
   height: 72px;
 }
 
@@ -238,9 +238,11 @@ export default {
   float: left;
     display: flex;
     align-items: center;
+    margin-top: 10px;
   margin-left: 33px;
   .logop{
     font-family: 'roboto-mediumitalice';
+    margin-left: 10px;
     
   }
 }
@@ -252,6 +254,7 @@ export default {
 .nav-header {
   color: #495169;
   position: relative;
+  margin-left: 22px;
 
 }
 .active {
@@ -345,7 +348,7 @@ export default {
     }
     .login_wallet{
       padding: 0 20px;
-      margin-top: 4px;
+      margin-top: 5px;
     }
       .wallet_addrs{
     margin: 0;
@@ -354,6 +357,8 @@ export default {
     width: 100%;
     padding: 0 0.25rem;
     font-size: 0.4rem;
+  }.nav_btn{
+    margin-top: 0;
   }
  
   }
