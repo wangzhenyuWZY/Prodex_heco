@@ -529,11 +529,6 @@ export default {
   width: 268px;
   display: inline-block;
 }
-.from_botton{
-  background: #05C98E;
-  color: #FFFFFF;
-
-}
 .ctx_3 {
   min-width: 160px;
   font-family: roboto-mediumitalic;

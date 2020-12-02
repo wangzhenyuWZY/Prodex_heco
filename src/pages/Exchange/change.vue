@@ -152,9 +152,7 @@ export default {
   color:#05C98E;
   margin-bottom: 8px;
 }
-.from_botton{
-  background: #05C98E;
-}
+
 .receive__Pool {
   margin-top: 24px;
   font-size: 18px;
