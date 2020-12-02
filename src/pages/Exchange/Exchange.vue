@@ -831,7 +831,7 @@ export default {
   cursor: pointer;
   img {
     position: absolute;
-    top: 8px;
+    top: 12px;
     right: 16px;
   }
 }

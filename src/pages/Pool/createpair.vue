@@ -48,7 +48,7 @@
             :balance="token1.balance"
             @click="showSelect(0)"
             :imgUrl="token1.img"
-                       :text="token1.name" />
+            :text="token1.name" />
           </div>
         </div>
 
