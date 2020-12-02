@@ -3,7 +3,7 @@
 
   <el-dialog title=""
              :visible.sync="showAlert"
-             :width="!mobile?'90%':'480px'"
+             :width="mobile?'90%':'480px'"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"
@@ -12,8 +12,8 @@
     </span>
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
-        <div class="received ">
-          <span class="rg ftblod">{{token1Num}}</span>
+        <div class="changes_rece ">
+          <span class="rg rg_ft ftblod">{{token1Num}}</span>
           <div class="lt change_img">
             <img class="lt_icon"
                  src="@/assets/img/btc.svg"
@@ -25,8 +25,8 @@
         <div class="from_contentIcon">
           <i class="el-icon-back changeicon"></i>
         </div>
-        <div class="received ">
-          <span class="rg ftblod">{{token2Num}}</span>
+        <div class="changes_rece ">
+          <span class="rg  rg_ft ftblod">{{token2Num}}</span>
           <div class="lt change_img">
             <img class="lt_icon"
                  src="@/assets/img/btc.svg"
@@ -47,7 +47,7 @@
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">
-          <div class="received ">
+          <div class="changes_rece  changes_rece">
             <div class="lt change_img">
               
               <span>Minimum received</span>
@@ -57,7 +57,7 @@
             </div>
             <span class="rg ">{{token2Num}} {{token2.name}}</span>
           </div>
-            <div class="received change20">
+            <div class="changes_rece change20">
             <div class="lt change_img">
               
               <span>Price Impacte</span>
@@ -67,7 +67,7 @@
             </div>
             <span class="rg change_red">{{percentage}}%</span>
           </div>
-            <div class="received ">
+            <div class="changes_rece ">
             <div class="lt change_img">
               
               <span>Liquidity Provider Fee</span>
@@ -88,13 +88,13 @@
 </template>
 
 <script>
-import { IsPc } from '../../utils'
+import { IsPc } from '../../utils/index'
 export default {
   props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage','mobile'],  
   data () {
     return {
       showAlert: true,
-      mobile:IsPc()
+      mobile:!IsPc()
 
     }
   },
@@ -168,6 +168,7 @@ export default {
   color: #878b97;
   padding-bottom: 24px;
   margin-bottom: 24px;
+  font-weight: 400;
   border-bottom: 1px solid #e5ebf2;
 }
 .received span {
@@ -207,10 +208,21 @@ export default {
   margin-right: 8px;
   margin-left: 4px;
 }
-.received {
+.changes_rece {
   display: flex;
   justify-content: space-between;
   color: #0f1730;
+}
+.changes_rece span{
+  font-size: 16px;
+  line-height:24px;
+  
+}
+.changes_rece .rg_ft{
+    font-size: 24px;
+}
+.changes_rece  .rg{
+  line-height: 24px;
 }
 .from_contentIcon{
   margin: 16px 0;
@@ -224,26 +236,20 @@ export default {
   margin: 20px 0;
 }
   .Price_text{
-    font-size: 20px;
+    font-size: 16px;
     color: #0F1730;
     margin-top: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 16px;
     text-align: center;
   
   }
   .Price_text>img{
         vertical-align: sub;
         margin-left: 4px;
+        width: 20px;
+        height: 20px;
         cursor: pointer;
   }
   
 </style>
 
-<style lang="scss" scoped>
-.change{
-   .received span {
-     font-size: 0.37rem;
-   }
-}
-
-</style>
