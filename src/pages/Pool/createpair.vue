@@ -399,7 +399,7 @@ line-height: 19px;
 <style lang="scss" scoped>
 .from_botton{
   width: 210px;
-  margin-top: 45px;
+  margin-top: 24px;
   background: #05C98E;
 }
 .from_lable{
@@ -410,7 +410,7 @@ line-height: 19px;
   // height: 72px;
 }
 .createpair {
-  margin-top: 10px;
+  margin-top: 120px;
 
   .whe {
     margin-top: 16px;
@@ -601,7 +601,7 @@ line-height: 19px;
       border-radius: 28px;
       border: 1px solid#05C98E;
       font-size: 20px;
-      color: #fe613c;
+      color:#05C98E;
       padding: 0;
       width: 200px;
       height: 32px;

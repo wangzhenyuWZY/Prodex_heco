@@ -11,16 +11,18 @@
           </router-link>
           <span class="content_text fl_lt">Add Liquidity</span>
           <div class="text_btn conct_btn fl_lt">
-            <el-button class="from_botton connect_btns  green_btn "
-                       @click="iSingle=true"
-                       type="small">Single Token </el-button>
+               <el-button class="from_botton connect_btns"
+                      :class="iSingle?'green_btn':'fff_button'"
+                     @click="iSingle=true"
+                     type="small">Single Token </el-button>
           </div>
-          <div class="text_btn fl_lt">
-            <el-button class=" from_botton  fff_button connect_btns"
-                       @click="iSingle=false"
-                       type="small">Double Token </el-button>
-          </div>
-
+         <div class="text_btn fl_lt">
+              <el-button class=" from_botton connect_btns"
+                    :class="!iSingle?'green_btn':'fff_button'"
+                     @click="iSingle=false"
+                     type="small">Double Token </el-button>
+         </div>
+        
         </div>
         <div class="rg_box  fl_rg">
           <el-tooltip class="item"
@@ -191,12 +193,14 @@
                  :token2Num="token2Num"
                  :token1="token1"
                  :token2="token2"
-                 @close="closeAlert" />
+                 @close="closeAlert" 
+           />
   </div>
 </template>
 
 <script>
 const Decimal = require('decimal.js');
+import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
@@ -312,12 +316,12 @@ export default {
         });
         return
       }
-      if (this.iSingle) {
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
-      } else {
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, this.token1Num, this.token2Balance, this.token2Num, this.lpTotal.toString())
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+      if(this.iSingle){
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
+      }else{
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }
       this.popsData = {
         reciveLptoken: this.reciveLptoken,
@@ -512,9 +516,13 @@ export default {
     async joinPool () {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
+      let token1balance = new BigNumber(that.token1.balance)
+      token1balance = token1balance.times(Math.pow(10,that.token1.decimals)).toFixed()
+      let token2balance = new BigNumber(that.token2.balance)
+      token2balance = token2balance.times(Math.pow(10,that.token2.decimals)).toFixed()
       var parameter = [
-        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10, that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10, that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10, that.token2.decimals)).toString()] },
+        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
+        { type: 'uint256[]', value: [token1balance, token2balance] },
       ]
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);

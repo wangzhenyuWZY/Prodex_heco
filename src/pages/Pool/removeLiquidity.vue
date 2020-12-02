@@ -384,7 +384,7 @@ color: #0F1730;
     border-radius: 28px;
     border: 1px solid#05C98E;
     font-size: 20px;
-    color: #fe613c;
+    color:#05C98E;
     padding: 0 32px;
     height: 32px;
   }

@@ -351,7 +351,7 @@ export default {
     margin-top: 49px;
     height: 28px;
     font-size: 24px;
-    font-family: Roboto-Medium, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 500;
     color: #0f1730;
     line-height: 28px;
