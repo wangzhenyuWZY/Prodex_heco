@@ -174,13 +174,14 @@ export default {
         console.log(e)
     },
     Approve () {
+      debugger
         this.$emit('Approve')
     },
     amount () {
         this.$emit('amount',this.test1)
     },
     stake () {
-      this.$emit('stake',this.test1)
+      this.$emit('stake',this.farmtoal.item,this.test1)
     },
     handelInit() {
       this.test1 = '';
