@@ -305,12 +305,25 @@ export default {
       }
     },
     confirmSupply(){//输出的lptoken数量
+      if(this.token1Num>this.token1.balance || this.token2Num>this.token2.balance){
+        this.$message({
+          message: '钱包余额不足',
+          type: 'error'
+        });
+        return
+      }else if(this.token1Num>this.token1Balance || this.token2Num>this.token2Balance){
+        this.$message({
+          message: '流动池余额不足',
+          type: 'error'
+        });
+        return
+      }
       if(this.iSingle){
         let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
         this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }else{
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
-        this.reciveLptoken = reciveLptoken.toFixed(6)
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal.toString())
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }
       this.popsData = {
         reciveLptoken:this.reciveLptoken,
