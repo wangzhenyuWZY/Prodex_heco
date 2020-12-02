@@ -117,7 +117,7 @@
           <div class="whe fl_lt"
                v-show="!isApproved">
             <el-button class="from_botton"
-                       @click="doApprove">Approve {{token1.name}}</el-button>
+                       @click="doApprove">Approve</el-button>
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton black_botton"
@@ -199,6 +199,7 @@
 </template>
 
 <script>
+const Web3Utils = require('web3');
 const Decimal = require('decimal.js');
 import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
@@ -251,7 +252,9 @@ export default {
       confirmPop: false,
       popsData: {},
       showAlert1: false,
-      alertType: 'success'
+      alertType: 'success',
+      token1ApproveBalance:0,
+      token2ApproveBalance:0
     }
   },
   components: {
@@ -461,12 +464,18 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex, 16)
-            if (approveBalance == 0) {
-              // that.$message({
-              //   message: '未授权请先授权',
-              //   type: 'error'
-              // });
+            that.token1ApproveBalance = parseInt(res._hex, 16)
+            if (that.token1ApproveBalance == 0) {
+              that.isApproved = false
+            } else {
+              that.isApproved = true
+            }
+          }
+        })
+        allowance(this.token2.address, pair[0].address).then((res) => {
+          if (res) {
+            that.token2ApproveBalance = parseInt(res._hex, 16)
+            if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {
               that.isApproved = true
@@ -520,10 +529,14 @@ export default {
       token1balance = token1balance.times(Math.pow(10,that.token1.decimals)).toFixed()
       let token2balance = new BigNumber(that.token2.balance)
       token2balance = token2balance.times(Math.pow(10,that.token2.decimals)).toFixed()
+      console.log('token1balance===='+token1balance)
+      console.log('token2balance===='+token2balance)
+      const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [token1balance, token2balance] },
+        { type: 'uint256[]', value: [MAX, MAX] },
       ]
+      console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
         if (!transaction.result || !transaction.result.result) {
@@ -601,7 +614,16 @@ export default {
     },
     doApprove () {
       if (this.pair) {
-        approved(this.token1.address, this.pair.address)
+        if(this.token1ApproveBalance==0){
+          approved(this.token1.address, this.pair.address).then((res)=>{
+            window.location.reload()
+          })
+        }
+        if(this.token2ApproveBalance==0){
+          approved(this.token2.address, this.pair.address).then((res)=>{
+            window.location.reload()
+          })
+        }
       } else {
         this.$layer.msg('请选择交易对')
       }
