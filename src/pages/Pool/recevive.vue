@@ -12,7 +12,7 @@
 
     <div class="box_sizes">
       <div class="provider receive__Pool">
-        <div class="title__num">{{popsData.reciveLptoken.toFixed(8)}}</div>
+        <div class="title__num">{{popsData.reciveLptoken}}</div>
         <div class="">{{popsData.token1.name}}{{popsData.token2.name}} Pool Tokens</div>
       </div>
     </div>

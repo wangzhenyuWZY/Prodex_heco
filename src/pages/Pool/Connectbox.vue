@@ -95,11 +95,11 @@
             <div class="box_title">Prices and pool share</div>
             <ul class="pre_list clearfix">
               <li>
-                <p>{{justPrice?justPrice.toFixed(6):'--'}}</p>
+                <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
                 <p>{{token1.name}} per {{token2.name}}</p>
               </li>
               <li>
-                <p>{{reversePrice?reversePrice.toFixed(6):'--'}}</p>
+                <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
                 <p>{{token2.name}} per {{token1.name}}</p>
               </li>
               <li>
@@ -303,12 +303,25 @@ export default {
       }
     },
     confirmSupply(){//输出的lptoken数量
+      if(this.token1Num>this.token1.balance || this.token2Num>this.token2.balance){
+        this.$message({
+          message: '钱包余额不足',
+          type: 'error'
+        });
+        return
+      }else if(this.token1Num>this.token1Balance || this.token2Num>this.token2Balance){
+        this.$message({
+          message: '流动池余额不足',
+          type: 'error'
+        });
+        return
+      }
       if(this.iSingle){
         let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
         this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }else{
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,Decimal(this.lpTotal).div(Math.pow(10,this.pair.decimals)).toString())
-        this.reciveLptoken = reciveLptoken.toFixed(6)
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal.toString())
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }
       this.popsData = {
         reciveLptoken:this.reciveLptoken,
@@ -323,6 +336,9 @@ export default {
       this.confirmPop = true
     }, 
     calcToken1Num(){
+      if(this.token2Num<=0){
+        return
+      }
       if(this.token1Balance&&this.token2Balance){
         this.token1Num = (this.token2Num/this.token2Balance*this.token1Balance).toFixed(6)
         // let differ = this.token2.decimals-this.token1.decimals
@@ -335,6 +351,9 @@ export default {
       
     },
     calcShare(){
+      if(this.token1Num<=0){
+        return
+      }
         if(this.token1Balance&&this.token2Balance){
           this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
           // let differ = this.token1.decimals-this.token2.decimals
@@ -344,7 +363,7 @@ export default {
           //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
           // }
         }
-      if(this.pair){
+      if(this.pair.address){
         this.getShare()
       }
     },

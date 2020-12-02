@@ -25,7 +25,9 @@
           </div>
           <div class="pool-butt2">
             <router-link to="/pool/connectpool">
-              <el-button class="from_botton bottun_hei"
+              <el-button 
+              
+              class="from_botton bottun_hei1"
                 >Add Liquidity</el-button
               >
             </router-link>
@@ -223,10 +225,16 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .bottun_hei {
-  height: 48px;
+  height: 40px;
+  border: 1px solid #0f1730;
+  color: #000;
 }
+.bottun_hei1 {
+  height: 40px;
+  background: #070A0E;
+}
+
 .fees {
   color: #0f1730;
   font-size: 18px;
