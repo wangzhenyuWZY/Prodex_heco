@@ -235,8 +235,6 @@ export default {
               that.bPoolContract = res
               that.setSwapLpFee()
               that.setSponsors()
-              console.log('授权地址===='+that.bPoolContract)
-              // that.bPoolContract = 'TDfFD4aeK6582o9YFfjScGubtJDrHB1pyf'
               approved(that.token1.address,that.bPoolContract).then(()=>{
                 approved(that.token2.address,that.bPoolContract).then(()=>{
                   let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
@@ -306,7 +304,6 @@ export default {
           {type: 'uint256', value: balance},
           {type: 'uint256', value: weight},
       ]
-      console.log('绑定地址===='+that.bPoolContract)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
@@ -314,7 +311,6 @@ export default {
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
       if(res){
         getConfirmedTransaction(res.txid).then((result)=>{
-          console.log('result11========='+result)
           if(name=='token1IsBind')
             that.token1IsBind = true
           if(name=='token2IsBind')

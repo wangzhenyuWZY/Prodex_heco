@@ -414,7 +414,6 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
         this.totalDenormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-        console.log('this.totalDenormalizedWeight========' + this.totalDenormalizedWeight)
       }
     },
     async getSwapFeeForDex () {
@@ -422,7 +421,6 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0], 16)
-      console.log('this.foxDex========' + transaction.constant_result[0])
     },
     async getPairAddress () {
       let that = this
@@ -433,7 +431,6 @@ export default {
       })
       if (pair && pair.length>0) {
         this.pair = pair[0]
-        console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
@@ -525,7 +522,6 @@ export default {
         { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
         { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10,that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10,that.token2.decimals)).toString()] },
       ]
-      console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
         if (!transaction.result || !transaction.result.result){
@@ -558,9 +554,7 @@ export default {
         { type: 'uint256', value: 0 }
       ]
       try {
-        console.log('走到1')
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
-        console.log('走到2',transaction)
         if (!transaction.result || !transaction.result.result){
           that.charm1();
           return console.error('Unknown error: ' + transaction, null, 2);
@@ -577,7 +571,6 @@ export default {
           });
         })
       } catch (error) {
-        console.log('走到3')
         console.log(111,error);
           that.charm1();
       }

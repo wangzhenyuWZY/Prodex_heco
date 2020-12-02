@@ -19,7 +19,7 @@
 
       <div class="search__box">
         <el-input class="search__input"
-                  v-model="value"
+                  v-model="filterName"
                   placeholder="Search name or paste address"></el-input>
       </div>
       <div class="select_size select__bases"
@@ -107,22 +107,26 @@ export default {
   },
   data () {
     return {
-      value: '',
+      filterName: '',
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
-     tokenList () {
+     tokenList(){
+         let filtername = this.filterName
          if (this.selectType == '') {
-           return tokenData.tokenList
+           return tokenData.tokenList.filter((el) => {
+             return el.name.includes(filtername.toUpperCase())
+           })
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name )
-            return arry;
-         }
+           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           return arry.filter((el) => {
+             return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
+           })
+         } 
      }
   },
   created () {
-    console.log('showAlert====================', this.showAlert)
   },
   methods: {
     handleClosea () {

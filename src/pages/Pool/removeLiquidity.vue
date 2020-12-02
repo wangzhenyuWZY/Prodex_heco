@@ -220,7 +220,6 @@ export default {
       }
       this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
       this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
-      console.log('this.slidenum========'+this.slidenum)
     },
     async getSpotPrice (address1, address2, name) {
       var functionSelector = 'getSpotPrice(address,address)';
