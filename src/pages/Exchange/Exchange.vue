@@ -146,7 +146,6 @@
             :spotPrice='spotPrice'
             :swapFee='swapFee'
             :percentage='percentage'
-            :mobile="!isPc"
             @handleClosea="isConfirm = false" />
     <selctoken :showAlert='isSelect'
                :item='item'
@@ -871,6 +870,7 @@ export default {
 
 @media screen and (max-width:750px) {
     .exchange{
+      margin-top: 0px;
       padding-bottom: 30px;
       .setInput{
         display: flex;
@@ -878,7 +878,8 @@ export default {
               flex: 1;
           }
            .ctx_3{
-              min-width: 3.2rem;
+              min-width: 2.8rem;
+              width: 2.8rem;
           }
       }
       .c_receove_Share{

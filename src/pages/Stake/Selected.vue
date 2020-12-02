@@ -86,7 +86,7 @@
                     v-model="test1"
                  />
                 </div>
-                <div class="rg">UNISWAP_LP</div>
+                <div class="rg mobles_rg">UNISWAP_LP</div>
               </div>
             </div>
           </div>
@@ -450,5 +450,34 @@ export default {
       float: right;
     }
   }
+}
+@media screen and (max-width: 750px) {
+  .stake_slect{
+     .received .lt span {
+        font-size: 0.37rem;
+     }
+      .received .rg span{
+        font-size: 0.37rem;
+      }
+      .text_conent{
+        font-size: 0.4rem;
+      }
+      .text_border{
+        font-size: 0.37rem;
+      }
+      .Approve_btns{
+        display: flex;
+      }
+      .box_Price{
+          height: auto;
+          line-height: inherit;
+          .mobles_rg{
+            display: flex;
+            align-items: center;
+            font-size: 0.4rem;
+          }
+      }
+  }
+  
 }
 </style>

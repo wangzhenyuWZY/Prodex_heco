@@ -529,14 +529,23 @@ ul {
   }
 }
 @media screen and (max-width: 750px) {
+  .glbale_pd{
+    padding: 0 0.2rem;
+  }
   .stake{
     ul{
-      grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
+      grid-template-columns: repeat(auto-fit, minmax(8.26rem, 2fr));
       li{
             display: block;
-    margin: 0 auto;
+          margin: 0 auto;
+          text-align: center;
+          margin-bottom: 0.4rem;
     .stake_addres{
-          margin: 0.4rem 0;
+          // margin: 0.4rem 0;
+          padding-left: 0;
+          .mrg{
+            text-align: center;
+          }
         }
       }
     }
@@ -545,11 +554,11 @@ ul {
  
 }
 @media screen and (max-width: 450px) {
+
    ul{
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
           li{
             display: block;
-    margin: 0 auto;
+            margin: 0 auto;
       }
     }
 }

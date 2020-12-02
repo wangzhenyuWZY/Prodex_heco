@@ -1,8 +1,8 @@
 <template>
   <div class="container">
     <!-- <div class="c-top"> -->
-      <!-- <samp class="c-mp">FoxDex Protocol Analytics</samp> -->
-      <!-- <div class="c-inp">
+    <!-- <samp class="c-mp">FoxDex Protocol Analytics</samp> -->
+    <!-- <div class="c-inp">
       <input type="text" placeholder="Search FoxDex pairs and tokens">  
       </div> -->
 
@@ -28,46 +28,92 @@
     <div class="c-box2">
       <div class="b2-top">
         <samp class="top1">Top Pairs</samp>
-       
+
       </div>
       <div class="table">
-        <el-table :data="pairList"
+        <el-table v-if="mobile"
+                  :data="pairList"
                   header-cell-class-name="adddd"
                   header-row-class-name="tabe_tr"
                   :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
                   cell-class-name="dddsadsa"
                   style="width: 100%">
           <el-table-column prop="pair"
-                           label="name"
-                           >
+                           label="name">
           </el-table-column>
           <el-table-column prop="token1.name"
-                           label="Assets"
-                           >
-                             <template slot-scope="scope">
-                             <div>
-                               {{scope.row.token1Balance ?scope.row.token1Balance :""  }}
-                               {{scope.row.token1.name}}
-                             </div>
-                           </template>
+                           label="Assets">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.token1Balance ?scope.row.token1Balance :""  }}
+                {{scope.row.token1.name}}
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="token2.name"
                            label="Symbol">
-                            <template slot-scope="scope">
-                             <div>
-                               {{scope.row.token2Balance ?scope.row.token2Balance :""  }}
-                               {{scope.row.token2.name}}
-                             </div>
-                           </template>
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.token2Balance ?scope.row.token2Balance :""  }}
+                {{scope.row.token2.name}}
+              </div>
+            </template>
           </el-table-column>
           <el-table-column prop="Liquidity"
-                           label="Liquidity" >
-                           <template slot-scope="scope">
-                             <div>
-                               {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
-                             </div>
-                           </template>
-                           <span ></span>
+                           label="Liquidity">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
+
+        </el-table>
+        <el-table v-if="!mobile"
+                  :data="pairList"
+                  header-cell-class-name="adddd"
+                  header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+                  cell-class-name="dddsadsa"
+                  style="width: 100%">
+          <el-table-column prop="pair"
+                           label="name">
+            <template slot-scope="scope">
+              <div class="table_size">
+                {{scope.$index+1}} <img :src="scope.row.token1.img"
+                     alt=""><img :src="scope.row.token2.img"
+                     alt=""> {{scope.row.token1.name}}-{{scope.row.token2.name}}
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="token1.name"
+                           label="Assets">
+            <template slot-scope="scope">
+                <div class="table_size">
+                <p>
+                  <span style="color:#05C98E">{{scope.row.weight ? scope.row.weight : '--'}}</span>
+                   {{scope.row.token1Balance ?scope.row.token1Balance :'--' }}
+                    {{scope.row.token1.name}}
+                </p>
+                <p>
+                  <span style="color:#05C98E">{{scope.row.weight ? scope.row.weight : '--'}}</span>
+                   {{scope.row.token1Balance ?scope.row.token1Balance : '--'  }}
+                    {{scope.row.token2.name}}
+                </p>
+               
+              </div>
+            </template>
+          </el-table-column>
+
+          <el-table-column prop="Liquidity"
+                           label="Liquidity">
+            <template slot-scope="scope">
+              <div class="table_size">
+                {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
+              </div>
+            </template>
+            <span></span>
           </el-table-column>
 
         </el-table>
@@ -75,7 +121,7 @@
       </div>
       <div class="pagin">
         <el-pagination background
-          v-if="pairList.length>=10"
+                       v-if="pairList.length>=10"
                        layout="prev, pager, next"
                        :total="pairList.length">
         </el-pagination>
@@ -89,44 +135,48 @@
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
-import {pairList} from '../../utils/token'
-import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
+import { pairList } from '../../utils/token'
+import { IsPc } from '../../utils/index'
+import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
     return {
-        pairList:pairList,
+      pairList: pairList,
+      mobile: IsPc()
     }
   },
-  mounted() {
+  mounted () {
     this.init();
     let arry = localStorage.getItem('pairList');
-     if (arry) {
+    if (arry) {
       this.poopairListlList = JSON.parse(arry);
     }
   },
   methods: {
-       async init () {
-         let arr = [];
-         for (let index = 0; index < this.pairList.length; index++) {
-           const el = this.pairList[index];
-              let res =   await  getBalanceInPool(el,el.token1);
-              let res1 =   await  getBalanceInPool(el,el.token2);
-              let res2=   await getLpBalanceInPool(el);
-              el.token1Balance = res;
-              el.token2Balance = res1;
-              el.Liquidity = res2;
-              arr.push(el);
-         }
-          localStorage.setItem('pairList',JSON.stringify(arr));
-         this.pairList = arr;
+    cccd (d) {
+      console.log(d)
+    },
+    async init () {
+      let arr = [];
+      for (let index = 0; index < this.pairList.length; index++) {
+        const el = this.pairList[index];
+        let res = await getBalanceInPool(el, el.token1);
+        let res1 = await getBalanceInPool(el, el.token2);
+        let res2 = await getLpBalanceInPool(el);
+        el.token1Balance = res;
+        el.token2Balance = res1;
+        el.Liquidity = res2;
+        arr.push(el);
       }
+      localStorage.setItem('pairList', JSON.stringify(arr));
+      this.pairList = arr;
+    }
   },
 }
 </script>
 <style  lang="scss" scoped>
-.container{
-  margin-top: 120px;
+.container {
 }
 .t-img {
   width: 22px;
@@ -208,7 +258,6 @@ export default {
   height: 960px;
   border-radius: 16px;
   overflow: hidden;
-  margin-top: 24px;
   background: #ffffff;
 
   .b2-top {
@@ -219,7 +268,7 @@ export default {
       float: left;
       height: 22px;
       font-size: 20px;
-      font-family:roboto-mediumitalice;
+      font-family: roboto-mediumitalice;
       font-weight: 500;
       color: #0f1730;
       line-height: 23px;
@@ -280,7 +329,6 @@ export default {
 <style  scoped>
 >>> .cell {
   margin-left: 30px;
-  
 }
 >>> .adddd {
   background-color: #f4f8fb;
@@ -292,8 +340,26 @@ export default {
 }
 
 @media screen and (max-width: 750px) {
-    .c-box2{
-      width: 100%;
-    }
+  .c-box2 {
+    width: 100%;
+    height: auto;
+  
+  }
+  .c-box2 .table{
+      height: auto;
+  }
+   .c-box2  .b2-top{
+    height: 40px;
+    line-height: 40px;
+  }
+  .c-box2  .b2-top .top1{
+        margin-top: 0;
+         line-height: 40px;
+  }
+  
+  >>> .cell {
+  margin-left: 0;
+  font-size:0.3rem !important;
+} 
 }
 </style>

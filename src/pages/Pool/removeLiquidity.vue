@@ -449,6 +449,7 @@ color: #0F1730;
 }
 @media screen and (max-width: 750px) {
   .removeLq{
+     margin-top: 0px;
       .add_marg {
         padding: 0.5rem 0.4rem;
       }

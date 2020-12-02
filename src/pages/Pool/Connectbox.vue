@@ -977,7 +977,7 @@ font-size: 18px;
     padding:  10px  0.2rem;
     .content_text {
       // width: 54px;
-      font-size: 0.2rem;
+      font-size: 0.4rem;
     }
   }
 }

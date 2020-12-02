@@ -240,9 +240,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.from_botton{
-  background: #05C98E;
-}
+
 .wtrx {
   color: #0f1730;
 }
@@ -425,7 +423,7 @@ export default {
   height: 300px;
 }
 .wtrx-bottom p:nth-child(1) {
-  font-family: oboto-mediumitalic;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   font-size: 18px;
   margin-top: 48px;
@@ -440,7 +438,7 @@ export default {
   font-size: 18px;
   color: #878B97;
   text-align: center;
-  line-height: 24px;
+  line-height: 22px;
 }
 .wtrx-bottom p:nth-child(3) {
   font-family: roboto-mediumitalic;
@@ -455,6 +453,7 @@ export default {
   margin-top: 8px;
   color: #878b97;
   text-align: center;
+  line-height: 22px;
 }
 .wtrx_img {
   vertical-align: sub;
@@ -471,6 +470,7 @@ export default {
 
 @media screen and (max-width: 750px) {
   .wtrx {
+  
     .wtrx-box1 {
       flex-wrap: wrap;
       .wtrx-right {
@@ -478,6 +478,12 @@ export default {
         font-size: 0.5rem;
         .wtrx-a {
           margin-top: 20px;
+          .wtrx-a1 {
+            font-size: 0.37rem;
+          }
+             .trx-a2 {
+          font-size: 0.37rem;
+        }
         }
         .trx-b {
           margin-top: 1rem;
@@ -485,21 +491,31 @@ export default {
       }
       .wtrx-left {
         margin: 0;
+        // width: 350;
+        
         margin-bottom: 20px;
         font-size: 0.5rem;
+        .trx{
+              // font-size: 0.45rem;
+        }
         .trx-b {
           margin-top: 1rem;
         }
         .trx-a {
           margin-top: 20px;
+          .trx-a1{
+            font-size: 0.37rem;
+          }
         }
         .trx-a2 {
+          font-size: 0.37rem;
         }
       }
     }
     .wtrx-box{
-        padding-top: 10px;
         height: 100%;
+            padding-top: 0;
+        // padding: 0 0.4rem;
     }
     .wtrx-bottom{
       width: 100%;
