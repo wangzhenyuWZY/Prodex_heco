@@ -7,11 +7,6 @@
              <span class="logop">FoxDex</span>
              </div>
              
-      <div class="moble fl_lt" >
-        <!-- <div class="iconsv">
-          
-        </div> -->
-      </div>
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
              ref="header">
@@ -335,6 +330,9 @@ export default {
     padding-bottom: 1.2rem;
     .logop{
       font-size: 0.5rem;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
     }
     .logo{
       margin-left: 15px;
@@ -347,6 +345,7 @@ export default {
     }
     .login_wallet{
       padding: 0 20px;
+      margin-top: 4px;
     }
       .wallet_addrs{
     margin: 0;
