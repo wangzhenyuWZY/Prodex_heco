@@ -470,7 +470,7 @@ line-height: 19px;
     }
     span:nth-child(2) {
       float: right;
-      color: #ff5d37;
+      color:#05C98E;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -483,7 +483,7 @@ line-height: 19px;
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #ff5d37;
+      color:#05C98E;
       width: 144px;
     }
     .demonstration {
@@ -539,7 +539,7 @@ line-height: 19px;
     }
     
     .setColr {
-      color: #ff5d37;
+      color:#05C98E;
     }
   }
   .setSlider {
@@ -580,7 +580,7 @@ line-height: 19px;
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid #ff5d37;
+      border: 1px solid#05C98E;
       font-size: 20px;
       color: #fe613c;
       padding: 0;
@@ -625,7 +625,7 @@ line-height: 19px;
     }
     .el-slider__button::before {
       content: "";
-      background: #ff5d37;
+      background:#05C98E;
       width: 20px;
       height: 20px;
       line-height: 32px;
@@ -745,7 +745,7 @@ line-height: 19px;
     }
   }
   .rec_red {
-    color: #ff5d37;
+    color:#05C98E;
   }
   .outlogin {
     margin-top: 48px;

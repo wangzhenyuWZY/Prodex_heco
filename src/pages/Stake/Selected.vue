@@ -256,7 +256,7 @@ export default {
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #ff5d37;
+      color:#05C98E;
       width: 144px;
     }
     .demonstration {
@@ -377,7 +377,7 @@ export default {
     .rg {
     }
     .setColr {
-      color: #ff5d37;
+      color:#05C98E;
     }
   }
   .setSlider {
@@ -418,7 +418,7 @@ export default {
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid #ff5d37;
+      border: 1px solid#05C98E;
       font-size: 20px;
       color: #fe613c;
       padding: 0;

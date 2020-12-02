@@ -219,7 +219,7 @@ export default {
       float: left;
       height: 22px;
       font-size: 20px;
-      font-family: Roboto-Regular, Roboto;
+      font-family:roboto-mediumitalice;
       font-weight: 500;
       color: #0f1730;
       line-height: 23px;
@@ -242,7 +242,7 @@ export default {
         width: 197px;
         height: 20px;
         font-size: 18px;
-        font-family: Roboto-Regular, Roboto;
+        font-family: roboto-mediumitalic;
       }
     }
   }

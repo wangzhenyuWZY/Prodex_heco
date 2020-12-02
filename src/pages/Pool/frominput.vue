@@ -192,7 +192,7 @@
   font-size: 40px;
   padding-left: 16px;
   font-weight: 500;
-  color: #FF5D37;
+  color:#05C98E;
 }
 .globle_input::placeholder{
   

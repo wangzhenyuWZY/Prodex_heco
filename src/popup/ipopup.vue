@@ -170,7 +170,7 @@ export default {
 }
 >>> .search__input .el-input__inner {
   border-radius: 32px;
-  border: 1px solid #ff5d37;
+  border: 1px solid#05C98E;
   border-radius: 32px;
   padding-left: 77px;
   font-size: 18px;

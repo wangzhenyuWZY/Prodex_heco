@@ -106,19 +106,19 @@ img{
     border: 1px solid #0F1730;
     background: none;
     color:#FF5D37;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 
 }
 .nav_btn{
     width: 240px;
   height: 40px;
   border-radius: 28px;
-  border: 1px solid #FF5D37;
+  border: 1px solid#05C98E;
   background: none;
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: normal;
-  color: #FF5D37;
+  color:#05C98E;
   padding: 0;
 }
 
@@ -130,18 +130,18 @@ img{
 .nav_btn:hover{
     color:#FF5D37;
     background: none;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 }
 
 .red_button:hover{
     background: none;
-    border: 1px solid #FF5D37;
-    color: #FF5D37;
+    border: 1px solid#05C98E;
+    color:#05C98E;
 }
 .nav_btn:active {
     color:#FF5D37;
     background: none;
-    border: 1px solid #FF5D37;
+    border: 1px solid#05C98E;
 }
 .black_botton:active{
     color: #0F1730;
@@ -242,7 +242,7 @@ img{
       font-family: Roboto-Regular, Roboto;
   }
   .change_red{
-      color: #FF5D37;
+      color:#05C98E;
   }
 
 @media screen and (max-width: 750px) {
