@@ -118,9 +118,12 @@
           </div>
           <div class="pool_it">
             <samp class="pool-p2">
-              Don't see a pool you joined?<samp class="pool-p3">
-                Import it.</samp
-              ></samp
+              Don't see a pool you joined?
+                 <router-link to="/pool/importpool"><samp class="pool-p3">
+            Import it. </samp>
+            </router-link>
+              
+              </samp
             >
           </div>
         </div>
@@ -254,7 +257,7 @@ export default {
     cursor: pointer;
     img {
       position: absolute;
-      top: 12px;
+      top: 16px;
       right: 24px;
     }
   }

@@ -19,6 +19,8 @@ const selctoken =()=>import('../pages/Pool/selctToken')
 const recevive =()=>import('../pages/Pool/recevive')
 const willRecevive =()=>import('../pages/Pool/willRecevive')
 const createpair =()=>import('../pages/Pool/createpair')
+const importpool =()=>import('../pages/Pool/importpool')
+
 export default new VueRouter({
   mode: 'hash',
   routes: [
@@ -66,6 +68,11 @@ export default new VueRouter({
           path:'pairs',
           name:'createpair',
           component:createpair
+        },
+        {
+          path:'importpool',
+          name:'importpool',
+          component:importpool
         }
         
        
