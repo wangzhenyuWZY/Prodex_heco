@@ -166,14 +166,9 @@ export default {
 <style lang="scss" scoped>
 .logop{
   float: left;
-  margin-top: 15px;
-  height: 38px;
   font-size: 32px;
   font-family: roboto-mediumitalice;;
   color: #05C98E;
-  line-height: 38px;
-  margin-left: 116px;
-  margin-right: 22px;
 }
 .iconsv{
   margin-left: 50px;
@@ -252,6 +247,7 @@ export default {
 .nav-header {
   color: #495169;
   position: relative;
+  margin-left: 22px;
 
 }
 .active {
