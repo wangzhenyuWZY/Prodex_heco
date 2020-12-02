@@ -1,6 +1,6 @@
 <template>
   <div class="container exchange">
-    <container top="40" :mobile="true">
+    <container top="40" :mobile="!isPc">
       <div slot="body">
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -76,7 +76,7 @@
 
       </div>
       <div slot="footer"
-           v-show="connectFlag"
+           v-show="connectFlag&&JSON.stringify(token1)!='{}'&&JSON.stringify(token2)!='{}'"
            class="position">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
@@ -100,7 +100,7 @@
                 </div>
                 <span class="rg">{{token2Num}} {{token2.name}}</span>
               </div>
-              <span class="rg">{{token2Num}} {{token2.name}}</span>
+            
             </div>
             <div class="received setmage">
               <div class="lt">
@@ -145,6 +145,7 @@
             :spotPrice='spotPrice'
             :swapFee='swapFee'
             :percentage='percentage'
+            :mobile="!isPc"
             @handleClosea="isConfirm = false" />
     <selctoken :showAlert='isSelect'
                :item='item'
@@ -173,6 +174,7 @@ import {
   calcOutGivenInAfterPrice
 } from '../../utils/calc_comparisons'
 import { mapState } from 'vuex'
+import {IsPc} from '../../utils/index'
 export default {
   data () {
     return {
@@ -202,7 +204,8 @@ export default {
       btnsbmit:false,
       showAlert1:false,
       alertType:'success',
-      isPair:true
+      isPair:true,
+      isPc:IsPc()
     }
   },
   computed: {
@@ -524,12 +527,11 @@ background: #FFFFFF;
 
 .ctx_1 {
   width: 268px;
-  height: 72px;
   display: inline-block;
 }
 
 .ctx_3 {
-  max-width: 160px;
+  min-width: 160px;
   display: inline-block;
   margin-left: 12px;
 }
@@ -670,6 +672,13 @@ background: #FFFFFF;
     height: 32px;
   }
 }
+.setInput{
+  display: flex;
+  .ctx_1 {
+    flex: 1;
+  }
+  
+}
 .mount_title {
   font-size: 20px;
   font-weight: normal;
@@ -795,6 +804,7 @@ background: #FFFFFF;
 .c_receove_Share {
   padding: 0 20px;
   padding-top: 50px;
+  padding-bottom: 1px;
 }
 .currencyprices {
   width: 190px;
@@ -854,6 +864,7 @@ background: #FFFFFF;
 
 @media screen and (max-width:750px) {
     .exchange{
+      padding-bottom: 30px;
       .setInput{
         display: flex;
         .ctx_1{
@@ -863,6 +874,9 @@ background: #FFFFFF;
               min-width: 3.2rem;
           }
       }
+      .c_receove_Share{
+        padding-bottom: 20px;
+      }
       .received{
             font-size: 0.4rem;
       }
@@ -870,7 +884,7 @@ background: #FFFFFF;
         margin: 8px 0;
       }
       .fees_account{
-        
+        margin: 0; margin-top: 24px;
         font-size: 0.4rem;
       }
      

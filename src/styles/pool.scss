@@ -109,7 +109,7 @@
   padding-top: 32px;
   margin-left: 20px;
   font-size: 20px;
-  font-family: Roboto-MediumItalic, Roboto;
+  font-family: roboto-mediumitalice;
   font-weight: normal;
   color: #FFFFFF;
   line-height: 24px;
@@ -137,12 +137,11 @@
     line-height: 19px;
 }
 .title {
-  height: 96px;
-  line-height: 96px;
   border-bottom: 1px solid #e5ebf2;
-  padding: 0 20px;
+  padding: 12px 20px;
   overflow: hidden;
- 
+  display: flex;
+  align-items: center;
   .content_text {
     
     height: 24px;
@@ -220,3 +219,8 @@
     margin-bottom: 8px;
   }
 }
+.lt_box{
+  flex: 1;
+}
+
+

@@ -50,19 +50,22 @@ export default {
     padding: 0 20px;
   }
 }
-.setmobile{
-   padding-left: 0.4rem;
-  padding-right: 0.4rem;
-}
+
 @media screen and (max-width: 750px)  {
+  
   .totalModel{
     max-width: 100%;
+    padding-bottom: 20px;
   }
     .setpdd{
       // padding: 0 0.4rem ;
       padding-left: 0.4rem;
       padding-right: 0.4rem;
     }
+    .setmobile{
+   padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
     
 }
 @media screen and (max-width: 375px)  { 

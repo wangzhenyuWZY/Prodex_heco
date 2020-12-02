@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="100%"
+             :width="!mobile?'100%':'480px'"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"
@@ -85,9 +85,8 @@
 </template>
 
 <script>
-
 export default {
-  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage'],  
+  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage','mobile'],  
   data () {
     return {
       showAlert: true

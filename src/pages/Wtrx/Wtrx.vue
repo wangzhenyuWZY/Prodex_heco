@@ -495,6 +495,7 @@ export default {
     }
     .wtrx-box{
         padding-top: 10px;
+        height: 100%;
     }
     .wtrx-bottom{
       width: 100%;

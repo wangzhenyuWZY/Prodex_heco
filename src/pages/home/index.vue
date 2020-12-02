@@ -289,4 +289,10 @@ export default {
   height: 72px;
   background: #ffffff;
 }
+
+@media screen and (max-width: 750px) {
+    .c-box2{
+      width: 100%;
+    }
+}
 </style>

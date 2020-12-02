@@ -222,7 +222,7 @@ background: #F6F7FB;
   
 font-weight: normal;
 color: #A6AEB7;
-font-size: 40px;
+font-size: 28px;
 }
 
 @keyframes slide-down {
@@ -247,6 +247,9 @@ font-size: 40px;
       height: 1.4rem;
        padding-left: 0.2rem;
       font-size: 0.55rem;
+    }
+    .globle_input::placeholder{
+      font-size: 0.5rem;
     }
     .from_data .from_input .input_lt .input_max{
        width: 1.2rem;

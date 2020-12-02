@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="100%"
+             :width="!mobile?'100%':'480px'"
              custom-class="dialog_selct"
              :before-close="handleClosea">
     <span slot="title"
@@ -90,6 +90,7 @@
 
 <script>
 import tokenData from '../../utils/token'
+import {IsPc} from '../../utils/index'
 export default {
   props: {
     showAlert: {
@@ -107,7 +108,7 @@ export default {
   },
   data () {
     return {
-      value: '',
+      mobile: IsPc(),
       // tokenList: tokenData.tokenList,
     }
   },
