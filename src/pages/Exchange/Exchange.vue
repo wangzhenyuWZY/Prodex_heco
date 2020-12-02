@@ -504,6 +504,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
 .exchange{
+  margin-top: 120px;
 
 .slott{
   background-color: #fff;

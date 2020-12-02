@@ -460,13 +460,8 @@ line-height: 19px;
     }
   }
   .pair_mandate{
-<<<<<<< HEAD
-    width: 210px;
-    height: 56px;
-=======
     display: inline-block;
     width: 48%;
->>>>>>> b1153e9e3121a326824c2b37d9110b12fd257004
   }
   .from_contentIcon {
     height: 36px;
