@@ -156,7 +156,7 @@ export default {
 .slotp{
     height: 57px;
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;
@@ -188,7 +188,7 @@ export default {
 }
 >>> .search__input .el-input__inner {
   border-radius: 32px;
-  border: 1px solid #ff5d37;
+  border: 1px solid#05C98E;
   border-radius: 32px;
   padding-left: 77px;
   font-size: 18px;
@@ -279,7 +279,7 @@ export default {
 }
 .Change_rg {
   font-size: 18px;
-  color: #ff5d37;
+  color:#05C98E;
 }
 .currency_list::-webkit-scrollbar {
   width: 8px;

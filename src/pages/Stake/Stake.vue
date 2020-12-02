@@ -515,12 +515,12 @@ ul {
       height: 48px;
       line-height: 48px;
       border-radius: 32px;
-      border: 1px solid #ff5d37;
+      border: 1px solid#05C98E;
       text-align: center;
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: normal;
-      color: #ff5d37;
+      color:#05C98E;
       margin: 0 auto;
       cursor: pointer;
     }

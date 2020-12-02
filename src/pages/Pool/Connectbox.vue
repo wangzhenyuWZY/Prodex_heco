@@ -782,7 +782,7 @@ export default {
     line-height: 50px;
     border-bottom: 1px solid #e5ebf2;
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #0F1730;
 
@@ -849,7 +849,7 @@ line-height: 48px;
 }
 .rex{
   font-size: 18px;
-font-family: Roboto-Regular, Roboto;
+font-family: roboto-mediumitalic;
 font-weight: 400;
 color: #A6AEB7;
 
@@ -909,7 +909,7 @@ font-size: 16px;
   margin-left: 23px;
   
 font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
 }
 .typeBtn1 {
@@ -919,7 +919,7 @@ font-size: 18px;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
 
 }

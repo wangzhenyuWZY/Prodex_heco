@@ -87,8 +87,9 @@
                   <span>Minimum received
                     <el-tooltip placement="right">
                       <div slot="content"
+                      effect="light"
                       
-                           class="">
+                           class="slott">
                         Your transaction will revert if<br>
                         there is a large,unfavorable <br>
                         price movement before it is
@@ -500,16 +501,17 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
-
+.slott{
+  background-color: #fff;
+}
 .slotp{ 
     height: 76px;
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;
-  
-background: #FFFFFF;
+    background: #FFFFFF;
 }
 .whe {
   width: 440px;
@@ -526,16 +528,19 @@ background: #FFFFFF;
   height: 72px;
   display: inline-block;
 }
-
+.from_botton{
+  background: #05C98E;
+}
 .ctx_3 {
   width: 160px;
+  font-family: roboto-mediumitalic;
   display: inline-block;
   margin-left: 12px;
 }
 .from_contentIcon {
   height: 36px;
   font-size: 32px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #0f1730;
   text-align: center;
@@ -557,7 +562,7 @@ background: #FFFFFF;
   }
   span:nth-child(2) {
     float: right;
-    color: #ff5d37;
+    color:#05C98E;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -567,7 +572,7 @@ background: #FFFFFF;
   .between {
     font-size: 56px;
     font-weight: normal;
-    color: #ff5d37;
+    color:#05C98E;
     width: 144px;
   }
   .demonstration {
@@ -619,7 +624,7 @@ background: #FFFFFF;
     
   }
   .setColr {
-    color: #ff5d37;
+    color:#05C98E;
   }
 }
 .setSlider {
@@ -661,7 +666,7 @@ background: #FFFFFF;
   .weth_btn {
     background: none;
     border-radius: 28px;
-    border: 1px solid #ff5d37;
+    border: 1px solid#05C98E;
     font-size: 20px;
     color: #fe613c;
     padding: 0;
@@ -706,7 +711,7 @@ background: #FFFFFF;
   }
   .el-slider__button::before {
     content: "";
-    background: #ff5d37;
+    background:#05C98E;
     width: 20px;
     height: 20px;
     line-height: 32px;
@@ -829,7 +834,7 @@ background: #FFFFFF;
   }
 }
 .rec_red {
-  color: #ff5d37;
+  color:#05C98E;
 }
 .outlogin {
   margin-top: 48px;

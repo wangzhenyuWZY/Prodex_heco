@@ -1,7 +1,9 @@
 <template>
+<div class="change">
+
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="100%"
+             width="480"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"
@@ -79,9 +81,10 @@
 
         </div>
       </div>
-    </div>
-    <el-button class="from_botton recevive_btn" @click="doConfirm">Confirm Swap</el-button>
-  </el-dialog>
+      </div>
+      <el-button class="from_botton recevive_btn" @click="doConfirm">Confirm Swap</el-button>
+      </el-dialog>
+  </div>
 </template>
 
 <script>
@@ -118,8 +121,10 @@ export default {
 <style  scoped>
 >>> .dialog_recevive {
   border-radius: 20px;
+  width: 480px;
 }
 >>> .dialog_recevive .el-icon-close {
+  /* width: 480px; */
   font-size: 28px;
   color: #0f1730;
 }
@@ -127,6 +132,7 @@ export default {
   color: #0f1730;
 }
 >>> .el-dialog__body {
+  width: 480px;
   padding: 0 32px;
   padding-bottom: 48px;
 }
@@ -137,13 +143,16 @@ export default {
   top: 24px;
   right: 34px;
 }
+
 .title__num {
   font-size: 40px;
   font-weight: normal;
   color: #fe613c;
   margin-bottom: 8px;
 }
-
+.from_botton{
+  background: #05C98E;
+}
 .receive__Pool {
   margin-top: 24px;
   font-size: 18px;

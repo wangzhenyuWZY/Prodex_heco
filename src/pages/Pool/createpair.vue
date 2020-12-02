@@ -39,7 +39,7 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  lable="weight(1-50)"
+            <frominput  class="flab" lable="weight"
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -60,7 +60,7 @@
                        v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput lable="weight(1-50)"
+            <frominput  lable="weigh"
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -384,13 +384,20 @@ export default {
   
 height: 19px;
 font-size: 16px;
-font-family: Roboto-Regular, Roboto;
+font-family: roboto-mediumitalic;
 font-weight: 400;
 color: #FFFFFF;
 line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
+.from_lable{
+  // width: 200px;
+  // padding-left: -16px;
+}
+.title{
+  // height: 72px;
+}
 .createpair {
   margin-top: 120px;
 
@@ -433,6 +440,7 @@ line-height: 19px;
       font-size: 20px;
       font-weight: bold;
       color: #0f1730;
+
     }
     .pair_mag {
       margin-top: 12px;
@@ -445,7 +453,7 @@ line-height: 19px;
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #0f1730;
     text-align: center;
   }
@@ -466,7 +474,7 @@ line-height: 19px;
     }
     span:nth-child(2) {
       float: right;
-      color: #ff5d37;
+      color:#05C98E;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -479,7 +487,7 @@ line-height: 19px;
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #ff5d37;
+      color:#05C98E;
       width: 144px;
     }
     .demonstration {
@@ -492,15 +500,17 @@ line-height: 19px;
     padding-bottom: 55px;
   }
   .lt_box {
-    // height: 96px;
+    //width: 440px;
+    //height: 72px;
+    // background: #000;
     .back_icon {
        color: #070A0E;
         width: 40px;
         height: 40px;
         text-align: center;
-        line-height: 40px;
+        // line-height: 40px;
         border-radius: 50%;
-          background: #F4F6FC;
+        background: #F4F6FC;
         cursor: pointer;
     }
   }
@@ -535,7 +545,7 @@ line-height: 19px;
     }
     
     .setColr {
-      color: #ff5d37;
+      color:#05C98E;
     }
   }
   .setSlider {
@@ -576,7 +586,7 @@ line-height: 19px;
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid #ff5d37;
+      border: 1px solid#05C98E;
       font-size: 20px;
       color: #fe613c;
       padding: 0;
@@ -621,7 +631,7 @@ line-height: 19px;
     }
     .el-slider__button::before {
       content: "";
-      background: #ff5d37;
+      background:#05C98E;
       width: 20px;
       height: 20px;
       line-height: 32px;
@@ -741,7 +751,7 @@ line-height: 19px;
     }
   }
   .rec_red {
-    color: #ff5d37;
+    color:#05C98E;
   }
   .outlogin {
     margin-top: 48px;
