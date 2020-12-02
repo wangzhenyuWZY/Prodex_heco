@@ -214,7 +214,7 @@ export default {
     margin-bottom: 14px;
     text-align: center;
     font-size: 24px;
-    font-family: Roboto-MediumItalic, Roboto;
+    font-family: roboto-mediumitalic, Roboto;
   }
   .ctx_1 {
     width: 397px;
@@ -233,7 +233,7 @@ export default {
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #0f1730;
     text-align: center;
   }
@@ -284,8 +284,8 @@ export default {
     justify-content: space-between;
     .content_text {
       font-size: 20px;
-      font-family: roboto-mediumitalic;
-      font-weight: normal;
+      font-family: roboto-mediumitalice;
+      // font-weight: normal;
       color: #0f1730;
       margin-left: 12px;
     }

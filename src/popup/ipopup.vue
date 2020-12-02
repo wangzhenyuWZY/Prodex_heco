@@ -114,7 +114,7 @@ export default {
   width: 349px;
   height: 21px;
   font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #878b97;
   line-height: 21px;
@@ -123,7 +123,7 @@ export default {
 .con-p1 {
   height: 21px;
   font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #878b97;
   line-height: 21px;
@@ -131,7 +131,7 @@ export default {
 .con-p2 {
   height: 21px;
   font-size: 18px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #fa403d;
   line-height: 21px;
@@ -208,7 +208,7 @@ export default {
   background: #f4f8fb;
   height: 24px;
   font-size: 20px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #0f1730;
   line-height: 24px;

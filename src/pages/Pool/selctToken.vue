@@ -152,7 +152,7 @@ export default {
 .slotp{
     height: 57px;
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #EEEEF0;
     line-height: 19px;

@@ -241,6 +241,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.from_botton{
+  background: #05C98E;
+}
 .wtrx {
   color: #0f1730;
 }
@@ -276,7 +279,7 @@ export default {
     margin-top: 49px;  
   height: 28px;
   font-size: 24px;
-  font-family: Roboto-Medium, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 500;
   color: #0F1730;
   line-height: 28px;
@@ -287,7 +290,7 @@ export default {
     .trx-a1 {
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -295,7 +298,7 @@ export default {
         .trx-a2 {
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -308,14 +311,14 @@ export default {
     .trx-b1 {
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
       .trx-b2 {
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -330,7 +333,7 @@ export default {
   padding-left: 50px;
   margin-top: 12px;
   font-size: 16px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #878B97;
   line-height: 18px;
@@ -352,7 +355,7 @@ export default {
     margin-top: 49px;  
   height: 28px;
   font-size: 24px;
-  font-family: Roboto-Medium, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 500;
   color: #0F1730;
   line-height: 28px;
@@ -363,7 +366,7 @@ export default {
     .wtrx-a1{
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -372,7 +375,7 @@ export default {
       
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -385,7 +388,7 @@ export default {
     .wtrx-b1{
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -393,7 +396,7 @@ export default {
 
       height: 21px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #0F1730;
       line-height: 21px;
@@ -405,7 +408,7 @@ export default {
 .wtrx-right input {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   color: #878b97;
   line-height: 18px;
   margin-top: 12px;
@@ -428,7 +431,7 @@ export default {
   height: 300px;
 }
 .wtrx-bottom p:nth-child(1) {
-  font-family: Roboto-Medium, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   font-size: 18px;
   margin-top: 48px;
@@ -438,7 +441,7 @@ export default {
 }
 .wtrx-bottom p:nth-child(2) {
 
-  font-family: Roboto-Regular, Roboto;
+  font-family:roboto;
   font-weight: 400;
   margin-top: 8px;
   font-size: 18px;
@@ -448,14 +451,14 @@ export default {
 }
 .wtrx-bottom p:nth-child(3) {
   
-  font-family: Roboto-Medium, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 500;
   margin-top: 24px;
   color: #0F1730;
   text-align: center;
 }
 .wtrx-bottom p:nth-child(4) {
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto;
   font-weight: 400;
   margin-top: 8px;
   color: #878b97;

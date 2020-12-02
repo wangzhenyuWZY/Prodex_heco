@@ -238,6 +238,9 @@ export default {
 </script>
 
 <style lang="scss"  >
+.removeLq{
+  margin-top: 120px;
+}
 .ctx_1 {
   width: 397px;
   display: inline-block;
@@ -255,7 +258,7 @@ export default {
 .from_contentIcon {
   height: 36px;
   font-size: 32px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
 color: #0F1730;
   text-align: center;
 }

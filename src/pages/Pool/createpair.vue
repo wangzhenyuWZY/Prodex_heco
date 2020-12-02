@@ -39,7 +39,7 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  lable="weight(1-50)"
+            <frominput  class="flab" lable="weight"
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -60,7 +60,7 @@
                        v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput lable="weight(1-50)"
+            <frominput  lable="weigh"
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -388,13 +388,20 @@ export default {
   
 height: 19px;
 font-size: 16px;
-font-family: Roboto-Regular, Roboto;
+font-family: roboto-mediumitalic;
 font-weight: 400;
 color: #FFFFFF;
 line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
+.from_lable{
+  // width: 200px;
+  // padding-left: -16px;
+}
+.title{
+  // height: 72px;
+}
 .createpair {
   margin-top: 120px;
 
@@ -437,6 +444,7 @@ line-height: 19px;
       font-size: 20px;
       font-weight: bold;
       color: #0f1730;
+
     }
     .pair_mag {
       margin-top: 12px;
@@ -449,7 +457,7 @@ line-height: 19px;
   .from_contentIcon {
     height: 36px;
     font-size: 32px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #0f1730;
     text-align: center;
   }
@@ -496,15 +504,17 @@ line-height: 19px;
     padding-bottom: 55px;
   }
   .lt_box {
-    // height: 96px;
+    //width: 440px;
+    //height: 72px;
+    // background: #000;
     .back_icon {
        color: #070A0E;
         width: 40px;
         height: 40px;
         text-align: center;
-        line-height: 40px;
+        // line-height: 40px;
         border-radius: 50%;
-          background: #F4F6FC;
+        background: #F4F6FC;
         cursor: pointer;
     }
   }

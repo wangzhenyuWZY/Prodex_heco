@@ -1,11 +1,16 @@
 <template>
 <div class="cont">
 
- <samp class="co-p">测试</samp>
+<div class="a">测试正ccc常字体  font-family: roboto; </div>
  <br>
- <span class="co-p1">测试</span>
  <br>
- <span class="co-p2">测试</span>
+ <div class="co-p1">测试粗体 font-family: roboto-mediumitalic;</div>
+ <br>
+ <br>
+ <div class="co-p2">测试细体 font-family: roboto-thin; </div>
+ <br>
+ <br>
+ <div class="co-p3">测试加粗斜体ont-family: roboto-mediumitalice;</div>
 </div>
 
 </template> 
@@ -18,22 +23,13 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
-.co-p{
-    font-size: 20px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: normal;
-}
-.co-p1{
-    font-size: 20px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 500;
-}
-.co-p2{
-    font-size: 20px;
-    font-family: Roboto-Regular, Roboto;
-    font-weight: 400;
-}
+<style lang="scss">
 
+.cont{
+    margin-top: 500px;
+    width: 200px;
+    font-size: 16px;
+    font-family: 'roboto-mediumitalice';
+}
 
 </style>

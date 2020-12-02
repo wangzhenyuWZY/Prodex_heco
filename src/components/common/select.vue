@@ -124,7 +124,7 @@ import tokenData from '../../utils/token'
         > li {
           height: 32px;
           line-height: 32px;
-          font-family: Roboto-Regular, Roboto;
+          font-family: roboto-mediumitalic;
           color: #e5ebf2;
           span {
             display: inline-block;
@@ -154,13 +154,13 @@ import tokenData from '../../utils/token'
     }
     .from_size {
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       color: #0F1730;
       // margin-left: 8px;
       // margin-right: 6px;
     }
     .show_size {
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       color: #05C98E;
     }
   }
@@ -177,12 +177,13 @@ import tokenData from '../../utils/token'
   .from_lable{
     font-size: 16px;
     height: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
     .balance_size{
+      
         color: #0F1730;
     }
   }

@@ -19,7 +19,7 @@
     width: 360px;
     height: 20px;
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #a6aeb7;
     line-height: 21px;
@@ -29,7 +29,7 @@
     width: 380px;
     height: 20px;
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #a6aeb7;
     line-height: 21px;
@@ -39,7 +39,7 @@
       width: 76px;
       height: 20px;
       font-size: 18px;
-      font-family: Roboto-Regular, Roboto;
+      font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #05C98E;
       line-height: 21px;
@@ -58,7 +58,7 @@
     width: 140px;
     height: 21px;
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 500;
     color: #0F1730;
     line-height: 21px;
@@ -109,7 +109,7 @@
   padding-top: 32px;
   margin-left: 20px;
   font-size: 20px;
-  font-family: Roboto-MediumItalic, Roboto;
+  font-family: roboto-mediumitalic, Roboto;
   font-weight: normal;
   color: #FFFFFF;
   line-height: 24px;
@@ -121,7 +121,7 @@
   margin-left: 20px;
   line-height: 19px;
   font-size: 16px;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
   font-weight: 400;
   color: #FFFFFF;
 }
@@ -131,23 +131,23 @@
   text-decoration: underline;
     height: 19px;
     font-size: 16px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     font-weight: 400;
     color: #FFFFFF;
     line-height: 19px;
 }
 .title {
-  height: 96px;
-  line-height: 96px;
+  height: 72px;
+  line-height: 72px;
   border-bottom: 1px solid #e5ebf2;
   padding: 0 20px;
   overflow: hidden;
  
   .content_text {
-    
     height: 24px;
-    font-size: 18px;
-    font-family: Roboto-MediumItalic, Roboto;
+    
+    font-size: 24px;
+    font-family: roboto-mediumitalice;
     color: #070A0E;
     line-height: 24px;
     margin-left: 8px;
@@ -171,7 +171,7 @@
   background: #f4f5fa;
   border-radius: 16px;
   // padding: 29px 0;
-  font-family: Roboto-Regular, Roboto;
+  font-family: roboto-mediumitalic;
 
 }
 .v_alert {
@@ -196,7 +196,7 @@
   }
   .alert_size {
     font-size: 18px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #e5ebf2;
     margin-top: 7px;
     text-align: center;
@@ -208,13 +208,13 @@
     border: 1px solid#05C98E;
     margin: 0 auto;
     font-size: 20px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color:#05C98E;
     background: none;
   }
   .failure_size{
     font-size: 14px;
-    font-family: Roboto-Regular, Roboto;
+    font-family: roboto-mediumitalic;
     color: #878B97;
     margin-top: 24px;
     margin-bottom: 8px;
