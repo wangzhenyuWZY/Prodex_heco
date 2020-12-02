@@ -83,7 +83,7 @@
           <div class="provider c_receove_Share ">
             <div class="">
               <div class="received">
-                <div class="lt">
+                <div class="lt1">
                   <span>Minimum received
                     <el-tooltip placement="right">
                       <div slot="content"
@@ -785,7 +785,7 @@ export default {
   background: #070A0E;
   border-radius: 0 0 20px 20px;
   position: absolute;
-  bottom: -275px;
+  bottom: -235px;
   left: 0;
   width: 480px;
   z-index: -1;
@@ -805,8 +805,9 @@ export default {
   justify-content: flex-start;
 }
 .c_receove_Share {
-  padding: 24px 40px;
-  padding-top: 40px;
+  box-sizing: border-box;
+  padding: 0px 20px;
+  padding-top: 50px;
 }
 .currencyprices {
   width: 190px;
@@ -814,7 +815,8 @@ export default {
 }
 
 .setmage {
-  margin: 20px 0;
+  // margin: 20px 0;
+  margin-top: 10px;
 }
 .fees_account {
   height: 48px;
@@ -836,6 +838,8 @@ export default {
 }
 .rec_red {
   color:#05C98E;
+  // margin-top: 30px;
+
 }
 .outlogin {
   margin-top: 48px;

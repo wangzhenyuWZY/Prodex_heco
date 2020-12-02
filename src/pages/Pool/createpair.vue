@@ -395,6 +395,11 @@ line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
+.from_botton{
+  width: 210px;
+  margin-top: 45px;
+  background: #05C98E;
+}
 .from_lable{
   // width: 200px;
   // padding-left: -16px;
@@ -444,7 +449,7 @@ line-height: 19px;
       font-size: 20px;
       font-weight: bold;
       color: #0f1730;
-
+      
     }
     .pair_mag {
       margin-top: 12px;
@@ -452,7 +457,8 @@ line-height: 19px;
     }
   }
   .pair_mandate{
-    width: 289px;
+    width: 210px;
+    height: 56px;
   }
   .from_contentIcon {
     height: 36px;
@@ -501,7 +507,7 @@ line-height: 19px;
   }
   .pair_input{
     margin-top: 40px;
-    padding-bottom: 55px;
+    padding-bottom: 48px;
   }
   .lt_box {
     //width: 440px;

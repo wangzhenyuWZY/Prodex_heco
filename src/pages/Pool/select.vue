@@ -137,7 +137,7 @@
   }
   .from_lable{
     font-size: 20px;
-    font-weight: normal;
+   
     color: #0F1730;
     margin-bottom: 12px;
     padding-left: 16px;
