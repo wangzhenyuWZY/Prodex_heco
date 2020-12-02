@@ -75,6 +75,7 @@ img{
     border-radius: 32px;
     height: 56px;
     text-align: center;
+    background: #05C98E;
     margin:0 auto;
     padding: 0;
     font-size: 18px;
@@ -91,12 +92,12 @@ img{
 }.from_botton.is-disabled:focus{
     background: #F4F5FA;
 
-    color: #878B97;
+    color: #fff;
 }
 .from_botton.is-disabled,.from_botton.is-disabled:hover{
     background: #F4F5FA;
     border: 1px solid #f4f5fa;
-    color: #878B97;
+    color: #fff;
 }
 
 .black_botton{

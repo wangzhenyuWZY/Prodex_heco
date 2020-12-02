@@ -56,11 +56,15 @@ export default {
   .totalModel{
     max-width: 100%;
     padding-bottom: 20px;
+     .modelBg{
+        padding: 0 0.35rem;
+      }
   }
+  
     .setpdd{
       // padding: 0 0.4rem ;
-      padding-left: 0.4rem;
-      padding-right: 0.4rem;
+      // padding-left: 0.4rem;
+      // padding-right: 0.4rem;
     }
     .setmobile{
    padding-left: 0.4rem;

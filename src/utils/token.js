@@ -80,6 +80,25 @@ export const pairList = [
         },
         pair:'WTRX/FOX',
         decimals:18
+    },
+    {
+        address:'TMGko3B1WF1SThjr1jje766MWaGf6wBCum',
+        token1:{ 
+            name:'FOX',
+            address:'TE9oQF7Y8tbq5Lqdfr9S47QNXHt7GRcHh4',
+            img:'',
+            balance:0,
+            decimals:12
+        },
+        token2:{ 
+            name:'USDT',
+            address:'TQKzfGM1F1bvjo2tnQ5Kirqdu2hR8mFWs2',
+            img:'',
+            balance:0,
+            decimals:8
+        },
+        pair:'FOX/USDT',
+        decimals:18
     }
 ]
 

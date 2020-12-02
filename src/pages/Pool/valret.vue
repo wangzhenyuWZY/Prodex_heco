@@ -2,7 +2,7 @@
   <el-dialog 
     title=""
     :visible.sync="isShow"
-    width="480px"
+    :width="!mobile?'80%':'480px'"
     custom-class="dialog_meeage"
     :before-close="handleClosea">
       <div class="alert_type">
@@ -37,7 +37,7 @@
 import success from '@/assets/img/icon_submitted.svg';
 import waiting from '@/assets/img/icon_waiting.svg';
 import failure from '@/assets/img/icon_faile.svg';
-
+import {IsPc} from '../../utils/index'
 export default {
   props:{
       isShow:{
@@ -79,7 +79,8 @@ export default {
         success,
         waiting,
         failure,
-      }
+      },
+      mobile:IsPc()
     }
   },
   methods: {
@@ -135,7 +136,7 @@ export default {
   margin-bottom: 48px;
 }
 .alert_button {
-  width: 416px;
+  width:80%;
   margin: 0 auto;
 }
 </style>

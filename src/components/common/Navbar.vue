@@ -2,14 +2,11 @@
   <div >
     <div class="bimg"> </div>
     <div class="nav clearfix">
-      <span class="logop">FoxDex</span>
-     
+      <div class="logo"><img src="../../assets/img/logo_FoxDex.png"
+             alt="" />
+             <span class="logop">FoxDex</span>
+             </div>
              
-      <div class="moble fl_lt" >
-        <!-- <div class="iconsv">
-          
-        </div> -->
-      </div>
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
              ref="header">
@@ -25,7 +22,7 @@
         <div class="nav-butt">
           <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
           <div class="login_wallet" v-if="connectFlag">
-              <img class="wallet_img" src="@/assets/img/btn_work_wallet_nor.svg" alt="">
+              <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
               <span class="wallet_addrs">{{walletAddres.address|address}}</span>
                <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
           </div>
@@ -194,12 +191,13 @@ export default {
   background-repeat: no-repeat;
   background-size: 100% 380px;
   z-index: -1;
+  border-radius: 0 0 16px 16px;
 }
 .nav {
   position: relative;
    
   /* width: 1920px; */
-  line-height: 72px;
+  // line-height: 72px;
   height: 72px;
 }
 
@@ -237,13 +235,19 @@ export default {
 }
 
 .logo {
-  // float: left;
-  // width: 35px;
-  // height: 35px;
-  // margin-left: 33px;
+  float: left;
+    display: flex;
+    align-items: center;
+  margin-left: 33px;
+  .logop{
+    font-family: 'roboto-mediumitalice';
+    
+  }
 }
 .logo img {
   width: 100%;
+   width: 50px;
+  height: 45px;
 }
 .nav-header {
   color: #495169;
@@ -286,7 +290,9 @@ export default {
   display: flex;
   align-items: center;
       cursor: pointer;
-
+    img{
+      margin-right: 2px;
+    }
   .wallet_icon{
     font-size: 24px;
     vertical-align: sub;
@@ -318,6 +324,20 @@ export default {
   margin-right: 8px;
 }
 @media screen and (max-width: 750px)  {
+   .nav{
+    padding-top: 10px;
+    height: auto;
+    padding-bottom: 1.2rem;
+    .logop{
+      font-size: 0.5rem;
+      margin-top: 0;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .logo{
+      margin-left: 15px;
+    }
+  }
   .nav-right{
     padding-right: 17px;
       .nav_merge{
@@ -325,6 +345,7 @@ export default {
     }
     .login_wallet{
       padding: 0 20px;
+      margin-top: 4px;
     }
       .wallet_addrs{
     margin: 0;
@@ -334,11 +355,15 @@ export default {
     padding: 0 0.25rem;
     font-size: 0.4rem;
   }
+ 
   }
   .content_text{
     display: none;
   }
-
+  .bimg{
+    height: 4.58rem;
+    background-size: 100%  4.58rem;
+  }
     
 }
 

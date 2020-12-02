@@ -187,6 +187,7 @@ import tokenData from '../../utils/token'
     .balance_size{
       
         color: #0F1730;
+        position: absolute;
     }
     .pads{
       width: 100%;
@@ -200,7 +201,7 @@ import tokenData from '../../utils/token'
       height: 1.4rem;
     }
     .from_select .from_size{
-      font-size: 0.35rem;
+      font-size: 0.3rem;
     }
     .from_lable{
       margin-bottom: 0.2rem;
@@ -209,7 +210,7 @@ import tokenData from '../../utils/token'
      .from_select{
       padding-right: 0.1rem;
       img{
-        width: 0.7rem;
+        width: 0.5rem;
         height: auto;
       }
       

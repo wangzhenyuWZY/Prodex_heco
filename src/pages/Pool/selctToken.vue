@@ -54,6 +54,8 @@
       <div class="select_size select__sorting ">
         <span>Token Name</span>
         <img class="sorting"
+            :class="iSort==0?'':(iSort==1?'sorttrue':'sortfalse')"
+            @click="changeSort"
              src="@/assets/img/icon_sorting.svg"
              alt="">
       </div>
@@ -110,12 +112,14 @@ export default {
     return {
       mobile: IsPc(),
       filterName: '',
+      iSort:0,
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
      tokenList(){
          let filtername = this.filterName
+         let iSort = this.iSort
          if (this.selectType == '') {
            return tokenData.tokenList.filter((el) => {
              return el.name.includes(filtername.toUpperCase())
@@ -131,6 +135,19 @@ export default {
   created () {
   },
   methods: {
+    changeSort(){
+      switch(this.iSort){
+        case 0:
+          this.iSort = 1
+          break
+        case 1:
+          this.iSort = 2
+          break
+        case 2:
+          this.iSort = 0
+          break    
+      }
+    },
     handleClosea () {
           this.$emit('closeAlert')
     },
@@ -257,6 +274,8 @@ export default {
   margin-top: 15px;
   margin-bottom: 12px;
 }
+.select__sorting .sorting.sorttrue{transform:rotate(180deg);}
+.select__sorting .sorting.sortfalse{transform:rotate(0deg);}
 .currency_list {
   height: 256px;
   background: #f4f5fa;

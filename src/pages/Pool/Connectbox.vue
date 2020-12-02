@@ -11,16 +11,18 @@
           </router-link>
           <span class="content_text fl_lt">Add Liquidity</span>
           <div class="text_btn conct_btn fl_lt">
-            <el-button class="from_botton connect_btns  green_btn "
-                       @click="iSingle=true"
-                       type="small">Single Token </el-button>
+               <el-button class="from_botton connect_btns"
+                      :class="iSingle?'green_btn':'fff_button'"
+                     @click="iSingle=true"
+                     type="small">Single Token </el-button>
           </div>
-          <div class="text_btn fl_lt">
-            <el-button class=" from_botton  fff_button connect_btns"
-                       @click="iSingle=false"
-                       type="small">Double Token </el-button>
-          </div>
-
+         <div class="text_btn fl_lt">
+              <el-button class=" from_botton connect_btns"
+                    :class="!iSingle?'green_btn':'fff_button'"
+                     @click="iSingle=false"
+                     type="small">Double Token </el-button>
+         </div>
+        
         </div>
         <div class="rg_box  fl_rg">
           <el-tooltip class="item"
@@ -115,7 +117,7 @@
           <div class="whe fl_lt"
                v-show="!isApproved">
             <el-button class="from_botton"
-                       @click="doApprove">Approve {{token1.name}}</el-button>
+                       @click="doApprove">Approve</el-button>
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton black_botton"
@@ -191,12 +193,15 @@
                  :token2Num="token2Num"
                  :token1="token1"
                  :token2="token2"
-                 @close="closeAlert" />
+                 @close="closeAlert" 
+           />
   </div>
 </template>
 
 <script>
+const Web3Utils = require('web3');
 const Decimal = require('decimal.js');
+import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
@@ -247,7 +252,9 @@ export default {
       confirmPop: false,
       popsData: {},
       showAlert1: false,
-      alertType: 'success'
+      alertType: 'success',
+      token1ApproveBalance:0,
+      token2ApproveBalance:0
     }
   },
   components: {
@@ -312,12 +319,12 @@ export default {
         });
         return
       }
-      if (this.iSingle) {
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
-      } else {
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, this.token1Num, this.token2Balance, this.token2Num, this.lpTotal.toString())
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+      if(this.iSingle){
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
+      }else{
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }
       this.popsData = {
         reciveLptoken: this.reciveLptoken,
@@ -457,12 +464,18 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex, 16)
-            if (approveBalance == 0) {
-              // that.$message({
-              //   message: '未授权请先授权',
-              //   type: 'error'
-              // });
+            that.token1ApproveBalance = parseInt(res._hex, 16)
+            if (that.token1ApproveBalance == 0) {
+              that.isApproved = false
+            } else {
+              that.isApproved = true
+            }
+          }
+        })
+        allowance(this.token2.address, pair[0].address).then((res) => {
+          if (res) {
+            that.token2ApproveBalance = parseInt(res._hex, 16)
+            if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {
               that.isApproved = true
@@ -512,10 +525,18 @@ export default {
     async joinPool () {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
+      let token1balance = new BigNumber(that.token1.balance)
+      token1balance = token1balance.times(Math.pow(10,that.token1.decimals)).toFixed()
+      let token2balance = new BigNumber(that.token2.balance)
+      token2balance = token2balance.times(Math.pow(10,that.token2.decimals)).toFixed()
+      console.log('token1balance===='+token1balance)
+      console.log('token2balance===='+token2balance)
+      const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
-        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10, that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10, that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10, that.token2.decimals)).toString()] },
+        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
+        { type: 'uint256[]', value: [MAX, MAX] },
       ]
+      console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
         if (!transaction.result || !transaction.result.result) {
@@ -593,7 +614,16 @@ export default {
     },
     doApprove () {
       if (this.pair) {
-        approved(this.token1.address, this.pair.address)
+        if(this.token1ApproveBalance==0){
+          approved(this.token1.address, this.pair.address).then((res)=>{
+            window.location.reload()
+          })
+        }
+        if(this.token2ApproveBalance==0){
+          approved(this.token2.address, this.pair.address).then((res)=>{
+            window.location.reload()
+          })
+        }
       } else {
         this.$layer.msg('请选择交易对')
       }
@@ -977,7 +1007,7 @@ font-size: 18px;
     padding:  10px  0.2rem;
     .content_text {
       // width: 54px;
-      font-size: 0.2rem;
+      font-size: 0.4rem;
     }
   }
 }
