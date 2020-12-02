@@ -106,7 +106,7 @@
             <div class="received setmage">
               <div class="lt">
                 <span>Price Impacte 
-                    <el-tooltip placement="right">
+                    <el-tooltip placement="right" effect="light">
                   <div slot="content" class="slotp2"> 
                        Right Center 提示文字<br> 
                       </div>

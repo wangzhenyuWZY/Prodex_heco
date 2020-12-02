@@ -1,6 +1,6 @@
 <template>
   <div class="stake_slect">
-    <h3 class="selct_top">Earn FARM with FoxDex</h3>
+    <!-- <h3 class="selct_top">Earn FARM with FoxDex</h3> -->
     <container top="24">
       <!-- top="0" -->
       <div class="title"
@@ -49,7 +49,7 @@
           </div>
         </div>
         <!--  -->
-        <div class="text_border">To stake UNISWAP_LP tokens, acquire <span class="colorFE613C">them here</span> </div>
+        <div class="text_border">To stake UNISWAP_LP tokens, acquire <span class="colorF">them here</span> </div>
         <div class="received">
           <div class="lt">
             <span>Total FARM Earned</span>
@@ -203,6 +203,9 @@ export default {
 </script>
 
 <style lang="scss"   scoped>
+.colorF{
+  color: #05C98E;
+}
 .stake_slect {
   color: #0f1730;
   font-size: 18px;
@@ -428,7 +431,7 @@ export default {
     padding-bottom: 48px;
     .Approve1 {
       height: 56px;
-      width:293px;
+      width:210px;
       border-radius: 25px;
       font-size: 20px;
     }
@@ -437,7 +440,7 @@ export default {
     margin-top: 32px;
     margin-bottom: 40px;
     .Approve1 {
-      width: 293px;
+      width: 210px;
       height: 56px;
       border-radius: 25px;
  
