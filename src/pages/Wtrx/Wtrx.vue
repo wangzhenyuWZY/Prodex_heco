@@ -528,4 +528,5 @@ export default {
     }
   }
 }
+}
 </style>
