@@ -125,7 +125,7 @@
                     </el-tooltip>
                   </span>
                 </div>
-                <span class="">{{swapFee}} {{token1.name}}</span>
+                <span class="setspan">{{swapFee}} {{token1.name}}</span>
               </div>
               <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
                      alt=""></div>
@@ -609,7 +609,7 @@ export default {
   img {
     width: 24px;
     height: 24px;
-    vertical-align: sub;
+    vertical-align: middle;
     margin-right: 8px;
   }
   .rg {
@@ -732,6 +732,9 @@ export default {
     }
   }
 }
+.setspan{
+  line-height: 24px;
+}
 .Price_text {
   font-size: 20px;
   color: #0f1730;
@@ -786,8 +789,8 @@ export default {
   justify-content: flex-start;
 }
 .c_receove_Share {
-  padding: 24px 40px;
-  padding-top: 40px;
+  padding: 0 20px;
+  padding-top: 50px;
 }
 .currencyprices {
   width: 190px;
@@ -795,17 +798,15 @@ export default {
 }
 
 .setmage {
-  margin: 20px 0;
+  margin: 18px 0;
 }
 .fees_account {
   height: 48px;
   line-height: 48px;
   border-radius: 16px;
-  padding-left: 20px;
-  margin-top: 48px;
-  margin-bottom: 24px;
+  margin: 24px 0;
+  padding-left: 25px;
   color: #A6AEB7;
- 
   border: 1px solid #A6AEB7;
   position: relative;
   cursor: pointer;
@@ -817,6 +818,7 @@ export default {
 }
 .rec_red {
   color: #ff5d37;
+  line-height: 24px;
 }
 .outlogin {
   margin-top: 48px;
@@ -840,7 +842,7 @@ export default {
   
   background: #070A0E;
   border-radius: 0 0 20px 20px;
-width: 100%;
+  width: 100%;
   z-index: -1;
   border-radius: 16px;
 }
@@ -856,6 +858,16 @@ width: 100%;
            .ctx_3{
               min-width: 3.2rem;
           }
+      }
+      .received{
+            font-size: 0.4rem;
+      }
+      .setmage{
+        margin: 8px 0;
+      }
+      .fees_account{
+        
+        font-size: 0.4rem;
       }
      
     }

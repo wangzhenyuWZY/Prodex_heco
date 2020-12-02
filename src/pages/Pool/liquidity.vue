@@ -325,4 +325,11 @@ export default {
     padding: 16px 0 32px 24px;
   }
 }
+@media screen and (max-width: 750px) {
+  .pool-box{
+    width: 100%;
+    // padding: 0 0.4rem ;
+    margin-top: 10px;
+  }
+}
 </style>

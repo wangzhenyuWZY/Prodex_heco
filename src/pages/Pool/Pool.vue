@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container ppcode">
     <!-- <div class="globle_title">Pool</div> -->
       <!-- <addfrombox/> -->
       <!-- <connectbox/> -->
@@ -75,5 +75,15 @@ export default {
     line-height: 28px;
   
 }
-@import '@/styles/pool.scss'
+@import '@/styles/pool.scss';
+@media screen and (max-width: 750px) {
+  .pool-box{
+    width: 100%;
+    margin-top: 10px;
+  }
+  .ppcode{
+    padding: 0 0.4rem ;
+    
+  }
+}
 </style>
