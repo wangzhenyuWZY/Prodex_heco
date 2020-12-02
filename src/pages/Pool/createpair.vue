@@ -85,7 +85,7 @@
         </div>
         <div class="whe clearfix">
          
-           <span class="pair_mandate" v-show="false">  <el-button class="from_botton  " > Mandate</el-button> </span>
+           <span class="pair_mandate" v-show="false">  <el-button class="from_botton pair_mandate  pair_mandate_btb" > Mandate</el-button> </span>
           <el-button class="from_botton pair_mandate pair_swap " @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
@@ -774,6 +774,16 @@ line-height: 19px;
 }
 @media screen and (max-width: 750px) {
    .createpair {
+     .from_botton{
+       margin-top: 0;
+     }
+     .title{
+       height: 1.6rem;
+       line-height: 1.6rem;
+     }
+     .tran_icon{
+       font-size: 0.37rem !important;
+     }
      .ctx_1{
        width: 40%;
      }
@@ -789,10 +799,13 @@ line-height: 19px;
        margin: 0 8px;
      }
       .ctx_3{
-       width: 30%;
+       width: 33%;
      }
      .pair_mandate{
        width: 70%;
+     }
+     .pair_mandate_btb{
+       width: 90%;
      }
      .pair_mandate{
        height: 1rem;

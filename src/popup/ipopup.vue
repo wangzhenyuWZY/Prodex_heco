@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+             :width="!mobile?'90%':'480px'"
              custom-class="dialog_selct"
              :close-on-click-modal="false"
              :before-close="handleClosea">
@@ -38,13 +38,15 @@ import tokenData from '../utils/token'
 import { mapState } from 'vuex'
 import store from '../store/index'
 import { Notification } from 'element-ui';
+import {IsPc} from '../utils/index'
 export default {
   data () {
     return {
       value: '',
       showAlert: false,
       connect: null,
-      index: 1
+      index: 1,
+      mobile:IsPc()
       // tokenList: tokenData.tokenList,
     }
   },
@@ -107,8 +109,7 @@ export default {
   }
 }
 </script>
-<style lang="scss" scoped>
-</style>
+
 <style  scoped>
 .con-p {
   width: 349px;
@@ -223,5 +224,26 @@ export default {
 }
 .currency_list::-webkit-scrollbar-thumb {
   border-radius: 4px;
+}
+
+
+</style>
+
+<style lang="scss" scoped>
+@media screen and (max-width: 750px) {
+  .currency_list{
+  width: 100%;
+  text-align: center;
+  .con-but{
+    margin-left: 0;
+  }
+  }
+  .con-p1{
+    font-size: 0.37rem;
+  }
+  .con-p{
+    margin-left: 0;
+  }
+
 }
 </style>

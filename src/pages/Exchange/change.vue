@@ -3,7 +3,7 @@
 
   <el-dialog title=""
              :visible.sync="showAlert"
-             :width="!mobile?'100%':'480px'"
+             :width="!mobile?'90%':'480px'"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"
@@ -88,11 +88,13 @@
 </template>
 
 <script>
+import { IsPc } from '../../utils'
 export default {
   props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage','mobile'],  
   data () {
     return {
-      showAlert: true
+      showAlert: true,
+      mobile:IsPc()
 
     }
   },
@@ -131,7 +133,6 @@ export default {
   color: #0f1730;
 }
 >>> .el-dialog__body {
-  width: 480px;
   padding: 0 32px;
   padding-bottom: 48px;
 }
@@ -142,7 +143,9 @@ export default {
   top: 24px;
   right: 34px;
 }
-
+>>> .el-dialog__wrapper{
+  overflow: auto;
+}
 .title__num {
   font-size: 40px;
   font-weight: normal;
@@ -233,4 +236,14 @@ export default {
         margin-left: 4px;
         cursor: pointer;
   }
+  
+</style>
+
+<style lang="scss" scoped>
+.change{
+   .received span {
+     font-size: 0.37rem;
+   }
+}
+
 </style>
