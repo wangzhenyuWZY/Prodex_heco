@@ -1,11 +1,9 @@
 <template>
   <div >
-    <div class="bimg"></div>
+    <div class="bimg"> </div>
     <div class="nav clearfix">
-      <div class="logo"><img src="../../assets/img/wtxlo.png"
-             alt="" />
-             <!-- <span class="logop">FoxDex</span> -->
-             </div>
+      <span class="logop">FoxDex</span>
+     
              
       <div class="moble fl_lt" >
         <!-- <div class="iconsv">
@@ -170,13 +168,15 @@ export default {
 
 <style lang="scss" scoped>
 .logop{
-  
-height: 38px;
-font-size: 32px;
-font-family: roboto-mediumitalic;
-font-weight: normal;
-color: #05C98E;
-line-height: 38px;
+  float: left;
+  margin-top: 15px;
+  height: 38px;
+  font-size: 32px;
+  font-family: roboto-mediumitalice;;
+  color: #05C98E;
+  line-height: 38px;
+  margin-left: 116px;
+  margin-right: 22px;
 }
 .iconsv{
   margin-left: 50px;
@@ -228,7 +228,7 @@ line-height: 38px;
 .nav-ion1 {
   width: 50px;
   height: 40px;
-  background: pink;
+  // background: pink;
 }
 .nav-ion2 {
   width: 50px;
@@ -237,16 +237,15 @@ line-height: 38px;
 }
 
 .logo {
-  float: left;
-  width: 35px;
-  height: 35px;
-  margin-left: 33px;
+  // float: left;
+  // width: 35px;
+  // height: 35px;
+  // margin-left: 33px;
 }
 .logo img {
   width: 100%;
 }
 .nav-header {
-  
   color: #495169;
   position: relative;
 
@@ -277,6 +276,7 @@ line-height: 38px;
   color: #ffffff;
 }
 .login_wallet{
+  margin-top: 18px;
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
@@ -312,6 +312,10 @@ line-height: 38px;
       font-weight: normal;
       color: #FFFFFF;
   }
+}
+.nav_btn{
+  margin-top: 17px;
+  margin-right: 8px;
 }
 @media screen and (max-width: 750px)  {
   .nav-right{

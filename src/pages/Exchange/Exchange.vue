@@ -84,11 +84,9 @@
               <div class="received">
                 <div class="lt1">
                   <span>Minimum received
-                    <el-tooltip placement="right">
+                    <el-tooltip placement="right"   effect="light">
                       <div slot="content"
-                      effect="light"
-                      
-                           class="slott">
+                           >
                         Your transaction will revert if<br>
                         there is a large,unfavorable <br>
                         price movement before it is
@@ -107,7 +105,7 @@
               <div class="lt">
                 <span>Price Impacte 
                     <el-tooltip placement="right" effect="light">
-                  <div slot="content" class="slotp2"> 
+                  <div slot="content" > 
                        Right Center 提示文字<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
@@ -116,11 +114,11 @@
                 </div>
                 <span class="rec_red">{{percentage}}%</span>
               </div>
-              <div class="received">
+              <div class="received"  >
                 <div class="lt">
                   <span>Liquidity Provider Fee
                     <el-tooltip class="item"
-                                effect="dark"
+                              effect="light"
                                 content="Right Center 提示文字"
                                 placement="right">
                       <img src="@/assets/img/icon_instructions.svg"
@@ -534,6 +532,8 @@ export default {
 }
 .from_botton{
   background: #05C98E;
+  color: #FFFFFF;
+
 }
 .ctx_3 {
   min-width: 160px;
@@ -672,7 +672,7 @@ export default {
     border-radius: 28px;
     border: 1px solid#05C98E;
     font-size: 20px;
-    color: #fe613c;
+    color:#05C98E;
     padding: 0;
     width: 200px;
     height: 32px;
