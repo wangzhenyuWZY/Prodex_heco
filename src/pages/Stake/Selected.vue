@@ -311,6 +311,7 @@ export default {
         line-height: 40px;
         border-radius: 50%;
           background: #F4F6FC;
+          font-size: 18px;
         cursor: pointer;
       }
     }

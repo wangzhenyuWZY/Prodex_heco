@@ -1,5 +1,5 @@
 <template>
-  <div class="totalModel" :class="pdd?'setpdd':''">
+  <div class="totalModel" :class="`${pdd ? 'setpdd' : ''}${mobile ? ' setmobile' : ''}`">
     <div class="toal_bg">
       <slot name="title"></slot>
     <div class="modelBg" :style="{'paddingTop':top+'px'}">
@@ -18,6 +18,10 @@ export default {
       default:'72'
     },
     pdd:{
+      type:Boolean,
+      default:false
+    },
+    mobile:{
       type:Boolean,
       default:false
     }
@@ -45,5 +49,26 @@ export default {
   .modelBg {
     padding: 0 20px;
   }
+}
+
+@media screen and (max-width: 750px)  {
+  
+  .totalModel{
+    max-width: 100%;
+    padding-bottom: 20px;
+  }
+    .setpdd{
+      // padding: 0 0.4rem ;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+    }
+    .setmobile{
+   padding-left: 0.4rem;
+  padding-right: 0.4rem;
+}
+    
+}
+@media screen and (max-width: 375px)  { 
+
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
 <div class="input_select">
-  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"><span>Balance:</span> <span class="balance_size">{{balance}}</span> </div>
+  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> Balance: <span class="balance_size">{{balance}}</span></span>  </div>
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
         <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="imgUrl" alt=""> </span>
@@ -132,6 +132,7 @@ import tokenData from '../../utils/token'
           }
         }
       }
+ 
       .open {
         max-height: 100%;
         transition: max-height 0.1s ease-in;
@@ -182,9 +183,36 @@ import tokenData from '../../utils/token'
     color: #878B97;
     margin-bottom: 12px;
     padding-left: 16px;
+    position: relative;
     .balance_size{
       
         color: #0F1730;
     }
+    .pads{
+      width: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
   }
+  @media screen and (max-width:750px) {
+    .input_content{
+      height: 1.4rem;
+    }
+    .from_select .from_size{
+      font-size: 0.35rem;
+    }
+    .from_lable{
+      margin-bottom: 0.2rem;
+      padding-left: 0.2rem;
+    }
+     .from_select{
+      padding-right: 0.1rem;
+      img{
+        width: 0.7rem;
+        height: auto;
+      }
+      
+    }
+}
 </style>

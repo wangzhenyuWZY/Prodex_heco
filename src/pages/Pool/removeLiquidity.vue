@@ -48,7 +48,7 @@
         <div class="box_sizes">
           <div class="provider Receive">
             <div class="">
-              <div class="received">
+              <div class="received mobilerece">
                 <div class="lt">
                   <img class="lt_icon"
                       src="@/assets/img/icon_wen.svg"
@@ -220,7 +220,6 @@ export default {
       }
       this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
       this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
-      console.log('this.slidenum========'+this.slidenum)
     },
     async getSpotPrice (address1, address2, name) {
       var functionSelector = 'getSpotPrice(address,address)';
@@ -306,6 +305,7 @@ color: #0F1730;
         line-height: 40px;
         border-radius: 50%;
           background: #F4F6FC;
+          font-size: 18px;
         cursor: pointer;
   }
 }
@@ -446,5 +446,47 @@ color: #0F1730;
   .el-slider__runway {
     background: #0f1730;
   }
+}
+@media screen and (max-width: 750px) {
+  .removeLq{
+      .add_marg {
+        padding: 0.5rem 0.4rem;
+      }
+      .box_slider{
+        .between{
+          font-size:1rem;
+          line-height: 1.3;
+          width: 35%;
+        }
+      }
+      .setSlider{
+          li{
+            width: 22%;
+            // height: 0.7rem;
+            line-height: 0.74rem;
+            font-size: 0.35rem;
+          }
+        
+      }
+  .mobilerece{
+    span{
+      font-size: 0.37rem;
+    }
+  }
+  }
+  .weth{
+    .weth_btn{
+      font-size: 0.37rem;
+    }
+  }
+  .Receive{
+     padding: 0.5rem 0.4rem;
+  }
+    .box_top{
+            span{
+            font-size: 0.4rem;
+
+            }
+          }
 }
 </style>

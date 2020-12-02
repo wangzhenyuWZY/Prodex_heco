@@ -1,35 +1,35 @@
 <template>
   <div class="connect_pd">
     <container top="32"
-               pdd >
+               pdd>
       <div class="title"
            slot="title">
-        <div class="lt_box  fl_lt">
-          <router-link to="/pool" class="fl_lt">
-            <span class="icon_box">
-              <i class="el-icon-back back_icon"></i>
-            </span>
+        <div class="lt_box  ">
+          <router-link to="/pool"
+                       class="disa">
+            <i class="el-icon-back back_icon"></i>
           </router-link>
           <span class="content_text fl_lt">Add Liquidity</span>
           <div class="text_btn conct_btn fl_lt">
-               <el-button class="from_botton connect_btns  green_btn "
-                     @click="iSingle=true"
-                     type="small">Single Token </el-button>
+            <el-button class="from_botton connect_btns  green_btn "
+                       @click="iSingle=true"
+                       type="small">Single Token </el-button>
           </div>
-         <div class="text_btn fl_lt">
-              <el-button class=" from_botton  fff_button connect_btns"
-                     @click="iSingle=false"
-                     type="small">Double Token </el-button>
-         </div>
-        
+          <div class="text_btn fl_lt">
+            <el-button class=" from_botton  fff_button connect_btns"
+                       @click="iSingle=false"
+                       type="small">Double Token </el-button>
+          </div>
+
         </div>
         <div class="rg_box  fl_rg">
-          <el-tooltip class="item" 
-                  effect="dark" 
-                  content="Right Center 提示文字" 
-                  placement="right">
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
+          <el-tooltip class="item"
+                      effect="dark"
+                      content="Right Center 提示文字"
+                      placement="right">
+            <img src="@/assets/img/icon_instructions.svg"
+                 alt="">
+          </el-tooltip>
         </div>
       </div>
 
@@ -63,7 +63,7 @@
             <setselect lable="321321"
                        :imgUrl="token1.img"
                        item='1'
-                       :showSelect ="JSON.stringify(token1)!='{}'"
+                       :showSelect="JSON.stringify(token1)!='{}'"
                        :balance="token1.balance"
                        :text="token1.name"
                        @click="showSelect(0)" />
@@ -78,7 +78,6 @@
             <frominput lable="input"
                        placeholder=""
                        showmax
-                     
                        :balance='token2.balance'
                        @input="calcToken1Num"
                        v-model="token2Num"></frominput>
@@ -87,12 +86,13 @@
             <setselect :imgUrl="token2.img"
                        item='2'
                        :balance="token2.balance"
-                         :showSelect ="JSON.stringify(token2)!='{}'"
+                       :showSelect="JSON.stringify(token2)!='{}'"
                        :text="token2.name"
                        @click="showSelect(1)" />
           </div>
         </div>
-        <div class="box_sizes">
+        <div class="box_sizes"
+             v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
           <div class="provider connectbox">
             <div class="box_title">Prices and pool share</div>
             <ul class="pre_list clearfix">
@@ -126,20 +126,21 @@
         </div>
       </div>
       <div slot="footer"
-           class="position clearfix" v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
+           class="position "
+           v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
             <div class="">
               <div class="received metitle ">
-                <div class="lt ">
+                <div class=" ">
                   Your position
                 </div>
                 <div class="rg connect_currency">
-                  <div class="">
+                  <div class="metits">
                     <img class="lt_icon"
                          src="@/assets/img/btc.svg"
                          alt="">
-                    <span>{{token1.name}}/{{token2.name}}</span>
+                    <span class="setsize">{{token1.name}}/{{token2.name}}</span>
                   </div>
                   <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
 
@@ -172,32 +173,25 @@
     <selctoken :showAlert='isSelect'
                :item='item'
                @closeAlert="isSelect=false"
-               @change="changeCoin"
-                />
-      <!--单币种流动性弹窗 -->
-    <selctoken
-          :showAlert ="isSelect1"
-          :item='item'
-          :selectType="selectType"
-          @closeAlert="isSelect1=false"
-          @linkage="linkage"
-    />
-    <recevive
-      v-if="confirmPop"
-      :showAlert ='confirmPop'
-      :popsData = 'popsData'
-      @change='supply(1)'
-      @close="confirmPop = false"
-    />  
-    <removealert
-      :isShow="showAlert1"
-      :alertType="alertType"
-      :token1Num="token1Num"
-      :token2Num="token2Num"
-      :token1 = "token1"
-      :token2 = "token2"
-      @close="closeAlert"
-   />         
+               @change="changeCoin" />
+    <!--单币种流动性弹窗 -->
+    <selctoken :showAlert="isSelect1"
+               :item='item'
+               :selectType="selectType"
+               @closeAlert="isSelect1=false"
+               @linkage="linkage" />
+    <recevive v-if="confirmPop"
+              :showAlert='confirmPop'
+              :popsData='popsData'
+              @change='supply(1)'
+              @close="confirmPop = false" />
+    <removealert :isShow="showAlert1"
+                 :alertType="alertType"
+                 :token1Num="token1Num"
+                 :token2Num="token2Num"
+                 :token1="token1"
+                 :token2="token2"
+                 @close="closeAlert" />
   </div>
 </template>
 
@@ -207,8 +201,8 @@ import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
 import tokenData from '../../utils/token'
-import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool  } from '../../utils/tronwebFn'
-import {calcPoolOutGivenSingleIn,getTokenInGivenPoolOut} from '../../utils/calc_comparisons'
+import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool } from '../../utils/tronwebFn'
+import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
 import removealert from './valret';
 
@@ -222,7 +216,7 @@ export default {
       pair: {},
       token: {},
       isSelect: false,
-      isSelect1:false,
+      isSelect1: false,
       item: 1,
       pairAddress: null,
       justPrice: 0,
@@ -244,16 +238,16 @@ export default {
         disabled1: true,
         subimt: false
       },
-      token2denormalizedWeight:0,
-      myShare:0,
-      myToken1Balance:0,
-      myToken2Balance:0,
-      myBalanceInPool:0,
-      reciveLptoken:0,
-      confirmPop:false,
-      popsData:{},
-      showAlert1:false,
-      alertType:'success'
+      token2denormalizedWeight: 0,
+      myShare: 0,
+      myToken1Balance: 0,
+      myToken2Balance: 0,
+      myBalanceInPool: 0,
+      reciveLptoken: 0,
+      confirmPop: false,
+      popsData: {},
+      showAlert1: false,
+      alertType: 'success'
     }
   },
   components: {
@@ -287,62 +281,62 @@ export default {
     }
   },
   methods: {
-    closeAlert(){
+    closeAlert () {
       this.showAlert1 = false
       window.location.reload()
     },
-    checkSupply(){
-      if(!this.token1Num || this.token1Num=='' || this.token1Num==0){
+    checkSupply () {
+      if (!this.token1Num || this.token1Num == '' || this.token1Num == 0) {
         this.$message({
           message: '请输入添加数量',
           type: 'error'
         });
-      }else if(this.token1Num>this.token1.balance){
+      } else if (this.token1Num > this.token1.balance) {
         this.$message({
           message: '钱包余额不足',
           type: 'error'
         });
       }
     },
-    confirmSupply(){//输出的lptoken数量
-      if(this.token1Num>this.token1.balance || this.token2Num>this.token2.balance){
+    confirmSupply () {//输出的lptoken数量
+      if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
           message: '钱包余额不足',
           type: 'error'
         });
         return
-      }else if(this.token1Num>this.token1Balance || this.token2Num>this.token2Balance){
+      } else if (this.token1Num > this.token1Balance || this.token2Num > this.token2Balance) {
         this.$message({
           message: '流动池余额不足',
           type: 'error'
         });
         return
       }
-      if(this.iSingle){
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
-      }else{
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal.toString())
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
+      if (this.iSingle) {
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+      } else {
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, this.token1Num, this.token2Balance, this.token2Num, this.lpTotal.toString())
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
       }
       this.popsData = {
-        reciveLptoken:this.reciveLptoken,
-        token1Num:this.token1Num,
-        token2Num:this.iSingle?0:this.token2Num,
-        t1Per:this.justPrice,
-        t2Per:this.reversePrice,
-        token1:this.token1,
-        token2:this.token2,
-        share:this.share
+        reciveLptoken: this.reciveLptoken,
+        token1Num: this.token1Num,
+        token2Num: this.iSingle ? 0 : this.token2Num,
+        t1Per: this.justPrice,
+        t2Per: this.reversePrice,
+        token1: this.token1,
+        token2: this.token2,
+        share: this.share
       }
       this.confirmPop = true
-    }, 
-    calcToken1Num(){
-      if(this.token2Num<=0){
+    },
+    calcToken1Num () {
+      if (this.token2Num <= 0) {
         return
       }
-      if(this.token1Balance&&this.token2Balance){
-        this.token1Num = (this.token2Num/this.token2Balance*this.token1Balance).toFixed(6)
+      if (this.token1Balance && this.token2Balance) {
+        this.token1Num = (this.token2Num / this.token2Balance * this.token1Balance).toFixed(6)
         // let differ = this.token2.decimals-this.token1.decimals
         // if(differ!==0 && differ>0){
         //   this.token1Num = (this.token1Num/Math.pow(10,Math.abs(differ))).toFixed(6)
@@ -350,32 +344,32 @@ export default {
         //   this.token1Num = (this.token1Num*Math.pow(10,Math.abs(differ))).toFixed(6)
         // }
       }
-      
+
     },
-    calcShare(){
-      if(this.token1Num<=0){
+    calcShare () {
+      if (this.token1Num <= 0) {
         return
       }
-        if(this.token1Balance&&this.token2Balance){
-          this.token2Num = (this.token1Num/this.token1Balance*this.token2Balance).toFixed(6)
-          // let differ = this.token1.decimals-this.token2.decimals
-          // if(differ!==0 && differ>0){
-          //   this.token2Num = (this.token2Num/Math.pow(10,Math.abs(differ))).toFixed(6)
-          // }else if(differ!==0 && differ<0){
-          //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
-          // }
-        }
-      if(this.pair.address){
+      if (this.token1Balance && this.token2Balance) {
+        this.token2Num = (this.token1Num / this.token1Balance * this.token2Balance).toFixed(6)
+        // let differ = this.token1.decimals-this.token2.decimals
+        // if(differ!==0 && differ>0){
+        //   this.token2Num = (this.token2Num/Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }else if(differ!==0 && differ<0){
+        //   this.token2Num = (this.token2Num*Math.pow(10,Math.abs(differ))).toFixed(6)
+        // }
+      }
+      if (this.pair.address) {
         this.getShare()
       }
     },
     getShare () {
       let that = this
-      if(this.token1Num && this.token1Num!==0){
-        if(this.token1Balance&&this.denormalizedWeight&&this.lpTotal&&this.totalDenormalizedWeight){
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
-          this.share = (poolOut/this.lpTotal*100).toFixed(2) 
-        }else{
+      if (this.token1Num && this.token1Num !== 0) {
+        if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+          this.share = (poolOut / this.lpTotal * 100).toFixed(2)
+        } else {
           this.getToken1DenormalizedWeight()//获取token1在pool中的权重
           this.getToken2DenormalizedWeight()//获取token2在pool中的权重
           this.getTotalDenormalizedWeight()//获取lptoken总权重
@@ -384,28 +378,28 @@ export default {
       } else {
         this.share = 0
       }
-      
+
     },
-    async getToken2DenormalizedWeight(){
+    async getToken2DenormalizedWeight () {
       var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token2.address }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        this.token2denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
-        console.log("token2权重======="+this.token2denormalizedWeight)
+        this.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+        console.log("token2权重=======" + this.token2denormalizedWeight)
       }
     },
-    async getToken1DenormalizedWeight(){
+    async getToken1DenormalizedWeight () {
       var functionSelector = 'getDenorm(address)';
       var parameter = [
         { type: 'address', value: this.token1.address }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        this.denormalizedWeight = parseInt(transaction.constant_result[0],16)/Math.pow(10,this.pair.decimals)
-        console.log("token1权重======="+this.denormalizedWeight)
+        this.denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+        console.log("token1权重=======" + this.denormalizedWeight)
       }
     },
     async getTotalDenormalizedWeight () {
@@ -414,7 +408,6 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
         this.totalDenormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-        console.log('this.totalDenormalizedWeight========' + this.totalDenormalizedWeight)
       }
     },
     async getSwapFeeForDex () {
@@ -422,7 +415,6 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0], 16)
-      console.log('this.foxDex========' + transaction.constant_result[0])
     },
     async getPairAddress () {
       let that = this
@@ -431,40 +423,39 @@ export default {
       let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
-      if (pair && pair.length>0) {
+      if (pair && pair.length > 0) {
         this.pair = pair[0]
-        console.log(this.token1.address,this.token2.address)
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
-          console.log('this.token1Balance====='+res)
+          console.log('this.token1Balance=====' + res)
           this.token1Balance = res
-          getMyBalanceInPool(pair[0]).then((res)=>{
+          getMyBalanceInPool(pair[0]).then((res) => {
             that.myBalanceInPool = Decimal(res)
-            console.log('that.myBalanceInPool========'+that.myBalanceInPool   )
-            if(that.lpTotal){
+            console.log('that.myBalanceInPool========' + that.myBalanceInPool)
+            if (that.lpTotal) {
               that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
               that.myToken1Balance = Decimal(that.token1Balance).mul(Decimal(that.myShare)).toFixed(6)
               that.myToken2Balance = Decimal(that.token2Balance).mul(Decimal(that.myShare)).toFixed(6)
-              console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toString())
+              console.log("that.myShare========" + Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)).toString())
             }
           })
         })
-        this.getBalanceInPool(pair[0],this.token2).then((res)=>{//获取token2在pool中的总量
-          console.log('this.token2Balance====='+res)
+        this.getBalanceInPool(pair[0], this.token2).then((res) => {//获取token2在pool中的总量
+          console.log('this.token2Balance=====' + res)
           this.token2Balance = res
-          getLpBalanceInPool(this.pair).then((res)=>{//获取lptoken总量
+          getLpBalanceInPool(this.pair).then((res) => {//获取lptoken总量
             that.lpTotal = Decimal(res)
-            if(that.myBalanceInPool){
+            if (that.myBalanceInPool) {
               that.myShare = Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal))
               that.myToken1Balance = Decimal(that.token1Balance).mul(Decimal(that.myShare)).toFixed(6)
               that.myToken2Balance = Decimal(that.token2Balance).mul(Decimal(that.myShare)).toFixed(6)
-              console.log("that.myShare========"+Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)))
+              console.log("that.myShare========" + Decimal(that.myBalanceInPool).div(Decimal(that.lpTotal)))
             }
           })
         })
-        
-        allowance(this.token1.address,pair[0].address).then((res) => {
+
+        allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
             let approveBalance = parseInt(res._hex, 16)
             if (approveBalance == 0) {
@@ -496,13 +487,13 @@ export default {
           if (this.token1Num != '' && JSON.stringify(this.token1) != '{}' && JSON.stringify(this.token2) != '{}') {
             this.charm.disabled1 = false
           } else {
-           this.charm.disabled1 = true
+            this.charm.disabled1 = true
           }
         } else { //  双向
           if (this.token1Num != '' && JSON.stringify(this.token1) != '{}' && this.token2Num != '' && JSON.stringify(this.token2) != '{}') {
             this.charm.disabled1 = false
           } else {
-          this.charm.disabled1 = true
+            this.charm.disabled1 = true
           }
 
         }
@@ -522,15 +513,14 @@ export default {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
       var parameter = [
-        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10,that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10,that.token2.decimals)).toString()] },
+        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10, that.pair.decimals)).toString() },
+        { type: 'uint256[]', value: [Decimal(that.token1Balance).mul(Math.pow(10, that.token1.decimals)).toString(), Decimal(that.token2Balance).mul(Math.pow(10, that.token2.decimals)).toString()] },
       ]
-      console.log(parameter)
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(this.pair.address, functionSelector, {}, parameter);
-        if (!transaction.result || !transaction.result.result){
-            that.charm1();
-            return console.error('Unknown error: ' + transaction, null, 2);
+        if (!transaction.result || !transaction.result.result) {
+          that.charm1();
+          return console.error('Unknown error: ' + transaction, null, 2);
         }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
@@ -558,9 +548,7 @@ export default {
         { type: 'uint256', value: 0 }
       ]
       try {
-        console.log('走到1')
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
-        console.log('走到2',transaction)
         if (!transaction.result || !transaction.result.result){
           that.charm1();
           return console.error('Unknown error: ' + transaction, null, 2);
@@ -577,7 +565,6 @@ export default {
           });
         })
       } catch (error) {
-        console.log('走到3')
         console.log(111,error);
           that.charm1();
       }
@@ -589,7 +576,7 @@ export default {
     },
     getBasicInfo (token) {
       let that = this;
-    
+
       decimals(token.address).then((res) => {
         token.decimals = res
         if (token.item == 0) {
@@ -644,21 +631,21 @@ export default {
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
-        if(name == 'justPrice'){
+        if (name == 'justPrice') {
           let justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-          let differ = this.token1.decimals-this.token2.decimals
-          if(differ!==0 && differ>0){
-            this.justPrice = justPrice/Math.pow(10,Math.abs(differ))
-          }else if(differ!==0 && differ<0){
-            this.justPrice = justPrice*Math.pow(10,Math.abs(differ))
+          let differ = this.token1.decimals - this.token2.decimals
+          if (differ !== 0 && differ > 0) {
+            this.justPrice = justPrice / Math.pow(10, Math.abs(differ))
+          } else if (differ !== 0 && differ < 0) {
+            this.justPrice = justPrice * Math.pow(10, Math.abs(differ))
           }
-        }else{
+        } else {
           let reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-          let differ = this.token2.decimals-this.token1.decimals
-          if(differ!==0 && differ>0){
-            this.reversePrice = reversePrice/Math.pow(10,Math.abs(differ))
-          }else if(differ!==0 && differ<0){
-            this.reversePrice = reversePrice*Math.pow(10,Math.abs(differ))
+          let differ = this.token2.decimals - this.token1.decimals
+          if (differ !== 0 && differ > 0) {
+            this.reversePrice = reversePrice / Math.pow(10, Math.abs(differ))
+          } else if (differ !== 0 && differ < 0) {
+            this.reversePrice = reversePrice * Math.pow(10, Math.abs(differ))
           }
         }
         // name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
@@ -691,10 +678,10 @@ export default {
     },
     linkage (token) { // 联动
       this.isSelect1 = false;
-      if(token.token1.name==this.selectType){
+      if (token.token1.name == this.selectType) {
         this.token1 = token.token1
         this.token2 = token.token2
-      }else{
+      } else {
         this.token2 = token.token1
         this.token1 = token.token2
       }
@@ -722,9 +709,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
-
-.connect_pd{
+.connect_pd {
   margin-top: 120px;
   padding-bottom: 100px;
 }
@@ -736,13 +721,17 @@ export default {
   .fees {
     height: 56px;
     border-radius: 16px;
-    border: 1px solid #070A0E;
+    border: 1px solid #070a0e;
     color: #0f1730;
     text-align: center;
     line-height: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
+    > span {
+      display: flex;
+      align-items: center;
+    }
     cursor: pointer;
     .fees_zies {
       font-size: 18px;
@@ -762,13 +751,15 @@ export default {
   }
 }
 
-.lt_box{
+.lt_box {
   overflow: hidden;
   display: flex;
   justify-items: center;
   align-items: center;
+  height: 100%;
+  flex: 1;
 }
-.from_contentIcon{
+.from_contentIcon {
   margin-top: 16px;
   margin-bottom: 12px;
 }
@@ -781,24 +772,32 @@ export default {
 .whe_img {
   vertical-align: sub;
 }
+.metit {
+  // width: 30%;
+}
+.setsize {
+  font-size: 14px;
+}
 .connectbox {
   padding: 0 24px 24px 24px;
   margin-top: 24px;
-  height: 134px;
   .box_title {
     line-height: 50px;
     border-bottom: 1px solid #e5ebf2;
     font-size: 18px;
     font-family: roboto-mediumitalic;
     font-weight: 400;
-    color: #0F1730;
-
- 
+    color: #0f1730;
   }
 }
-.conct_btn{
-margin-left: 12px;
-margin-right: 8px;
+
+.disa {
+  display: flex;
+  align-items: center;
+}
+.conct_btn {
+  margin-left: 12px;
+  margin-right: 8px;
 }
 .pre_list {
   margin-top: 12px;
@@ -819,42 +818,52 @@ margin-right: 8px;
     }
   }
 }
-.position{
-    max-width: 480px;
+.position {
+  max-width: 480px;
+  margin-top: -40px;
+  position: relative;
+}
+.position::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40px;
+  background: #ffffff;
+  border-radius: 0 0 24px 24px;
 }
 .connect_boxs {
   border-radius: 0 0 24px 24px;
-      width: 100%;
-  position: absolute;
+  width: 100%;
+  // position: absolute;
   font-size: 16px;
   bottom: 59px;
   left: 0;
 
   height: 210px;
-  background: #070A0E;
+  background: #070a0e;
   z-index: -1;
 }
-.connect_btns{
+.connect_btns {
   height: 48px;
   font-size: 14px;
-border-radius: 12px;
-line-height: 48px;
+  border-radius: 12px;
+  line-height: 48px;
 }
-.connect_btn{
+.connect_btn {
   display: flex;
-
 }
 .metitle {
-
   margin-top: 12px;
   height: 62px;
   line-height: 62px;
   border-bottom: 1px solid #e5ebf2;
   font-weight: normal;
-  color: #E5EBF2;
-
+  color: #e5ebf2;
+  display: flex;
 }
-.rex{
+.rex {
   font-size: 18px;
 font-family: roboto-mediumitalic;
 font-weight: 400;
@@ -862,51 +871,62 @@ color: #A6AEB7;
 
 }
 .ctx_1 {
-  max-width: 268px;
+  // max-width: 268px;
   display: inline-block;
 }
-.text_btn{
+.text_btn {
   max-width: 104px;
 }
-.text_btn1{
-  
+.text_btn1 {
 }
-.setInput{
+.setInput {
   display: flex;
-  .ctx_1{
+  .ctx_1 {
     flex: 1;
   }
-.ctx_3s {
-  min-width: 160px;
-  display: inline-block;
-  margin-left: 12px;
-}
+  .ctx_3s {
+    min-width: 160px;
+    display: inline-block;
+    margin-left: 12px;
+  }
 }
 
-.lt1,.lt2,.lt3{
-  
+.lt1,
+.lt2,
+.lt3 {
   height: 17px;
-  color: #A6AEB7;
+  color: #a6aeb7;
   font-size: 16px;
 }
-.rg1,.rg2,.rg3{
-height: 17px;
-color: #E5EBF2;
-font-size: 16px;
-
+.rg1,
+.rg2,
+.rg3 {
+  height: 17px;
+  color: #e5ebf2;
+  font-size: 16px;
+}
+.title {
+  display: flex;
 }
 
-
 .connect_currency {
+  overflow: hidden;
+  flex: 1;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
 }
 .c_receove_Share {
   padding: 24px 20px;
 }
 .currencyprices {
-  width: 190px;
+  // width: 190px;
   text-align: right;
+  width: 40%;
+}
+.metits {
+  width: 60%;
+  font-size: 16px;
+  text-align: center;
 }
 .typeBtn {
   width: 136px;
@@ -922,12 +942,79 @@ font-size: 18px;
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #05C98E;
+  background: #05c98e;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
-
 }
+@media screen and (max-width: 750px) {
+  .connect_pd {
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    .back_icon{
+      width: 0.8rem;
+      height: 0.8rem;
+      line-height: 0.8rem;
+    }
+  }
+  .setInput .ctx_3s {
+    min-width: 3.2rem;
+  }
+  .from_contentIcon {
+    margin: 0;
+  }
+  .position {
+    width: 100%;
+  }
+  .received span {
+    font-size: 16px;
+  }
+  .title {
+    display: flex;
+    padding:  10px  0.2rem;
+    .content_text {
+      // width: 54px;
+      font-size: 0.2rem;
+    }
+  }
+}
+@media screen and (max-width: 475px) {
+  .conct_btn {
+    // margin-left: 50px;
+    margin:0 0.2rem;
+  }
+  .lt_box {
+    flex-wrap: wrap;
+  }
+  .pre_list {
+    li {
+      width: 50%;
+    }
+    li:nth-child(3) {
+      width: 100%;
+      margin-top: 10px;
+    }
+  }
+  .connect_btns {
+    font-size: 12px;
+    height: 1rem;
+    line-height: 1rem;
+     width: 2.1rem;
+     padding: 0;
+  }
+  
+}
+//  @media screen and (max-width:375px){
+// .conct_btn{
+//     margin-left:15px;
+//   }
+//  }
+//   @media screen and (max-width:320px){
+// .conct_btn{
+//     margin-left:9px;
+//   }
+//  }
 </style>

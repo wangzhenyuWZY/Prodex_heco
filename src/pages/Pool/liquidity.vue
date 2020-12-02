@@ -8,7 +8,7 @@
           their share of the pool. Fees are added to the pool, accrue in real
           time and can be claimed withdrawing your liquidity.
         </p>
-        <p>Read more about providing liquidity</p>
+        <p v-show="false">Read more about providing liquidity</p>
       </div>
       <div class="pool-btn clearfix">
         <p class=""></p>
@@ -175,7 +175,6 @@ export default {
       item.token1.balanceInPool = this.token1Balance
       item.token2.balanceInPool = this.token2Balance
       sessionStorage.setItem('toRemove',JSON.stringify(item));
-      console.log('sessionStorage')
       this.$router.push({
           name:"removeLiquidity",
           params:{
@@ -195,6 +194,10 @@ export default {
     },
     toggleDrop(item){
       let that = this
+      if(item.show){
+        item.show = false
+        return
+      }
       that.pairList.forEach((ktem)=>{
         if(ktem!==item)
           ktem.show = false
@@ -333,4 +336,20 @@ export default {
     padding: 16px 0 32px 24px;
   }
 }
+@media screen and (max-width: 750px) {
+   .removeLq{
+       .pool-box{
+    width: 100%;
+    // padding: 0 0.4rem ;
+    margin-top: 10px;
+  }
+    .pool-box1{
+      p:nth-child(2){
+        font-size: 0.4rem;
+     }
+    } 
+   }
+
+}
+
 </style>

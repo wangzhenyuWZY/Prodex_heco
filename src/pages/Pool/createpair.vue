@@ -39,7 +39,8 @@
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  class="flab" lable="weight"
+            <frominput  lable="weight"
+                    placeholder="1-50" 
                        v-model="firstTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -60,7 +61,8 @@
                        v-model="secondTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
-            <frominput  lable="weigh"
+            <frominput lable="weight"
+                      placeholder="1-50"
                        v-model="secondTokenWeight"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
@@ -82,20 +84,24 @@
                alt="">
         </div>
         <div class="whe clearfix">
-          <el-button class="from_botton pair_mandate fl_lt" v-show="false"> Mandate</el-button>
-          <el-button class="from_botton pair_mandate pair_swap fl_rg" @click="handel"> Swap</el-button>
+         
+           <span class="pair_mandate" v-show="false">  <el-button class="from_botton  " > Mandate</el-button> </span>
+          <el-button class="from_botton pair_mandate pair_swap " @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="Sponsors"
+             placeholder="Please Enter" 
                        v-model="sponsors"></frominput>
           </div>
           <div class="ctx_2 fl_lt">
             <frominput lable="FoxDex"
+             placeholder="Please Enter" 
                        v-model="foxDex"></frominput>
           </div>
           <div class="ctx_3 fl_lt">
             <frominput lable="LP"
+             placeholder="Please Enter" 
                        v-model="lp"></frominput>
           </div>
         </div>
@@ -235,8 +241,6 @@ export default {
               that.bPoolContract = res
               that.setSwapLpFee()
               that.setSponsors()
-              console.log('授权地址===='+that.bPoolContract)
-              // that.bPoolContract = 'TDfFD4aeK6582o9YFfjScGubtJDrHB1pyf'
               approved(that.token1.address,that.bPoolContract).then(()=>{
                 approved(that.token2.address,that.bPoolContract).then(()=>{
                   let number = window.tronWeb.toBigNumber(that.firstTokenNum*Math.pow(10, that.token1.decimals)).toString(10)
@@ -306,7 +310,6 @@ export default {
           {type: 'uint256', value: balance},
           {type: 'uint256', value: weight},
       ]
-      console.log('绑定地址===='+that.bPoolContract)
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
@@ -314,7 +317,6 @@ export default {
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
       if(res){
         getConfirmedTransaction(res.txid).then((result)=>{
-          console.log('result11========='+result)
           if(name=='token1IsBind')
             that.token1IsBind = true
           if(name=='token2IsBind')
@@ -408,10 +410,11 @@ line-height: 19px;
   // height: 72px;
 }
 .createpair {
-  margin-top: 120px;
+  margin-top: 10px;
 
   .whe {
-    // margin-top: 48px;
+    margin-top: 16px;
+    display: flex;
   }
   .whe_img {
     vertical-align: sub;
@@ -457,8 +460,13 @@ line-height: 19px;
     }
   }
   .pair_mandate{
+<<<<<<< HEAD
     width: 210px;
     height: 56px;
+=======
+    display: inline-block;
+    width: 48%;
+>>>>>>> b1153e9e3121a326824c2b37d9110b12fd257004
   }
   .from_contentIcon {
     height: 36px;
@@ -740,7 +748,9 @@ line-height: 19px;
     width: 190px;
     text-align: right;
   }
+.whe{
 
+}
   .setmage {
     margin: 20px 0;
   }
@@ -767,4 +777,44 @@ line-height: 19px;
     margin-top: 48px;
   }
 }
+@media screen and (max-width: 750px) {
+   .createpair {
+     .ctx_1{
+       width: 40%;
+     }
+     .whe{
+       display: flex;
+       margin-top: 17px;
+     }
+     .pair_input{
+       padding-bottom: 20px;
+     }
+      .ctx_2{
+       width: 22%;
+       margin: 0 8px;
+     }
+      .ctx_3{
+       width: 30%;
+     }
+     .pair_mandate{
+       width: 70%;
+     }
+     .pair_mandate{
+       height: 1rem;
+     }
+     .Price_text{
+       font-size: 0.4rem;
+       margin-top: 20px;
+     }
+      .pair_ved {
+          .pair_title{
+            font-size: 0.4rem;
+          }
+          p{
+            font-size: 0.35rem;
+          }
+      } 
+   } 
+}
+
 </style>

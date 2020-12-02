@@ -439,20 +439,22 @@ export default {
 
 ul {
   display: grid;
-  // grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
   grid-template-columns: 320px 320px 320px;
   grid-template-rows: 320px 320px 320px;
-  // grid-template-rows:3;
+  grid-template-rows:3;
   gap: 32px;
   // display: flex;
   // justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 120px;
+  // flex-wrap: wrap;
+  margin-top: 40px;
   li {
     width: 320px;
+    height: 320px;
     background: #ffffff;
     border-radius: 16px;
     padding: 37px 32px;
+
     .content_zise {
       font-size: 20px;
       font-family: roboto-mediumitalic;
@@ -526,4 +528,30 @@ ul {
     }
   }
 }
+@media screen and (max-width: 750px) {
+  .stake{
+    ul{
+      grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
+      li{
+            display: block;
+    margin: 0 auto;
+    .stake_addres{
+          margin: 0.4rem 0;
+        }
+      }
+    }
+    
+  }
+ 
+}
+@media screen and (max-width: 450px) {
+   ul{
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+          li{
+            display: block;
+    margin: 0 auto;
+      }
+    }
+}
+
 </style>

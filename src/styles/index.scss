@@ -76,6 +76,7 @@ img{
     height: 56px;
     text-align: center;
     margin:0 auto;
+    padding: 0;
     font-size: 18px;
     font-family: roboto;
     color: #FFFFFF;
@@ -216,11 +217,11 @@ img{
     width: 100%;
     overflow-y: auto;
 }
+.container::-webkit-scrollbar{
+    width: 0;
+}
 .colorFE613C {
     color: #FE613C;
-}
-.container::-webkit-scrollbar {
-    width: 0px;
 }
 .globle_title{
     height: 27px;
@@ -244,18 +245,20 @@ img{
   .change_red{
       color:#05C98E;
   }
-
+// element
+.el-dialog__wrapper{
+    overflow: hidden;
+}
 @media screen and (max-width: 750px) {
     html,body{
-       
         height: 100%;
-      
+        // max-width: 480px;
+        // width: 480px;
+        font-size: 18px;
         text-size-adjust: 100%;
         text-rendering: optimizeLegibility;
     }
-    .wtrx-bottom{
-        width: 700px !important;
-    }
+
     .stake_list{
         justify-content: space-around !important;
     }
@@ -274,5 +277,6 @@ img{
 }
 @font-face {  // 加粗斜体
     font-family: roboto-mediumitalice;
-    src:url('./font-face/roboto-mediumitalic.ttf');
+    src:  url('./font-face/roboto-mediumitalic.ttf');
 }
+

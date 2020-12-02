@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+             :width="!mobile?'100%':'480px'"
              custom-class="dialog_selct"
              :before-close="handleClosea">
     <span slot="title"
@@ -18,9 +18,9 @@
     <div class="conter">
 
       <div class="search__box">
-        <el-input class="search__input"
+        <!-- <el-input class="search__input"
                   v-model="value"
-                  placeholder="Search name or paste address"></el-input>
+                  placeholder="Search name or paste address"></el-input> -->
       </div>
       <div class="select_size select__bases"
            hidden>
@@ -90,6 +90,7 @@
 
 <script>
 import tokenData from '../../utils/token'
+import {IsPc} from '../../utils/index'
 export default {
   props: {
     showAlert: {
@@ -107,22 +108,27 @@ export default {
   },
   data () {
     return {
-      value: '',
+      mobile: IsPc(),
+      filterName: '',
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
-     tokenList () {
+     tokenList(){
+         let filtername = this.filterName
          if (this.selectType == '') {
-           return tokenData.tokenList
+           return tokenData.tokenList.filter((el) => {
+             return el.name.includes(filtername.toUpperCase())
+           })
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name )
-            return arry;
-         }
+           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           return arry.filter((el) => {
+             return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
+           })
+         } 
      }
   },
   created () {
-    console.log('showAlert====================', this.showAlert)
   },
   methods: {
     handleClosea () {
@@ -159,6 +165,7 @@ export default {
 }
 >>> .dialog_selct {
   border-radius: 20px;
+  
 }
 >>> .dialog_selct .el-icon-close {
   font-size: 28px;
@@ -284,5 +291,16 @@ export default {
 }
 .currency_list::-webkit-scrollbar-thumb {
   border-radius: 4px;
+}
+@media screen and (max-width:750px) {
+   
+    >>> .dialog_selct {
+      border-radius: 20px 20px 0 0;
+      position: absolute;
+      bottom: -50px;
+      left: 0;
+      overflow: hidden;
+      
+    }
 }
 </style>
