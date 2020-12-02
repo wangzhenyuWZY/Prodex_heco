@@ -400,7 +400,7 @@ line-height: 19px;
 .from_botton{
   width: 210px;
   margin-top: 24px;
-  background: #05C98E;
+  // background: #05C98E;
 }
 .from_lable{
   // width: 200px;

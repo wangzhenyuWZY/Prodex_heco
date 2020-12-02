@@ -530,7 +530,7 @@ export default {
   display: inline-block;
 }
 .from_botton{
-  background: #05C98E;
+  // background: #05C98E;
   color: #FFFFFF;
 
 }
