@@ -197,15 +197,14 @@ export default {
     },
     toggleDrop(item){
       let that = this
-      if(item.show){
-        item.show = false
-        return
-      }
       that.pairList.forEach((ktem)=>{
-        if(ktem!==item)
+        if(ktem.pair!==item.pair){
           ktem.show = false
+        }else{
+          ktem.show = !item.show
+        } 
       })
-      item.show = !item.show
+      
       if(item.show){
         getLpBalanceInPool(item).then((res)=>{
           that.lpTotal = Decimal(res).div(Math.pow(10,18))

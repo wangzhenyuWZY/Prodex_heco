@@ -13,6 +13,7 @@
             :value="value"
             :disabled ="disabled"
             ref="input"
+            @mousewheel.prevent
             onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
             :maxlength="maxlength"
           />

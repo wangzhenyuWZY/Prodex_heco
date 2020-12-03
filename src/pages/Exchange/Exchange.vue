@@ -8,6 +8,7 @@
             lable="From"
             showmax
             v-model="token1Num" 
+            :balance="token1.balance"
             @input='cumpToken2'>
             
             </frominput>
@@ -32,6 +33,7 @@
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
                       showmax
+                      :balance="token2.balance"
                        v-model="token2Num"
                        @input="cumpToken1"></frominput>
           </div>
@@ -48,9 +50,9 @@
              v-show="connectFlag">
           <span>Price: </span>
           <span>{{spotPrice.toFixed(4)}} </span>
-          <span> {{token1.name}} </span>
-          <span> per </span>
           <span> {{token2.name}} </span>
+          <span> per </span>
+          <span> {{token1.name}} </span>
           <img src="@/assets/img/icon_slect.png"
                alt=""
                @click="convert">
@@ -66,7 +68,7 @@
                          :loading="btnLoading2"
                          @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
-            <div class="whe fl_rg">
+            <div class="whe fl_rg" v-show="!Approved()">
               <span> <el-button class="from_botton"
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
@@ -412,8 +414,15 @@ export default {
         });
         return
       }
-      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
+      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token2Num) {
         let token1Num = calcInGivenOut(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token2Num, this.swapFee)
+        if(token1Num.toString()=='NaN'){
+          this.$message({
+            message: '流动池余额不足',
+            type: 'error'
+          });
+          return
+        }
         this.token1Num = token1Num.toFixed(this.token1.decimals)
       }
     },
@@ -433,8 +442,8 @@ export default {
       }
     },
     getSpotPrice () {//计算token1的价格
-      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee) {
-        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.swapFee)
+      if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
+        this.spotPrice = calcSpotPrice(this.token2Balance, this.token2Weight, this.token1Balance, this.token1Weight, this.swapFee)
       }
       if (this.token1Num) {
         this.cumpToken2()
@@ -572,8 +581,8 @@ export default {
 .whe {
   width: 100%;
   margin: 0 auto;
-  // padding-bottom: 48px;
-  margin-bottom: 48px;
+  // padding-bottom: 28px;
+  margin-bottom: 38px;
 }
 .whe_img {
   vertical-align: sub;

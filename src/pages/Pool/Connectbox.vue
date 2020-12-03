@@ -124,7 +124,7 @@
           <div class="whe fl_rg">
             <el-button class="from_botton"
                        :loading="charm.btnLoading1"
-                       :disabled="charm.disabled1&&!isApproved"
+                       :disabled="btndisable()"
                        @click="confirmSupply">Supply</el-button>
           </div>
         </div>
@@ -252,6 +252,7 @@ export default {
         disabled2: false,
       },
       token2denormalizedWeight: 0,
+      token1denormalizedWeight: 0,
       myShare: 0,
       myToken1Balance: 0,
       myToken2Balance: 0,
@@ -306,10 +307,35 @@ export default {
         }
     },
     disableds () {
-        if (this.token1ApproveBalance==0&&this.token2ApproveBalance == 0) {
-            return false;
-        } else {
+      if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
+              if (this.token1ApproveBalance==0) {
           return true
+        } else {
+           if(this.token2ApproveBalance == 0) {
+            return true;
+          } else {
+            return false
+          }
+        }
+      } else {
+        return false
+      }
+      
+    },
+    btndisable () {
+        if (!this.charm.disabled1) { // 可以执行
+                 if (this.token1ApproveBalance==0) {
+                    return true
+                  } else {
+                    if(this.token2ApproveBalance == 0) {
+                      return true;
+                    } else {
+                      return false
+                    }
+                  } 
+         
+        } else {
+            return true
         }
     },
     closeAlert () {
@@ -337,8 +363,9 @@ export default {
         });
         return
       }
+    
       if(this.iSingle){
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.token1denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
         this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }else{
         let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
@@ -375,7 +402,7 @@ export default {
       if (this.token1Num <= 0) {
         return
       }
-      if (this.token1Balance && this.token2Balance) {
+      if (this.token1Balance && this.token2Balance && !this.iSingle) {
         this.token2Num = (this.token1Num / this.token1Balance * this.token2Balance).toFixed(6)
         // let differ = this.token1.decimals-this.token2.decimals
         // if(differ!==0 && differ>0){
@@ -388,23 +415,24 @@ export default {
         this.getShare()
       }
     },
-    async getShare () {
+    getShare () {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
-        if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+        if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
           this.share = (poolOut / this.lpTotal * 100).toFixed(2)
         } else {
           // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
           // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
-          await getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
-            that.token1denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
+            that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
-          await getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
-            that.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
+            that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
+          // this.getShare()
         }
       } else {
         this.share = 0
@@ -538,6 +566,15 @@ export default {
       }
 
     },
+    charm2 (n) {
+        if (n) {
+          this.charm.btnLoading2 = true;
+          this.charm.disabled2 = true;
+        } else {
+            this.charm.btnLoading2 = false;
+          this.charm.disabled2 =false;
+        }
+    },
     supply () {
       this.charm1(1);
       if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
@@ -547,6 +584,7 @@ export default {
         });
         return
       }
+      
       if (this.iSingle) {
         this.joinswapExternAmountIn()
       } else {
@@ -579,10 +617,12 @@ export default {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success("SUCCESS!")
             that.charm1();
+            that.charm2();
             that.showAlert1 = true
           }).catch((err) => {
             console.log(err);
             that.charm1();
+            that.charm2();
             that.showAlert1 = true
           });
         })
@@ -645,15 +685,22 @@ export default {
       this.validity();
     },
     doApprove () {
+      this.charm2(1);
       if (this.pair) {
+        debugger;
         if(this.token1ApproveBalance==0){
           approved(this.token1.address, this.pair.address).then((res)=>{
-            window.location.reload()
+            this.getPairAddress()
+
+            this.charm2();
+            // window.location.reload()
           })
         }
         if(this.token2ApproveBalance==0){
           approved(this.token2.address, this.pair.address).then((res)=>{
-            window.location.reload()
+              this.getPairAddress()
+             this.charm2();
+            // window.location.reload()
           })
         }
       } else {
