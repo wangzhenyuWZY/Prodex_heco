@@ -48,6 +48,7 @@
             :balance="token1.balance"
             @click="showSelect(0)"
             :imgUrl="token1.img"
+            :showSelect="JSON.stringify(token1)!='{}'"
             :text="token1.name" />
           </div>
         </div>
@@ -69,7 +70,7 @@
             <setselect @click="showSelect(1)"
                         :balance="token2.balance"
                        :imgUrl="token2.img"
-                       :showSelect="false"
+                       :showSelect="JSON.stringify(token2)!='{}'"
                        :text="token2.name" />
           </div>
         </div>

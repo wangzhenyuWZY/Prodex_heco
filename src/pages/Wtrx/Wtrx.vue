@@ -5,7 +5,7 @@
         <div class="wtrx-box1">
           <div class="wtrx-left">
             <samp class="trx">TRX <img class="wtrx_img"
-                   src="@/assets/img/icon_arrow_right.png"
+                   src="@/assets/img/icon_arrow_right.svg"
                    alt=""> WTRX</samp>
             <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
@@ -24,7 +24,7 @@
           </div>
           <div class="wtrx-right">
             <samp class="wtrx1">WTRX <img class="wtrx_img"
-                   src="@/assets/img/icon_arrow_right.png"
+                   src="@/assets/img/icon_arrow_right.svg"
                    alt=""> TRX</samp>
             <div class="wtrx-a"> <samp class="wtrx-a1">WTRX Balance:</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
             <input type="number"
@@ -475,6 +475,7 @@ export default {
       flex-wrap: wrap;
       .wtrx-right {
         margin: 0;
+        width: 9rem;
         font-size: 0.5rem;
         .wtrx-a {
           margin-top: 20px;
@@ -492,7 +493,7 @@ export default {
       .wtrx-left {
         margin: 0;
         // width: 350;
-        
+        width: 9rem;
         margin-bottom: 20px;
         font-size: 0.5rem;
         .trx{

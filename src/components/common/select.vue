@@ -3,7 +3,7 @@
   <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> Balance: <span class="balance_size">{{balance}}</span></span>  </div>
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
-        <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="imgUrl" alt=""> </span>
+        <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="requierImg()" alt=""> </span>
         <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:'Optional pass'}}</span>
         <img src="@/assets/img/icon_down.svg" alt="" />
       </div>
@@ -17,6 +17,7 @@
 </template>
 
 <script>
+
 import tokenData from '../../utils/token'
   export default {
     props: {
@@ -72,6 +73,15 @@ import tokenData from '../../utils/token'
     console.log('imgurl=====',this.imgUrl)
   },
   methods: {
+    requierImg () {
+        if (this.text) {
+           try {
+               return require('@/assets/img/currency/'+this.text+'.png')
+           } catch (error) {
+              return require('@/assets/img/currency/avitve.png')
+           }
+        }
+    },
     hadelClick(e) {
       this.$emit("input", e.target.value);
     },
@@ -184,14 +194,19 @@ import tokenData from '../../utils/token'
     margin-bottom: 12px;
     padding-left: 16px;
     position: relative;
+        text-align: right;
+        min-width: 300px;
+    transform: translateX(-50%);
+    overflow: hidden;
     .balance_size{
       
         color: #0F1730;
-        position: absolute;
+    
+        // position: absolute;
     }
     .pads{
       width: 100%;
-        position: absolute;
+        // position: absolute;
         top: 0;
         left: 0;
     }

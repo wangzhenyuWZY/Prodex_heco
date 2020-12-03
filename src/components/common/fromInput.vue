@@ -124,16 +124,16 @@
          background: #F4F5FA; 
              border-radius: 16px;
       .input_max{
-        width: 64px;
+        width: 56px;
         height: 28px;
         margin-right: 16px;
         line-height: 28px;
         text-align: center;
         cursor: pointer;
-        background: #070A0E;
+          background: #F6F7FB;
         border-radius: 18px;
         font-size: 14px;
-        color: #FFFFFF;
+        color: #05C98E;
       }
     }
     .input_rg {

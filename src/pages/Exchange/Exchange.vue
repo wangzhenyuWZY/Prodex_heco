@@ -12,7 +12,7 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  
-            :showSelect="selectColor1" 
+           :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
             :text="token1.name" @click="showSelect(0)" />           
@@ -532,7 +532,7 @@ export default {
   display: inline-block;
 }
 .ctx_3 {
-  min-width: 160px;
+  width: 160px;
   font-family: roboto-mediumitalic;
   display: inline-block;
   margin-left: 12px;
