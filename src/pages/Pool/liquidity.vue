@@ -44,7 +44,7 @@
           >
         </div>
         <div class="fees" v-if="connectFlag">
-          <div class="fees_account">
+          <div class="fees_account" v-show="false">
             Acoout analytics and accrued fees
             <img src="@/assets/img/icon_jump_green.png" alt="" />
           </div>
@@ -267,6 +267,7 @@ export default {
     margin-bottom:10px;
     background: #f4f5fa;
     border-radius: 0 0 16px 16px;
+    margin-top:15px;
   }
   .fees_curny {
     background: url(../../assets/img/binp.png) no-repeat;

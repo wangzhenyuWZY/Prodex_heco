@@ -321,12 +321,6 @@ export default {
           type: 'error'
         });
         return
-      } else if (this.token1Num > this.token1Balance || this.token2Num > this.token2Balance) {
-        this.$message({
-          message: '流动池余额不足',
-          type: 'error'
-        });
-        return
       }
       if(this.iSingle){
         let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
