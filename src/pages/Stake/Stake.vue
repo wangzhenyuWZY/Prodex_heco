@@ -22,9 +22,9 @@
             :key='index'>
           <div class="stake_top">
             <span class="lt_icon ">
-              <img :src="requierImg(idx.name,1)"
+              <img :src="requierImg(idx.pair,1)"
                    alt="" />
-              <img :src="requierImg(idx.name,0)"
+              <img :src="requierImg(idx.pair,0)"
                    alt="" />
             </span>
             <span class="content_zise">
@@ -33,7 +33,7 @@
           </div>
           <div class="stake_addres">
             <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.pair}}</span></div>
-            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FARM</span></div>
+            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FOX</span></div>
           </div>
           <div class="stake_btn"
                @click="showModels(idx)">12.04%APY</div>
@@ -122,6 +122,7 @@ export default {
     },
     requierImg (name,number) {
       let str;
+      debugger
       if (name) {
         try {
            if (number != undefined) {
@@ -132,6 +133,8 @@ export default {
         } catch (error) {
             return require('@/assets/img/currency/avitve.png')
         }
+      } else {
+           return require('@/assets/img/currency/avitve.png')
       }
     },
     Approve (x) { //  提现 x = 0 ;领取奖励

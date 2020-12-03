@@ -135,14 +135,14 @@
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
-import { pairList } from '../../utils/token'
+import tokenData from '../../utils/token'
 import { IsPc } from '../../utils/index'
 import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool,getTokenDenormalizedWeight } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
     return {
-      pairList: pairList,
+      pairList:[],
       mobile: IsPc()
     }
   },
@@ -156,26 +156,27 @@ export default {
   methods: {
     async init () {
       let that = this
-      for (let index = 0; index < this.pairList.length; index++) {
-        const el = this.pairList[index];
+      for (let index = 0; index < tokenData.pairList.length; index++) {
+        const el = tokenData.pairList[index];
+        getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
+          el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+        })  
+        getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
+          el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+        })    
         let res = await getBalanceInPool(el, el.token1);
         let res1 = await getBalanceInPool(el, el.token2);
         let res2 = await getLpBalanceInPool(el);
-        getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
-          el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-          getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
-            el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-            if(el.token1.name=='USDT'){
-              let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
-              that.pairList[index].liquidity = bil*parseFloat(res1)
-            }else if(el.token2.name=='USDT'){
-              let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
-              that.pairList[index].liquidity = bil*parseFloat(res1)
-            }
-          })
-        })
-        this.pairList[index].token1Balance = res;
-        this.pairList[index].token2Balance = res1;
+        if(el.token1.name=='USDT'){
+          let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
+          el.liquidity = bil*parseFloat(res1)
+        }else if(el.token2.name=='USDT'){
+          let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
+          el.liquidity = bil*parseFloat(res1)
+        }
+        el.token1Balance = res;
+        el.token2Balance = res1;
+        this.pairList.push(el)
       }
     }
   },
@@ -183,7 +184,7 @@ export default {
 </script>
 <style  lang="scss" scoped>
 .container {
- padding-top: 120px;
+  padding-top: 120px;
 }
 .t-img {
   width: 22px;

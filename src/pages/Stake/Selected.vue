@@ -27,7 +27,7 @@
           <div class="provider add_marg">
             <div class="received">
               <div class="lt">
-                <span>ETH</span>
+                <span>{{farmtoal.item?farmtoal.item.token1.name:''}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -37,7 +37,7 @@
             <div class="text_conent ftblod">FOXDEX_LP</div>
             <div class="received">
               <div class="lt">
-                <span>ETH</span>
+                <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -58,13 +58,13 @@
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Unstaked UNISWAP_LP</span>
+            <span>Your Unstaked FOXDEX_LP</span>
           </div>
           <div class="rg ftblod">{{farmtoal.balanceOf}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Staked UNISWAP_LP</span>
+            <span>Your Staked FOXDEX_LP</span>
           </div>
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
@@ -113,7 +113,8 @@ export default {
         balanceOf:0,
         btnFlag1:false,
         btnFlag2:false,
-        btnFlag3:false
+        btnFlag3:false,
+        item:{token1:{},token2:{}}
        }
      }
   },
@@ -268,8 +269,8 @@ export default {
   }
   .box_Price{
 
-    height: 80px;
-    line-height: 80px;
+    height: 72px;
+    line-height: 72px;
     padding-right: 24px;   
     overflow: hidden;
      .rg{
