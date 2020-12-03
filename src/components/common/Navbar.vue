@@ -92,7 +92,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.header.children.forEach((element) => {
             let str = element.getBoundingClientRect();
-          this.childrenNode.push(element.offsetWidth -2);
+          this.childrenNode.push(element.offsetWidth );
         });
         let hash = location.hash;
         let str = hash.split("#")[1];
@@ -253,7 +253,8 @@ export default {
     height: 64px;
 }
 .nav-header {
-  color: #495169;
+   
+  color: #A6AEB7;
   position: relative;
   // margin-left: 22px;
 
