@@ -115,14 +115,16 @@
         </div>
         <div class="connect_btn clearfix">
           <div class="whe fl_lt"
-               v-show="!isApproved">
+               v-show="disableds()">
             <el-button class="from_botton"
+                        :loading="charm.btnLoading2"
+                       :disabled="charm.disabled2"
                        @click="doApprove">Approve</el-button>
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton"
                        :loading="charm.btnLoading1"
-                       :disabled="charm.disabled1"
+                       :disabled="charm.disabled1&&!isApproved"
                        @click="confirmSupply">Supply</el-button>
           </div>
         </div>
@@ -227,7 +229,7 @@ export default {
       justPrice: 0,
       reversePrice: 0,
       decimals: 18,
-      isApproved: true,
+      isApproved: false,
       selectType: '',
       item: 1,
       iSingle: false,
@@ -241,7 +243,9 @@ export default {
       charm: {
         btnLoading1: false,
         disabled1: true,
-        subimt: false
+        subimt: false,
+        btnLoading2: false,
+        disabled2: false,
       },
       token2denormalizedWeight: 0,
       myShare: 0,
@@ -295,6 +299,13 @@ export default {
            } catch (error) {
               return require('@/assets/img/currency/avitve.png')
            }
+        }
+    },
+    disableds () {
+        if (this.token1ApproveBalance==0&&this.token2ApproveBalance == 0) {
+            return false;
+        } else {
+          return true
         }
     },
     closeAlert () {
@@ -479,7 +490,8 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            that.token1ApproveBalance = parseInt(res._hex, 16)
+            that.token1ApproveBalance = parseInt(res._hex, 16);
+            console.log(that.token1ApproveBalance)
             if (that.token1ApproveBalance == 0) {
               that.isApproved = false
             } else {
