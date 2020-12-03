@@ -455,7 +455,7 @@ export default {
       this.btnDisabled1 = true;
       this.btnLoading1 = true;
       this.btnsbmit = true;
-      if (that.token1Num > that.token1Balance) {
+      if (that.token2Num > that.token2Balance) {
         this.$message.error('兑换额不能大于流动性池余额');
         that.btnDisabled1 = false;
         that.btnLoading1 = false;
