@@ -28,15 +28,15 @@
                    alt="" />
             </span>
             <span class="content_zise">
-              {{idx.name}}
+              {{idx.pair}}
             </span>
           </div>
           <div class="stake_addres">
-            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.name}}</span></div>
+            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.pair}}</span></div>
             <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FARM</span></div>
           </div>
           <div class="stake_btn"
-               @click="showModels(index)">12.04%APY</div>
+               @click="showModels(idx)">12.04%APY</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
@@ -57,10 +57,12 @@
 </template>
 
 <script>
+const Web3Utils = require('web3');
+const Decimal = require('decimal.js');
 import ipConfig from '../../config/ipconfig.bak'
-import { approved } from '../../utils/tronwebFn'
+import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
-import farmList from './farmList';
+import tokenData from '../../utils/token';
 export default {
   data () {
     return {
@@ -70,7 +72,8 @@ export default {
       poolIndex: 0,
       login: false,
       showModel: false,
-      farmList: farmList,
+      farmList: tokenData.pairList,
+      item:{},
       total: {
         farmTotal: 0, // 总数
         shareToal: 0, // 抵押数量
@@ -79,8 +82,8 @@ export default {
         decimals: 0, // 精度 查询减 发送合约加
         btnFlag1: false,
         btnFlag2: false,
-        btnFlag3: false
-
+        btnFlag3: false,
+        item:{}
       },
       list: [
         {
@@ -88,8 +91,7 @@ export default {
           name2: 'FARM',
           account: '12.04%'
         }
-      ],
-      poolList: farmList
+      ]
     }
   },
   components: {
@@ -97,10 +99,6 @@ export default {
   },
   created () {
     this.init();
-    let arry = localStorage.getItem('farmList');
-    if (arry) {
-      this.poolList = JSON.parse(arry);
-    }
   },
   methods: {
     initColse () {
@@ -136,77 +134,82 @@ export default {
         }
       }
     },
-    async Approve (x) { //  提现 x = 0 ;领取奖励
-      if (x === 0) { // 领取奖励
-          this.total.btnFlag2 = true;
-      } else {
-          this.total.btnFlag3 = true;
+    Approve (x) { //  提现 x = 0 ;领取奖励
+      this.withdraw()
+      // if (x === 0) { // 领取奖励
+      //     this.total.btnFlag2 = true;
+      // } else {
+      //     this.total.btnFlag3 = true;
 
-      }
-      try {
-        let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
-        if (res) {
-          let approveBalance = parseInt(res._hex, 16)
-          console.log('approveBalance====', approveBalance)
-          if (approveBalance == 0) {
-            await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
-            if (x == 0) {
-              t
-              this.withdraw(0)
-
-            } else {
-
-              this.withdraw()
-
-            }
-          } else {
-            if (x == 0) {
-              this.withdraw(0)
-
-            } else {
-              this.withdraw()
-
-            }
-          }
-        } else {
-        }
-      } catch (error) {
-        if (x === 0) { // 领取奖励
-          this.total.btnFlag2 = false;
-        } else {
-          this.total.btnFlag3 = false;
-        }
-        console.log(error)
-      }
+      // }
+      // try {
+      //   let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
+      //   if (res) {
+      //     let approveBalance = parseInt(res._hex, 16)
+      //     if (approveBalance == 0) {
+      //       await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
+      //       if (x == 0) {
+      //         this.withdraw(0)
+      //       } else {
+      //         this.withdraw()
+      //       }
+      //     } else {
+      //       if (x == 0) {
+      //         this.withdraw(0)
+      //       } else {
+      //         this.withdraw()
+      //       }
+      //     }
+      //   } else {
+      //   }
+      // } catch (error) {
+      //   if (x === 0) { // 领取奖励
+      //     this.total.btnFlag2 = false;
+      //   } else {
+      //     this.total.btnFlag3 = false;
+      //   }
+      //   console.log(error)
+      // }
     },
     async clickAmount () { // 领取奖励
-      this.Approve(0);
+      this.withdraw(0);
+      // this.Approve(0);
     },
     async devFundDivRate () {
 
     },
-    async stake (n) { // 抵押
+    async stake (item,n) { // 抵押
+      let that = this
       this.total.btnFlag1 = true;
-      try {
-        let res = await this.getContract["allowance"](window.tronWeb.defaultAddress.base58, this.poolList[this.poolIndex].lpToken).call(); //查询授权
-        if (res) {
-          let approveBalance = parseInt(res._hex, 16)
-          console.log(approveBalance);
-
-          if (approveBalance == 0) {
-            console.log(this.poolList[this.poolIndex].lpToken)
-            await approved(this.poolList[this.poolIndex].lpToken, ipConfig.MasterChef); // 授权
-            this.deposit(n);
-          } else {
-            this.deposit(n);
-          }
-        } else {
+      bPoolAllowance(item.address,ipConfig.MasterChef).then((res)=>{
+        let isApproved = parseInt(res.constant_result[0], 16)
+        if(isApproved==0){
+          that.doApproved(item,n)
+        }else{
+          that.deposit(item,n);
+          that.total.btnFlag1 = false;
         }
-      } catch (error) {
-        console.log(error)
-        this.total.btnFlag1 = false;
-      }
-
+      })
+    },
+    async doApproved(item,n){
+      let that = this
+      var functionSelector = 'approve(address,uint256)';
+      const MAX = Web3Utils.utils.toTwosComplement(-1);
+      var parameter = [
+        {type:'address',value:ipConfig.MasterChef},
+        {type:'uint256',value:MAX}
+      ]
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(item.address,functionSelector,{shouldPollResponse:true}, parameter);
+      if (!transaction.result || !transaction.result.result)
+        return console.error('Unknown error: ' + transaction, null, 2);
+      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+            getConfirmedTransaction(res.txid).then(()=>{
+              that.deposit(item,n);
+              that.total.btnFlag1 = false;
+            })
+          });
+      }) 
     },
     async grtMasterChef () {//连接MasterChef合约需要对应的合约base58信息
       this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
@@ -215,57 +218,50 @@ export default {
         await this.getMasterChefContract();
       }
     },
-    async getContracts (n) { // 查询对应合约余额
-      try {
-        this.getContract = await window.tronWeb.contract().at(n);
-        let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
-        console.log(balanceOf);
-        this.total.decimals = await this.getContract.decimals().call(); // 精度
-        let res = await this.toDecimal(balanceOf._hex);
-        console.log(res);
-        this.total.balanceOf = res == 0 ? 0 : res / Math.pow(10, this.total.decimals);
-        // this.total.balanceOf = res 
-      } catch (error) {
-        console.log('getContracts==', error)
-      }
+    getContracts (item) { // 查询对应合约余额
+      let that = this
+      getMyBalanceInPool(item).then((res)=>{
+        that.total.balanceOf = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()
+        that.total.decimals = 18
+      })
     },
-    async showModels (index) { // 弹框
-      this.poolIndex = index;
+    async showModels (item) { // 弹框
       this.showModel = true;
-      await this.getContracts(this.poolList[this.poolIndex].lpToken);
-      await this.tokenPerBlock();
-      let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
+      this.total.item = item
+      await this.getContracts(item);
+      await this.tokenPerBlock(item);
+      let userInfo = await this.MasterChefContract.userInfo(item.index, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
       let res = await this.toDecimal(userInfo.amount._hex);
-      await this.pendingTokens();
+      await this.pendingTokens(item.index);
       this.total.shareToal = res / Math.pow(10, this.total.decimals);
 
       console.log(res);
     },
-    async updata () { // 提现 抵押 更新 余额  抵押数
-      try {
-        let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
-        let res = await this.toDecimal(balanceOf._hex);
-        // this.total.balanceOf =res
-        console.log('updata==balanceOf', res)
-        this.total.balanceOf = res / Math.pow(10, this.total.decimals);
-        let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
-        await this.pendingTokens();
-        this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
-        console.log( this.total.shareToal)
-        this.total.shareToal = this.total.shareToal / Math.pow(10, this.total.decimals);
-        console.log('updata==userInfo', userInfo)
+    async updata (item) { // 提现 抵押 更新 余额  抵押数
+      await this.getContracts(item)
+      // try {
+      //   let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
+      //   let res = await this.toDecimal(balanceOf._hex);
+      //   // this.total.balanceOf =res
+      //   console.log('updata==balanceOf', res)
+      //   this.total.balanceOf = res / Math.pow(10, this.total.decimals);
+      //   let userInfo = await this.MasterChefContract.userInfo(this.poolIndex, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
+      //   await this.pendingTokens();
+      //   this.total.shareToal = await this.toDecimal(userInfo.amount._hex);
+      //   console.log( this.total.shareToal)
+      //   this.total.shareToal = this.total.shareToal / Math.pow(10, this.total.decimals);
+      //   console.log('updata==userInfo', userInfo)
 
 
-      } catch (error) {
-        console.log(error);
-      }
+      // } catch (error) {
+      //   console.log(error);
+      // }
     },
     async getMasterChefContract () {//1.获取PoolInfo[] 返回列表一个数组，数组里的信息包括：lptoken的地址
       let that = this
       try {
         let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
         this.poolLength = await this.toDecimal(leng); // 16进制转10进制
-        console.log(this.poolLength);
         let arry = [];
         for (let index = 0; index < this.poolLength; index++) {
           let res = await that.MasterChefContract["poolInfo"](index).call();
@@ -279,23 +275,26 @@ export default {
           // console.log('利率======',res4)
           // console.log('利率======',res6)
           //  console.log(res1)
-          arry.push(res);
+          let lpToken = window.tronWeb.address.fromHex(res.lpToken)
+          this.farmList.forEach((item)=>{
+            if(item.address==lpToken){
+              item.index = index
+            }
+          })
         }
-        //  localStorage.setItem('farmList',JSON.stringify(arry));
-        // this.poolList = arry;
 
       } catch (error) {
         console.log(error);
       }
     },
 
-    async pendingTokens () {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
-      let penaccount = await this.MasterChefContract.pendingToken(this.poolIndex, window.tronWeb.defaultAddress.base58).call();
+    async pendingTokens (index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
+      let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
       this.total.uniswaplp = pre;
     },
-    async deposit (n) { // 质押  
+    async deposit (item,n) { // 质押  
       // （1）PoolInfo[]数组的序号
       // （2）质押的数量,为0的时候只领取奖励，不进行质押
       let data = {  // 使用send来执行non-pure或modify智能合约方法，这些方法确实修改了区块链，消耗资源（bandwidth 和 energy）并且还广播到网络。
@@ -309,53 +308,41 @@ export default {
       n = n * Math.pow(10, this.total.decimals);
       n = n+'';
       try {
-       num = await this.MasterChefContract['deposit'](this.poolIndex, n).send(data);
+       num = await this.MasterChefContract['deposit'](item.index, n).send(data);
       } catch (error) {
         console.log(error);
          this.total.btnFlag1 = false;
       }
       if (num) {
-        this.updata();
+        this.updata(item);
         console.log(num);
       }
       this.total.btnFlag1 = false;
     },
-    async withdraw (x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
-      let arr = this.total.shareToal * Math.pow(10, this.total.decimals); 
-      let n =  arr || 0;
-      let num ;
-        n = n;
-        if (x===0) n = 0;
-        n= n+'';
-        console.log('withdraw====',n)
-        debugger;
-        try {
-           num = await this.MasterChefContract.withdraw(this.poolIndex, n).send({
-              shouldPollResponse: true
-            });
-        } catch (error) {
-          this.$message.error('系统错误')
-            console.log(error);
-            if (x === 0) {
-              this.total.btnFlag2 = false;
-            } else {
-              this.total.btnFlag3 = false;
-            }
+    withdraw (x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
+      let that = this
+      let arr = Decimal(this.total.shareToal).mul(Math.pow(10, this.total.decimals)).toString();
+      let num = null
+      this.MasterChefContract.withdraw(that.total.item.index, x==0?0:arr).send({
+        shouldPollResponse: true
+      }).then((res)=>{
+        if (res) {
+          this.updata(that.total.item);
+          console.log(res);
         }
-  
-      if (num) {
-        this.updata();
-        console.log(num);
-      }
-      if (x === 0) {
-        this.total.btnFlag2 = false;
-      } else {
-        this.total.btnFlag3 = false;
-      }
+        if (x === 0) {
+          that.total.btnFlag2 = false;
+        } else {
+          that.total.btnFlag3 = false;
+        }
+      })
+      
     },
-    async tokenPerBlock () { // 转换 数值 
-      this.total.farmTotal = await this.toDecimal(this.poolList[this.poolIndex].perBlockToken._hex);   // 总数
-      // this.total.shareToal = await this.toDecimal(this.poolList[this.poolIndex].accFoxPerShare._hex);  //抵押数量
+    tokenPerBlock (item) { // 转换 数值 
+      let that = this
+      getLpBalanceInPool(item).then((res) => {//获取lptoken总量
+        that.total.farmTotal = Decimal(res).div(Math.pow(10,18))
+      })
     },
     async toDecimal (n) { // 16进制转10进制
       try {

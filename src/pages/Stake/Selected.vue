@@ -174,13 +174,14 @@ export default {
         console.log(e)
     },
     Approve () {
+      debugger
         this.$emit('Approve')
     },
     amount () {
         this.$emit('amount',this.test1)
     },
     stake () {
-      this.$emit('stake',this.test1)
+      this.$emit('stake',this.farmtoal.item,this.test1)
     },
     handelInit() {
       this.test1 = '';
@@ -246,7 +247,7 @@ export default {
     line-height: 56px;
     border-radius: 16px;
     border: 1px solid #0f1730;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     margin-top: 12px;
     margin-bottom: 32px;
@@ -294,6 +295,7 @@ export default {
       vertical-align: middle;
     }
     .lt_icon {
+      // margin-top: 4px;
       margin-right: 12px;
     }
     .rg_icon {
@@ -358,12 +360,14 @@ export default {
     color: #0f1730;
     .lt {
       span {
-        font-size: 20px;
+        font-size: 16px; 
+       color: #0F1730;
       }
     }
     .rg {
       span {
-        font-size: 18px;
+        font-size: 16px;
+        color: #0F1730;
       }
     }
     span {
@@ -397,6 +401,7 @@ export default {
       cursor: pointer;
     }
   }
+ 
   .add_marg {
     padding: 24px;
   }

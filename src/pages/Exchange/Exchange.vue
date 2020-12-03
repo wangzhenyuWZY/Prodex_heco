@@ -20,8 +20,10 @@
         </div>
 
         <div class="from_contentIcon">
-          <i class="el-icon-back cursor tran_icon"
-             @click="purples"></i>
+
+          <img src="../../assets/img/icon_down.png" alt="">
+          <!-- <i class="el-icon-back cursor tran_icon"
+             @click="purples"></i> -->
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -453,7 +455,7 @@ export default {
       this.btnDisabled1 = true;
       this.btnLoading1 = true;
       this.btnsbmit = true;
-      if (that.token1Num > that.token1Balance) {
+      if (that.token2Num > that.token2Balance) {
         this.$message.error('兑换额不能大于流动性池余额');
         that.btnDisabled1 = false;
         that.btnLoading1 = false;
@@ -620,6 +622,8 @@ export default {
   }
   .rg {
     
+   color: #FFFFFF;
+    
   }
   .setColr {
     color:#05C98E;
@@ -747,6 +751,7 @@ export default {
 }
 .setspan{
   line-height: 24px;
+  color:#ffffff;
 }
 .Price_text {
   font-size: 20px;

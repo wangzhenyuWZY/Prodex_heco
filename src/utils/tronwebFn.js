@@ -38,22 +38,23 @@ const allowance = (coinAddress,contractAddress) => {//查询授权
         }
     })
 }
-// const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
-//     return new Promise(function (resolve, reject) {
-//         try {
-//             var functionSelector = 'allowance(address,uint256)';
-//             var parameter = [
-//                 {type: 'address', value: coinAddress}
-//             ]
-//             window.tronWeb.transactionBuilder.triggerConstantContract(contractAddress,functionSelector,{}, parameter).then((transaction)=>{
-//                 resolve(transaction)
-//             })
-//         } catch (error) {
-//             console.log(error);
-//             reject()
-//         }
-//     })
-// }
+const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
+    return new Promise(function (resolve, reject) {
+        try {
+            var functionSelector = 'allowance(address,address)';
+            var parameter = [
+                {type: 'address', value: window.tronWeb.defaultAddress.base58},
+                {type: 'address', value: contractAddress}
+            ]
+            window.tronWeb.transactionBuilder.triggerConstantContract(coinAddress,functionSelector,{}, parameter).then((transaction)=>{
+                resolve(transaction)
+            })
+        } catch (error) {
+            console.log(error);
+            reject()
+        }
+    })
+}
 const approved = (coinAddress,contractAddress) => {//授权
     return new Promise(function (resolve, reject) {
         try {
@@ -142,5 +143,29 @@ const getLpBalanceInPool = (pair) =>{//获取LPtoken总额
         })
     })
 }
-export {approved,decimals,getConfirmedTransaction,allowance,getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool}
+const getTokenDenormalizedWeight = (coinAddress,contractAddress) => {//获取token在交易对中的权重
+    return new Promise(function (resolve, reject) {
+        var functionSelector = 'getDenorm(address)';
+        var parameter = [
+            { type: 'address', value: coinAddress }
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(contractAddress, functionSelector, {}, parameter).then((transaction)=>{
+            if (transaction) {
+                let denormalizedWeight = transaction.constant_result[0]
+                resolve(denormalizedWeight)
+            }
+        })
+    })
+}
+export {
+    approved,
+    decimals,
+    getConfirmedTransaction,
+    allowance,
+    getBalanceInPool,
+    getMyBalanceInPool,
+    getLpBalanceInPool,
+    bPoolAllowance,
+    getTokenDenormalizedWeight
+}
 export default initTronWeb;

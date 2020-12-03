@@ -1,16 +1,17 @@
 .pool-box2 {
   background: #fff;
    border-radius: 0 0 20px 20px;
+    min-height: 206px;
     overflow: hidden;
   .pool_boxbg{
     display: flex;
     flex-direction: column;
-    height: 283px;
+    height: 134px;
     padding-left: 32px;
     background: #fff;
-    background: url(../../assets/img/pool_bg.png) no-repeat;
-    background-size: 240px 219px;
-    background-position: right bottom;
+    // background: url(../../assets/img/pool_bg.png) no-repeat;
+    // background-size: 240px 219px;
+    // background-position: right bottom;
     
   }
   
@@ -29,7 +30,8 @@
     height: 20px;
     font-size: 16px;
     font-weight: 400;
-    color: #a6aeb7;
+    
+    color: #0F1730;
     line-height: 21px;
     margin-top: 32px;
 
@@ -89,7 +91,7 @@
   width: 480px;
   height: 506px;
   border-radius: 20px;
-  margin-top: 120px;
+  margin-top: 119px;
 
 
 
@@ -114,12 +116,13 @@
   
 }
 .pool-box1 p:nth-child(2) {
+  padding: 0 20px;
   margin-top: 12px;
   // width: 660px;
-  margin-left: 20px;
+  // margin-left: 20px;
   line-height: 19px;
   font-size: 16px;
-  font-family: roboto-mediumitalic;
+  font-family: roboto;
   font-weight: 400;
   color: #FFFFFF;
 }

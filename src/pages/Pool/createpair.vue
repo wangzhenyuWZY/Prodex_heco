@@ -398,7 +398,6 @@ line-height: 19px;
 } */
 </style>
 <style lang="scss" scoped>
-
 .from_lable{
   // width: 200px;
   // padding-left: -16px;

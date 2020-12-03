@@ -59,11 +59,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="Liquidity"
-                           label="Liquidity">
+          <el-table-column prop="liquidity"
+                           label="liquidity">
             <template slot-scope="scope">
               <div>
-                {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
+                {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
               </div>
             </template>
             <span></span>
@@ -106,11 +106,11 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="Liquidity"
-                           label="Liquidity">
+          <el-table-column prop="liquidity"
+                           label="liquidity">
             <template slot-scope="scope">
               <div class="table_size">
-                {{scope.row.Liquidity ? scope.row.Liquidity  : "--"}}
+                {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
               </div>
             </template>
             <span></span>
@@ -137,7 +137,7 @@ import chart2 from './chart2.vue'
 import circular from './circular'
 import { pairList } from '../../utils/token'
 import { IsPc } from '../../utils/index'
-import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from "../../utils/tronwebFn"
+import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool,getTokenDenormalizedWeight } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
@@ -147,30 +147,36 @@ export default {
     }
   },
   mounted () {
-    this.init();
-    let arry = localStorage.getItem('pairList');
-    if (arry) {
-      this.poopairListlList = JSON.parse(arry);
-    }
+    let that = this
+    this.$initTronWeb().then(function (tronWeb) {
+      that.init();
+    })
+    
   },
   methods: {
-    cccd (d) {
-      console.log(d)
-    },
     async init () {
-      let arr = [];
+      let that = this
       for (let index = 0; index < this.pairList.length; index++) {
         const el = this.pairList[index];
         let res = await getBalanceInPool(el, el.token1);
         let res1 = await getBalanceInPool(el, el.token2);
         let res2 = await getLpBalanceInPool(el);
-        el.token1Balance = res;
-        el.token2Balance = res1;
-        el.Liquidity = res2;
-        arr.push(el);
+        getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
+          el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+          getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
+            el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+            if(el.token1.name=='USDT'){
+              let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
+              that.pairList[index].liquidity = bil*parseFloat(res1)
+            }else if(el.token2.name=='USDT'){
+              let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
+              that.pairList[index].liquidity = bil*parseFloat(res1)
+            }
+          })
+        })
+        this.pairList[index].token1Balance = res;
+        this.pairList[index].token2Balance = res1;
       }
-      localStorage.setItem('pairList', JSON.stringify(arr));
-      this.pairList = arr;
     }
   },
 }

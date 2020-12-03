@@ -152,7 +152,6 @@ export default {
   color:#05C98E;
   margin-bottom: 8px;
 }
-
 .receive__Pool {
   margin-top: 24px;
   font-size: 18px;
