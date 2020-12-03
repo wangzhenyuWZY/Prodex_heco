@@ -184,7 +184,7 @@ export default {
 </script>
 <style  lang="scss" scoped>
 .container {
- padding-top: 120px;
+  padding-top: 120px;
 }
 .t-img {
   width: 22px;

@@ -268,8 +268,8 @@ export default {
   }
   .box_Price{
 
-    height: 80px;
-    line-height: 80px;
+    height: 72px;
+    line-height: 72px;
     padding-right: 24px;   
     overflow: hidden;
      .rg{

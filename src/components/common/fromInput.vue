@@ -130,7 +130,7 @@
         line-height: 28px;
         text-align: center;
         cursor: pointer;
-          background: #F6F7FB;
+          background: #EAFFF6;
         border-radius: 18px;
         font-size: 14px;
         color: #05C98E;
