@@ -341,8 +341,10 @@ export default {
     color: #878b97;
   }
   .text_conent {
+width: 120px;
     font-size: 20px;
-    text-align: center;
+    // text-align: center;
+    margin-left:120px ;
   }
   .margintop {
     width: 320px;
