@@ -83,15 +83,10 @@ export default {
         btnFlag1: false,
         btnFlag2: false,
         btnFlag3: false,
-        item:{}
+        item:{},
+        token1:'',
+        token2:''
       },
-      list: [
-        {
-          name: 'fUNISWAP_LP',
-          name2: 'FARM',
-          account: '12.04%'
-        }
-      ]
     }
   },
   components: {
@@ -122,6 +117,7 @@ export default {
     },
     requierImg (name,number) {
       let str;
+      // debugger
       if (name) {
         try {
            if (number != undefined) {
@@ -229,7 +225,10 @@ export default {
     },
     async showModels (item) { // 弹框
       this.showModel = true;
-      this.total.item = item
+      this.total.item = item;
+      this.total.token1 = item.token1.name
+      this.total.token2 = item.token2.name
+      console.log(item)
       await this.getContracts(item);
       await this.tokenPerBlock(item);
       let userInfo = await this.MasterChefContract.userInfo(item.index, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
