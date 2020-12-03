@@ -63,6 +63,7 @@ import ipConfig from '../../config/ipconfig.bak'
 import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
 import tokenData from '../../utils/token';
+import valret from '../Pool/valret'
 export default {
   data () {
     return {
@@ -90,7 +91,8 @@ export default {
     }
   },
   components: {
-    selected
+    selected,
+    valret
   },
   created () {
     this.init();
@@ -185,7 +187,6 @@ export default {
           that.doApproved(item,n)
         }else{
           that.deposit(item,n);
-          that.total.btnFlag1 = false;
         }
       })
     },
