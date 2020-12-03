@@ -61,8 +61,11 @@
              :class="connectFlag?'login_text':'outlogin'">
           <div class="connect_btn clearfix">
             <div class="whe fl_lt"
-                 v-show="!isApproved && connectFlag">
+                 v-show=" Approved()"
+                 >
               <el-button class="from_botton"
+                        :disabled="btnDisabled2"
+                         :loading="btnLoading2"
                          @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg">
@@ -76,7 +79,7 @@
              <span>  <el-button class="from_botton"
                          :loading="btnLoading1"
                          v-show="connectFlag" 
-                         :disabled="btnDisabled1"
+                         :disabled="tobtnDisabled()"
                          @click="confirmSwap">Swap</el-button></span>
             </div>
           </div>
@@ -189,7 +192,7 @@ export default {
       token1Num: '',
       token2Num: '',
       login: true,
-      isApproved: true,
+      isApproved: false,
       isSelect: false,
       item: 0,
       pair: {},
@@ -210,7 +213,9 @@ export default {
       btnsbmit:false,
       showAlert1:false,
       alertType:'success',
+      btnLoading2:false,
       isPair:true,
+      btnDisabled2:false,
       isPc:IsPc()
     }
   },
@@ -239,8 +244,9 @@ export default {
   },
   methods: {
     closeAlert(){
-      this.showAlert1 = false
-      window.location.reload()
+      this.showAlert1 = false;
+      
+      // window.location.reload()
     },
     btnClick () {
       this.$popup({
@@ -249,6 +255,27 @@ export default {
           this.$router.push('../../popup/popup')
         }
       })
+    },
+    tobtnDisabled () {
+      debugger
+      if (this.connectFlag) {
+         if (this.isApproved) { // true 不需要授权 false 需要授权
+          if (this.btnLoading1) {
+              return false;
+          } else {
+            return true;
+          }
+           return false
+         } else {
+           if (this.btnDisabled1) {
+              return true
+           } else {
+              return false
+           }
+           return false // 显示
+         }
+      }
+        return true
     },
     purples () {  // 箭头切换
       this.purple = !this.purple;
@@ -303,13 +330,31 @@ export default {
         }
       }
     },
+    Approved () {
+      if (this.connectFlag) {
+         if (this.isApproved) {
+                   return true
+         } else {
+          //  if(this.token1.address!=null&&this.token2.address!=null) {
+          //    return true
+          //  } else {
+          //     return false
+          //  }
+          return false
+         } 
+      }
+    },
     doApprove () {
+        this.btnDisabled2 = true;
+        this.btnLoading2 =true;
       if (this.token1.address && this.token2.address) {
         approved(this.token1.address, this.pair.address).then((res) => {
-          this.isApproved = true
+          this.isApproved = false;
+          this.btnLoading2 =false;
+          this.btnDisabled2 = false;
         })
       } else {
-        this.$layer.msg('请选择交易对')
+        this.$message.error('请选择交易对')
       }
     },
     async getPairAddress () {
@@ -322,14 +367,16 @@ export default {
       if (pair && pair.length > 0) {
         this.isPair = true
         this.pair = pair[0]
-        this.decimals = pair[0].decimals
+        this.decimals = pair[0].decimals;
+        console.log('getPairAddress=========')
         allowance(that.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex, 16)
+            let approveBalance = parseInt(res._hex, 16);
+            console.log('approveBalance ====='+approveBalance)
             if (approveBalance == 0) {
-              that.isApproved = false
-            } else {
               that.isApproved = true
+            } else {
+              that.isApproved = false
             }
           }
         })
@@ -474,6 +521,7 @@ export default {
         that.btnLoading1 = false;
         return
       }
+      debugger;
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       var parameter = [
         { type: 'address', value: that.token1.address },

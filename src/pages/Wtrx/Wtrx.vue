@@ -20,7 +20,6 @@
                          :disabled="btnDisabled1"
                          @click="changeWtrx">Confim</el-button>
             </div>
-
           </div>
           <div class="wtrx-right">
             <samp class="wtrx1">WTRX <img class="wtrx_img"
@@ -37,7 +36,7 @@
               <el-button class="from_botton"
                          :loading="btnLoading2"
                          :disabled="btnDisabled2"
-                         @click="getAllowance">Confim</el-button>
+                         @click="getAllowance">{{proNmae}}</el-button>
             </div>
           </div>
         </div>
@@ -52,11 +51,17 @@
         </div>
       </div>
     </div>
+    <valert
+      :isShow="showAlert"
+      :alertType='typeName'
+      @close ='showAlert=false'
+    />
   </div>
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
 import { approved, allowance } from '../../utils/tronwebFn'
+import valert from '../Pool/valret'
 export default {
   data () {
     return {
@@ -72,7 +77,14 @@ export default {
       inputdisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
+      proNmae:'Confim',
+      showAlert:false,
+      typeName:'success',
+      stup:1
     };
+  },
+  components:{
+    valert
   },
   computed: {
 
@@ -165,10 +177,33 @@ export default {
       that.loading2(1);
       allowance(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then((res) => {
         if (res) {
-          let approveBalance = window.tronWeb.toSun(res._hex)
+          let approveBalance = window.tronWeb.toSun(res._hex);
           if (approveBalance == 0) {
-            approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress)
-            that.loading2(0);
+            debugger;
+            // alert('    ');
+            if (that.proNmae=='approved') {
+                  that.loading2(1);
+                  // that.showAlert = true;
+                  approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then(res=>{
+                     console.log(res);
+                      that.proNmae = 'Confim';
+                      that.loading2(0);
+                  }).catch(err=>{
+                    that.$message.error('授权失败');
+                    that.loading2(0);
+                  })
+            } else {
+             
+              if ( that.stup ==1 ) {
+                    that.proNmae = 'approved';
+                    that.loading2(0);
+                     that.stup+=1;
+              } else {
+                  that.changeTrx();
+              }
+             
+            }
+
           } else {
             that.changeTrx()
           }
@@ -182,6 +217,7 @@ export default {
       let contractAddress = ipConfig.wtrxAddress;
       let functionSelector = 'withdraw(uint256)';
       let options = {};
+       that.loading2(1);
       let parameter = [{ type: 'uint256', value: window.tronWeb.toSun(this.wtrxNum) }];
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(contractAddress, functionSelector, options, parameter);
@@ -191,7 +227,11 @@ export default {
         }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function () {
-            alert('success');
+            that.$message.success('交易成功')
+            if (that.stup != 1) {
+                that.proNmae = 'Confim';
+            }
+            that.stup = 1;
             that.getWtrx();
             that.gettrx();
             that.loading2(0);
