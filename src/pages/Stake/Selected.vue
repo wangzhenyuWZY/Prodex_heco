@@ -116,6 +116,9 @@ export default {
         btnFlag3:false,
         item:{token1:{},token2:{}}
        }
+     },
+     farmList:{
+
      }
   },
   computed: {
@@ -170,6 +173,7 @@ export default {
 
   },
   methods: {
+
     hadelClick (e) {
       console.log('22222')
         console.log(e)
