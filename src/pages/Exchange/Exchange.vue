@@ -15,7 +15,7 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  
-           :showSelect="JSON.stringify(token1)!='{}'"
+            :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
             :text="token1.name" @click="showSelect(0)" />           

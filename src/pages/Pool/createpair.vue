@@ -36,6 +36,7 @@
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
             <frominput lable="Input"
+                        showmax
                        v-model="firstTokenNum"></frominput>
           </div>
            <div class="ctx_2   fl_lt">
@@ -59,7 +60,11 @@
                <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
             <frominput lable="Input"
-                       v-model="secondTokenNum"></frominput>
+
+                       v-model="secondTokenNum"
+                       showmax
+                       
+                       ></frominput>
           </div>
            <div class="ctx_2   fl_lt">
             <frominput lable="weight"

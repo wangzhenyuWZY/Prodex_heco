@@ -23,8 +23,11 @@
           
       </div>
       <div class="but1">
-           <span class="but1-left">{{eth}}</span><span  class="butt1-right">
-               <img src="../../assets/img/icon_down.png" alt=""></span>
+          <setselect
+          lable="false" 
+
+          />
+           
       </div>
         <div class="from_contentIcon">
           <i class="el-icon-plus tran_icon"></i>
@@ -42,7 +45,7 @@
 </template>
 
 <script>
-
+import {setselect } from '../../components/index'
 export default {
     data() {
         return {
@@ -58,6 +61,7 @@ export default {
         }
     },
     components:{
+        setselect,
     }
 }
 </script>
@@ -89,7 +93,7 @@ export default {
     height: 523px;
     background: #FFFFFF;
     border-radius: 20px;
-    padding-top: 120px;
+   margin-top: 120px;
 }
 .imp-top{
     height: 72px;
