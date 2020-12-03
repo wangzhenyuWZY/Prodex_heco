@@ -503,7 +503,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
 .exchange{
-  margin-top: 120px;
+  padding-top: 120px;
 
 .slott{
   background-color: #fff;
@@ -639,7 +639,7 @@ export default {
     border-radius: 24px;
     font-weight: normal;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 16px;
     background: #0f1730;
     text-align: center;
     cursor: pointer;

@@ -755,7 +755,7 @@ export default {
 
 <style lang="scss" scoped>
 .connect_pd {
-  margin-top: 120px;
+  padding-top: 120px;
   padding-bottom: 100px;
 }
 .xzk {

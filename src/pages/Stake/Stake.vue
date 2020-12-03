@@ -451,7 +451,7 @@ ul {
   // display: flex;
   // justify-content: space-between;
   // flex-wrap: wrap;
-  margin-top: 120px;
+  padding-top: 120px;
   li {
     width: 320px;
     height: 320px;
