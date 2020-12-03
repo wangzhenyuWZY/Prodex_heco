@@ -60,7 +60,7 @@
           <div class="lt">
             <span>Your Unstaked FOXDEX_LP</span>
           </div>
-          <div class="rg ftblod">{{farmtoal.farmTotal}}</div>
+          <div class="rg ftblod">{{farmtoal.balanceOf}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
