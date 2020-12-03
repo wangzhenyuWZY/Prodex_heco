@@ -28,7 +28,7 @@
           <el-tooltip class="item"
                       effect="dark"
                       content="Right Center 提示文字"
-                      placement="right">
+                      placement="left">
             <img src="@/assets/img/icon_instructions.svg"
                  alt="">
           </el-tooltip>
@@ -764,6 +764,7 @@ export default {
 .connect_pd {
   padding-top: 120px;
   padding-bottom: 100px;
+  
 }
 .xzk {
   height: 56px;
@@ -816,7 +817,7 @@ export default {
   margin-bottom: 12px;
 }
 .whe {
-  width: 293px;
+  width: 440px;
   margin: 0 auto;
   padding-bottom: 48px;
   margin-top: 40px;

@@ -16,7 +16,7 @@
           <el-tooltip class="item" 
                   effect="dark" 
                   content="Right Center 提示文字" 
-                  placement="right">
+                  placement="left">
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
         </div>
@@ -95,18 +95,21 @@
           <el-button class="from_botton pair_mandate pair_swap " @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
-          <div class="ctx_1 fl_lt">
+          <div class="ctx_1 fl_lt ">
             <frominput lable="Sponsors"
+            
              placeholder="Please Enter" 
                        v-model="sponsors"></frominput>
           </div>
-          <div class="ctx_2 fl_lt">
+          <div class="ctx_2 fl_lt ">
             <frominput lable="FoxDex"
+           
              placeholder="Please Enter" 
                        v-model="foxDex"></frominput>
           </div>
-          <div class="ctx_3 fl_lt">
+          <div class="ctx_3 fl_lt ">
             <frominput lable="LP"
+    
              placeholder="Please Enter" 
                        v-model="lp"></frominput>
           </div>
@@ -392,17 +395,10 @@ export default {
 </script>
 
 <style  scoped>
-/* >>>.rgs{
-  
-height: 19px;
-font-size: 16px;
-font-family: roboto-mediumitalic;
-font-weight: 400;
-color: #FFFFFF;
-line-height: 19px;
-} */
+
 </style>
 <style lang="scss" scoped>
+
 .from_lable{
   // width: 200px;
   // padding-left: -16px;
@@ -428,11 +424,13 @@ line-height: 19px;
   .ctx_2 {
     width: 96px;
     display: inline-block;
+
     margin: 0 12px;
   }
   .ctx_3 {
     width: 160px;
     display: inline-block;
+   
     margin: 0;
   }
   .selct_3 {
@@ -512,6 +510,7 @@ line-height: 19px;
   .pair_input{
     margin-top: 40px;
     padding-bottom: 48px;
+   
   }
   .lt_box {
     //width: 440px;

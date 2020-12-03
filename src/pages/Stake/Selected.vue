@@ -32,9 +32,9 @@
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
               </div>
-              <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
+             
             </div>
-            <div class="text_conent ftblod">FOXDEX_LP</div>
+            <div class="text_conent ftblod">FOXDEX_LP </div> <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
