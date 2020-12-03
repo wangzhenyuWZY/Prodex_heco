@@ -7,7 +7,9 @@
     <span slot="title"
           class="select_size">
       <span>Select a token</span>
-      <el-tooltip placement="right">
+      <el-tooltip  placement="bottom" 
+                   effect="light"
+                  >
                   <div slot="content" class="slotp"> 
                     Find a token by searching for <br> 
                     its  name  or  symbol  or  by <br>
@@ -186,7 +188,7 @@ export default {
     font-size: 16px;
     font-family: roboto-mediumitalic;
     font-weight: 400;
-    color: #EEEEF0;
+    color: #000;
     line-height: 19px;
 }
 >>> .dialog_selct {

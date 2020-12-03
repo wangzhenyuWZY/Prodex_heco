@@ -139,9 +139,13 @@
                 </div>
                 <div class="rg connect_currency">
                   <div class="metits">
-                    <img class="lt_icon"
-                         src="@/assets/img/btc.svg"
-                         alt="">
+                  <span>
+                    <img :src="requierImg(token1.name)"
+                        alt="">
+                    <img v-show="showFees(token2)"
+                        :src="requierImg(token2.name)"
+                        alt="">
+                  </span>
                     <span class="setsize">{{token1.name}}/{{token2.name}}</span>
                   </div>
                   <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
@@ -150,19 +154,19 @@
               </div>
               <div class="received mrge12 mrgtop16">
                 <div class="lt1">
-                  <span>Your pool share:</span>
+                  <span class="wlt">Your pool share:</span>
                 </div>
                 <span class="rg1">{{(myShare*100).toFixed(2)}}%</span>
               </div>
               <div class="received mrge12">
                 <div class="lt2">
-                  <span>{{token1.name}}:</span>
+                  <span class="wlt">{{token1.name}}:</span>
                 </div>
                 <span class="rg2">{{myToken1Balance}}</span>
               </div>
               <div class="received">
                 <div class="lt3">
-                  <span>{{token2.name}}:</span>
+                  <span class="wlt">{{token2.name}}:</span>
                 </div>
                 <span class="rg3">{{myToken2Balance}}</span>
               </div>
@@ -793,9 +797,14 @@ export default {
     .fees_zies {
     }
     img:nth-child(2) {
-      transform: translateX(-16px);
+      transform: translateX(-14px);
     }
   }
+}
+.wlt{
+  font-size: 16px;
+  
+color: #A6AEB7;
 }
 
 .lt_box {
@@ -974,6 +983,12 @@ color: #A6AEB7;
   width: 60%;
   font-size: 16px;
   text-align: center;
+  img{
+     transform: translateX(17px);
+  }
+  img:nth-child(2) {
+      transform: translateX(1px);
+    }
 }
 .typeBtn {
   width: 136px;

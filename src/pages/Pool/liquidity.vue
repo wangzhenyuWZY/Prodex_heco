@@ -338,7 +338,7 @@ export default {
     transition: transform 0.3s;
   }
   .pool_it {
-    padding: 16px 0 32px 24px;
+    padding: 16px 0 32px 0px;
   }
 }
 @media screen and (max-width: 750px) {
