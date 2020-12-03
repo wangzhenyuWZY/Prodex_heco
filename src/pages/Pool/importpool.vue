@@ -89,7 +89,7 @@ export default {
     height: 523px;
     background: #FFFFFF;
     border-radius: 20px;
-    margin-top: 120px;
+    padding-top: 120px;
 }
 .imp-top{
     height: 72px;

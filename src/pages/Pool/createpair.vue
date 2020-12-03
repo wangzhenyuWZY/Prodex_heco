@@ -405,7 +405,7 @@ line-height: 19px;
   // height: 72px;
 }
 .createpair {
-  margin-top: 120px;
+  padding-top: 120px;
 
   .whe {
     margin-top: 16px;
