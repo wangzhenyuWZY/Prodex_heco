@@ -48,9 +48,16 @@ import {IsPc} from '../../utils/index';
 export default {
   data () {
     return {
-      key: "0",
+      key: "31",
       navIndex: 0,
-      childrenNode: [],
+      childrenNode: [
+            102,
+            133,
+            87,
+            113,
+            103,
+            97
+      ],
       moble:true,
       tag: [
         {
@@ -89,11 +96,12 @@ export default {
 
   mounted () {
     try {
-      this.$nextTick(() => {
-        this.$refs.header.children.forEach((element) => {
-            let str = element.getBoundingClientRect();
-          this.childrenNode.push(element.offsetWidth );
-        });
+      // setTimeout(()=>{
+        // this.$refs.header.children.forEach((element) => {
+        //     let str = element.getBoundingClientRect();
+        //     // console.log(str);
+        //   this.childrenNode.push(element.offsetWidth);
+        // });
         let hash = location.hash;
         let str = hash.split("#")[1];
         if (str) {
@@ -101,7 +109,8 @@ export default {
         } else {
           this.handelActive("/");
         }
-      });
+      // },1000)
+ 
     } catch (error) {
       console.log(error);
     }
