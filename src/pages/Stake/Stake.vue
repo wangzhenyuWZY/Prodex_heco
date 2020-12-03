@@ -33,7 +33,7 @@
           </div>
           <div class="stake_addres">
             <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.pair}}</span></div>
-            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FARM</span></div>
+            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FOX</span></div>
           </div>
           <div class="stake_btn"
                @click="showModels(idx)">12.04%APY</div>

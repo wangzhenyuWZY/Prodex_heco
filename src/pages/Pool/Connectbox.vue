@@ -521,6 +521,13 @@ export default {
     },
     supply () {
       this.charm1(1);
+      if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
+        this.$message({
+          message: '未授权，请先授权',
+          type: 'error'
+        });
+        return
+      }
       if (this.iSingle) {
         this.joinswapExternAmountIn()
       } else {
