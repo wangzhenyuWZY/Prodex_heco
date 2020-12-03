@@ -34,7 +34,10 @@
               </div>
              
             </div>
-            <div class="text_conent ftblod">FOXDEX_LP </div> <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
+            <div class="text_conent ftblod">FOXDEX_LP
+               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span></div>
+               </div> 
+           
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
@@ -210,6 +213,9 @@ export default {
 </script>
 
 <style lang="scss"   scoped>
+.rgh{
+  float: right;
+}
 .colorF{
   color: #05C98E;
 }
@@ -348,10 +354,10 @@ export default {
     color: #878b97;
   }
   .text_conent {
-width: 120px;
-    font-size: 20px;
+   width: 300px;
+    font-size: 22px;
     // text-align: center;
-    margin-left:120px ;
+    margin-left:90px ;
   }
   .margintop {
     width: 320px;

@@ -141,9 +141,13 @@
                 </div>
                 <div class="rg connect_currency">
                   <div class="metits">
-                    <img class="lt_icon"
-                         src="@/assets/img/btc.svg"
-                         alt="">
+                  <span>
+                    <img :src="requierImg(token1.name)"
+                        alt="">
+                    <img v-show="showFees(token2)"
+                        :src="requierImg(token2.name)"
+                        alt="">
+                  </span>
                     <span class="setsize">{{token1.name}}/{{token2.name}}</span>
                   </div>
                   <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
@@ -152,19 +156,19 @@
               </div>
               <div class="received mrge12 mrgtop16">
                 <div class="lt1">
-                  <span>Your pool share:</span>
+                  <span class="wlt">Your pool share:</span>
                 </div>
                 <span class="rg1">{{(myShare*100).toFixed(2)}}%</span>
               </div>
               <div class="received mrge12">
                 <div class="lt2">
-                  <span>{{token1.name}}:</span>
+                  <span class="wlt">{{token1.name}}:</span>
                 </div>
                 <span class="rg2">{{myToken1Balance}}</span>
               </div>
               <div class="received">
                 <div class="lt3">
-                  <span>{{token2.name}}:</span>
+                  <span class="wlt">{{token2.name}}:</span>
                 </div>
                 <span class="rg3">{{myToken2Balance}}</span>
               </div>
@@ -248,6 +252,7 @@ export default {
         disabled2: false,
       },
       token2denormalizedWeight: 0,
+      token1denormalizedWeight: 0,
       myShare: 0,
       myToken1Balance: 0,
       myToken2Balance: 0,
@@ -360,7 +365,7 @@ export default {
       }
     
       if(this.iSingle){
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.token1denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
         this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }else{
         let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
@@ -397,7 +402,7 @@ export default {
       if (this.token1Num <= 0) {
         return
       }
-      if (this.token1Balance && this.token2Balance) {
+      if (this.token1Balance && this.token2Balance && !this.iSingle) {
         this.token2Num = (this.token1Num / this.token1Balance * this.token2Balance).toFixed(6)
         // let differ = this.token1.decimals-this.token2.decimals
         // if(differ!==0 && differ>0){
@@ -410,23 +415,24 @@ export default {
         this.getShare()
       }
     },
-    async getShare () {
+    getShare () {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
-        if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+        if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
           this.share = (poolOut / this.lpTotal * 100).toFixed(2)
         } else {
           // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
           // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
-          await getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
-            that.token1denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
+            that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
-          await getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
-            that.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
+            that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
+          // this.getShare()
         }
       } else {
         this.share = 0
@@ -850,9 +856,14 @@ export default {
     .fees_zies {
     }
     img:nth-child(2) {
-      transform: translateX(-16px);
+      transform: translateX(-14px);
     }
   }
+}
+.wlt{
+  font-size: 16px;
+  
+color: #A6AEB7;
 }
 
 .lt_box {
@@ -1031,6 +1042,12 @@ color: #A6AEB7;
   width: 60%;
   font-size: 16px;
   text-align: center;
+  img{
+     transform: translateX(17px);
+  }
+  img:nth-child(2) {
+      transform: translateX(1px);
+    }
 }
 .typeBtn {
   width: 136px;

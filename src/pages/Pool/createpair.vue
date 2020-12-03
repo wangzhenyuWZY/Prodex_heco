@@ -14,7 +14,8 @@
         <div class="rg_box">
           <el-tooltip class="item" 
                   effect="dark" 
-                  content="Right Center 提示文字" 
+                  popper-class="tipstyle"
+                  content="When you add liquidity,you are given pool tokens representing your position.These tokens automatically earn fees proportional to your share of the pool,and can be redeemed at any time." 
                   placement="left">
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
@@ -99,23 +100,28 @@
                      @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
-          <div class="ctx_1 fl_lt ">
-            <frominput lable="Sponsors"
-            
-             placeholder="Please Enter" 
-                       v-model="sponsors"></frominput>
-          </div>
+         
+         <span class="ctw"> <div class="ctx_1 fl_lt ">
+            <frominput 
+            lable="Sponsors"
+            placeholder="Please Enter" 
+            v-model="sponsors">
+            </frominput>
+          </div></span>
+
           <div class="ctx_2 fl_lt ">
-            <frominput lable="FoxDex"
-           
-             placeholder="Please Enter" 
-                       v-model="foxDex"></frominput>
+            <frominput 
+            lable="FoxDex"
+            placeholder="Please Enter" 
+            v-model="foxDex">
+            </frominput>
           </div>
           <div class="ctx_3 fl_lt ">
-            <frominput lable="LP"
-    
-             placeholder="Please Enter" 
-                       v-model="lp"></frominput>
+            <frominput 
+            lable="LP"
+            placeholder="Please Enter" 
+            v-model="lp">
+            </frominput>
           </div>
         </div>
       </div>
@@ -429,12 +435,15 @@ export default {
   },
 }
 </script>
-
-<style  scoped>
-
-</style>
+<style>
+.tipstyle{
+  width:200px;
+}
+</style> 
 <style lang="scss" scoped>
-
+.el-tooltip__popper{
+  width:100%;
+}
 .from_lable{
   // width: 200px;
   // padding-left: -16px;
@@ -442,6 +451,7 @@ export default {
 .title {
   // height: 72px;
 }
+
 .createpair {
   padding-top: 120px;
 
