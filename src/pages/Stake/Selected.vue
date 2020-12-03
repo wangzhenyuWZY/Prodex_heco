@@ -72,7 +72,7 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btns clearfix">
-          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">UNDTSKE&CLIM</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">UNDTSKE&CLAIM</el-button>
           <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">CLAIM REWARDS</el-button>
         </div>
         <div class="ftblod mrge12">Amount</div>

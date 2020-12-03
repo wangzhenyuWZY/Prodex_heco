@@ -70,27 +70,27 @@
             <div class="box_sizes" :class="item.show ? 'transition' : 'hide_box'">
               <div class="provider">
                 <div class="fees_share">
-                  <div class="received">
+                  <div class="received liqui">
                     <div class="lt">
                       <span>Your tatal pool token:</span>
                     </div>
                     <span class="rg">{{item.myBalanceInPool}}</span>
                   </div>
-                  <div class="received mrgtop16">
+                  <div class="received liqui  mrgtop16">
                     <div class="lt">
                       <img src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled {{item.token1.name}}:</span>
                     </div>
                     <span class="rg">{{token1Balance.toFixed(6)}}</span>
                   </div>
-                  <div class="received mrgtop16">
+                  <div class="received  liqui mrgtop16">
                     <div class="lt">
                       <img class="lt_icon" src="@/assets/img/btc.svg" alt="" />
                       <span>Pooled {{item.token2.name}}:</span>
                     </div>
                     <span class="rg">{{token2Balance.toFixed(6)}}</span>
                   </div>
-                  <div class="received mrgtop16">
+                  <div class="received liqui mrgtop16">
                     <div class="lt">
                       <span>Your pool share:</span>
                     </div>
@@ -274,7 +274,7 @@ export default {
     background-size: cover;
     height: 72px;
     line-height: 72px;
-    font-size: 20px;
+    font-size: 16px;
     font-family: roboto-mediumitalic;
     color: #eeeef0;
     padding: 0 24px;
@@ -309,6 +309,7 @@ export default {
   .accrued {
     margin-top: 24px;
     text-align: center;
+    font-size: 16px;
     .acrued_img {
       width: 24px;
       height: 24px;
@@ -317,13 +318,24 @@ export default {
   .accrued_btn {
     margin-top: 27px;
     .btn_lt {
-      width: 270px;
+      width: 190px;
+      button{
+        height: 48px;
+      }
     }
   }
   .hide_box {
     height: 0;
     overflow: hidden;
     transition: height 0.3s;
+  }
+  .liqui{
+    span{
+      font-size: 16px;
+    }
+    .lt{
+      color: #878B97;
+    }
   }
   .actvimg {
     transform: rotate(180deg);

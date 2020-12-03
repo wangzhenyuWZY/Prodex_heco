@@ -24,7 +24,7 @@
       <div 
           v-if="alertType == 'success'">
         <div class="alert_size">Transaction Submitted</div>
-        <div class="alert_success">View on Etherscan</div>
+        <div class="alert_success" @click="openUrl">View on Etherscan</div>
         <div class="alert_button"
             v-show="alertType == 'success'">
           <el-button class="from_botton" @click="handleClosea">Close</el-button>
@@ -56,6 +56,9 @@ export default {
         type:[String,Number],
         default:0
       },
+      url:{
+        default:''
+      }
       // token1:{
       //   type:Object,
       //   default:{}
@@ -68,6 +71,7 @@ export default {
   data () {
     return {
       test: '12',
+      addUrl:'https://shasta.tronscan.org/#/address/',
       ppd: {
         a: 1,
         b: 2,
@@ -84,6 +88,9 @@ export default {
     }
   },
   methods: {
+    openUrl () {
+        window.open(this.addUrl+this.url)
+    },  
     handleClosea () {
          this.$emit('close')
     }
@@ -134,6 +141,7 @@ export default {
   color:#05C98E;
   margin-top: 12px;
   margin-bottom: 48px;
+  cursor: pointer;
 }
 .alert_button {
   width:80%;
