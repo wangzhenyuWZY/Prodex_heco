@@ -167,7 +167,6 @@ export default {
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex)
           if (approveBalance == 0) {
-            alert('未授权请先授权');
             approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress)
             that.loading2(0);
           } else {

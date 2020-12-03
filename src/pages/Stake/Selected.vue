@@ -54,7 +54,7 @@
           <div class="lt">
             <span>Total FOX Earned</span>
           </div>
-          <div class="rg ftblod">{{farmtoal.farmTotal}}</div>
+          <div class="rg ftblod">{{farmtoal.uniswaplp}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
@@ -111,6 +111,7 @@ export default {
         uniswaplp:0,
         maxamount:0,
         balanceOf:0,
+        foxBalance:0,
         btnFlag1:false,
         btnFlag2:false,
         btnFlag3:false,
