@@ -27,7 +27,7 @@
           <div class="provider add_marg">
             <div class="received">
               <div class="lt">
-                <span  >{{farmtoal.token1}}</span>
+                <span>{{farmtoal.item?farmtoal.item.token1.name:''}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -37,7 +37,7 @@
             <div class="text_conent ftblod">FOXDEX_LP</div>
             <div class="received">
               <div class="lt">
-                  <span>{{farmtoal.token2}}</span>
+                <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -58,13 +58,13 @@
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Unstaked UNISWAP_LP</span>
+            <span>Your Unstaked FOXDEX_LP</span>
           </div>
           <div class="rg ftblod">{{farmtoal.balanceOf}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Staked UNISWAP_LP</span>
+            <span>Your Staked FOXDEX_LP</span>
           </div>
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
@@ -114,11 +114,7 @@ export default {
         btnFlag1:false,
         btnFlag2:false,
         btnFlag3:false,
-        item:{
-
-        },
-        token1:'WTRX',
-        token2:'USDT'
+        item:{token1:{},token2:{}}
        }
      },
      farmList:{
@@ -219,7 +215,8 @@ export default {
 .stake_slect {
   color: #0f1730;
   font-size: 18px;
-  margin-top: 50px;
+  // margin-top: 50px;
+  padding-top: 120px;
   .selct_top{
     margin-bottom: 14px;
     text-align: center;
