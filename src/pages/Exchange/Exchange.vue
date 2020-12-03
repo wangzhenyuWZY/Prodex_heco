@@ -6,13 +6,16 @@
           <div class="ctx_1 fl_lt">
           <frominput 
             lable="From"
+            showmax
             v-model="token1Num" 
             @input='cumpToken2'>
+            
             </frominput>
+           
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  
-           :showSelect="JSON.stringify(token1)!='{}'"
+            :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
             :text="token1.name" @click="showSelect(0)" />           
@@ -28,6 +31,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
+                      showmax
                        v-model="token2Num"
                        @input="cumpToken1"></frominput>
           </div>
@@ -578,6 +582,7 @@ export default {
 .ctx_1 {
   width: 268px;
   display: inline-block;
+
 }
 .ctx_3 {
   width: 160px;

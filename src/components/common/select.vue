@@ -171,7 +171,7 @@ import tokenData from '../../utils/token'
       // margin-right: 6px;
     }
     .show_size {
-      font-family: roboto-mediumitalic;
+      font-family: roboto;
       color: #05C98E;
     }
   }

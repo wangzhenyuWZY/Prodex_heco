@@ -99,15 +99,15 @@ export default {
     initColse () {
         this.showModel = false;
         this.total = {
-        farmTotal: 0, // 总数
-        shareToal: 0, // 抵押数量
-        uniswaplp: 0, // 计算用户收益
-        balanceOf: 0, // 钱包余额
-        decimals: 0, // 精度 查询减 发送合约加
-        btnFlag1: false,
-        btnFlag2: false,
-        btnFlag3: false
-      }
+          farmTotal: 0, // 总数
+          shareToal: 0, // 抵押数量
+          uniswaplp: 0, // 计算用户收益
+          balanceOf: 0, // 钱包余额
+          decimals: 0, // 精度 查询减 发送合约加
+          btnFlag1: false,
+          btnFlag2: false,
+          btnFlag3: false
+        }
     },
     async init () {//初始化tronweb
       let that = this
@@ -117,7 +117,7 @@ export default {
     },
     requierImg (name,number) {
       let str;
-      debugger
+      // debugger
       if (name) {
         try {
            if (number != undefined) {
@@ -293,7 +293,7 @@ export default {
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
-      this.total.uniswaplp = pre;
+      this.total.uniswaplp = parseInt(pre,16)/Math.pow(10,18);
     },
     async deposit (item,n) { // 质押  
       // （1）PoolInfo[]数组的序号

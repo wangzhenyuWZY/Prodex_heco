@@ -32,9 +32,9 @@
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
               </div>
-              <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
+             
             </div>
-            <div class="text_conent ftblod">FOXDEX_LP</div>
+            <div class="text_conent ftblod">FOXDEX_LP </div> <div class="rg"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span> </div>
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
@@ -54,7 +54,7 @@
           <div class="lt">
             <span>Total FOX Earned</span>
           </div>
-          <div class="rg ftblod">{{farmtoal.farmTotal}}</div>
+          <div class="rg ftblod">{{farmtoal.uniswaplp}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
@@ -111,6 +111,7 @@ export default {
         uniswaplp:0,
         maxamount:0,
         balanceOf:0,
+        foxBalance:0,
         btnFlag1:false,
         btnFlag2:false,
         btnFlag3:false,

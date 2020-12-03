@@ -28,7 +28,7 @@
           <el-tooltip class="item"
                       effect="dark"
                       content="Right Center 提示文字"
-                      placement="right">
+                      placement="left">
             <img src="@/assets/img/icon_instructions.svg"
                  alt="">
           </el-tooltip>
@@ -38,7 +38,7 @@
       <div slot="body"
            class="posting">
         <div class="xzk"
-             v-if="showFees(token1)"
+             v-if="showFees(token1 )"
              @click="validation">
           <div class="fees">
             <span>
@@ -329,12 +329,6 @@ export default {
       if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
           message: '钱包余额不足',
-          type: 'error'
-        });
-        return
-      } else if (this.token1Num > this.token1Balance || this.token2Num > this.token2Balance) {
-        this.$message({
-          message: '流动池余额不足',
           type: 'error'
         });
         return
@@ -776,6 +770,7 @@ export default {
 .connect_pd {
   padding-top: 120px;
   padding-bottom: 100px;
+  
 }
 .xzk {
   height: 56px;
@@ -828,7 +823,7 @@ export default {
   margin-bottom: 12px;
 }
 .whe {
-  width: 293px;
+  width: 440px;
   margin: 0 auto;
   padding-bottom: 48px;
   margin-top: 40px;
