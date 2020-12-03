@@ -244,6 +244,7 @@ export default {
         subimt: false
       },
       token2denormalizedWeight: 0,
+      token1denormalizedWeight: 0,
       myShare: 0,
       myToken1Balance: 0,
       myToken2Balance: 0,
@@ -323,7 +324,7 @@ export default {
         return
       }
       if(this.iSingle){
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.token1denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
         this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
       }else{
         let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
@@ -360,7 +361,7 @@ export default {
       if (this.token1Num <= 0) {
         return
       }
-      if (this.token1Balance && this.token2Balance) {
+      if (this.token1Balance && this.token2Balance && !this.iSingle) {
         this.token2Num = (this.token1Num / this.token1Balance * this.token2Balance).toFixed(6)
         // let differ = this.token1.decimals-this.token2.decimals
         // if(differ!==0 && differ>0){
@@ -373,23 +374,24 @@ export default {
         this.getShare()
       }
     },
-    async getShare () {
+    getShare () {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
-        if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+        if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
           this.share = (poolOut / this.lpTotal * 100).toFixed(2)
         } else {
           // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
           // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
-          await getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
-            that.token1denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
+            that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
-          await getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
-            that.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
+            that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
+          // this.getShare()
         }
       } else {
         this.share = 0

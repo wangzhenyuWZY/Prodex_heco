@@ -48,9 +48,9 @@
              v-show="connectFlag">
           <span>Price: </span>
           <span>{{spotPrice.toFixed(4)}} </span>
-          <span> {{token1.name}} </span>
-          <span> per </span>
           <span> {{token2.name}} </span>
+          <span> per </span>
+          <span> {{token1.name}} </span>
           <img src="@/assets/img/icon_slect.png"
                alt=""
                @click="convert">
@@ -386,8 +386,8 @@ export default {
       }
     },
     getSpotPrice () {//计算token1的价格
-      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee) {
-        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.swapFee)
+      if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
+        this.spotPrice = calcSpotPrice(this.token2Balance, this.token2Weight, this.token1Balance, this.token1Weight, this.swapFee)
       }
       if (this.token1Num) {
         this.cumpToken2()
