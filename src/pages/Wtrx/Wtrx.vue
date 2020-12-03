@@ -189,7 +189,7 @@ export default {
                       that.proNmae = 'Confim';
                       that.loading2(0);
                   }).catch(err=>{
-                    that.$message.error('授权失败');
+                    that.$message.error('privilege grant failed');
                     that.loading2(0);
                   })
             } else {
@@ -227,7 +227,7 @@ export default {
         }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function () {
-            that.$message.success('交易成功')
+            that.$message.success('Successful trade')
             if (that.stup != 1) {
                 that.proNmae = 'Confim';
             }

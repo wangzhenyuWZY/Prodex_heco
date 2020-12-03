@@ -219,19 +219,19 @@ export default {
       // this.login = !this.login
       if (!this.firstTokenNum || this.firstTokenNum == 0 || this.firstTokenNum == '' || !this.secondTokenNum || this.secondTokenNum == 0 || this.secondTokenNum == '') {
         this.$message({
-          message: '请输入添加数量',
+          message: 'Please enter the added quantity',
           type: 'error'
         });
         return
       } else if (!this.firstTokenWeight || this.firstTokenWeight == 0 || this.firstTokenWeight == '' || !this.secondTokenWeight || this.secondTokenWeight == 0 || this.secondTokenWeight == '') {
         this.$message({
-          message: '请输入权重',
+          message: 'Please enter weight',
           type: 'error'
         });
         return
       } else if ((this.firstTokenWeight + this.secondTokenWeight) > 50) {
         this.$message({
-          message: '权重相加不能大于50',
+          message: 'Weight addition cannot be greater than 50',
           type: 'error'
         });
         return
@@ -271,7 +271,7 @@ export default {
       this.showAlert1 = true;
       this.typeUrl = window.tronWeb.defaultAddress.base58;
       this.$message({
-        message: '成功，请等待区块确认',
+        message: 'Successful, please wait for block confirmation',
         type: 'error'
       });
       try {
@@ -304,7 +304,7 @@ export default {
       catch (error) {
         that.loading1();
           this.$message({
-        message: '系统错误',
+        message: 'System error',
         type: 'error'
       });
         console.log(error);

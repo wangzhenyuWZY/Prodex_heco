@@ -345,12 +345,12 @@ export default {
     checkSupply () {
       if (!this.token1Num || this.token1Num == '' || this.token1Num == 0) {
         this.$message({
-          message: '请输入添加数量',
+          message: 'Please enter the added quantity',
           type: 'error'
         });
       } else if (this.token1Num > this.token1.balance) {
         this.$message({
-          message: '钱包余额不足',
+          message: 'Insufficient wallet balance',
           type: 'error'
         });
       }
@@ -358,7 +358,7 @@ export default {
     confirmSupply () {//输出的lptoken数量
       if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
-          message: '钱包余额不足',
+          message: 'Insufficient wallet balance',
           type: 'error'
         });
         return
@@ -579,7 +579,7 @@ export default {
       this.charm1(1);
       if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
         this.$message({
-          message: '未授权，请先授权',
+          message: 'Unauthorized, please authorize first',
           type: 'error'
         });
         return
@@ -704,7 +704,7 @@ export default {
           })
         }
       } else {
-        this.$layer.msg('请选择交易对')
+        this.$layer.msg('Please select transaction pair')
       }
     },
     async getBalance (token) {//获取余额
@@ -774,7 +774,7 @@ export default {
         this.selectType = this.token1.name
       } else {
         this.$message({
-          message: '请先选择交易对',
+          message: 'Please select transaction pair first',
           type: 'error'
         });
       }
