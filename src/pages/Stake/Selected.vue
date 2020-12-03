@@ -27,7 +27,7 @@
           <div class="provider add_marg">
             <div class="received">
               <div class="lt">
-                <span>ETH</span>
+                <span  >{{farmtoal.token1}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -37,7 +37,7 @@
             <div class="text_conent ftblod">FOXDEX_LP</div>
             <div class="received">
               <div class="lt">
-                <span>ETH</span>
+                  <span>{{farmtoal.token2}}</span>
                 <img class="lt_icon"
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
@@ -113,8 +113,16 @@ export default {
         balanceOf:0,
         btnFlag1:false,
         btnFlag2:false,
-        btnFlag3:false
+        btnFlag3:false,
+        item:{
+
+        },
+        token1:'WTRX',
+        token2:'USDT'
        }
+     },
+     farmList:{
+
      }
   },
   computed: {
@@ -169,6 +177,7 @@ export default {
 
   },
   methods: {
+
     hadelClick (e) {
       console.log('22222')
         console.log(e)
