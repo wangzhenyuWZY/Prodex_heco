@@ -4,7 +4,7 @@
     <div class="nav clearfix">
       <div class="logo"><img src="../../assets/img/logo_FoxDex.png"
              alt="" />
-             <span class="logop">FoxDex</span>
+             <!-- <span class="logop">FoxDex</span> -->
              </div>
              
       <div class="nav-header fl_lt" v-show="moble">
@@ -92,7 +92,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.header.children.forEach((element) => {
             let str = element.getBoundingClientRect();
-          this.childrenNode.push(element.offsetWidth -2);
+          this.childrenNode.push(element.offsetWidth );
         });
         let hash = location.hash;
         let str = hash.split("#")[1];
@@ -164,17 +164,17 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.logop{
-  float: left;
-  // margin-top: 8px;
-  height: 38px;
-  font-size: 32px;
-  font-family: roboto-mediumitalice;;
-  color: #05C98E;
-  line-height: 38px;
-  // margin-left: 116px;
-  margin-right: 22px;
-}
+// .logop{
+//   float: left;
+//   // margin-top: 8px;
+//   height: 38px;
+//   font-size: 32px;
+//   font-family: roboto-mediumitalice;;
+//   color: #05C98E;
+//   line-height: 38px;
+//   // margin-left: 116px;
+//   margin-right: 22px;
+// }
 .iconsv{
   margin-left: 50px;
 }
@@ -238,23 +238,25 @@ export default {
   float: left;
     display: flex;
     align-items: center;
-    margin-top: 10px;
-  margin-left: 33px;
-  .logop{
-    font-family: 'roboto-mediumitalice';
-    margin-left: 10px;
+   
+    margin-top: 2px;
+    margin-left: 38px;
+  // .logop{
+  //   font-family: 'roboto-mediumitalice';
+  //   margin-left: 10px;
     
-  }
+  // }
 }
 .logo img {
   width: 100%;
-   width: 50px;
-  height: 45px;
+  width:180px ;
+    height: 64px;
 }
 .nav-header {
-  color: #495169;
+   
+  color: #A6AEB7;
   position: relative;
-  margin-left: 22px;
+  // margin-left: 22px;
 
 }
 .active {
