@@ -466,6 +466,8 @@ export default {
   .ctx_1 {
     width: 160px;
     display: inline-block;
+    
+
   }
   .ctx_2 {
     width: 96px;
@@ -504,6 +506,7 @@ export default {
     }
   }
   .pair_mandate {
+    margin-top: 20px;
     display: inline-block;
     width: 48%;
   }
@@ -553,8 +556,9 @@ export default {
     }
   }
   .pair_input {
-    margin-top: 40px;
-    padding-bottom: 48px;
+    
+    margin-top: 30px;
+    padding-bottom: 40px;
    
   }
   .lt_box {
