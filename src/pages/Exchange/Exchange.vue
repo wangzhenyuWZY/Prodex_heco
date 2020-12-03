@@ -68,7 +68,7 @@
                          :loading="btnLoading2"
                          @click="doApprove">Approve {{token1.name}}</el-button>
             </div>
-            <div class="whe fl_rg">
+            <div class="whe fl_rg" v-show="!Approved()">
               <span> <el-button class="from_botton"
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
@@ -581,8 +581,8 @@ export default {
 .whe {
   width: 100%;
   margin: 0 auto;
-  // padding-bottom: 48px;
-  margin-bottom: 48px;
+  // padding-bottom: 28px;
+  margin-bottom: 38px;
 }
 .whe_img {
   vertical-align: sub;
