@@ -92,7 +92,7 @@ export default {
       this.$nextTick(() => {
         this.$refs.header.children.forEach((element) => {
             let str = element.getBoundingClientRect();
-          this.childrenNode.push(element.offsetWidth );
+          this.childrenNode.push(element.offsetWidth);
         });
         let hash = location.hash;
         let str = hash.split("#")[1];
