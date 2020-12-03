@@ -8,6 +8,7 @@
             lable="From"
             showmax
             v-model="token1Num" 
+            :balance="token1.balance"
             @input='cumpToken2'>
             
             </frominput>
@@ -32,6 +33,7 @@
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
                       showmax
+                      :balance="token2.balance"
                        v-model="token2Num"
                        @input="cumpToken1"></frominput>
           </div>
@@ -365,8 +367,15 @@ export default {
         });
         return
       }
-      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
+      if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token2Num) {
         let token1Num = calcInGivenOut(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token2Num, this.swapFee)
+        if(token1Num.toString()=='NaN'){
+          this.$message({
+            message: '流动池余额不足',
+            type: 'error'
+          });
+          return
+        }
         this.token1Num = token1Num.toFixed(this.token1.decimals)
       }
     },

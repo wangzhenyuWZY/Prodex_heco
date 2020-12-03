@@ -195,7 +195,6 @@ export default {
             that.getWtrx();
             that.gettrx();
             that.loading2(0);
-
           });
         });
       } catch (error) {

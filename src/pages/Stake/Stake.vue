@@ -315,8 +315,9 @@ export default {
          this.total.btnFlag1 = false;
       }
       if (num) {
+        window.location.reload()
         this.updata(item);
-        console.log(num);
+
       }
       this.total.btnFlag1 = false;
     },
@@ -328,6 +329,7 @@ export default {
         shouldPollResponse: true
       }).then((res)=>{
         if (res) {
+          window.location.reload()
           this.updata(that.total.item);
           console.log(res);
         }
