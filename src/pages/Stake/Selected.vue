@@ -99,12 +99,16 @@
         </div>
       </div>
     </container>
+    <valret :isShow="farmtoal.showAlert1"
+            :url="farmtoal.defaultAddress"
+            @close='farmtoal.showAlert1=false' />
   </div>
 </template>
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
 import {mapState} from 'vuex'
+import valret from '../Pool/valret'
 export default {
   props: {
      farmtoal:{
@@ -118,6 +122,8 @@ export default {
         btnFlag1:false,
         btnFlag2:false,
         btnFlag3:false,
+        showAlert1:false,
+        defaultAddress:'',
         item:{token1:{},token2:{}}
        }
      },
@@ -171,10 +177,10 @@ export default {
   components: {
     // vButton: vbutton,
     container,
-    frominput 
+    frominput, 
     // vfromInput: fromInput,
     // setselect
-
+    valret
   },
   methods: {
 

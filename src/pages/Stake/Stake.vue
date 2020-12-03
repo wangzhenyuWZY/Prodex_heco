@@ -53,6 +53,7 @@
               @amount="clickAmount"
               @back="initColse"
               @stake="stake" />
+    
   </div>
 </template>
 
@@ -63,10 +64,11 @@ import ipConfig from '../../config/ipconfig.bak'
 import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
 import tokenData from '../../utils/token';
-import valret from '../Pool/valret'
+
 export default {
   data () {
     return {
+      
       MasterChefContract: null,
       getContract: null,
       poolLength: 0,
@@ -86,13 +88,14 @@ export default {
         btnFlag3: false,
         item:{},
         token1:'',
-        token2:''
+        token2:'',
+        showAlert1:false,
+        defaultAddress:'',
       },
     }
   },
   components: {
-    selected,
-    valret
+    selected
   },
   created () {
     this.init();
@@ -108,7 +111,9 @@ export default {
           decimals: 0, // 精度 查询减 发送合约加
           btnFlag1: false,
           btnFlag2: false,
-          btnFlag3: false
+          btnFlag3: false,
+          showAlert1:false,
+          defaultAddress:'',
         }
     },
     async init () {//初始化tronweb
@@ -306,7 +311,9 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
-       let num ;
+      this.total.defaultAddress = window.tronWeb.defaultAddress.base58
+      this.total.showAlert1 = true
+      let num ;
       n = n * Math.pow(10, this.total.decimals);
       n = n+'';
       try {
