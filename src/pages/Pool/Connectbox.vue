@@ -206,7 +206,7 @@ import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
 import tokenData from '../../utils/token'
-import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool } from '../../utils/tronwebFn'
+import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool, getTokenDenormalizedWeight } from '../../utils/tronwebFn'
 import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
 import removealert from './valret';
@@ -370,15 +370,21 @@ export default {
         this.getShare()
       }
     },
-    getShare () {
+    async getShare () {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
         if (this.token1Balance && this.denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
           let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
           this.share = (poolOut / this.lpTotal * 100).toFixed(2)
         } else {
-          this.getToken1DenormalizedWeight()//获取token1在pool中的权重
-          this.getToken2DenormalizedWeight()//获取token2在pool中的权重
+          // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
+          // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
+          await getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
+            that.token1denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          })
+          await getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
+            that.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+          })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
         }
@@ -387,28 +393,28 @@ export default {
       }
 
     },
-    async getToken2DenormalizedWeight () {
-      var functionSelector = 'getDenorm(address)';
-      var parameter = [
-        { type: 'address', value: this.token2.address }
-      ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
-      if (transaction) {
-        this.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-        console.log("token2权重=======" + this.token2denormalizedWeight)
-      }
-    },
-    async getToken1DenormalizedWeight () {
-      var functionSelector = 'getDenorm(address)';
-      var parameter = [
-        { type: 'address', value: this.token1.address }
-      ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
-      if (transaction) {
-        this.denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
-        console.log("token1权重=======" + this.denormalizedWeight)
-      }
-    },
+    // async getToken2DenormalizedWeight () {
+    //   var functionSelector = 'getDenorm(address)';
+    //   var parameter = [
+    //     { type: 'address', value: this.token2.address }
+    //   ]
+    //   let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+    //   if (transaction) {
+    //     this.token2denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+    //     console.log("token2权重=======" + this.token2denormalizedWeight)
+    //   }
+    // },
+    // async getToken1DenormalizedWeight () {
+    //   var functionSelector = 'getDenorm(address)';
+    //   var parameter = [
+    //     { type: 'address', value: this.token1.address }
+    //   ]
+    //   let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+    //   if (transaction) {
+    //     this.denormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
+    //     console.log("token1权重=======" + this.denormalizedWeight)
+    //   }
+    // },
     async getTotalDenormalizedWeight () {
       var functionSelector = 'getTotalDenormalizedWeight()';
       var parameter = []

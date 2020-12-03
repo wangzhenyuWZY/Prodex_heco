@@ -143,5 +143,29 @@ const getLpBalanceInPool = (pair) =>{//获取LPtoken总额
         })
     })
 }
-export {approved,decimals,getConfirmedTransaction,allowance,getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool,bPoolAllowance}
+const getTokenDenormalizedWeight = (coinAddress,contractAddress) => {//获取token在交易对中的权重
+    return new Promise(function (resolve, reject) {
+        var functionSelector = 'getDenorm(address)';
+        var parameter = [
+            { type: 'address', value: coinAddress }
+        ]
+        window.tronWeb.transactionBuilder.triggerConstantContract(contractAddress, functionSelector, {}, parameter).then((transaction)=>{
+            if (transaction) {
+                let denormalizedWeight = transaction.constant_result[0]
+                resolve(denormalizedWeight)
+            }
+        })
+    })
+}
+export {
+    approved,
+    decimals,
+    getConfirmedTransaction,
+    allowance,
+    getBalanceInPool,
+    getMyBalanceInPool,
+    getLpBalanceInPool,
+    bPoolAllowance,
+    getTokenDenormalizedWeight
+}
 export default initTronWeb;
