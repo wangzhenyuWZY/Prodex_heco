@@ -6,9 +6,12 @@
           <div class="ctx_1 fl_lt">
           <frominput 
             lable="From"
+            showmax
             v-model="token1Num" 
             @input='cumpToken2'>
+            
             </frominput>
+           
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  
@@ -28,6 +31,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
             <frominput lable="To"
+                      showmax
                        v-model="token2Num"
                        @input="cumpToken1"></frominput>
           </div>
@@ -530,6 +534,7 @@ export default {
 .ctx_1 {
   width: 268px;
   display: inline-block;
+
 }
 .ctx_3 {
   width: 160px;

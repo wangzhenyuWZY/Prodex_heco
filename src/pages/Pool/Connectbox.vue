@@ -38,7 +38,7 @@
       <div slot="body"
            class="posting">
         <div class="xzk"
-             v-if="showFees(token1)"
+             v-if="showFees(token1 )"
              @click="validation">
           <div class="fees">
             <span>
