@@ -100,23 +100,28 @@
                      @click="handel"> Swap</el-button>
         </div>
         <div class="setInput pair_input clearfix">
-          <div class="ctx_1 fl_lt ">
-            <frominput lable="Sponsors"
-            
-             placeholder="Please Enter" 
-                       v-model="sponsors"></frominput>
-          </div>
+         
+         <span class="ctw"> <div class="ctx_1 fl_lt ">
+            <frominput 
+            lable="Sponsors"
+            placeholder="Please Enter" 
+            v-model="sponsors">
+            </frominput>
+          </div></span>
+
           <div class="ctx_2 fl_lt ">
-            <frominput lable="FoxDex"
-           
-             placeholder="Please Enter" 
-                       v-model="foxDex"></frominput>
+            <frominput 
+            lable="FoxDex"
+            placeholder="Please Enter" 
+            v-model="foxDex">
+            </frominput>
           </div>
           <div class="ctx_3 fl_lt ">
-            <frominput lable="LP"
-    
-             placeholder="Please Enter" 
-                       v-model="lp"></frominput>
+            <frominput 
+            lable="LP"
+            placeholder="Please Enter" 
+            v-model="lp">
+            </frominput>
           </div>
         </div>
       </div>
