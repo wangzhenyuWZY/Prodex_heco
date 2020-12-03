@@ -122,7 +122,7 @@ export default {
     },
     requierImg (name,number) {
       let str;
-      debugger
+      // debugger
       if (name) {
         try {
            if (number != undefined) {
