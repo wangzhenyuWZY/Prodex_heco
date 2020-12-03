@@ -38,14 +38,14 @@
       <div slot="body"
            class="posting">
         <div class="xzk"
-             v-show="showFees(token1)"
+             v-if="showFees(token1)"
              @click="validation">
           <div class="fees">
             <span>
-              <img src="@/assets/img/btc.svg"
+              <img :src="requierImg(token1.name)"
                    alt="">
               <img v-show="showFees(token2)"
-                   src="@/assets/img/btc.svg"
+                   :src="requierImg(token2.name)"
                    alt="">
             </span>
             <span class="fees_zies">{{token1.name}}-{{token2.name}} </span>
@@ -120,7 +120,7 @@
                        @click="doApprove">Approve</el-button>
           </div>
           <div class="whe fl_rg">
-            <el-button class="from_botton black_botton"
+            <el-button class="from_botton"
                        :loading="charm.btnLoading1"
                        :disabled="charm.disabled1"
                        @click="confirmSupply">Supply</el-button>
@@ -288,6 +288,15 @@ export default {
     }
   },
   methods: {
+      requierImg (name) {
+        if (name) {
+           try {
+               return require('@/assets/img/currency/'+name+'.png')
+           } catch (error) {
+              return require('@/assets/img/currency/avitve.png')
+           }
+        }
+    },
     closeAlert () {
       this.showAlert1 = false
       window.location.reload()
@@ -915,7 +924,7 @@ color: #A6AEB7;
     flex: 1;
   }
   .ctx_3s {
-    min-width: 160px;
+    width: 160px;
     display: inline-block;
     margin-left: 12px;
   }

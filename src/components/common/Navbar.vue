@@ -252,7 +252,7 @@ export default {
   height: 45px;
 }
 .nav-header {
-  color: #495169;
+  color: #A6AEB7;
   position: relative;
   margin-left: 22px;
 

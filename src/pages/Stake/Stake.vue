@@ -22,9 +22,9 @@
             :key='index'>
           <div class="stake_top">
             <span class="lt_icon ">
-              <img src="@/assets/img/btc.svg"
+              <img :src="requierImg(idx.name,1)"
                    alt="" />
-              <img src="@/assets/img/btc.svg"
+              <img :src="requierImg(idx.name,0)"
                    alt="" />
             </span>
             <span class="content_zise">
@@ -121,6 +121,20 @@ export default {
       this.$initTronWeb().then(function (tronWeb) {
         that.grtMasterChef()
       })
+    },
+    requierImg (name,number) {
+      let str;
+      if (name) {
+        try {
+           if (number != undefined) {
+              str = name.split('/');
+              return require('@/assets/img/currency/'+str[number]+'.png')
+           }
+            return require('@/assets/img/currency/'+name+'.png')
+        } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+        }
+      }
     },
     async Approve (x) { //  提现 x = 0 ;领取奖励
       if (x === 0) { // 领取奖励
@@ -530,7 +544,8 @@ ul {
 }
 @media screen and (max-width: 750px) {
   .glbale_pd{
-    padding: 0 0.2rem;
+    padding: 0 0.5rem;
+    padding-bottom: 74px;
   }
   .stake{
     ul{
