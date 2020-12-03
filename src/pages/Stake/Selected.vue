@@ -210,7 +210,8 @@ export default {
 .stake_slect {
   color: #0f1730;
   font-size: 18px;
-  margin-top: 50px;
+  // margin-top: 50px;
+  padding-top: 120px;
   .selct_top{
     margin-bottom: 14px;
     text-align: center;
