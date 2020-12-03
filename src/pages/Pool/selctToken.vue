@@ -19,7 +19,7 @@
 
       <div class="search__box">
         <!-- <el-input class="search__input"
-                  v-model="value"
+                  v-model="value"       
                   placeholder="Search name or paste address"></el-input> -->
       </div>
       <div class="select_size select__bases"
@@ -66,7 +66,7 @@
                 :key="index"
                 @click="selectClick(items,index)">
               <img class="currency_img"
-                   src="@/assets/img/btc.svg"
+                   :src="requierImg(items.name)"
                    alt="">
               <span class="bases_currency"> <span v-show="selectType != ''">{{selectType}}/</span> {{filter(items)}}</span>
             </li>
@@ -135,6 +135,15 @@ export default {
   created () {
   },
   methods: {
+        requierImg (name) {
+        if (name) {
+           try {
+               return require('@/assets/img/currency/'+name+'.png')
+           } catch (error) {
+              return require('@/assets/img/currency/avitve.png')
+           }
+        }
+    },
     changeSort(){
       switch(this.iSort){
         case 0:

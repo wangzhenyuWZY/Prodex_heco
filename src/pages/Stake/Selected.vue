@@ -42,9 +42,9 @@
                      src="@/assets/img/icon_jump_green.png"
                      alt="">
               </div>
-              <div class="rg"> 
+              <!-- <div class="rg"> 
                 <span class="text_color">APR:</span> <span class="ftblod">322.16%</span>
-                 </div>
+                 </div> -->
             </div>
           </div>
         </div>
@@ -69,8 +69,8 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btns clearfix">
-          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">Withdrawal</el-button>
-          <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">Reward</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">UNDTSKE&CLIM</el-button>
+          <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">CLAIM REWARDS</el-button>
         </div>
         <div class="ftblod mrge12">Amount</div>
         <div class="box_sizes box_Price">
@@ -248,7 +248,7 @@ export default {
     line-height: 56px;
     border-radius: 16px;
     border: 1px solid #0f1730;
-    font-size: 20px;
+    font-size: 16px;
     text-align: center;
     margin-top: 12px;
     margin-bottom: 32px;
@@ -296,7 +296,9 @@ export default {
       vertical-align: middle;
     }
     .lt_icon {
+      // margin-top: 4px;
       margin-right: 12px;
+
     }
     .rg_icon {
       img {
@@ -307,6 +309,8 @@ export default {
     .lt_box {
       .back_icon {
         color: #070A0E;
+        
+// color: #0F1730;
         width: 40px;
         height: 40px;
         text-align: center;
@@ -334,11 +338,14 @@ export default {
     vertical-align: sub;
   }
   .text_color {
+    // margin-top: 50px;
     color: #878b97;
   }
   .text_conent {
+width: 120px;
     font-size: 20px;
-    text-align: center;
+    // text-align: center;
+    margin-left:120px ;
   }
   .margintop {
     width: 320px;
@@ -360,12 +367,16 @@ export default {
     color: #0f1730;
     .lt {
       span {
-        font-size: 20px;
+        font-size: 16px; 
+        color: #0F1730;
+      
+// color: #0F1730;
       }
     }
     .rg {
       span {
-        font-size: 18px;
+        font-size: 16px;
+        color: #0F1730;
       }
     }
     span {
@@ -399,6 +410,7 @@ export default {
       cursor: pointer;
     }
   }
+ 
   .add_marg {
     padding: 24px;
   }

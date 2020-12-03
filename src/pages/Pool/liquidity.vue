@@ -233,8 +233,9 @@ export default {
 <style lang="scss" scoped>
 .bottun_hei {
   height: 40px;
-  border: 1px solid #0f1730;
-  color: #000;
+  border: 1px solid #0f1730; 
+  color: #070A0E; 
+  // font-family: roboto-mediumitalic;
 }
 .bottun_hei1 {
   height: 40px;

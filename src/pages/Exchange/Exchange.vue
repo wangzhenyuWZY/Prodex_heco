@@ -12,7 +12,7 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect  
-            :showSelect="selectColor1" 
+           :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
             :text="token1.name" @click="showSelect(0)" />           
@@ -20,8 +20,10 @@
         </div>
 
         <div class="from_contentIcon">
-          <i class="el-icon-back cursor tran_icon"
-             @click="purples"></i>
+
+          <img src="../../assets/img/icon_down.png" alt="">
+          <!-- <i class="el-icon-back cursor tran_icon"
+             @click="purples"></i> -->
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -501,7 +503,7 @@ export default {
 <style lang="scss" scoped>
 @import '../../styles/color.scss';
 .exchange{
-  margin-top: 120px;
+  padding-top: 120px;
 
 .slott{
   background-color: #fff;
@@ -530,7 +532,7 @@ export default {
   display: inline-block;
 }
 .ctx_3 {
-  min-width: 160px;
+  width: 160px;
   font-family: roboto-mediumitalic;
   display: inline-block;
   margin-left: 12px;
@@ -620,6 +622,8 @@ export default {
   }
   .rg {
     
+   color: #FFFFFF;
+    
   }
   .setColr {
     color:#05C98E;
@@ -635,7 +639,7 @@ export default {
     border-radius: 24px;
     font-weight: normal;
     color: #ffffff;
-    font-size: 20px;
+    font-size: 16px;
     background: #0f1730;
     text-align: center;
     cursor: pointer;
@@ -747,6 +751,7 @@ export default {
 }
 .setspan{
   line-height: 24px;
+  color:#ffffff;
 }
 .Price_text {
   font-size: 20px;

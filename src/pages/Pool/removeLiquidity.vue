@@ -238,7 +238,7 @@ export default {
 
 <style lang="scss"  >
 .removeLq{
-  margin-top: 120px;
+  padding-top: 120px;
 }
 .ctx_1 {
   width: 397px;
