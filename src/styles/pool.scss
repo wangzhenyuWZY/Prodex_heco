@@ -31,7 +31,8 @@
     font-size: 18px;
     font-family: roboto-mediumitalic;
     font-weight: 400;
-    color: #a6aeb7;
+    
+    color: #0F1730;
     line-height: 21px;
     margin-top: 32px;
 
@@ -91,7 +92,7 @@
   width: 480px;
   height: 506px;
   border-radius: 20px;
-  margin-top: 120px;
+  margin-top: 119px;
 
 
 
@@ -116,12 +117,13 @@
   
 }
 .pool-box1 p:nth-child(2) {
+  padding: 0 20px;
   margin-top: 12px;
   // width: 660px;
-  margin-left: 20px;
+  // margin-left: 20px;
   line-height: 19px;
   font-size: 16px;
-  font-family: roboto-mediumitalic;
+  font-family: roboto;
   font-weight: 400;
   color: #FFFFFF;
 }
