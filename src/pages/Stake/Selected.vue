@@ -510,6 +510,9 @@ export default {
       }
       .Approve_btns{
         display: flex;
+        .Approve1{
+          font-size: 0.37rem;
+        }
       }
       .box_Price{
           height: auto;
