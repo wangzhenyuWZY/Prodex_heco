@@ -98,7 +98,7 @@
           <el-button class="from_botton pair_mandate pair_swap "
                      :loading="btnLoading1"
                      :disabled="disabled1"
-                     @click="handel"> Swap</el-button>
+                     @click="handel">Confim</el-button>
         </div>
         <div class="setInput pair_input clearfix">
          
@@ -476,19 +476,19 @@ export default {
   .whe {
     margin-top: 16px;
     display: flex;
+    justify-content: space-between;
   }
   .whe_img {
     vertical-align: sub;
   }
-
   .ctx_1 {
-    width: 160px;
+    width: 180px;
     display: inline-block;
     
 
   }
   .ctx_2 {
-    width: 96px;
+    width: 76px;
     display: inline-block;
     margin: 0 12px;
   }
@@ -525,7 +525,7 @@ export default {
   .pair_mandate {
     margin-top: 20px;
     display: inline-block;
-    width: 48%;
+    width: 100%;
   }
   .from_contentIcon {
     height: 36px;
@@ -868,7 +868,7 @@ export default {
       width: 33%;
     }
     .pair_mandate {
-      width: 70%;
+      // width: 70%;
     }
     .pair_mandate_btb {
       width: 90%;

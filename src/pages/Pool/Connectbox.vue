@@ -14,13 +14,13 @@
                <el-button class="from_botton connect_btns"
                       :class="iSingle?'green_btn':'fff_button'"
                      @click="iSingle=true"
-                     type="small">Single Token </el-button>
+                     type="small">Single assets</el-button>
           </div>
          <div class="text_btn fl_lt">
               <el-button class=" from_botton connect_btns"
                     :class="!iSingle?'green_btn':'fff_button'"
                      @click="iSingle=false"
-                     type="small">Double Token </el-button>
+                     type="small">Double assets</el-button>
          </div>
         
         </div>
