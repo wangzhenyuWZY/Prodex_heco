@@ -290,10 +290,9 @@ export default {
               approved(that.token2.address, that.bPoolContract).then(() => {
                 let number = window.tronWeb.toBigNumber(that.firstTokenNum * Math.pow(10, that.token1.decimals)).toString(10)
                 let weight = window.tronWeb.toBigNumber(that.firstTokenWeight * Math.pow(10, 18)).toString(10)
-                that.bindCoin(that.token1.address, number, weight, 'token1IsBind')
                 let number2 = window.tronWeb.toBigNumber(that.secondTokenNum * Math.pow(10, that.token2.decimals)).toString(10)
                 let weight2 = window.tronWeb.toBigNumber(that.secondTokenWeight * Math.pow(10, 18)).toString(10)
-                that.bindCoin(that.token2.address, number2, weight2, 'token2IsBind')
+                that.bindCoin(that.token1.address, number, weight,that.token2.address, number2, weight2)
               })
             })
 
@@ -365,13 +364,16 @@ export default {
         });
       })
     },
-    async bindCoin (address, balance, weight, name) {//绑定币种
+    async bindCoin (token1Address, token1Balance, token1Weight, token2Address, token2Balance, token2Weight) {//绑定币种
       let that = this
-      var functionSelector = 'bind(address,uint256,uint256)';
+      var functionSelector = 'addToken(address,uint256,uint256,address,uint256,uint256)';
       var parameter = [
-        { type: 'address', value: address },
-        { type: 'uint256', value: balance },
-        { type: 'uint256', value: weight },
+        { type: 'address', value: token1Address },
+        { type: 'uint256', value: token1Balance },
+        { type: 'uint256', value: token1Weight },
+        { type: 'address', value: token2Address },
+        { type: 'uint256', value: token2Balance },
+        { type: 'uint256', value: token2Weight }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.bPoolContract, functionSelector, { shouldPollResponse: true }, parameter);
       if (!transaction.result || !transaction.result.result)
@@ -488,7 +490,6 @@ export default {
   .ctx_2 {
     width: 96px;
     display: inline-block;
-
     margin: 0 12px;
   }
   .ctx_3 {
@@ -861,7 +862,7 @@ export default {
     }
     .ctx_2 {
       width: 22%;
-      margin: 0 8px;
+      margin: 0 2.5%;
     }
     .ctx_3 {
       width: 33%;
