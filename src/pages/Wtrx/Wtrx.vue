@@ -18,7 +18,7 @@
               <el-button class="from_botton"
                          :loading="btnLoading1"
                          :disabled="btnDisabled1"
-                         @click="changeWtrx">Confim</el-button>
+                         @click="changeWtrx">Confirm</el-button>
             </div>
           </div>
           <div class="wtrx-right">
@@ -78,7 +78,7 @@ export default {
       inputdisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
-      proNmae:'Confim',
+      proNmae:'Confirm',
       showAlert:false,
       typeName:'success',
       stup:1,
@@ -188,7 +188,7 @@ export default {
                   // that.showAlert = true;
                   approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then(res=>{
                      console.log(res);
-                      that.proNmae = 'Confim';
+                      that.proNmae = 'Confirm';
                       that.loading2(0);
                   }).catch(err=>{
                     that.$message.error('privilege grant failed');
@@ -235,7 +235,7 @@ export default {
               console.log(res1);
                  that.$message.success('Successful trade')
                 if (that.stup != 1) {
-                    that.proNmae = 'Confim';
+                    that.proNmae = 'Confirm';
                 }
                 that.stup = 1;
                 that.getWtrx();
