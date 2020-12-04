@@ -74,9 +74,6 @@ export default new VueRouter({
           name:'importpool',
           component:importpool
         }
-        
-       
-       
       ]
   },
     { path: '/foxdex', component: Foxdex},

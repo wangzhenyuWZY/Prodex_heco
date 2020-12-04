@@ -26,7 +26,7 @@
 
         <div class="from_contentIcon">
 
-          <img src="../../assets/img/icon_down.png" alt="">
+          <img @click="purples" src="../../assets/img/icon_down.png" alt="">
           <!-- <i class="el-icon-back cursor tran_icon"
              @click="purples"></i> -->
         </div>
@@ -251,6 +251,7 @@ export default {
       
       // window.location.reload()
     },
+    
     btnClick () {
       this.$popup({
         click: () => {
