@@ -6,17 +6,11 @@ function calcRelativeDiff(expected, actual) {
 
 //计算A->B的价格（用于展示）
 function calcSpotPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut, tokenWeightOut, swapFee) {
-    debugger
     const numer = Decimal(tokenBalanceIn).div(Decimal(tokenWeightIn));
     const denom = Decimal(tokenBalanceOut).div(Decimal(tokenWeightOut));
     const ratio = numer.div(denom);
     const scale = Decimal(1).div(Decimal(1).sub(Decimal(swapFee)));
     const spotPrice = ratio.mul(scale);
-    console.log('numer======='+numer)
-    console.log('denom======='+denom)
-    console.log('ratio======='+ratio)
-    console.log('scale======='+scale)
-    console.log('spotPrice======='+spotPrice)
     return spotPrice;
 }
 ////计算A->B的价格(用于计算swap), 输入固定，计算输出

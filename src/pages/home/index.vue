@@ -45,7 +45,7 @@
                            label="Assets">
             <template slot-scope="scope">
               <div>
-                {{scope.row.token1Balance ?scope.row.token1Balance :""  }}
+                {{scope.row.token1Balance ?scope.row.token1Balance :"--"  }}
                 {{scope.row.token1.name}}
               </div>
             </template>
@@ -54,7 +54,7 @@
                            label="Symbol">
             <template slot-scope="scope">
               <div>
-                {{scope.row.token2Balance ?scope.row.token2Balance :""  }}
+                {{scope.row.token2Balance ?scope.row.token2Balance :"--"  }}
                 {{scope.row.token2.name}}
               </div>
             </template>
@@ -142,7 +142,7 @@ export default {
   components: { chart, chart2, circular },
   data () {
     return {
-      pairList:[],
+      pairList:tokenData.pairList,
       mobile: IsPc()
     }
   },
@@ -156,6 +156,8 @@ export default {
   methods: {
     async init () {
       let that = this
+      // this.pairList = tokenData.pairList
+      let pairList = []
       for (let index = 0; index < tokenData.pairList.length; index++) {
         const el = tokenData.pairList[index];
         getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
@@ -176,8 +178,9 @@ export default {
         }
         el.token1Balance = res;
         el.token2Balance = res1;
-        this.pairList.push(el)
+        pairList.push(el)
       }
+      this.pairList = pairList
     }
   },
 }

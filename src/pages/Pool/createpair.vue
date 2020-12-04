@@ -273,7 +273,7 @@ export default {
       this.typeUrl = window.tronWeb.defaultAddress.base58;
       this.$message({
         message: 'Successful, please wait for block confirmation',
-        type: 'error'
+        type: 'success'
       });
       try {
         if (this.BFactoryContract) {

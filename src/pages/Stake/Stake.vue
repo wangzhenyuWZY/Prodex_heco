@@ -47,7 +47,7 @@
         </li>
       </ul>
     </div>
-    <selected v-show="showModel"
+    <selected v-if="showModel"
               :farmtoal="total"
               @Approve="Approve"
               @amount="clickAmount"
@@ -311,13 +311,14 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
-      this.total.defaultAddress = window.tronWeb.defaultAddress.base58
-      this.total.showAlert1 = true
+      // this.total.defaultAddress = window.tronWeb.defaultAddress.base58
+      // this.total.showAlert1 = true
       let num ;
       n = n * Math.pow(10, this.total.decimals);
       n = n+'';
       try {
        num = await this.MasterChefContract['deposit'](item.index, n).send(data);
+       console.log(num)
       } catch (error) {
         console.log(error);
          this.total.btnFlag1 = false;
