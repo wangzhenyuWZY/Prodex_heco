@@ -7,7 +7,6 @@
           <input
             class="globle_input"
             :class="className"
-            type="number"
             :placeholder="placeholder"
             @keyup="hadelClick"
             :value="value"

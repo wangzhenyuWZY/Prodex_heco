@@ -47,7 +47,7 @@
         </li>
       </ul>
     </div>
-    <selected v-show="showModel"
+    <selected v-if="showModel"
               :farmtoal="total"
               @Approve="Approve"
               @amount="clickAmount"
@@ -318,6 +318,7 @@ export default {
       n = n+'';
       try {
        num = await this.MasterChefContract['deposit'](item.index, n).send(data);
+       console.log(num)
       } catch (error) {
         console.log(error);
          this.total.btnFlag1 = false;

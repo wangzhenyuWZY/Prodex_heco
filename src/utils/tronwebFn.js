@@ -55,11 +55,13 @@ const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
         }
     })
 }
+const Web3Utils = require('web3');
+const MAX = Web3Utils.utils.toTwosComplement(-1);
 const approved = (coinAddress,contractAddress) => {//授权
     return new Promise(function (resolve, reject) {
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["approve"](contractAddress,'100000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
+                Contract["approve"](contractAddress,MAX).send({shouldPollResponse:true}).then((res)=>{
                     if(res){
                         Message({
                             showClose: true,

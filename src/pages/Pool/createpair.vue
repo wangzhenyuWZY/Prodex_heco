@@ -272,7 +272,7 @@ export default {
       
       this.$message({
         message: 'Successful, please wait for block confirmation',
-        type: 'error'
+        type: 'success'
       });
       try {
         if (this.BFactoryContract) {
