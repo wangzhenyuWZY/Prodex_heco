@@ -89,12 +89,13 @@
 
 <script>
 import { IsPc } from '../../utils/index'
+console.log(IsPc())
 export default {
-  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage','mobile'],  
+  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage'],  
   data () {
     return {
       showAlert: true,
-      mobile:!IsPc()
+      mobile:IsPc()
 
     }
   },

@@ -108,6 +108,7 @@
    <removealert
       :isShow="showAlert1"
       :alertType="alertType"
+      :url="tyepUrl"
       @close="closeAlert"
    />
 </div>
@@ -138,6 +139,7 @@ export default {
       showAlert:false,
       justPrice:0,
       reversePrice:0,
+      tyepUrl:'',
       showAlert1:false,
       alertType:'success' // success  waiting
     }
@@ -190,7 +192,7 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              alert('success');
+            that.$message.success('success');
           });
       }) 
     },
@@ -210,6 +212,7 @@ export default {
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
               that.showAlert = false
+              that.tyepUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
               that.showAlert1 =true
           });
       }) 

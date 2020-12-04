@@ -49,9 +49,7 @@ export default {
     // AddLiquidity,
       // recevive,
       //  willRecevive,
-    liquidity,
     // vAlret
-    createpair
   },    
 
   created () {

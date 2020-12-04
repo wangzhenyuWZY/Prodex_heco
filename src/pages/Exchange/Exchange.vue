@@ -164,6 +164,7 @@
     <removealert
       :isShow="showAlert1"
       :alertType="alertType"
+      :url="typeUrl"
       @close="closeAlert"
     />  
   </div>
@@ -219,7 +220,8 @@ export default {
       isPair:true,
       btnDisabled2:false,
       isPc:IsPc(),
-      tips:''
+      tips:'',
+      typeUrl:''
     }
   },
   computed: {
@@ -356,7 +358,7 @@ export default {
           this.btnDisabled2 = false;
         })
       } else {
-        this.$message.error('Please select transaction pair')
+        this.$message.error('Please select transac tion pair')
       }
     },
     async getPairAddress () {
@@ -371,7 +373,7 @@ export default {
         this.pair = pair[0]
         this.decimals = pair[0].decimals;
         console.log('getPairAddress=========')
-        allowance(that.token1.address, pair[0].address).then((exchangeres) => {
+        allowance(that.token1.address, pair[0].address).then((res) => {
           if (res) {
             let approveBalance = parseInt(res._hex, 16);
             console.log('approveBalance ====='+approveBalance)
@@ -399,7 +401,7 @@ export default {
           this.getSpotPrice()
         })
         this.getSwapFee(pair[0]).then((res) => {
-          this.tips = 'A protion of each trade ('+(res*1000).toFixed(4)+'%) goes to liquidity providers as a protocal incentive.'
+          this.tips = "A protion of each trade ('+(res*1000).toFixed(4)+'%)goes to liquidity providers as a protocal incentive."
           this.swapFee = res
           this.thisswapFee = res
           this.getSpotPrice()
@@ -538,6 +540,8 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+          console.log('sendRawTransaction=========>'+JSON.stringify(signedTransaction));
+          that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
             that.$message.success('Successful trade');

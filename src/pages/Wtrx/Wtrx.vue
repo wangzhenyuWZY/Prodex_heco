@@ -54,13 +54,14 @@
     <valert
       :isShow="showAlert"
       :alertType='typeName'
+      :url="typeUrl"
       @close ='showAlert=false'
     />
   </div>
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-import { approved, allowance } from '../../utils/tronwebFn'
+import { approved, allowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import valert from '../Pool/valret'
 export default {
   data () {
@@ -80,7 +81,8 @@ export default {
       proNmae:'Confim',
       showAlert:false,
       typeName:'success',
-      stup:1
+      stup:1,
+      typeUrl:''
     };
   },
   components:{
@@ -166,7 +168,7 @@ export default {
         this.loading1();
       } catch (error) {
         if (error == "Confirmation declined by user") {
-          alert('拒绝合约');
+           that.$message.success('success');
         }
         this.loading1();
         console.log(error);
@@ -179,7 +181,6 @@ export default {
         if (res) {
           let approveBalance = window.tronWeb.toSun(res._hex);
           if (approveBalance == 0) {
-            debugger;
             // alert('    ');
             if (that.proNmae=='approved') {
                   that.loading2(1);
@@ -226,15 +227,22 @@ export default {
           return console.error('Unknown error: ' + transaction, null, 2);
         }
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function () {
-            that.$message.success('Successful trade')
-            if (that.stup != 1) {
-                that.proNmae = 'Confim';
-            }
-            that.stup = 1;
-            that.getWtrx();
-            that.gettrx();
-            that.loading2(0);
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+            that.showAlert = true;
+            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txid;
+            getConfirmedTransaction(res.txid).then((res1)=>{
+              console.log(res1);
+                 that.$message.success('Successful trade')
+                if (that.stup != 1) {
+                    that.proNmae = 'Confim';
+                }
+                that.stup = 1;
+                that.getWtrx();
+                that.gettrx();
+                that.loading2(0);
+            })
+        
+           
           });
         });
       } catch (error) {
