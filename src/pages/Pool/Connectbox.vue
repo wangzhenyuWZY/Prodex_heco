@@ -631,7 +631,7 @@ export default {
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [MAX, MAX] },
+        { type: 'uint256[]', value: ['1000000000000000000000000000000', '1000000000000000000000000000000'] },
       ]
       console.log(parameter)
       try {
