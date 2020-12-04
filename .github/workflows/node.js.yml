@@ -24,11 +24,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: restore yarn
-          uses: actions/cache@v2
-          with:
-            path: |
-              node_modules
-              */*/node_modules
-            key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
+        uses: actions/cache@v2
+        with:
+          path: |
+            node_modules
+            */*/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: ./sh/build.sh
 
