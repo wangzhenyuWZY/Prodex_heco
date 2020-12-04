@@ -1,5 +1,5 @@
 <template>
-  <div class="container createpair">
+  <div class="createpair">
     <container top="40">
       <div class="title"
            slot="title">
@@ -818,7 +818,7 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .createpair {
-    margin-top: 0;
+    padding-top: 0;
     .from_botton {
       margin-top: 0;
     }

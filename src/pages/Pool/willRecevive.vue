@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             :width="!mobile?'90%':'480px'"
+             :width="mobile?'480px':' 90%'"
              custom-class="dialog_recevive"
              :before-close="handleClosea">
     <span slot="title"
@@ -172,8 +172,7 @@ export default {
   border-bottom: 1px solid #e5ebf2;
 }
 .received span {
-  font-size: 16px;
- 
+  font-size: 18px;
 }
 .received .rg {
   padding-top: 5px;

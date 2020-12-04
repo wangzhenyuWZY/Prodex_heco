@@ -817,6 +817,11 @@ export default {
 }
 </script>
 
+<style scoped>
+    >>> .el-dialog__wrapper{
+  overflow: auto;
+}
+</style>
 <style lang="scss" scoped>
 .connect_pd {
   padding-top: 120px;
@@ -1082,7 +1087,7 @@ font-size: 18px;
     }
   }
   .setInput .ctx_3s {
-    min-width: 3.2rem;
+    width: 2.8rem;
   }
   .from_contentIcon {
     margin: 0;

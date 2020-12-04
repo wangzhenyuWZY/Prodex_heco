@@ -24,7 +24,7 @@
       <div 
           v-if="alertType == 'success'">
         <div class="alert_size">Transaction Submitted</div>
-        <div class="alert_success" @click="openUrl">View on Etherscan</div>
+        <div class="alert_success" @click="openUrl">View on Tronscan</div>
         <div class="alert_button"
             v-show="alertType == 'success'">
           <el-button class="from_botton" @click="handleClosea">Close</el-button>

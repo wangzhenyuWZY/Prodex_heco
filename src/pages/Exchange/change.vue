@@ -3,7 +3,7 @@
 
   <el-dialog title=""
              :visible.sync="showAlert"
-             :width="mobile?'90%':'480px'"
+             :width="mobile?'480px':'90%'"
              custom-class="dialog_recevive"
              :before-close="handleClose">
     <span slot="title"
@@ -247,6 +247,11 @@ export default {
         height: 20px;
         cursor: pointer;
   }
+  @media screen and (max-width: 750px) {
+ .changes_rece span{
+    font-size: 0.35rem;
+ }
   
+}
 </style>
 

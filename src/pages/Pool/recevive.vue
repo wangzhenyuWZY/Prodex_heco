@@ -1,7 +1,7 @@
 <template>
   <el-dialog title=""
              :visible.sync="showAlert"
-             width="480px"
+              :width="mobile?'480px':'90%'"
              :close-on-click-modal="false"
              custom-class="dialog_recevive"
              :before-close="handleClosea">
@@ -58,7 +58,7 @@
 </template>
 
 <script>
-
+import {IsPc} from '../../utils/index'
 export default {
   props:{
     showAlert: {
@@ -75,7 +75,7 @@ export default {
   },
   data () {
     return {
-
+        mobile: IsPc()
     }
   },
   components: {
@@ -118,6 +118,7 @@ export default {
   top: 24px;
   right: 34px;
 }
+
 .title__num {
   font-size: 40px;
   font-weight: normal;
@@ -156,5 +157,14 @@ export default {
 }
 .recevive_btn{
   margin-top: 48px;
+}
+@media screen and (max-width: 750px) {
+.received span{
+  font-size: 0.35rem;
+}
+.conversion{
+  font-size: 0.35rem;
+}
+  
 }
 </style>

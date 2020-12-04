@@ -348,6 +348,9 @@ export default {
 }
 
 @media screen and (max-width: 750px) {
+  .container{
+    padding-top: 50px;
+  }
   .c-box2 {
     width: 100%;
     height: auto;
