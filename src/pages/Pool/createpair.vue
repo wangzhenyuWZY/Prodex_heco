@@ -89,18 +89,7 @@
           <img src="@/assets/img/icon_slect.png"
                alt="">
         </div>
-        <div class="whe clearfix">
-
-          <span class="pair_mandate"
-                v-show="false">
-            <el-button class="from_botton pair_mandate  pair_mandate_btb"> Mandate</el-button>
-          </span>
-          <el-button class="from_botton pair_mandate pair_swap "
-                     :loading="btnLoading1"
-                     :disabled="disabled1"
-                     @click="handel">Confirm</el-button>
-        </div>
-        <div class="setInput pair_input clearfix">
+          <div class="setInput pair_input clearfix">
          
          <span class="ctw"> <div class="ctx_1 fl_lt ">
             <frominput 
@@ -125,6 +114,18 @@
             </frominput>
           </div>
         </div>
+        <div class="whe clearfix">
+
+          <span class="pair_mandate"
+                v-show="false">
+            <el-button class="from_botton pair_mandate  pair_mandate_btb"> Mandate</el-button>
+          </span>
+          <el-button class="from_botton pair_mandate pair_swap "
+                     :loading="btnLoading1"
+                     :disabled="disabled1"
+                     @click="handel">Confirm</el-button>
+        </div>
+      
       </div>
       <div slot="footer"
            v-show="login"
@@ -477,7 +478,7 @@ export default {
   padding-top: 120px;
 
   .whe {
-    margin-top: 16px;
+    padding-bottom: 16px;
     display: flex;
     justify-content: space-between;
   }
@@ -578,7 +579,7 @@ export default {
   .pair_input {
     
     margin-top: 30px;
-    padding-bottom: 40px;
+    padding-bottom: 0px;
    
   }
   .lt_box {
@@ -865,7 +866,7 @@ export default {
     }
     .pair_input {
       margin-top: 15px;
-      padding-bottom: 20px;
+      padding-bottom: 0px;
     }
     .ctx_2 {
       width: 22%;
