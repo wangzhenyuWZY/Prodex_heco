@@ -25,13 +25,26 @@
         
         </div>
         <div class="rg_box  fl_rg">
-          <el-tooltip class="item"
-                      effect="dark"
-                      content="Right Center 提示文字"
-                      placement="left">
-            <img src="@/assets/img/icon_instructions.svg"
-                 alt="">
-          </el-tooltip>
+           <el-tooltip placement="left"   >
+                      <div slot="content"
+                           >
+                        When you add liquidity, <br>
+                        you are given pool tokens <br>
+                        representing your<br>
+                        position. These tokens <br>
+                        automatically earn fees <br>
+                        proportional to your <br>
+                        share of the pool, and <br>
+                        can be redeemed at <br>
+                        anytime.
+
+
+                      </div>
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
+
+          
         </div>
       </div>
 
@@ -934,6 +947,7 @@ color: #A6AEB7;
   }
 }
 .position {
+  
   max-width: 480px;
   margin-top: -40px;
   position: relative;

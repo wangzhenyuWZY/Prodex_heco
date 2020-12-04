@@ -15,7 +15,7 @@
           <el-tooltip class="item" 
                   effect="dark" 
                   content="Right Center 提示文字" 
-                  placement="right">
+                  placement="left">
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
         </div>
