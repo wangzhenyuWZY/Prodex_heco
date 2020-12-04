@@ -1,0 +1,10 @@
+version: '3'
+
+services:
+  foxdex:
+    image: foxdex/web:dev
+    container_name: foxdex
+    restart: always
+    ports:
+      - "8080:80"
+    privileged: true
