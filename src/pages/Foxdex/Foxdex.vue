@@ -17,7 +17,6 @@ export default {
         },
         methods: {
             hdel (n) {
-                console.log(this.$i18n.locale)
                         let i18n =  this.$i18n.locale;
                     this.$i18n.locale = i18n == 'en' ? 'zh':'en'
             }

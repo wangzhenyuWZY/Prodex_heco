@@ -13,6 +13,5 @@ const i18n = new VueI18n({
     en
   }
 })
- console.log('321321321')
 export default i18n
 
