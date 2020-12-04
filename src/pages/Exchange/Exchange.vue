@@ -546,7 +546,7 @@ export default {
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       var parameter = [
         { type: 'address', value: that.token1.address },
-        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'uint256', value: Decimal(that.token1Num).mul(Decimal(Math.pow(10, that.token1.decimals))) },
         { type: 'address', value: that.token2.address },
         { type: 'uint256', value: 0 },
         { type: 'uint256', value: '1000000000000000000000000' }
