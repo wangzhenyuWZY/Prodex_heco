@@ -543,7 +543,7 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            that.token1ApproveBalance = parseInt(res._hex, 16);
+            that.token1ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16);
             console.log(that.token1ApproveBalance)
             if (that.token1ApproveBalance == 0) {
               that.isApproved = false
@@ -554,7 +554,7 @@ export default {
         })
         allowance(this.token2.address, pair[0].address).then((res) => {
           if (res) {
-            that.token2ApproveBalance = parseInt(res._hex, 16)
+            that.token2ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16)
             if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {

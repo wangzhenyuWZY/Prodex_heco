@@ -12,6 +12,13 @@ export const tokenList = [
         img:'',
         balance:0,
         decimals:6
+    },
+    { 
+        name:'FOX',
+        address:'TCakeKXQub9efsXtBTohPRA1pfmL2GZ9DU',
+        img:'',
+        balance:0,
+        decimals:18
     }
 ]
 export const pairList = [
