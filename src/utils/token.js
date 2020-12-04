@@ -68,7 +68,7 @@ export const pairList = [
             balance:0,
             decimals:6
         },
-        pair:'WTRX/USDT',
+        pair:'FOX/USDT',
         decimals:18
     }
 ]
