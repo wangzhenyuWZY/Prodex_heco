@@ -1,7 +1,7 @@
 <template>
   <div >
     <div class="bimg"> </div>
-    <div class="nav clearfix">
+    <div class="nav ">
       <div class="logo"><img src="../../assets/img/logo_FoxDex.png"
              alt="" />
              <!-- <span class="logop">FoxDex</span> -->
@@ -204,8 +204,8 @@ export default {
 }
 .nav {
   position: relative;
-   
-  /* width: 1920px; */
+    overflow: hidden;
+  /* width: 1920px; */  
   line-height: 72px;
   height: 72px;
 }
@@ -365,7 +365,7 @@ export default {
     }
   }
   .nav-right{
-    padding-right: 17px;
+    padding-right: 15px;
       .nav_merge{
         margin-left: 14px;
     }
