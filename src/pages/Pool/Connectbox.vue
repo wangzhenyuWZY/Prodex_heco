@@ -128,7 +128,7 @@
         </div>
         <div class="connect_btn clearfix">
           <div class="whe fl_lt"
-               v-show="disableds()">
+               v-show="!isApproved">
             <el-button class="from_botton"
                         :loading="charm.btnLoading2"
                        :disabled="charm.disabled2"
@@ -323,10 +323,10 @@ export default {
     },
     disableds () {
       if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
-              if (this.token1ApproveBalance==0) {
+        if (this.token1ApproveBalance==0) {
           return true
         } else {
-           if(this.token2ApproveBalance == 0) {
+          if(this.token2ApproveBalance == 0) {
             return true;
           } else {
             return false

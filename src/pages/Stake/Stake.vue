@@ -300,7 +300,7 @@ export default {
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
-      this.total.uniswaplp = parseInt(pre,16)/Math.pow(10,18);
+      this.total.uniswaplp = parseInt(pre,10)/Math.pow(10,18);
     },
     async deposit (item,n) { // 质押  
       // （1）PoolInfo[]数组的序号

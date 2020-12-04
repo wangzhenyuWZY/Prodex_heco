@@ -11,7 +11,7 @@ export const tokenList = [
         address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
         img:'',
         balance:0,
-        decimals:8
+        decimals:6
     }
 ]
 export const pairList = [

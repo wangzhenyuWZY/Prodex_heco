@@ -524,6 +524,11 @@ export default {
       let token2 = this.token2
       this.token1 = token2
       this.token2 = token1
+      this.token2Balance = 0
+      this.token2Weight = 0 
+      this.token1Balance = 0
+      this.token1Weight = 0
+      this.swapFee = 0
       this.getPairAddress()
     },
     async doswap () {
