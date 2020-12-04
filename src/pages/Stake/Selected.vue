@@ -35,7 +35,7 @@
              
             </div>
             <div class="text_conent ftblod">FOXDEX_LP
-               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span></div>
+               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">322.16%</span></div>
                </div> 
            
             <div class="received">
@@ -99,12 +99,16 @@
         </div>
       </div>
     </container>
+    <valret :isShow="farmtoal.showAlert1"
+            :url="farmtoal.defaultAddress"
+            @close='farmtoal.showAlert1=false' />
   </div>
 </template>
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
 import {mapState} from 'vuex'
+import valret from '../Pool/valret'
 export default {
   props: {
      farmtoal:{
@@ -118,6 +122,8 @@ export default {
         btnFlag1:false,
         btnFlag2:false,
         btnFlag3:false,
+        showAlert1:false,
+        defaultAddress:'',
         item:{token1:{},token2:{}}
        }
      },
@@ -171,10 +177,10 @@ export default {
   components: {
     // vButton: vbutton,
     container,
-    frominput 
+    frominput, 
     // vfromInput: fromInput,
     // setselect
-
+    valret
   },
   methods: {
 
@@ -213,6 +219,9 @@ export default {
 </script>
 
 <style lang="scss"   scoped>
+.fbbb{
+  color: #05C98E;
+}
 .rgh{
   float: right;
 }

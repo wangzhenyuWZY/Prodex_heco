@@ -19,7 +19,8 @@
             :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
-            :text="token1.name" @click="showSelect(0)" />           
+            :text="token1.name"
+             @click="showSelect(0)" />           
           </div>
         </div>
 
@@ -117,7 +118,7 @@
                 <span>Price Impacte 
                     <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       Right Center 提示文字<br> 
+                       The difference between the<br> market price and estimated <br>price due to trade size.<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>          
@@ -130,14 +131,14 @@
                   <span>Liquidity Provider Fee
                     <el-tooltip class="item"
                               effect="light"
-                                content="Right Center 提示文字"
+                                :content="tips"
                                 placement="right">
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
                     </el-tooltip>
                   </span>
                 </div>
-                <span class="setspan">{{swapFee}} {{token1.name}}</span>
+                <span class="setspan">{{thisswapFee}} {{token1.name}}</span>
               </div>
               <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
                      alt=""></div>
@@ -153,7 +154,7 @@
             :token1Num='token1Num'
             :token2Num='token2Num'
             :spotPrice='spotPrice'
-            :swapFee='swapFee'
+            :swapFee='thisswapFee'
             :percentage='percentage'
             @handleClosea="isConfirm = false" />
     <selctoken :showAlert='isSelect'
@@ -202,6 +203,7 @@ export default {
       token1Weight: 0,
       token2Weight: 0,
       swapFee: 0,
+      thisswapFee:0,
       spotPrice: 0,
       percentage: 0,
       isConfirm: false,
@@ -216,7 +218,8 @@ export default {
       btnLoading2:false,
       isPair:true,
       btnDisabled2:false,
-      isPc:IsPc()
+      isPc:IsPc(),
+      tips:''
     }
   },
   computed: {
@@ -257,7 +260,6 @@ export default {
       })
     },
     tobtnDisabled () {
-      debugger
       if (this.connectFlag) {
          if (this.isApproved) { // true 不需要授权 false 需要授权
           if (this.btnLoading1) {
@@ -354,7 +356,7 @@ export default {
           this.btnDisabled2 = false;
         })
       } else {
-        this.$message.error('请选择交易对')
+        this.$message.error('Please select transaction pair')
       }
     },
     async getPairAddress () {
@@ -389,17 +391,17 @@ export default {
           this.getSpotPrice()
         })
         this.getWeight(pair[0], this.token1).then((res) => {
-          debugger
           this.token1Weight = res
           this.getSpotPrice()
         })
         this.getWeight(pair[0], this.token2).then((res) => {
-          debugger
           this.token2Weight = res
           this.getSpotPrice()
         })
         this.getSwapFee(pair[0]).then((res) => {
+          this.tips = 'A protion of each trade ('+(res*1000).toFixed(4)+'%) goes to liquidity providers as a protocal incentive.'
           this.swapFee = res
+          this.thisswapFee = res
           this.getSpotPrice()
         })
       }else {
@@ -409,7 +411,7 @@ export default {
     cumpToken1 () {//计算兑换的token1
       if(!this.isPair){
         this.$message({
-          message: '交易对不存在',
+          message: 'The transaction pair does not exist',
           type: 'error'
         });
         return
@@ -418,7 +420,7 @@ export default {
         let token1Num = calcInGivenOut(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token2Num, this.swapFee)
         if(token1Num.toString()=='NaN'){
           this.$message({
-            message: '流动池余额不足',
+            message: 'Insufficient balance of flow pool',
             type: 'error'
           });
           return
@@ -429,7 +431,7 @@ export default {
     cumpToken2 () {//计算兑换的token2
       if(!this.isPair){
         this.$message({
-          message: '交易对不存在',
+          message: 'The transaction pair does not exist',
           type: 'error'
         });
         return
@@ -439,6 +441,7 @@ export default {
         this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.percentage = ((afterPrice - this.spotPrice) / this.spotPrice * 100).toFixed(2)
+        this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
     },
     getSpotPrice () {//计算token1的价格
@@ -482,6 +485,7 @@ export default {
         var parameter = []
         window.tronWeb.transactionBuilder.triggerConstantContract(pair.address, functionSelector, {}, parameter).then((transaction) => {
           let swapFee = parseInt(transaction.constant_result[0], 16) / Math.pow(10, pair.decimals)
+          console.log('swapFee=========================='+parseInt(transaction.constant_result[0], 16))
           resolve(swapFee);
         })
       })
@@ -516,12 +520,11 @@ export default {
       this.btnLoading1 = true;
       this.btnsbmit = true;
       if (that.token2Num > that.token2Balance) {
-        this.$message.error('兑换额不能大于流动性池余额');
+        this.$message.error('The exchange amount cannot be greater than the liquidity pool balance');
         that.btnDisabled1 = false;
         that.btnLoading1 = false;
         return
       }
-      debugger;
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       var parameter = [
         { type: 'address', value: that.token1.address },
@@ -537,7 +540,7 @@ export default {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
-            that.$message.success('交易成功');
+            that.$message.success('Successful trade');
             that.token1Num = 0;
             that.token2Num = 0;
             that.getBalance(that.token1)
