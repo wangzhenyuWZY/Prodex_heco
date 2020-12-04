@@ -11,7 +11,7 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [runner1]
 
     strategy:
       matrix:
@@ -23,5 +23,12 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: restore yarn
+          uses: actions/cache@v2
+          with:
+            path: |
+              node_modules
+              */*/node_modules
+            key: ${{ runner.os }}-${{ hashFiles('**/yarn.lock') }}
       - run: ./sh/build.sh
 
