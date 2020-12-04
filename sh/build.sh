@@ -3,9 +3,9 @@ npm install
 npm ci
 npm test
 
-yarn build
+yarn build:prod
 
-docker build -t  foxdex/web:dev .
+docker build -t  foxdex/web:latest .
 
 docker login --username foxdex -p $DOCKER_ACCESS_TOKEN
 
