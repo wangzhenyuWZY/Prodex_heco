@@ -35,7 +35,7 @@
              
             </div>
             <div class="text_conent ftblod">FOXDEX_LP
-               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod">322.16%</span></div>
+               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">322.16%</span></div>
                </div> 
            
             <div class="received">
@@ -219,6 +219,9 @@ export default {
 </script>
 
 <style lang="scss"   scoped>
+.fbbb{
+  color: #05C98E;
+}
 .rgh{
   float: right;
 }

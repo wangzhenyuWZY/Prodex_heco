@@ -37,6 +37,7 @@
           <div class="ctx_1    fl_lt">
             <frominput lable="Input"
                         showmax
+                        :balance="token1.balance"
                        v-model="firstTokenNum"></frominput>
           </div>
           <div class="ctx_2   fl_lt">
@@ -62,7 +63,7 @@
 
                        v-model="secondTokenNum"
                        showmax
-                       
+                       :balance="token2.balance"
                        ></frominput>
           </div>
           <div class="ctx_2   fl_lt">

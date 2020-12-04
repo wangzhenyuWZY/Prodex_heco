@@ -19,7 +19,8 @@
             :showSelect="JSON.stringify(token1)!='{}'"
             :imgUrl="token1.img" item='0' 
             :balance="token1.balance"
-            :text="token1.name" @click="showSelect(0)" />           
+            :text="token1.name"
+             @click="showSelect(0)" />           
           </div>
         </div>
 
