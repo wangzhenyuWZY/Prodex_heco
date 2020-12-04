@@ -16,7 +16,7 @@ export const tokenList = [
 ]
 export const pairList = [
     {
-        address:'TMMypXZP4z4dV9XuraDq3VdweY7PtsSUX8',
+        address:'TABdMKUCX81wRA7PRQxXzKBTQEGYZjbeUD',
         token1:{ 
             name:'WTRX',
             address:'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
@@ -29,7 +29,7 @@ export const pairList = [
             address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
             img:'',
             balance:0,
-            decimals:8
+            decimals:6
         },
         pair:'WTRX/USDT',
         decimals:18
