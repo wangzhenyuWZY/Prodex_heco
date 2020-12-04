@@ -241,6 +241,7 @@ export default {
     },
     init () {//初始化tronweb
       let that = this
+      debugger
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
         that.getSwapFeeForDex()
@@ -249,9 +250,11 @@ export default {
       })
     },
     async getBFactoryContract () {//链接BFactory合约
+      console.log('ipConfig.BFactory====='+ipConfig.BFactory)
       this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
     },
     async getSwapFeeForDex () {
+      console.log('ipConfig.FactoryManager====='+ipConfig.FactoryManager)
       var functionSelector = 'swapFeeForDex()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
