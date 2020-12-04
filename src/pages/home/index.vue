@@ -29,7 +29,17 @@
       <div class="b2-top">
         <samp class="top1">Top Pairs</samp>
 
+        <!-- <template slot-scope="scope">
+              <div>   
+                <img :src="requierImg(scope.row.token1.name,1)"
+                   alt="" /> 
+                   <img :src="requierImg(scope.row.token1.name,0)"
+                   alt="" />
+              </div>
+            </template> -->
+
       </div>
+      
       <div class="table">
         <el-table v-if="mobile"
                   :data="pairList"
@@ -40,13 +50,26 @@
                   style="width: 100%">
           <el-table-column prop="pair"
                            label="name">
-          </el-table-column>
+         <template slot-scope="scope">
+              <div class="reqimg">   
+                <img :src="requierImg(scope.row.token1.name,0)"
+                   alt="" /> 
+                   <img :src="requierImg(scope.row.token2.name,0)"
+                   alt="" />
+                    {{scope.row.token1.name}}/ 
+                     {{scope.row.token2.name}}
+              </div>
+            </template>           
+          
+        </el-table-column>
+          
           <el-table-column prop="token1.name"
                            label="Assets">
             <template slot-scope="scope">
-              <div>
+              <div>   
                 {{scope.row.token1Balance ?scope.row.token1Balance :"--"  }}
-                {{scope.row.token1.name}}
+                {{scope.row.token1.name}} 
+
               </div>
             </template>
           </el-table-column>
@@ -81,9 +104,13 @@
                            label="name">
             <template slot-scope="scope">
               <div class="table_size">
-                {{scope.$index+1}} <img :src="scope.row.token1.img"
-                     alt=""><img :src="scope.row.token2.img"
-                     alt=""> {{scope.row.token1.name}}-{{scope.row.token2.name}}
+               
+                {{scope.$index+1}} 
+                <img :src="scope.row.token1.img"
+                     alt="">
+                <img :src="scope.row.token2.img"
+                     alt=""> 
+                     {{scope.row.token1.name}}-{{scope.row.token2.name}}
               </div>
             </template>
           </el-table-column>
@@ -143,7 +170,8 @@ export default {
   data () {
     return {
       pairList:tokenData.pairList,
-      mobile: IsPc()
+      mobile: IsPc(),
+       farmList: tokenData.pairList,
     }
   },
   mounted () {
@@ -154,6 +182,24 @@ export default {
     
   },
   methods: {
+     requierImg (name,number) {
+      let str;
+      // debugger
+      if (name) {
+        try {
+           if (number != undefined) {
+              str = name.split('/');
+              return require('@/assets/img/currency/'+str[number]+'.png')
+              
+           }
+            return require('@/assets/img/currency/'+name+'.png')
+        } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+        }
+      } else {
+           return require('@/assets/img/currency/avitve.png')
+      }
+    },
     async init () {
       let that = this
       // this.pairList = tokenData.pairList
@@ -186,6 +232,16 @@ export default {
 }
 </script>
 <style  lang="scss" scoped>
+.reqimg{
+  img{
+    width: 25px;
+    height: 25px;
+  }
+
+  img:nth-child(2) {
+      transform: translateX(-12px);
+    }
+}
 .container {
   padding-top: 120px;
 }
@@ -343,7 +399,7 @@ export default {
 }
 >>> .adddd {
   background-color: #f4f8fb;
-  margin-left: 41px;
+  margin-left: 20px;
 }
 >>> .el-table__row {
   height: 72px;
