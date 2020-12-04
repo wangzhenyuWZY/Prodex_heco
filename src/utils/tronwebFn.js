@@ -63,7 +63,7 @@ const approved = (coinAddress,contractAddress) => {//授权
                     if(res){
                         Message({
                             showClose: true,
-                            message: '授权成功',
+                            message: 'Authorization success',
                             type: 'success'
                         })
                         resolve(res);
