@@ -1,3 +1,14 @@
+
+
+
+
+
+
+
+
+
+
+
 export const tokenList = [
     { 
         name:'WTRX',
@@ -40,6 +51,25 @@ export const pairList = [
         },
         pair:'WTRX/USDT',
         decimals:18
+    },
+    {
+        address:'TMDpAWJGPaFGbThPAAs6oGdRfhnEv67yxL',
+        token1:{ 
+            name:'FOX',
+            address:'TCakeKXQub9efsXtBTohPRA1pfmL2GZ9DU',
+            img:'',
+            balance:0,
+            decimals:18
+        },
+        token2:{ 
+            name:'USDT',
+            address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+            img:'',
+            balance:0,
+            decimals:6
+        },
+        pair:'FOX/USDT',
+        decimals:18
     }
 ]
 
@@ -48,3 +78,4 @@ const tokenData = {
     pairList
 }
 export default tokenData
+
