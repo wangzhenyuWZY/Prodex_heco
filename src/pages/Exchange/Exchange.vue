@@ -378,7 +378,7 @@ export default {
         console.log('getPairAddress=========')
         allowance(that.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex, 16);
+            let approveBalance = parseInt(res._hex?res._hex:res.constant_result[0], 16);
             console.log('approveBalance ====='+approveBalance)
             if (approveBalance == 0) {
               that.isApproved = true
