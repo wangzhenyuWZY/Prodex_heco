@@ -3,7 +3,7 @@ npm install
 npm ci
 npm test
 
-yarn build
+yarn build:dev
 
 docker build -t  foxdex/web:dev .
 

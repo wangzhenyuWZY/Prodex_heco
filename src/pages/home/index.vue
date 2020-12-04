@@ -101,6 +101,7 @@
                   cell-class-name="dddsadsa"
                   style="width: 100%">
           <el-table-column prop="pair"
+                             width="110px"
                            label="name">
             <template slot-scope="scope">
               <div class="table_size">
@@ -119,14 +120,16 @@
             <template slot-scope="scope">
                 <div class="table_size">
                 <p>
-                  <span style="color:#05C98E">{{scope.row.token1.widget ? scope.row.token1.widget+'%' : '--'}}</span>
+                  <span style="color:#05C98E">{{scope.row.token1.widget ? scope.row.token1.widget : '--'}}</span>
+                   {{scope.row.token1.name}}
                    {{scope.row.token1Balance ?scope.row.token1Balance :'--' }}
-                    {{scope.row.token1.name}}
+                   
                 </p>
                 <p>
-                   <span style="color:#05C98E">{{scope.row.token2.widget ? scope.row.token2.widget+'%' : '--'}}</span>
+                   <span style="color:#05C98E">{{scope.row.token2.widget ? scope.row.token2.widget: '--'}}</span>
+                       {{scope.row.token2.name}}
                    {{scope.row.token1Balance ?scope.row.token1Balance : '--'  }}
-                    {{scope.row.token2.name}}
+                
                 </p>
                
               </div>

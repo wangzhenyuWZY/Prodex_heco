@@ -4,10 +4,11 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --host 0.0.0.0",
-    "build": "vue-cli-service build",
+    "build:dev": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "start": "npm run serve",
-    "build:prod": "vue-cli-service build"
+    "build:prod": "vue-cli-service build --mode production",
+    "serve:prod": "vue-cli-service serve --host 0.0.0.0 --mode production"
   },
   "dependencies": {
     "9cf-chart": "^1.0.20",
@@ -34,8 +35,11 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "terser-webpack-plugin": "^4.2.3",
+    "vue-i18n": "^8.22.2",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

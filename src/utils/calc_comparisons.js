@@ -11,6 +11,11 @@ function calcSpotPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut, tokenWeig
     const ratio = numer.div(denom);
     const scale = Decimal(1).div(Decimal(1).sub(Decimal(swapFee)));
     const spotPrice = ratio.mul(scale);
+    // console.log('numer----------'+numer)
+    // console.log('denom----------'+denom)
+    // console.log('ratio----------'+ratio)
+    // console.log('scale----------'+scale)
+    // console.log('spotPrice----------'+spotPrice)
     return spotPrice;
 }
 ////计算A->B的价格(用于计算swap), 输入固定，计算输出
@@ -41,7 +46,16 @@ function calcOutGivenInAfterPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut
     const tokenAmountOut = Decimal(tokenBalanceOut).times(bar);
     const newTokenBalanceIn = Decimal(tokenBalanceIn).add(Decimal(tokenAmountIn));
     const newTokenBalanceOut = Decimal(tokenBalanceOut).sub(tokenAmountOut);
-    return calcSpotPrice(newTokenBalanceIn, tokenWeightIn, newTokenBalanceOut, tokenWeightOut, swapFee);
+    console.log('weightRatio----------'+weightRatio)
+    console.log('adjustedIn----------'+adjustedIn)
+    console.log('y----------'+y)
+    console.log('foo----------'+foo)
+    console.log('bar----------'+bar)
+    console.log('tokenAmountOut----------'+tokenAmountOut)
+    console.log('newTokenBalanceIn----------'+newTokenBalanceIn)
+    console.log('newTokenBalanceOut----------'+newTokenBalanceOut)
+    console.log('swapFeeswapFeeswapFeeswapFee----------'+swapFee)
+    return calcSpotPrice(newTokenBalanceOut, tokenWeightOut,newTokenBalanceIn, tokenWeightIn, swapFee);
 
 }
 

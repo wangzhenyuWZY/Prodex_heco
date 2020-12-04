@@ -439,11 +439,19 @@ export default {
         });
         return
       }
+      if(this.token1Num==0){
+        this.percentage = 0
+        this.thisswapFee = 0
+        return
+      }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(6)
-        let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
-        this.percentage = ((afterPrice - this.spotPrice) / this.spotPrice * 100).toFixed(2)
+        let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
+        let percentage = (Decimal(this.spotPrice).minus(afterPrice)).div(afterPrice).mul(Decimal(100))
+        console.log('----------',this.token1Balance,this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num,this.swapFee)
+        console.log('afterPrice============='+afterPrice,this.spotPrice.toFixed())
+        this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
     },

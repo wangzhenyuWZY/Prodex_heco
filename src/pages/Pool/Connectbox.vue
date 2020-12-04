@@ -14,13 +14,13 @@
                <el-button class="from_botton connect_btns"
                       :class="iSingle?'green_btn':'fff_button'"
                      @click="iSingle=true"
-                     type="small">Single Token </el-button>
+                     type="small">Single assets</el-button>
           </div>
          <div class="text_btn fl_lt">
               <el-button class=" from_botton connect_btns"
                     :class="!iSingle?'green_btn':'fff_button'"
                      @click="iSingle=false"
-                     type="small">Double Token </el-button>
+                     type="small">Double assets</el-button>
          </div>
         
         </div>
@@ -415,6 +415,7 @@ export default {
     },
     calcShare () {
       if (this.token1Num <= 0) {
+        this.share = 0
         return
       }
       if (this.token1Balance && this.token2Balance && !this.iSingle) {
@@ -435,10 +436,10 @@ export default {
       if (this.token1Num && this.token1Num !== 0) {
         if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
           let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-          this.share = (poolOut / this.lpTotal * 100).toFixed(2)
+          let plus = Decimal(poolOut).plus(this.lpTotal)
+          let share = Decimal(poolOut).div(plus).mul(100)
+          this.share = share.toFixed(2)
         } else {
-          // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
-          // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
           getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
             that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })

@@ -28,15 +28,44 @@
           </div>
         </div>
         <div class="nav_merge" v-show="!moble">
-         <el-dropdown trigger="click" size="medium" @command="handleCommand">
-            <span class="el-dropdown-link">
-              <i class="el-icon-menu icons"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item v-for="(el,index) in tag" :key="el.path+index" :command="el.path">{{el.name}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
+              <img  class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
         </div>
+        <el-drawer
+          title="我是标题"
+          :visible.sync="drawer"
+           :show-close ="false"
+           custom-class="drawer_body"
+          :with-header="false">
+            <div class="drawer_logo">
+               <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png"
+             alt="" /></div>
+               <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click="drawer = false"> </div>
+            </div>
+            <div class="drawer_btn">
+                <div class="nav-butt">
+                  <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
+                  <div class="login_wallet drawer_wallet" v-if="connectFlag">
+                      <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+                      <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+                      <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
+                  </div>
+                </div>
+            </div>
+            <ul class="drawer_nav">
+                <li  v-for="(idx, index) in tag"
+                :key="idx.path+'drawer'+index"
+                @click="handelActive(idx.path, index)"
+                :class="navIndex == index ?'drawer_nav_active':''">{{idx.name }}</li>
+            </ul>
+            <ul class="drawer_nav_aubt">
+                <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
+                <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
+                <li> <img src="@/assets/img/icon_telegram.svg" alt=""></li>
+                <li> <img src="@/assets/img/icon_discord.svg" alt=""></li>
+                <li> <img src="@/assets/img/icon_medium.svg" alt=""></li>
+                <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
+            </ul>
+        </el-drawer>
       </div>
     </div>
   </div>
@@ -50,6 +79,7 @@ export default {
     return {
       key: "31",
       navIndex: 0,
+      drawer:false,
       childrenNode: [
             102,
             133,
@@ -130,6 +160,8 @@ export default {
 
 
     handelActive (e, index) {
+        this.drawer = false;
+
       if (e == '/') {
         this.navIndex = 0;
       } else {
@@ -171,7 +203,15 @@ export default {
   }
 };
 </script>
-
+<style >
+.nav .drawer_body{
+      width: 69% !important;
+      background: #070A0E;
+      border-radius: 16px 0px 0px 16px;
+      color: #FFFFFF;
+      /* position: relative; */
+  }
+</style>
 <style lang="scss" scoped>
 // .logop{
 //   float: left;
@@ -184,6 +224,61 @@ export default {
 //   // margin-left: 116px;
 //   margin-right: 22px;
 // }
+.drawer_logo{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 0.2rem;
+    .lt_logo{
+      padding-left: 0.3rem;
+      img{
+        width: 3.5rem;
+        
+      }
+    }
+    .rg_colse{
+      padding-right: 0.4rem;
+      img{
+        width: 0.9rem;
+      }
+    }
+   
+}
+.drawer_nav_aubt{
+  position: absolute;
+  left: 0;
+  bottom: 0.7rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  li{
+  
+    img{
+       width: 0.9rem;
+    }
+  }
+}
+ .drawer_nav{
+      font-size: 0.5rem;
+      margin-top: 0.5rem;
+      li{
+        line-height: 1.3rem;
+        padding-left: 0.8rem;
+      }
+    }
+    .drawer_nav_active{
+        background-color:#05c98e26;
+        color: #05C98E;
+        font-family: roboto-mediumitalic;
+    }
+   
+ .drawer_btn{
+      padding: 0.4rem;
+      .drawer_wallet{
+        display: flex;
+        justify-content: center;
+      }
+    }
 .iconsv{
   margin-left: 50px;
 }
@@ -209,7 +304,9 @@ export default {
   line-height: 72px;
   height: 72px;
 }
-
+.drawer_body{
+  width: 50%;
+}
 .nav-butt {
   // width: 119px;
 }
@@ -219,6 +316,10 @@ export default {
     vertical-align: middle;
     margin-top: -3px;
     cursor: pointer;
+  }
+  .merge_img{
+    width: 0.8rem;
+    height: auto;
   }
 }
 .nav-right {

@@ -135,6 +135,7 @@ export default {
       });
     },
     async getWtrxContract () {//链接wtrx合约
+      console.log('ipConfig.wtrxAddress==========='+ipConfig.wtrxAddress)
       this.wtrxContract = await window.tronWeb.contract().at(ipConfig.wtrxAddress);
       if (this.wtrxContract) {
         this.getWtrx()
@@ -530,9 +531,9 @@ export default {
           .wtrx-a1 {
             font-size: 0.37rem;
           }
-             .trx-a2 {
+          .wtrx-a2 {
           font-size: 0.37rem;
-        }
+          }
         }
         .trx-b {
           margin-top: 1rem;
@@ -555,6 +556,9 @@ export default {
           .trx-a1{
             font-size: 0.37rem;
           }
+              .trx-a2 {
+          font-size: 0.37rem;
+        }
         }
         .trx-a2 {
           font-size: 0.37rem;
