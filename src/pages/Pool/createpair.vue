@@ -269,8 +269,7 @@ export default {
     async createBPool () {//newBPool
       let that = this;
       this.loading1(1);
-      this.showAlert1 = true;
-      this.typeUrl = window.tronWeb.defaultAddress.base58;
+      
       this.$message({
         message: 'Successful, please wait for block confirmation',
         type: 'success'
@@ -295,7 +294,6 @@ export default {
                 let number2 = window.tronWeb.toBigNumber(that.secondTokenNum * Math.pow(10, that.token2.decimals)).toString(10)
                 let weight2 = window.tronWeb.toBigNumber(that.secondTokenWeight * Math.pow(10, 18)).toString(10)
                 that.bindCoin(that.token2.address, number2, weight2, 'token2IsBind')
-                that.loading1();
               })
             })
 
@@ -312,6 +310,7 @@ export default {
       }
     },
     async setSwapLpFee () {//设置LP
+    let that= this;
       if (this.lp == 0) {
         return
       }
@@ -322,11 +321,14 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          alert('success');
+          // that.$message.success('success');
+           that.showAlert1 = true;
+           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
         });
       })
     },
     async setSponsors () {//设置sponsors
+    var that = this;
       if (this.sponsors == 0) {
         return
       }
@@ -337,20 +339,29 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          alert('success');
+          //  that.$message.success('success');
+           that.showAlert1 = true;
+           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
         });
       })
     },
     async finalize (address) {
+
       let that = this
       var functionSelector = 'finalize()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(address, functionSelector, { shouldPollResponse: true }, parameter);
-      if (!transaction.result || !transaction.result.result)
-        return console.error('Unknown error: ' + transaction, null, 2);
+      if (!transaction.result || !transaction.result.result){
+            that.loading1(1);
+           return console.error('Unknown error: ' + transaction, null, 2);
+
+      }
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          alert('success');
+           that.showAlert1 = true;
+           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
+          that.loading1(1);
+          that.$message.success('success');
         });
       })
     },
@@ -366,8 +377,12 @@ export default {
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       let signedTransaction = await window.tronWeb.trx.sign(transaction.transaction)
+       that.showAlert1 = true;
+      that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
       let res = await window.tronWeb.trx.sendRawTransaction(signedTransaction)
+     
       if (res) {
+         
         getConfirmedTransaction(res.txid).then((result) => {
           if (name == 'token1IsBind')
             that.token1IsBind = true
@@ -395,7 +410,7 @@ export default {
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          alert('success');
+          that.$message.success('success');
         });
       })
     },

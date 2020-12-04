@@ -89,7 +89,7 @@ export default {
   },
   methods: {
     openUrl () {
-        window.open(this.addUrl+this.url)
+        window.open(this.url)
     },  
     handleClosea () {
          this.$emit('close')

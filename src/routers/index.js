@@ -10,7 +10,6 @@ const Foxdex = ()=>import('../pages/Foxdex/Foxdex.vue')
 const Wtrx = ()=>import('../pages/Wtrx/Wtrx.vue')
 const Stake = ()=>import('../pages/Stake/Stake.vue')
 const Stakes = ()=>import('../pages/Stake/Selected.vue')
-const contexnt =()=>import('../pages/Pool/contexnt')
 const removeLiquidity =()=>import('../pages/Pool/removeLiquidity')
 const liquidity =()=>import('../pages/Pool/liquidity')
 const addfrombox =()=>import('../pages/Pool/addfrombox')
@@ -74,9 +73,6 @@ export default new VueRouter({
           name:'importpool',
           component:importpool
         }
-        
-       
-       
       ]
   },
     { path: '/foxdex', component: Foxdex},

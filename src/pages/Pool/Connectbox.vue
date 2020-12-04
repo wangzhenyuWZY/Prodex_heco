@@ -212,6 +212,7 @@
                  :token2Num="token2Num"
                  :token1="token1"
                  :token2="token2"
+                 :url="typeUrl"
                  @close="closeAlert" 
            />
   </div>
@@ -255,6 +256,7 @@ export default {
       lpTotal: 0,
       denormalizedWeight: 0,
       totalDenormalizedWeight: 0,
+      typeUrl:'',
       foxDex: 0,
       share: 0,
       charm: {
@@ -629,6 +631,7 @@ export default {
         window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             that.$message.success("SUCCESS!")
+             that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
             that.charm1();
             that.charm2();
             that.showAlert1 = true

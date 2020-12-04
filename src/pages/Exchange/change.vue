@@ -51,9 +51,17 @@
             <div class="lt change_img">
               
               <span>Minimum received</span>
-              <img class="lt_icon"
-                   src="@/assets/img/icon_instructions.svg"
-                   alt="">
+                    <el-tooltip placement="right"   effect="light">
+                      <div slot="content"
+                           >
+                        Your transaction will revert if<br>
+                        there is a large,unfavorable <br>
+                        price movement before it is
+                        <br>confirmed.
+                      </div>
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
             </div>
             <span class="rg ">{{token2Num}} {{token2.name}}</span>
           </div>
@@ -61,9 +69,12 @@
             <div class="lt change_img">
               
               <span>Price Impacte</span>
-              <img class="lt_icon"
-                   src="@/assets/img/icon_instructions.svg"
-                   alt="">
+               <el-tooltip placement="right" effect="light">
+                  <div slot="content" > 
+                       The difference between the<br> market price and estimated <br>price due to trade size.<br> 
+                      </div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip> 
             </div>
             <span class="rg change_red">{{percentage}}%</span>
           </div>
@@ -71,9 +82,13 @@
             <div class="lt change_img">
               
               <span>Liquidity Provider Fee</span>
-              <img class="lt_icon"
-                   src="@/assets/img/icon_instructions.svg"
-                   alt="">
+              
+                   <el-tooltip placement="right" effect="light">
+                  <div slot="content" > 
+                       A protion of each trade(0.0010%) <br> goes to liquidity providers <br> as a protocal incentive.
+                      </div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip> 
             </div>
             <span class="rg ">{{swapFee}} {{token1.name}}</span>
           </div>
@@ -89,12 +104,13 @@
 
 <script>
 import { IsPc } from '../../utils/index'
+console.log(IsPc())
 export default {
-  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage','mobile'],  
+  props: ['token1','token2','token1Num','token2Num','spotPrice','swapFee','percentage'],  
   data () {
     return {
       showAlert: true,
-      mobile:!IsPc()
+      mobile:IsPc()
 
     }
   },

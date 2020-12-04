@@ -209,6 +209,7 @@ export default {
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             getConfirmedTransaction(res.txid).then(()=>{
+              that.total.defaultAddress = res.txid;
               that.deposit(item,n);
               that.total.btnFlag1 = false;
             })
@@ -311,8 +312,7 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
-      // this.total.defaultAddress = window.tronWeb.defaultAddress.base58
-      // this.total.showAlert1 = true
+      this.total.showAlert1 = true
       let num ;
       n = n * Math.pow(10, this.total.decimals);
       n = n+'';
