@@ -1,8 +1,3 @@
-
-
-
-
-
 export const tokenList = [
     { 
         name:'WTRX',
@@ -46,8 +41,3 @@ const tokenData = {
     pairList
 }
 export default tokenData
-
-
-
-
-
