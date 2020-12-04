@@ -488,6 +488,10 @@ export default {
 }
 @media screen and (max-width: 750px) {
   .stake_slect{
+    padding-top: 0;
+    .add_marg {
+      padding: 24px 14px;
+    }
      .received .lt span {
         font-size: 0.37rem;
      }
@@ -495,7 +499,11 @@ export default {
         font-size: 0.37rem;
       }
       .text_conent{
+        padding-left: 90px;
         font-size: 0.4rem;
+        text-align: center;
+        margin-left: 0;
+        width: 100%;
       }
       .text_border{
         font-size: 0.37rem;

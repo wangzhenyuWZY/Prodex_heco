@@ -247,7 +247,7 @@ export default {
   float: left;
     display: flex;
     align-items: center;
-   
+    
     margin-top: 2px;
     margin-left: 38px;
   // .logop{
@@ -339,9 +339,15 @@ export default {
 }
 @media screen and (max-width: 750px)  {
    .nav{
-    padding-top: 10px;
+    padding-top: 0px;
     height: auto;
-    padding-bottom: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    line-height: inherit;
+    padding-top: 0.4rem;
+
+    // padding-bottom: 1.2rem;
     .logop{
       font-size: 0.5rem;
       margin-top: 0;
@@ -349,7 +355,13 @@ export default {
       margin-right: 0;
     }
     .logo{
-      margin-left: 15px;
+      // transform: scale(0.9);
+      margin-left: 0px;
+      img{
+        width: 3rem;
+        height: auto;
+        // transform: scale(0.9);
+      }
     }
   }
   .nav-right{
@@ -359,7 +371,7 @@ export default {
     }
     .login_wallet{
       padding: 0 20px;
-      margin-top: 5px;
+      margin-top: 0px;
     }
       .wallet_addrs{
     margin: 0;

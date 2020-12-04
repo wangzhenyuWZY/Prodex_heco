@@ -109,6 +109,9 @@ import tokenData from '../../utils/token'
 </script>
 
 <style lang="scss" scoped>
+.input_select{
+  position: relative;
+}
   .input_content {
       display: flex;
       align-items: center;
@@ -221,6 +224,24 @@ import tokenData from '../../utils/token'
     .from_lable{
       margin-bottom: 0.2rem;
       padding-left: 0.2rem;
+     position: relative;
+     min-width: 100%;
+        transform: translateX(0);
+        overflow:inherit;
+      right: 0;
+      top: 0;
+      .pads{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        top: 0;
+        margin: auto;
+        right: 0;
+        min-width: 7.2rem;
+        left: 0;
+        transform: translateX(-4.6rem);
+      }
+   
     }
      .from_select{
       padding-right: 0.1rem;

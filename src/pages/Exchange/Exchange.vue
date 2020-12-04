@@ -1,6 +1,6 @@
 <template>
   <div class="container exchange">
-    <container top="40" :mobile="!isPc">
+    <container top="40" :mobile="isPc">
       <div slot="body">
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
@@ -372,7 +372,7 @@ export default {
         this.pair = pair[0]
         this.decimals = pair[0].decimals;
         console.log('getPairAddress=========')
-        allowance(that.token1.address, pair[0].address).then((res) => {
+        allowance(that.token1.address, pair[0].address).then((exchangeres) => {
           if (res) {
             let approveBalance = parseInt(res._hex, 16);
             console.log('approveBalance ====='+approveBalance)
@@ -938,6 +938,9 @@ export default {
     .exchange{
       margin-top: 0px;
       padding-bottom: 30px;
+      padding-left: 0.4rem;
+      padding-right: 0.4rem;
+      // padding-top: 0px;
       .setInput{
         display: flex;
         .ctx_1{
@@ -952,7 +955,10 @@ export default {
         padding-bottom: 20px;
       }
       .received{
-            font-size: 0.4rem;
+        span{ 
+            font-size: 0.37rem;
+
+        }
       }
       .setmage{
         margin: 8px 0;
