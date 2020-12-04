@@ -301,7 +301,7 @@ export default {
       // let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
       console.log('penaccount._hex', penaccount._hex);
-      this.total.uniswaplp = parseInt(penaccount._hex,16)/Math.pow(10,18);
+      this.total.uniswaplp = (parseInt(penaccount._hex,16)/Math.pow(10,18)).toFixed(6);
     },
     async deposit (item,n) { // 质押  
       // （1）PoolInfo[]数组的序号
