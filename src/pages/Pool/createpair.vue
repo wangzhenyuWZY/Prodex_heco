@@ -255,7 +255,7 @@ export default {
       this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
     },
     async getSwapFeeForDex () {
-      console.log('ipConfig.FactoryManager====='+ipConfig.FactoryManager)
+      console.log('ipConfig.BFactory====='+ipConfig.BFactory)
       var functionSelector = 'swapFeeForDex()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);

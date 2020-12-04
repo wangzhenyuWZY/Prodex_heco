@@ -491,6 +491,16 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0], 16)
     },
+    async getCreateToken(item){
+      let that = this
+      var functionSelector = 'getCurrentTokens()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(item.address, functionSelector, { shouldPollResponse: true }, parameter);
+      if (!transaction.result || !transaction.result.result){
+           return console.error('Unknown error: ' + transaction, null, 2);
+      }
+      console.log(transaction)
+    },
     async getPairAddress () {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
@@ -500,6 +510,7 @@ export default {
       })
       if (pair && pair.length > 0) {
         this.pair = pair[0]
+        // this.getCreateToken(pair[0])
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量

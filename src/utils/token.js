@@ -16,7 +16,7 @@ export const tokenList = [
 ]
 export const pairList = [
     {
-        address:'TABdMKUCX81wRA7PRQxXzKBTQEGYZjbeUD',
+        address:'TV6jcZt8QDcDmw3yMgrWYumRNBrrPQhfJq',
         token1:{ 
             name:'WTRX',
             address:'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
