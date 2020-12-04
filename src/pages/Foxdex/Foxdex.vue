@@ -1,7 +1,7 @@
 <template>
 <div class="cont">
-    {{$t('message')}}
-    <button @click="hdel">切换</button>
+    <!-- {{$t('message')}} -->
+    <!-- <button @click="hdel">切换</button> -->
 </div>
 
 </template> 
