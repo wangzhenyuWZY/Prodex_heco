@@ -355,6 +355,7 @@ export default {
 @media screen and (max-width: 750px) {
    .removeLq{
      margin-top: 0px;
+
        .pool-box{
     width: 100%;
     // padding: 0 0.4rem ;
@@ -368,6 +369,14 @@ export default {
      }
     } 
    }
+      .fees .fees_share{
+       padding:  0 12px;
+       padding-top: 16px;
+       
+     }
+    .fees .accrued_btn .btn_lt {
+      width: 48%;
+     }
 
 }
 

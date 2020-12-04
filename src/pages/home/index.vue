@@ -128,7 +128,7 @@
                 <p>
                    <span style="color:#05C98E">{{scope.row.token2.widget ? scope.row.token2.widget: '--'}}</span>
                        {{scope.row.token2.name}}
-                   {{scope.row.token1Balance ?scope.row.token1Balance : '--'  }}
+                   {{scope.row.token2Balance ?scope.row.token2Balance : '--'  }}
                 
                 </p>
                

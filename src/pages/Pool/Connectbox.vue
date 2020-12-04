@@ -128,7 +128,7 @@
         </div>
         <div class="connect_btn clearfix">
           <div class="whe fl_lt"
-               v-show="disableds()">
+               v-show="!isApproved">
             <el-button class="from_botton"
                         :loading="charm.btnLoading2"
                        :disabled="charm.disabled2"
@@ -323,10 +323,10 @@ export default {
     },
     disableds () {
       if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
-              if (this.token1ApproveBalance==0) {
+        if (this.token1ApproveBalance==0) {
           return true
         } else {
-           if(this.token2ApproveBalance == 0) {
+          if(this.token2ApproveBalance == 0) {
             return true;
           } else {
             return false
@@ -543,7 +543,7 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            that.token1ApproveBalance = parseInt(res._hex, 16);
+            that.token1ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16);
             console.log(that.token1ApproveBalance)
             if (that.token1ApproveBalance == 0) {
               that.isApproved = false
@@ -554,7 +554,7 @@ export default {
         })
         allowance(this.token2.address, pair[0].address).then((res) => {
           if (res) {
-            that.token2ApproveBalance = parseInt(res._hex, 16)
+            that.token2ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16)
             if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {
@@ -631,7 +631,7 @@ export default {
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [MAX, MAX] },
+        { type: 'uint256[]', value: ['1000000000000000000000000000000', '1000000000000000000000000000000'] },
       ]
       console.log(parameter)
       try {
