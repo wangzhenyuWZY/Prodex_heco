@@ -140,8 +140,8 @@
                 </div>
                 <span class="setspan">{{thisswapFee}} {{token1.name}}</span>
               </div>
-              <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
-                     alt=""></div>
+              <!-- <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
+                     alt=""></div> -->
             </div>
           </div>
         </div>
@@ -832,6 +832,7 @@ export default {
 .setspan{
   line-height: 24px;
   color:#ffffff;
+  // padding-bottom: 20px;
 }
 .Price_text {
   font-size: 20px;
