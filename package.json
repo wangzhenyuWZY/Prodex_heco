@@ -6,7 +6,8 @@
     "serve": "vue-cli-service serve --host 0.0.0.0",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "npm run serve"
+    "start": "npm run serve",
+    "build:prod": "vue-cli-service build"
   },
   "dependencies": {
     "9cf-chart": "^1.0.20",
