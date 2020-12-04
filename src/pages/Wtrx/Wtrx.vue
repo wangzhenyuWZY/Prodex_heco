@@ -135,6 +135,7 @@ export default {
       });
     },
     async getWtrxContract () {//链接wtrx合约
+      console.log('ipConfig.wtrxAddress==========='+ipConfig.wtrxAddress)
       this.wtrxContract = await window.tronWeb.contract().at(ipConfig.wtrxAddress);
       if (this.wtrxContract) {
         this.getWtrx()

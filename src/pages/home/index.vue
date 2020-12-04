@@ -78,6 +78,7 @@
                   cell-class-name="dddsadsa"
                   style="width: 100%">
           <el-table-column prop="pair"
+                             width="110px"
                            label="name">
             <template slot-scope="scope">
               <div class="table_size">

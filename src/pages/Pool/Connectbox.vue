@@ -435,10 +435,10 @@ export default {
       if (this.token1Num && this.token1Num !== 0) {
         if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
           let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-          this.share = (poolOut / this.lpTotal * 100).toFixed(2)
+          let plus = Decimal(poolOut).plus(this.lpTotal)
+          let share = Decimal(poolOut).div(plus).mul(100)
+          this.share = share.toFixed(2)
         } else {
-          // this.getToken1DenormalizedWeight()//获取token1在pool中的权重
-          // this.getToken2DenormalizedWeight()//获取token2在pool中的权重
           getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
             that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
           })
