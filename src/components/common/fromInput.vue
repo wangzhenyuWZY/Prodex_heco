@@ -212,7 +212,7 @@ background: #F6F7FB;
   width: 100%;
   border: none;
   border-radius: 16px;
-  font-size: 26px;
+  font-size: 20px;
   padding-left: 16px;
   font-weight: 500;
   color: #070A0E;
@@ -220,9 +220,8 @@ background: #F6F7FB;
 }
 .globle_input::placeholder{
   
-font-weight: normal;
 color: #A6AEB7;
-font-size: 28px;
+font-size: 18px;
 }
 
 @keyframes slide-down {

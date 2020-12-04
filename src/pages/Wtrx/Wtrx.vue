@@ -531,9 +531,9 @@ export default {
           .wtrx-a1 {
             font-size: 0.37rem;
           }
-             .trx-a2 {
+          .wtrx-a2 {
           font-size: 0.37rem;
-        }
+          }
         }
         .trx-b {
           margin-top: 1rem;
@@ -556,6 +556,9 @@ export default {
           .trx-a1{
             font-size: 0.37rem;
           }
+              .trx-a2 {
+          font-size: 0.37rem;
+        }
         }
         .trx-a2 {
           font-size: 0.37rem;

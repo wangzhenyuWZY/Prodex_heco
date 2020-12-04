@@ -39,6 +39,7 @@
     "cross-env": "^7.0.3",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "terser-webpack-plugin": "^4.2.3",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
