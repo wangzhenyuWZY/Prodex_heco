@@ -21,8 +21,9 @@ export default {
   methods: {
   ...mapActions(['connectWallett']),
      async init () {
-        await initTronWeb();
-          this.connectWallett();
+       this.$initTronWeb().then((tronWeb)=> {
+          this.connectWallett()
+      })
   }
 
   },

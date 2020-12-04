@@ -21,7 +21,7 @@
       <div class="nav-right fl_rg">
         <div class="nav-butt">
           <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
-          <div class="login_wallet" v-if="connectFlag">
+          <div class="login_wallet" v-if="connectFlag&&moble">
               <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
               <span class="wallet_addrs">{{walletAddres.address|address}}</span>
                <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
@@ -210,7 +210,8 @@ export default {
       border-radius: 16px 0px 0px 16px;
       color: #FFFFFF;
       /* position: relative; */
-  }
+        outline: 0;
+        }
 </style>
 <style lang="scss" scoped>
 // .logop{
@@ -475,7 +476,8 @@ export default {
       margin-top: 0px;
     }
       .wallet_addrs{
-    margin: 0;
+      margin: 0;
+      font-size: 0.35rem;
   }
   .nav_btn{
     width: 100%;

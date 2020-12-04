@@ -40,8 +40,8 @@
           <samp class="pool-p2">
             Don't see a pool you joined?<samp class="pool-p3">
               Import it.</samp
-            ></samp
-          >
+            >
+            </samp>
         </div>
         <div class="fees" v-if="connectFlag">
           <div class="fees_account" v-show="false">
@@ -117,14 +117,14 @@
             </div>
           </div>
           <div class="pool_it">
-            <samp class="pool-p2">
+            <!-- <samp class="pool-p2">
               Don't see a pool you joined?
                  <router-link to="/pool/importpool"><samp class="pool-p3">
             Import it. </samp>
-            </router-link>
+            </router-link> -->
               
-              </samp
-            >
+              <!-- </samp
+            > -->
           </div>
         </div>
       </div>

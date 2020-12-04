@@ -98,7 +98,7 @@
           <el-button class="from_botton pair_mandate pair_swap "
                      :loading="btnLoading1"
                      :disabled="disabled1"
-                     @click="handel">Confim</el-button>
+                     @click="handel">Confirm</el-button>
         </div>
         <div class="setInput pair_input clearfix">
          
@@ -840,6 +840,9 @@ export default {
 @media screen and (max-width: 750px) {
   .createpair {
     padding-top: 0;
+    .from_contentIcon{
+      margin: 0;
+    }
     .from_botton {
       margin-top: 0;
     }
@@ -858,6 +861,7 @@ export default {
       margin-top: 17px;
     }
     .pair_input {
+      margin-top: 15px;
       padding-bottom: 20px;
     }
     .ctx_2 {

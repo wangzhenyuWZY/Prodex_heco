@@ -79,6 +79,7 @@ img{
     padding: 0;
     font-size: 18px;
     font-family: roboto;
+    outline: 0;
     color: #FFFFFF;
     cursor: pointer;
     user-select:none;
@@ -87,7 +88,8 @@ img{
     vertical-align: middle;
 }
 .from_botton:hover ,.from_botton:focus{
-    color: #fff ;
+    color: #05C98E ;
+    border-color:#05C98E;
     background: #05C98E;
 }.from_botton.is-disabled:focus{
     background: #F4F5FA;
@@ -142,7 +144,7 @@ img{
     color:#05C98E;
 }
 .nav_btn:active {
-    color:#FF5D37;
+    color:#05C98E;
     background: none;
     border: 1px solid#05C98E;
 }

@@ -575,9 +575,13 @@ export default {
       font-size: 0.4rem;
       p:nth-child(2),p:nth-child(4){
           font-size: 0.3rem;
+          padding: 0 0.5rem;
       }
       p:nth-child(4){
         padding-bottom: 1rem;
+      }
+      p{
+        
       }
     }
   }
