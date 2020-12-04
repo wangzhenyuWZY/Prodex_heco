@@ -26,7 +26,7 @@
 
         <div class="from_contentIcon">
 
-          <img src="../../assets/img/icon_down.png" alt="" @click="convert">
+          <img @click="purples" src="../../assets/img/icon_down.png" alt="">
           <!-- <i class="el-icon-back cursor tran_icon"
              @click="purples"></i> -->
         </div>
@@ -172,7 +172,6 @@
 </template>
 
 <script>
-const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
 import selctoken from '../Pool/selctToken';
