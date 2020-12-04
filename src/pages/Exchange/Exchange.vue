@@ -26,11 +26,7 @@
 
         <div class="from_contentIcon">
 
-<<<<<<< HEAD
           <img src="../../assets/img/icon_down.png" alt="" @click="convert">
-=======
-          <img @click="purples" src="../../assets/img/icon_down.png" alt="">
->>>>>>> db17d581d5739097170788020c161b130cba9ca8
           <!-- <i class="el-icon-back cursor tran_icon"
              @click="purples"></i> -->
         </div>
