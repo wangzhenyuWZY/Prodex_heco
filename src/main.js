@@ -11,6 +11,7 @@ import layer from 'vue-layer'
 import 'vue-layer/lib/vue-layer.css';
 import store from './store/index';
 import  Popup from './popup/popup';
+import i18n from './lang'
 Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$initTronWeb =initTronWeb;
 Vue.prototype.$popup = Popup.install;
@@ -53,5 +54,6 @@ if (!IsPc()) {
 new Vue({
   router,
   store,
+  i18n,
   render: h => h(App),
 }).$mount('#app')

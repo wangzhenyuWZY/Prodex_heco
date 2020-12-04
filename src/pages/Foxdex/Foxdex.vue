@@ -1,6 +1,7 @@
 <template>
 <div class="cont">
-    1
+    <!-- {{$t('message')}} -->
+    <!-- <button @click="hdel">切换</button> -->
 </div>
 
 </template> 
@@ -9,7 +10,17 @@
 
 export default {
   
-
+        data() {
+            return {
+                
+            }
+        },
+        methods: {
+            hdel (n) {
+                        let i18n =  this.$i18n.locale;
+                    this.$i18n.locale = i18n == 'en' ? 'zh':'en'
+            }
+        },
 }
 </script>
 
