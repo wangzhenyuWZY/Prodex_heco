@@ -415,6 +415,7 @@ export default {
     },
     calcShare () {
       if (this.token1Num <= 0) {
+        this.share = 0
         return
       }
       if (this.token1Balance && this.token2Balance && !this.iSingle) {
