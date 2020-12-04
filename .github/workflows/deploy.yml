@@ -2,7 +2,7 @@ name: Deploy dev
 on: workflow_dispatch
 jobs:
   deploy:
-    runs-on: [runner1]
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: init ssh, deploy

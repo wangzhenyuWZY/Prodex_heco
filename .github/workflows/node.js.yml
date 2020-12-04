@@ -11,7 +11,7 @@ env:
 jobs:
   build:
 
-    runs-on: [runner1]
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
