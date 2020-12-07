@@ -63,7 +63,8 @@ const Decimal = require('decimal.js');
 import ipConfig from '../../config/ipconfig.bak'
 import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
-import tokenData from '../../utils/token';
+// import tokenData from '../../utils/token';
+import {TokenData} from '../../utils/index'
 
 export default {
   data () {
@@ -75,7 +76,7 @@ export default {
       poolIndex: 0,
       login: false,
       showModel: false,
-      farmList: tokenData.pairList,
+      farmList: TokenData().pairList,
       item:{},
       total: {
         farmTotal: 0, // 总数

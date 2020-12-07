@@ -1,42 +1,21 @@
 export const tokenList = [
     { 
         name:'WTRX',
-        address:'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
+        address:'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
         img:'111',
         balance:0,
         decimals:6
     },
     { 
-        name:'INVERST',
-        address:'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C',
+        name:'USDT',
+        address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
         img:'',
         balance:0,
         decimals:6
     },
     { 
-        name:'DAI',
-        address:'TRdyNcAxCFTDhrw1cWEKdWEX87hS6FFvGe',
-        img:'',
-        balance:0,
-        decimals:18
-    },
-    { 
-        name:'USDT',
-        address:'TQKzfGM1F1bvjo2tnQ5Kirqdu2hR8mFWs2',
-        img:'',
-        balance:0,
-        decimals:8
-    },
-    { 
         name:'FOX',
-        address:'TE9oQF7Y8tbq5Lqdfr9S47QNXHt7GRcHh4',
-        img:'',
-        balance:0,
-        decimals:12
-    },
-    { 
-        name:'WETH',
-        address:'TPkjDBVb3AyCqsnM5AfZ9NA8AtyTiP7sUZ',
+        address:'TCakeKXQub9efsXtBTohPRA1pfmL2GZ9DU',
         img:'',
         balance:0,
         decimals:18
@@ -44,22 +23,41 @@ export const tokenList = [
 ]
 export const pairList = [
     {
-        address:'TMMypXZP4z4dV9XuraDq3VdweY7PtsSUX8',
+        address:'TV6jcZt8QDcDmw3yMgrWYumRNBrrPQhfJq',
         token1:{ 
             name:'WTRX',
-            address:'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
+            address:'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
             img:'111',
             balance:0,
             decimals:6
         },
         token2:{ 
             name:'USDT',
-            address:'TQKzfGM1F1bvjo2tnQ5Kirqdu2hR8mFWs2',
+            address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
             img:'',
             balance:0,
-            decimals:8
+            decimals:6
         },
         pair:'WTRX/USDT',
+        decimals:18
+    },
+    {
+        address:'TMDpAWJGPaFGbThPAAs6oGdRfhnEv67yxL',
+        token1:{ 
+            name:'FOX',
+            address:'TCakeKXQub9efsXtBTohPRA1pfmL2GZ9DU',
+            img:'',
+            balance:0,
+            decimals:18
+        },
+        token2:{ 
+            name:'USDT',
+            address:'TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t',
+            img:'',
+            balance:0,
+            decimals:6
+        },
+        pair:'FOX/USDT',
         decimals:18
     }
 ]

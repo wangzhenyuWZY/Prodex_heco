@@ -135,7 +135,7 @@
 <script>
 const Decimal = require('decimal.js');
 import { mapActions, mapState } from "vuex";
-import tokenData from "../../utils/token"
+import {TokenData} from '../../utils/index'
 import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
 export default {
   data() {
@@ -146,7 +146,8 @@ export default {
       token2Balance:0,
       myBalanceInPool:0,
       lpTotal:0,
-      share:0
+      share:0,
+      tokenData:TokenData()
     };
   },
   computed: {
@@ -187,7 +188,7 @@ export default {
     },
     getpairList(){
       let that = this
-      tokenData.pairList.forEach((item)=>{
+      this.tokenData.pairList.forEach((item)=>{
         item.show = false
         getMyBalanceInPool(item).then((res)=>{
           item.myBalanceInPool = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()

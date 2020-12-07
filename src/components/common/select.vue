@@ -18,7 +18,7 @@
 
 <script>
 
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
   export default {
     props: {
       lable: {
@@ -57,7 +57,7 @@ import tokenData from '../../utils/token'
     return {
       isShow: false,
       className: "",
-      tokenList: tokenData.tokenList,
+      tokenList: TokenData(),
       itemToken:{}
     };
   },

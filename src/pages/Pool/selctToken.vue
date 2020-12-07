@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import {IsPc} from '../../utils/index'
 export default {
   props: {
@@ -115,6 +115,7 @@ export default {
       mobile: IsPc(),
       filterName: '',
       iSort:0,
+      tokenData:TokenData()
       // tokenList: tokenData.tokenList,
     }
   },
@@ -123,11 +124,11 @@ export default {
          let filtername = this.filterName
          let iSort = this.iSort
          if (this.selectType == '') {
-           return tokenData.tokenList.filter((el) => {
+           return this.tokenData.tokenList.filter((el) => {
              return el.name.includes(filtername.toUpperCase())
            })
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           let arry = this.tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
            return arry.filter((el) => {
              return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
            })

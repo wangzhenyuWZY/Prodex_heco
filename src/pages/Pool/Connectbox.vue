@@ -225,7 +225,7 @@ import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool, getTokenDenormalizedWeight } from '../../utils/tronwebFn'
 import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
@@ -278,7 +278,8 @@ export default {
       showAlert1: false,
       alertType: 'success',
       token1ApproveBalance:0,
-      token2ApproveBalance:0
+      token2ApproveBalance:0,
+      tokenData:TokenData()
     }
   },
   components: {
@@ -505,7 +506,7 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = tokenData.pairList.filter((item) => {
+      let pair = this.tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {

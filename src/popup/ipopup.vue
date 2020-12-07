@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import tokenData from '../utils/token'
+// import tokenData from '../utils/token'
 import { mapState } from 'vuex'
 import store from '../store/index'
 import { Notification } from 'element-ui';
