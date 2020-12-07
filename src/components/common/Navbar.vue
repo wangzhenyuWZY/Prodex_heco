@@ -9,6 +9,7 @@
              
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
+              v-if="doc"
              ref="header">
           <span v-for="(idx, index) in tag"
                 :key="idx.path"
@@ -20,7 +21,7 @@
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
+          <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button>
           <div class="login_wallet" v-if="connectFlag&&moble">
               <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
               <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -43,7 +44,7 @@
             </div>
             <div class="drawer_btn">
                 <div class="nav-butt">
-                  <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
+                  <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button>
                   <div class="login_wallet drawer_wallet" v-if="connectFlag">
                       <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
                       <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -66,7 +67,10 @@
                 <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
             </ul>
         </el-drawer>
+        
+         
       </div>
+      <div class="hdel"><button @click="hdel">切换</button></div>
     </div>
   </div>
 </template>
@@ -79,6 +83,7 @@ export default {
     return {
       key: "31",
       navIndex: 0,
+      doc:true,
       drawer:false,
       childrenNode: [
             102,
@@ -89,41 +94,84 @@ export default {
             97
       ],
       moble:true,
+
       tag: [
         {
           path: '/',
-          name: 'Home'
+          name:this.$t('nav.home1')
         },
         {
           path: "/exchange",
-          name: "Exchange",
+          name: this.$t('nav.Exchange'),
         },
         {
           path: "/pool",
-          name: "Pool",
+          name: this.$t('nav.Pool'),
         },
         {
           path: "/foxdex",
-          name: "FoxDex",
+          name: this.$t('nav.FoxDex'),
         },
         {
           path: "/wtrx",
-          name: "WTRX",
+          name: this.$t('nav.WTRX'),
         },
         {
           path: "/stake",
-          name: "Stake",
+          name: this.$t('nav.Stake'),
         },
       ],
     };
   },
+
   created() {
     this.moble = IsPc();
   },
   computed: {
     ...mapState(['walletAddres','connectFlag'])
+    
   },
+  watch :{
+    '$i18n.locale':{
+      handler:function(val) {
+        // this.doc = false
+        // setTimeout(()=>{
+        //   this.doc = true;
+        //   this.$forceUpdate();
+        //   console.log(this.$t('nav.home1'))
+        // })
+        var a =  [
+        {
+          path: '/',
+          name:this.$t('nav.home1')
+        },
+        {
+          path: "/exchange",
+          name: this.$t('nav.Exchange'),
+        },
+        {
+          path: "/pool",
+          name: this.$t('nav.Pool'),
+        },
+        {
+          path: "/foxdex",
+          name: this.$t('nav.FoxDex'),
+        },
+        {
+          path: "/wtrx",
+          name: this.$t('nav.WTRX'),
+        },
+        {
+          path: "/stake",
+          name: this.$t('nav.Stake'),
+        },
+      ];
+      console.log(a)
+      this.tag = a;
+      }
 
+    }
+  },
   mounted () {
     try {
       // setTimeout(()=>{
@@ -157,6 +205,31 @@ export default {
         }
       })
     },
+    hdel(n){
+        let i18n =  this.$i18n.locale;
+    this.$i18n.locale = i18n == 'en' ? 'zh':'en';
+    this.childrenNode = [];
+    try {
+               setTimeout(()=>{
+        this.$refs.header.children.forEach((element) => {
+            let str = element.getBoundingClientRect();
+            // console.log(str);
+          this.childrenNode.push(element.offsetWidth);
+        });
+        let hash = location.hash;
+        let str = hash.split("#")[1];
+        if (str) {
+          this.handelActive(str);
+        } else {
+          this.handelActive("/");
+        }
+       })
+    } catch (error) {
+      
+    }
+
+    },
+        
 
 
     handelActive (e, index) {
@@ -214,6 +287,7 @@ export default {
         }
 </style>
 <style lang="scss" scoped>
+
 // .logop{
 //   float: left;
 //   // margin-top: 8px;

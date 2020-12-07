@@ -27,7 +27,7 @@
     </div> -->
     <div class="c-box2">
       <div class="b2-top">
-        <samp class="top1">Top Pairs</samp>
+        <samp class="top1">{{$t('home.TopPairs')}}</samp>
 
         <!-- <template slot-scope="scope">
               <div>   

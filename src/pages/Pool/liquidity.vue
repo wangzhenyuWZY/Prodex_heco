@@ -2,11 +2,9 @@
   <div class="pool-box">
     <div class="pool_bg clearfix">
       <div class="pool-box1">
-        <p>Liquidity provider rewards</p>
+        <p>{{$t('pool.Lpr')}}</p>
         <p>
-          Liquidity providers earn a 0.3% fee on all trades proportional to
-          their share of the pool. Fees are added to the pool, accrue in real
-          time and can be claimed withdrawing your liquidity.
+          {{$t('pool.Lpr2')}}
         </p>
         <p v-show="false">Read more about providing liquidity</p>
       </div>
@@ -15,11 +13,11 @@
       </div>
       <div class="pool-box2">
         <div class="pool-butt">
-          <samp class="pool-p">Your liquidity</samp>
+          <samp class="pool-p">{{$t('pool.Yly')}}</samp>
           <div class="pool-butt1">
             <router-link to="/pool/pairs">
               <el-button class="from_botton red_button bottun_hei"
-                >Create a pair</el-button
+                >{{$t('pool.cj1')}}</el-button
               >
             </router-link>
           </div>
@@ -28,18 +26,18 @@
               <el-button 
               
               class="from_botton bottun_hei1"
-                >Add Liquidity</el-button
+                >{{$t('pool.al')}}</el-button
               >
             </router-link>
           </div>
         </div>
         <div class="pool_boxbg" v-if="!connectFlag">
           <samp class="pool-p1"
-            >Connect to a wallet to view your liquidity.</samp
+            >{{$t('pool.cta')}}</samp
           >
           <samp class="pool-p2">
-            Don't see a pool you joined?<samp class="pool-p3">
-              Import it.</samp
+            {{$t('pool.dts')}}<samp class="pool-p3">
+            {{$t('pool.imp')}}</samp
             >
             </samp>
         </div>

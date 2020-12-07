@@ -74,7 +74,7 @@
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
                      src="@/assets/img/icon_my_wallet.svg"
-                     alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}
+                     alt=""> {{connectFlag?'Swap':$t('nav.CWet')}}
                      </el-button></span>
 
              <span>  <el-button class="from_botton"

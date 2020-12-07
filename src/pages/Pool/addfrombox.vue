@@ -7,7 +7,7 @@
           <i class="el-icon-back back_icon"></i>
         </span>
 
-        <span class="content_text">Add Liquidity</span>
+        <span class="content_text">{{$t('pool.al')}}</span>
       </div>
       <div class="rg_box">
         <img src="@/assets/img/icon_instructions.svg"
@@ -39,7 +39,7 @@
       <div class="whe">
         <el-button class="from_botton"> <img class="whe_img"
                src="@/assets/img/icon_my_wallet.svg"
-               alt=""> Connect to a wallet</el-button>
+               alt="">{{$t('nav.CWet')}}</el-button>
       </div>
 
     </div>

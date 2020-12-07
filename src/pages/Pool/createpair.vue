@@ -9,7 +9,7 @@
               <i class="el-icon-back back_icon"></i>
             </span>
           </router-link>
-          <span class="content_text">Create a pair</span>
+          <span class="content_text">{{$t('pool.cj1')}}</span>
         </div>
         <div class="rg_box">
           <el-tooltip class="item" 
@@ -26,9 +26,9 @@
           <div class="provider ">
             <div class="">
               <div class=" pair_ved">
-                <p class="pair_title">You are the first liquidity provider.</p>
-                <p class="pair_size pair_mag">The ratio of tokens you add will set the price of this pool.</p>
-                <p>Once you are happy with the rate click supply to review.</p>
+                <p class="pair_title">{{$t('pool.yat')}}</p>
+                <p class="pair_size pair_mag">{{$t('pool.tro')}}</p>
+                <p>{{$t('pool.tro1')}}</p>
               </div>
             </div>
           </div>

@@ -9,18 +9,18 @@
                        class="disa">
             <i class="el-icon-back back_icon"></i>
           </router-link>
-          <span class="content_text fl_lt">Add Liquidity</span>
+          <span class="content_text fl_lt">{{$t('pool.al')}}</span>
           <div class="text_btn conct_btn fl_lt">
                <el-button class="from_botton connect_btns"
                       :class="iSingle?'green_btn':'fff_button'"
                      @click="iSingle=true"
-                     type="small">Single assets</el-button>
+                     type="small">{{$t('pool.assets1')}}</el-button>
           </div>
          <div class="text_btn fl_lt">
               <el-button class=" from_botton connect_btns"
                     :class="!iSingle?'green_btn':'fff_button'"
                      @click="iSingle=false"
-                     type="small">Double assets</el-button>
+                     type="small">{{$t('pool.assets2')}}</el-button>
          </div>
         
         </div>

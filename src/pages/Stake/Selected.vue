@@ -19,7 +19,7 @@
             <el-button class="from_botton" @click="butlink"> <img class="whe_img"
                   
                    src="@/assets/img/icon_my_wallet.svg"
-                   alt=""> Connect to a wallet</el-button>
+                   alt="">{{$t('nav.CWet')}}</el-button>
           </p>
 
         </div>

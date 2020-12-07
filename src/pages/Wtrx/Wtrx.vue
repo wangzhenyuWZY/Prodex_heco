@@ -7,13 +7,13 @@
             <samp class="trx">TRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.svg"
                    alt=""> WTRX</samp>
-            <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
+            <div class="trx-a"> <samp class="trx-a1">TRX{{$t('Exc.Balance')}} :</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
                    v-model="trxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
                    placeholder="Please enter the amout of TRX">
-            <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
+            <div class="trx-b"> <samp class="trx-b1">{{$t('wtrx.yog')}} WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
               <el-button class="from_botton"
                          :loading="btnLoading1"
@@ -25,13 +25,13 @@
             <samp class="wtrx1">WTRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.svg"
                    alt=""> TRX</samp>
-            <div class="wtrx-a"> <samp class="wtrx-a1">WTRX Balance:</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
+            <div class="wtrx-a"> <samp class="wtrx-a1">WTRX {{$t('Exc.Balance')}} :</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
             <input type="number"
                    v-model="wtrxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
                    placeholder="Please enter the amout of TRX">
-            <div class="wtrx-b"> <samp class="wtrx-b1">You will get TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
+            <div class="wtrx-b"> <samp class="wtrx-b1">{{$t('wtrx.yog')}} TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
               <el-button class="from_botton"
                          :loading="btnLoading2"
@@ -42,12 +42,12 @@
         </div>
 
         <div class="wtrx-bottom">
-          <p>What is WTRX?</p>
-          <p>TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.
-            <br> DepositTRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.
+          <p>{{$t('wtrx.Whatis')}} WTRX?</p>
+          <p>{{$t('wtrx.titn')}}
+            <br> {{$t('wtrx.titn1')}}
           </p>
-          <p>Can WTRX exchange to other TRC20 Tokens?</p>
-          <p>WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.</p>
+          <p>{{$t('wtrx.CWetTRC20')}}</p>
+          <p>{{$t('wtrx.wtitn')}}</p>
         </div>
       </div>
     </div>
