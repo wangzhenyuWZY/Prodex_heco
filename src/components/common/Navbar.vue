@@ -1,70 +1,57 @@
 <template>
-  <div >
+  <div>
     <div class="bimg"> </div>
     <div class="nav ">
-      <div class="logo"><img src="../../assets/img/logo_FoxDex.png"
-             alt="" />
-             <!-- <span class="logop">FoxDex</span> -->
-             </div>
-             
+      <div class="logo"><img src="../../assets/img/logo_FoxDex.png" alt="" />
+        <!-- <span class="logop">FoxDex</span> -->
+      </div>
+
       <div class="nav-header fl_lt" v-show="moble">
-        <div class="van_list"
-             ref="header">
-          <span v-for="(idx, index) in tag"
-                :key="idx.path"
-                @click="handelActive(idx.path, index)"
+        <div class="van_list" ref="header">
+          <span v-for="(idx, index) in tag" :key="idx.path" @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
-        <div class="active-bar"
-             :style="{ transform: `translateX(${key}px)` }"></div>
+        <div class="active-bar" :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
           <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
           <div class="login_wallet" v-if="connectFlag&&moble">
-              <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
-              <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-               <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
+            <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+            <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+            <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
           </div>
         </div>
         <div class="nav_merge" v-show="!moble">
-              <img  class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
+          <img class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
         </div>
-        <el-drawer
-          title="我是标题"
-          :visible.sync="drawer"
-           :show-close ="false"
-           custom-class="drawer_body"
-          :with-header="false">
-            <div class="drawer_logo">
-               <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png"
-             alt="" /></div>
-               <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click="drawer = false"> </div>
+        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false">
+          <div class="drawer_logo">
+            <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png" alt="" /></div>
+            <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click="drawer = false"> </div>
+          </div>
+          <div class="drawer_btn">
+            <div class="nav-butt">
+              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
+              <div class="login_wallet drawer_wallet" v-if="connectFlag">
+                <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+                <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+                <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
+              </div>
             </div>
-            <div class="drawer_btn">
-                <div class="nav-butt">
-                  <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
-                  <div class="login_wallet drawer_wallet" v-if="connectFlag">
-                      <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
-                      <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-                      <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
-                  </div>
-                </div>
-            </div>
-            <ul class="drawer_nav">
-                <li  v-for="(idx, index) in tag"
-                :key="idx.path+'drawer'+index"
-                @click="handelActive(idx.path, index)"
+          </div>
+          <ul class="drawer_nav">
+            <li v-for="(idx, index) in tag" :key="idx.path+'drawer'+index" @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'drawer_nav_active':''">{{idx.name }}</li>
-            </ul>
-            <ul class="drawer_nav_aubt">
-                <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_telegram.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_discord.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_medium.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
-            </ul>
+          </ul>
+          <ul class="drawer_nav_aubt">
+            <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_telegram.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_discord.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_medium.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
+          </ul>
         </el-drawer>
       </div>
     </div>
@@ -72,23 +59,23 @@
 </template>
 
 <script>
-import {mapState} from "vuex"
-import {IsPc} from '../../utils/index';
+import { mapState } from "vuex"
+import { IsPc } from '../../utils/index';
 export default {
-  data () {
+  data() {
     return {
       key: "31",
       navIndex: 0,
-      drawer:false,
+      drawer: false,
       childrenNode: [
-            102,
-            133,
-            87,
-            113,
-            103,
-            97
+        102,
+        133,
+        87,
+        113,
+        103,
+        97
       ],
-      moble:true,
+      moble: true,
       tag: [
         {
           path: '/',
@@ -121,33 +108,33 @@ export default {
     this.moble = IsPc();
   },
   computed: {
-    ...mapState(['walletAddres','connectFlag'])
+    ...mapState(['walletAddres', 'connectFlag'])
   },
 
-  mounted () {
+  mounted() {
     try {
       // setTimeout(()=>{
-        // this.$refs.header.children.forEach((element) => {
-        //     let str = element.getBoundingClientRect();
-        //     // console.log(str);
-        //   this.childrenNode.push(element.offsetWidth);
-        // });
-        let hash = location.hash;
-        let str = hash.split("#")[1];
-        if (str) {
-          this.handelActive(str);
-        } else {
-          this.handelActive("/");
-        }
+      // this.$refs.header.children.forEach((element) => {
+      //     let str = element.getBoundingClientRect();
+      //     // console.log(str);
+      //   this.childrenNode.push(element.offsetWidth);
+      // });
+      let hash = location.hash;
+      let str = hash.split("#")[1];
+      if (str) {
+        this.handelActive(str);
+      } else {
+        this.handelActive("/");
+      }
       // },1000)
- 
+
     } catch (error) {
       console.log(error);
     }
   },
 
   methods: {
-     btnClick () {
+    btnClick() {
       this.$popup({
         // showAlert:true,
         click: () => {
@@ -159,8 +146,8 @@ export default {
     },
 
 
-    handelActive (e, index) {
-        this.drawer = false;
+    handelActive(e, index) {
+      this.drawer = false;
 
       if (e == '/') {
         this.navIndex = 0;
@@ -179,11 +166,11 @@ export default {
       this.$router.push(e);
 
     },
-    handleCommand (res) {
+    handleCommand(res) {
       this.$router.push(res);
-          console.log(res);
+      console.log(res);
     },
-    setActive (n) {
+    setActive(n) {
       let num = 0;
       for (let index = 0; index <= n; index++) {
         num = (this.childrenNode[index] + num) * 1;
@@ -192,26 +179,26 @@ export default {
       return num1;
     },
   },
-  filters:{
-    address (n) {
+  filters: {
+    address(n) {
       if (!n) return '';
-      let pop  = n.slice(0, 6);
-      let len  =  n.substring(n.length-4);
-      let str = pop+'....' + len ;
-          return str;
+      let pop = n.slice(0, 6);
+      let len = n.substring(n.length - 4);
+      let str = pop + '....' + len;
+      return str;
     }
   }
 };
 </script>
 <style >
-.nav .drawer_body{
-      width: 69% !important;
-      background: #070A0E;
-      border-radius: 16px 0px 0px 16px;
-      color: #FFFFFF;
-      /* position: relative; */
-        outline: 0;
-        }
+.nav .drawer_body {
+  width: 69% !important;
+  background: #070a0e;
+  border-radius: 16px 0px 0px 16px;
+  color: #ffffff;
+  /* position: relative; */
+  outline: 0;
+}
 </style>
 <style lang="scss" scoped>
 // .logop{
@@ -225,70 +212,69 @@ export default {
 //   // margin-left: 116px;
 //   margin-right: 22px;
 // }
-.drawer_logo{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 0.2rem;
-    .lt_logo{
-      padding-left: 0.3rem;
-      img{
-        width: 3.5rem;
-        
-      }
+.drawer_logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.2rem;
+  .lt_logo {
+    padding-left: 0.3rem;
+    img {
+      width: 3.5rem;
     }
-    .rg_colse{
-      padding-right: 0.4rem;
-      img{
-        width: 0.9rem;
-      }
+  }
+  .rg_colse {
+    padding-right: 0.4rem;
+    img {
+      // width: 0.9rem;
+      width: 0.58rem;
     }
-   
+  }
 }
-.drawer_nav_aubt{
+.drawer_nav_aubt {
   position: absolute;
   left: 0;
   bottom: 0.7rem;
   width: 100%;
   display: flex;
   justify-content: space-around;
-  li{
-  
-    img{
-       width: 0.9rem;
+  li {
+    img {
+      width: 0.58667rem;
     }
   }
 }
- .drawer_nav{
-      font-size: 0.5rem;
-      margin-top: 0.5rem;
-      li{
-        line-height: 1.3rem;
-        padding-left: 0.8rem;
-      }
-    }
-    .drawer_nav_active{
-        background-color:#05c98e26;
-        color: #05C98E;
-        font-family: roboto-mediumitalic;
-    }
-   
- .drawer_btn{
-      padding: 0.4rem;
-      .drawer_wallet{
-        display: flex;
-        justify-content: center;
-      }
-    }
-.iconsv{
+.drawer_nav {
+  // font-size: 0.5rem;
+  font-size: 0.426667rem;
+  margin-top: 0.5rem;
+  li {
+    line-height: 1.3rem;
+    padding-left: 0.8rem;
+  }
+}
+.drawer_nav_active {
+  background-color: #05c98e26;
+  color: #05c98e;
+  font-family: roboto-mediumitalic;
+}
+
+.drawer_btn {
+  padding: 0.4rem;
+  .drawer_wallet {
+    display: flex;
+    justify-content: center;
+  }
+}
+.iconsv {
   margin-left: 50px;
 }
 .icons {
   font-size: 34px;
-  color: #05C98E;
+  color: #05c98e;
   vertical-align: sub;
 }
-.bimg{
+.bimg {
   position: absolute;
   width: 100%;
   height: 380px;
@@ -300,12 +286,12 @@ export default {
 }
 .nav {
   position: relative;
-    overflow: hidden;
-  /* width: 1920px; */  
+  overflow: hidden;
+  /* width: 1920px; */
   line-height: 72px;
   height: 72px;
 }
-.drawer_body{
+.drawer_body {
   width: 50%;
 }
 .nav-butt {
@@ -318,7 +304,7 @@ export default {
     margin-top: -3px;
     cursor: pointer;
   }
-  .merge_img{
+  .merge_img {
     width: 0.8rem;
     height: auto;
   }
@@ -347,33 +333,30 @@ export default {
 
 .logo {
   float: left;
-    display: flex;
-    align-items: center;
-    
-    margin-top: 2px;
-    margin-left: 38px;
+  display: flex;
+  align-items: center;
+
+  margin-top: 2px;
+  margin-left: 38px;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
   //   margin-left: 10px;
-    
+
   // }
 }
 .logo img {
   width: 100%;
-  width:180px ;
-    height: 64px;
+  width: 180px;
+  height: 64px;
 }
 .nav-header {
-   
-  color: #A6AEB7;
+  color: #a6aeb7;
   position: relative;
   // margin-left: 22px;
-
 }
 .active {
   font-family: roboto-mediumitalic;
-  color: #05C98E;
-
+  color: #05c98e;
 }
 .active-bar {
   position: absolute;
@@ -381,7 +364,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #05C98E;
+  background: #05c98e;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -395,52 +378,51 @@ export default {
 .on {
   color: #ffffff;
 }
-.login_wallet{
+.login_wallet {
   margin-top: 18px;
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
-  background: #19242E;
-  color:#05C98E;
+  background: #19242e;
+  color: #05c98e;
   padding: 0 32px;
   display: flex;
   align-items: center;
-      cursor: pointer;
-    img{
-      margin-right: 2px;
-    }
-  .wallet_icon{
+  cursor: pointer;
+  img {
+    margin-right: 2px;
+  }
+  .wallet_icon {
     font-size: 24px;
     vertical-align: sub;
-   
   }
-  .wallet_addrs{
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-       margin-left: 4px;
-       margin-right: 16px;
+  .wallet_addrs {
+    font-size: 18px;
+    font-family: roboto-mediumitalic;
+    margin-left: 4px;
+    margin-right: 16px;
   }
-  span{
-      vertical-align: sub;
+  span {
+    vertical-align: sub;
   }
-  .conversion{
-      padding: 0 16px;
-      height: 24px;
-      line-height: 24px;
-      background:#05C98E;
-      border-radius: 28px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: normal;
-      color: #FFFFFF;
+  .conversion {
+    padding: 0 16px;
+    height: 24px;
+    line-height: 24px;
+    background: #05c98e;
+    border-radius: 28px;
+    font-size: 18px;
+    font-family: roboto-mediumitalic;
+    font-weight: normal;
+    color: #ffffff;
   }
 }
-.nav_btn{
+.nav_btn {
   margin-top: 17px;
   margin-right: 8px;
 }
-@media screen and (max-width: 750px)  {
-   .nav{
+@media screen and (max-width: 750px) {
+  .nav {
     padding-top: 0px;
     height: auto;
     display: flex;
@@ -450,52 +432,50 @@ export default {
     padding-top: 0.4rem;
 
     // padding-bottom: 1.2rem;
-    .logop{
+    .logop {
       font-size: 0.5rem;
       margin-top: 0;
       margin-left: 0;
       margin-right: 0;
     }
-    .logo{
+    .logo {
       // transform: scale(0.9);
       margin-left: 0px;
-      img{
+      img {
         width: 3rem;
         height: auto;
         // transform: scale(0.9);
       }
     }
   }
-  .nav-right{
+  .nav-right {
     padding-right: 15px;
-      .nav_merge{
-        margin-left: 14px;
+    .nav_merge {
+      margin-left: 14px;
     }
-    .login_wallet{
+    .login_wallet {
       padding: 0 20px;
       margin-top: 0px;
     }
-      .wallet_addrs{
+    .wallet_addrs {
       margin: 0;
       font-size: 0.35rem;
+    }
+    .nav_btn {
+      width: 100%;
+      padding: 0 0.25rem;
+      font-size: 0.4rem;
+    }
+    .nav_btn {
+      margin-top: 0;
+    }
   }
-  .nav_btn{
-    width: 100%;
-    padding: 0 0.25rem;
-    font-size: 0.4rem;
-  }.nav_btn{
-    margin-top: 0;
-  }
- 
-  }
-  .content_text{
+  .content_text {
     display: none;
   }
-  .bimg{
+  .bimg {
     height: 4.58rem;
-    background-size: 100%  4.58rem;
+    background-size: 100% 4.58rem;
   }
-    
 }
-
 </style>
