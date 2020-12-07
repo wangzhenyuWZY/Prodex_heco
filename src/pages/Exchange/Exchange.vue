@@ -172,6 +172,8 @@
 </template>
 
 <script>
+const Web3Utils = require('web3');
+import BigNumber from 'bignumber.js'
 const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
@@ -544,12 +546,15 @@ export default {
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
+      let token1num = new BigNumber(that.token1Num)
+      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         { type: 'address', value: that.token1.address },
-        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
         { type: 'uint256', value: 0 },
-        { type: 'uint256', value: '1000000000000000000000000' }
+        { type: 'uint256', value: MAX }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
