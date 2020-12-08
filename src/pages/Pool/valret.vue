@@ -23,7 +23,7 @@
       <!-- success -->
       <div 
           v-if="alertType == 'success'">
-        <div class="alert_size">Transaction Submitted</div>
+        <div class="alert_size">{{$t('pop.TSed')}}</div>
         <div class="alert_success" @click="openUrl">View on Tronscan</div>
         <div class="alert_button"
             v-show="alertType == 'success'">

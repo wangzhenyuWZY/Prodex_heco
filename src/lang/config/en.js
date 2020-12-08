@@ -17,6 +17,7 @@ module.exports = {
       Liquidity:'Liquidity'
     },
     Exc:{
+      to:'TO',
       From:'From',
       Balance:'Balance',
       Price:'Price',
@@ -35,6 +36,11 @@ module.exports = {
       cpe1:'The difference between the',
       cpe2:'market price and estimated',
       cpe3:'price due to trade size.',
+      lpf:'Liquidity Provider Fee',
+      lpf1:'',
+      lpf2:'',
+      lpf3:'',
+     
 
     },
     pool:{
@@ -50,10 +56,12 @@ module.exports = {
       tro:'The ratio of tokens you add will set the price of this pool.',
       tro1:'Once you are happy with the rate click supply to review.',
       assets1:'Single assets',
-      assets2:'Double assets'
-
-
-  
+      assets2:'Double assets',
+      paps:'Prices and pool share',
+      yopn: 'Your position:',
+      yops:'Your pool share:',
+      Input:'Input',
+      Weight:'Weight',
     },
     ALy:{
 
@@ -72,9 +80,16 @@ module.exports = {
     Stake:{
       Deposit:'Deposit',
       Earn:'Earn',
-      YSPool:'您选择的页面',
+      Yol:'Your Selected Pool',
+
+
       Total:'获得的总',
-  
+
+      sfox: 'To stake FOXDEX_LP tokens, acquire',
+      stfe:'Total FOX Earned',
+      syuf:'Your Unstaked FOXDEX_LP',
+      sysfl:'Your Staked FOXDEX_LP',
+
       RLty:'消除流动性页面',
       Acoout:'阿科特',
       Detailed:'详细',
@@ -88,7 +103,7 @@ module.exports = {
   
     },
     pop:{
-      TSed:'交易已提交',
+      TSed:'Transaction Submitted',
       Pname:'配对名称',
       Ywr:'你会复活',
   

@@ -72,7 +72,7 @@
               <span>{{$t('Exc.cpe')}}</span>
                <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       {{$t('Exc.cpe1')}}<br> 
+                      {{$t('Exc.cpe1')}}<br> 
                       {{$t('Exc.cpe2')}}<br>
                       {{$t('Exc.cpe3')}}<br> 
                       </div>
@@ -84,14 +84,15 @@
             <div class="changes_rece ">
             <div class="lt change_img">
               
-              <span>Liquidity Provider Fee</span>
-              
+              <span>{{$t('Exc.lpf')}}</span>
                    <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       A protion of each trade(0.0010%) <br> goes to liquidity providers <br> as a protocal incentive.
+                        A protion of each trade <br> 
+                        goes to liquidity providers<br>
+                        as a protocal incentive.<br>             
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip> 
+                </el-tooltip>      
             </div>
             <span class="rg ">{{swapFee}} {{token1.name}}</span>
           </div>

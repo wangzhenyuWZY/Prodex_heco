@@ -35,13 +35,13 @@
         </div>
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
-            <frominput lable="Input"
+            <frominput  :lable= "$t('pool.Input')"
                         showmax
                         :balance="token1.balance"
                        v-model="firstTokenNum"></frominput>
           </div>
           <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput :lable= "$t('pool.Weight')"
                        placeholder="1-50"
                        v-model="firstTokenWeight"></frominput>
           </div>
@@ -59,7 +59,7 @@
         </div>
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
-            <frominput lable="Input"
+            <frominput :lable= "$t('pool.Input')"
 
                        v-model="secondTokenNum"
                        showmax
@@ -67,7 +67,7 @@
                        ></frominput>
           </div>
           <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput :lable= "$t('pool.Weight')"
                        placeholder="1-50"
                        v-model="secondTokenWeight"></frominput>
           </div>

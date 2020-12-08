@@ -5,7 +5,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
           <frominput 
-            lable = "From"
+            :lable= "$t('Exc.From')" 
             showmax
             v-model="token1Num" 
             :balance="token1.balance"
@@ -32,7 +32,7 @@
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput lable="To"
+            <frominput :lable= "$t('Exc.to')"
                       showmax
                       :balance="token2.balance"
                        v-model="token2Num"
@@ -130,14 +130,15 @@
               </div>
               <div class="received"  >
                 <div class="lt">
-                  <span>Liquidity Provider Fee
-                    <el-tooltip class="item"
-                              effect="light"
-                                :content="tips"
-                                placement="right">
-                      <img src="@/assets/img/icon_instructions.svg"
-                           alt="">
-                    </el-tooltip>
+                  <span>{{$t('Exc.lpf')}}
+                     <el-tooltip placement="right" effect="light">
+                  <div slot="content" > 
+                        A protion of each trade <br> 
+                        goes to liquidity providers as a <br>
+                        protocal incentive.<br>             
+                      </div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>        
                   </span>
                 </div>
                 <span class="setspan">{{thisswapFee}} {{token1.name}}</span>

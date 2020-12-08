@@ -1,6 +1,6 @@
 <template>
 <div class="input_select">
-  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> Balance: <span class="balance_size">{{balance}}</span></span>  </div>
+  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> {{$t('Exc.Balance')}}: <span class="balance_size">{{balance}}</span></span>  </div>
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
         <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="requierImg()" alt=""> </span>

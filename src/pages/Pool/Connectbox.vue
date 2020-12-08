@@ -68,7 +68,7 @@
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput lable="input"
+            <frominput :lable= "$t('pool.Input')"
                        showmax
                        :balance='token1.balance'
                        v-model="token1Num"
@@ -90,7 +90,7 @@
         <div class="setInput clearfix"
              v-show="!iSingle">
           <div class="ctx_1 fl_lt">
-            <frominput lable="input"
+            <frominput :lable= "$t('pool.Input')"
                        placeholder=""
                        showmax
                        :balance='token2.balance'
@@ -109,7 +109,7 @@
         <div class="box_sizes"
              v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
           <div class="provider connectbox">
-            <div class="box_title">Prices and pool share</div>
+            <div class="box_title">{{$t('pool.paps')}}</div>
             <ul class="pre_list clearfix">
               <li>
                 <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
@@ -150,7 +150,7 @@
             <div class="">
               <div class="received metitle ">
                 <div class=" ">
-                  Your position
+                  {{$t('pool.yopn')}}
                 </div>
                 <div class="rg connect_currency">
                   <div class="metits">
@@ -169,7 +169,7 @@
               </div>
               <div class="received mrge12 mrgtop16">
                 <div class="lt1">
-                  <span class="wlt">Your pool share:</span>
+                  <span class="wlt"> {{$t('pool.yops')}}</span>
                 </div>
                 <span class="rg1">{{(myShare*100).toFixed(2)}}%</span>
               </div>

@@ -35,10 +35,15 @@ module.exports = {
     cpe1:'他们直接的差异',
     cpe2:'市场价格和估计',
     cpe3:'价格因交易规模而异。',
+    lpf:'流动性提供者费用',
+    lpf1:'',
+    lpf2:'',
+    lpf3:'',
    
     
   },
   pool:{
+    to:'到',
     Lpr:'流动性提供者奖励',
     Lpr2:'流动性提供者在所有交易中均按其所占份额的比例收取0.3％的费用。费用会实时添加到池中，可以要求提取您的流动资金。',
     Yly:'您的流动资金',
@@ -51,7 +56,13 @@ module.exports = {
     tro:'您添加的代币比率将设置该池的价格。',
     tro1:'对价格满意后，请点击供应进行审核。',
     assets1:'单资产添加',
-    assets2:'双资产添加'
+    assets2:'双资产添加',
+    paps:'价格和池份额',
+    yopn:'你的职位:',
+    yops:'您的共享池:',
+    Input:'输入',
+    Weight:'权重'
+
   },
   ALy:{
 
@@ -67,8 +78,12 @@ module.exports = {
   Stake:{
     Deposit:'存款',
     Earn:'赚',
-    YSPool:'Your Selected Pool页面',
+    Yol:'您选择的',
     Total:'获得的总',
+    sfox:'要存放FOXDEX_LP代币，请在此处获取',
+    stfe:'获得的总FOX',
+    syuf:'您无抵押的FOXDEX_LP',
+    sysfl:'您的权益FOXDEX_LP',
     RLty:'消除流动性页面',
     Acoout:'Acoout',
     Detailed:'详细',
@@ -82,6 +97,7 @@ module.exports = {
     Pname:'配对名称',
     Ywr:'你会复活',
   },
+  
   confirm:'确认',
   Supply:'供应'
 

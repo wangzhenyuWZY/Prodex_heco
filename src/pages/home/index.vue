@@ -49,7 +49,7 @@
                   cell-class-name="dddsadsa"
                   style="width: 100%">
           <el-table-column prop="pair"
-                           label="name">
+                           :label= "$t('home.Name')" >
          <template slot-scope="scope">
               <div class="reqimg">   
                 <img :src="requierImg(scope.row.token1.name,0)"
@@ -64,7 +64,7 @@
         </el-table-column>
           
           <el-table-column prop="token1.name"
-                           label="Assets">
+                           :label= "$t('home.Assets')">
             <template slot-scope="scope">
               <div>   
                 {{scope.row.token1Balance ?scope.row.token1Balance :"--"  }}
@@ -74,7 +74,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="token2.name"
-                           label="Symbol">
+                           :label= "$t('home.Symbol')">
             <template slot-scope="scope">
               <div>
                 {{scope.row.token2Balance ?scope.row.token2Balance :"--"  }}
@@ -83,7 +83,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="liquidity"
-                           label="liquidity">
+                           :label= "$t('home.Liquidity')">
             <template slot-scope="scope">
               <div>
                 {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
