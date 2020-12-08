@@ -165,16 +165,16 @@
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import { IsPc } from '../../utils/index'
 import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool,getTokenDenormalizedWeight } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
     return {
-      pairList:tokenData.pairList,
+      pairList:TokenData().pairList,
       mobile: IsPc(),
-       farmList: tokenData.pairList,
+      tokenData:TokenData()
     }
   },
   mounted () {
@@ -207,8 +207,8 @@ export default {
       let that = this
       // this.pairList = tokenData.pairList
       let pairList = []
-      for (let index = 0; index < tokenData.pairList.length; index++) {
-        const el = tokenData.pairList[index];
+      for (let index = 0; index < this.tokenData.pairList.length; index++) {
+        const el = this.tokenData.pairList[index];
         getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
           el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
         })  

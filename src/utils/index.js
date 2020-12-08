@@ -1,5 +1,16 @@
 import Vue from 'vue'
+import tokenDataDev from './token'
+import tokenProdData from './token.prod.js'
 /* eslint-disable */
+export const TokenData = function(){
+  console.log('process.env.NODE_ENV=============='+process.env.NODE_ENV)
+  if (process.env.NODE_ENV === 'development') {
+    return tokenDataDev
+  }else{
+    return tokenProdData
+  }
+}
+
 
 export const generateId = function() {
   return Math.floor(Math.random() * 10000)
