@@ -123,7 +123,7 @@
           <el-button class="from_botton pair_mandate pair_swap "
                      :loading="btnLoading1"
                      :disabled="disabled1"
-                     @click="handel">Confirm</el-button>
+                     @click="handel">{{$t('confirm')}}</el-button>
         </div>
       
       </div>

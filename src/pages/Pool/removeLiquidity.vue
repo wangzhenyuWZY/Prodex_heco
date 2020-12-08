@@ -88,7 +88,7 @@
           </div>
         </div>
         <div class="Approve_btn clearfix" hidden>
-              <el-button class="Approve1" @click="approveLpToken">Approve</el-button>
+              <el-button class="Approve1" @click="approveLpToken">{{$t('Stake.Approve')}}</el-button>
               <el-button class="Approve1 Approve2" >Enter an amount</el-button>
         </div>
     </div>

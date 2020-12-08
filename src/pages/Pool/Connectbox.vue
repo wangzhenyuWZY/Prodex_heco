@@ -132,13 +132,13 @@
             <el-button class="from_botton"
                         :loading="charm.btnLoading2"
                        :disabled="charm.disabled2"
-                       @click="doApprove">Approve</el-button>
+                       @click="doApprove">{{$t('Stake.Approve')}}</el-button>
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton"
                        :loading="charm.btnLoading1"
                        :disabled="btndisable()"
-                       @click="confirmSupply">Supply</el-button>
+                       @click="confirmSupply">{{$t('Supply')}}</el-button>
           </div>
         </div>
       </div>

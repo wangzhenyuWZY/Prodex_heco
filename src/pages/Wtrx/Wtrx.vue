@@ -18,7 +18,7 @@
               <el-button class="from_botton"
                          :loading="btnLoading1"
                          :disabled="btnDisabled1"
-                         @click="changeWtrx">Confirm</el-button>
+                         @click="changeWtrx">{{$t('confirm')}}</el-button>
             </div>
           </div>
           <div class="wtrx-right">
@@ -36,7 +36,7 @@
               <el-button class="from_botton"
                          :loading="btnLoading2"
                          :disabled="btnDisabled2"
-                         @click="getAllowance">{{proNmae}}</el-button>
+                         @click="getAllowance">{{$t('confirm')}}</el-button>
             </div>
           </div>
         </div>

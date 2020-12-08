@@ -20,9 +20,23 @@ module.exports = {
     From:'从',
     Balance:'余额',
     Price:'价钱',
-    Swap:'交换',
+    Swap:'交易',
+    sat:'选择代币',
+    tn:'代币名称',
     mprompt:'收到的最低金额提示您的交易将在以下情况下恢复有一个很大的，不利的之前的价格变动确认。',
     Pprompt:' 市场价格和估计价格因交易规模而异。',
+    ops:'请选择',
+    mrd:'收到的最低金额',
+    cts1:'您的交易将在以下情况下恢复',
+    cts2:'有一个很大的，不利的',           
+    cts3:'之前的价格变动',      
+    cts4:'确认。',
+    cpe:'价格影响',
+    cpe1:'他们直接的差异',
+    cpe2:'市场价格和估计',
+    cpe3:'价格因交易规模而异。',
+   
+    
   },
   pool:{
     Lpr:'流动性提供者奖励',
@@ -51,8 +65,8 @@ module.exports = {
     wtitn:'WTRX是TRC20令牌，您可以交换到FoxDex上的任何其他TRC20令牌。'
   },
   Stake:{
-    Deposit:'存Deposit款',
-    Earn:'Earn',
+    Deposit:'存款',
+    Earn:'赚',
     YSPool:'Your Selected Pool页面',
     Total:'获得的总',
     RLty:'消除流动性页面',
@@ -68,6 +82,7 @@ module.exports = {
     Pname:'配对名称',
     Ywr:'你会复活',
   },
-  confirm:'确认'
+  confirm:'确认',
+  Supply:'供应'
 
 }

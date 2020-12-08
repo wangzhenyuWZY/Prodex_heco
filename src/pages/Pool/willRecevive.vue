@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn" @click="clickFn  ">Confirm</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickFn  ">{{$t('confirm')}}</el-button>
   </el-dialog>
 </template>
 

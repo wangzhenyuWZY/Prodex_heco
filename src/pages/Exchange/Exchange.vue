@@ -5,7 +5,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
           <frominput 
-            lable="From"
+            lable = "From"
             showmax
             v-model="token1Num" 
             :balance="token1.balance"
@@ -49,7 +49,7 @@
         </div>
         <div class="Price_text"
              v-show="connectFlag">
-          <span>Price: </span>
+          <span>{{$t('Exc.Price')}}:</span>
           <span>{{spotPrice.toFixed(4)}} </span>
           <span> {{token2.name}} </span>
           <span> per </span>
@@ -67,21 +67,21 @@
               <el-button class="from_botton"
                         :disabled="btnDisabled2"
                          :loading="btnLoading2"
-                         @click="doApprove">Approve {{token1.name}}</el-button>
+                         @click="doApprove">{{$t('Stake.Approve')}} {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg" v-show="!Approved()">
               <span> <el-button class="from_botton"
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
                      src="@/assets/img/icon_my_wallet.svg"
-                     alt=""> {{connectFlag?'Swap':$t('nav.CWet')}}
+                     alt=""> {{connectFlag?$t('Exc.Swap'): $t('nav.CWet')}}
                      </el-button></span>
 
              <span>  <el-button class="from_botton"
                          :loading="btnLoading1"
                          v-show="connectFlag" 
                          :disabled="tobtnDisabled()"
-                         @click="confirmSwap">Swap</el-button></span>
+                         @click="confirmSwap">{{$t('Exc.Swap')}}</el-button></span>
             </div>
           </div>
         </div>
@@ -95,14 +95,14 @@
             <div class="">
               <div class="received">
                 <div class="lt1">
-                  <span>Minimum received
+                  <span>{{$t('Exc.mrd')}}
                     <el-tooltip placement="right"   effect="light">
                       <div slot="content"
                            >
-                        Your transaction will revert if<br>
-                        there is a large,unfavorable <br>
-                        price movement before it is
-                        <br>confirmed.
+                        {{$t('Exc.cts1')}}<br>
+                        {{$t('Exc.cts2')}} <br>
+                        {{$t('Exc.cts3')}}<br>
+                        {{$t('Exc.cts4')}}
                       </div>
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
@@ -115,10 +115,12 @@
             </div>
             <div class="received setmage">
               <div class="lt">
-                <span>Price Impacte 
+                <span>{{$t('Exc.cpe')}}
                     <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       The difference between the<br> market price and estimated <br>price due to trade size.<br> 
+                      {{$t('Exc.cpe1')}}<br> 
+                      {{$t('Exc.cpe2')}}<br>
+                      {{$t('Exc.cpe3')}}<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>          
@@ -178,7 +180,7 @@ const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
 import selctoken from '../Pool/selctToken';
-import {TokenData} from '../../utils/index'
+import tokenData from '../../utils/token'
 import { approved, decimals, getConfirmedTransaction, allowance } from '../../utils/tronwebFn'
 import removealert from '../Pool/valret'
 import {
@@ -224,8 +226,7 @@ export default {
       btnDisabled2:false,
       isPc:IsPc(),
       tips:'',
-      typeUrl:'',
-      tokenData:TokenData()
+      typeUrl:''
     }
   },
   computed: {
@@ -371,7 +372,7 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = this.tokenData.pairList.filter((item) => {
+      let pair = tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {

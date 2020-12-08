@@ -6,7 +6,7 @@
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
-      <span>Select a token</span>
+      <span>{{$t('Exc.sat')}}</span>
       <el-tooltip  placement="bottom" 
                    effect="light"
                   >
@@ -54,7 +54,7 @@
         </li>
       </ul>
       <div class="select_size select__sorting ">
-        <span>Token Name</span>
+        <span>{{$t('Exc.tn')}}</span>
         <img class="sorting"
             :class="iSort==0?'':(iSort==1?'sorttrue':'sortfalse')"
             @click="changeSort"

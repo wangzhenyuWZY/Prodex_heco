@@ -4,7 +4,7 @@
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
         <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="requierImg()" alt=""> </span>
-        <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:'Optional pass'}}</span>
+        <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:$t('Exc.ops')}}</span>
         <img src="@/assets/img/icon_down.svg" alt="" />
       </div>
       <!-- <ul class="select_model" :class="className" @click="addClass">

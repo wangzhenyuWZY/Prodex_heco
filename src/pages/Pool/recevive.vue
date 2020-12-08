@@ -53,7 +53,7 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn" @click="clickHadel">Confirm Supply</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickHadel">{{$t('confirm')}} {{$t('Supply')}}</el-button>
   </el-dialog>
 </template>
 

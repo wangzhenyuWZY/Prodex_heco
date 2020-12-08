@@ -21,9 +21,21 @@ module.exports = {
       Balance:'Balance',
       Price:'Price',
       Swap:'Swap',
+      sat:'Select a token' ,
+      tn:'Token Name',
       mprompt:'Your transaction will revert if there is a large,unfavorable price movement before it is confirmed.',
       Pprompt:' he difference between the market price and estimated price due to trade size',
-  
+      ops:'Optional pass',
+      mrd:'Minimum received',
+      cts1:'Your transaction will revert if',
+      cts2:'there is a large,unfavorable ',           
+      cts3:'price movement before it is ',      
+      cts4:'confirmed.',      
+      cpe:'Price Impacte',
+      cpe1:'The difference between the',
+      cpe2:'market price and estimated',
+      cpe3:'price due to trade size.',
+
     },
     pool:{
       Lpr:'Liquidity provider rewards',
@@ -58,8 +70,8 @@ module.exports = {
   
     },
     Stake:{
-      Deposit:'存款',
-      Earn:'赚',
+      Deposit:'Deposit',
+      Earn:'Earn',
       YSPool:'您选择的页面',
       Total:'获得的总',
   
@@ -81,7 +93,8 @@ module.exports = {
       Ywr:'你会复活',
   
     },
-    confirm:'confirm'
+    Supply:'Supply',
+    confirm:'Confirm'
    
       
      
