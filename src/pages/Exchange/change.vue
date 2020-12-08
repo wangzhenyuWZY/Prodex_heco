@@ -41,7 +41,7 @@
             <span>{{$t('Exc.Price')}}: </span> 
             <span>{{spotPrice.toFixed(8)}} </span>
                 <span> {{token1.name}} </span> 
-               <span> per </span>
+               <span>{{$t('Exc.per')}} </span>
                <span> {{token2.name}} </span> 
                <img src="@/assets/img/icon_slect.png" alt=""></div>
     <div class="box_sizes">

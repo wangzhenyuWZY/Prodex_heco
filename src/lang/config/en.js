@@ -13,11 +13,11 @@ module.exports = {
       TopPairs:'Top Pairs',
       Name:'Name',
       Assets:'Assets',
-      Symbol:'Symbol',
+      
       Liquidity:'Liquidity'
     },
     Exc:{
-      to:'TO',
+      per:'Per',
       From:'From',
       Balance:'Balance',
       Price:'Price',
@@ -44,6 +44,7 @@ module.exports = {
 
     },
     pool:{
+      to:'TO',
       Lpr:'Liquidity provider rewards',
       Lpr2:'Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed withdrawing your liquidity.',
       Yly:'Your liquidity',
@@ -72,16 +73,16 @@ module.exports = {
       titn:'TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.',
       titn1:'Deposit TRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.',
       CWetTRC20:'Can WTRX exchange to other TRC20 Tokens?',
-      wtitn:'WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.'
-      
+      wtitn:'WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.',
+      petao:'Please enter the amout of WTRX',
+      petao1:'Please enter the amout of TRX'
   
-  
+
     },
     Stake:{
       Deposit:'Deposit',
       Earn:'Earn',
       Yol:'Your Selected Pool',
-
 
       Total:'获得的总',
 
@@ -91,8 +92,8 @@ module.exports = {
       sysfl:'Your Staked FOXDEX_LP',
 
       RLty:'消除流动性页面',
-      Acoout:'阿科特',
-      Detailed:'详细',
+      Account:'Account',
+      Detailed:'Detailed',
       Price:'价钱',
    
       Approve:'Approve',
@@ -109,7 +110,8 @@ module.exports = {
   
     },
     Supply:'Supply',
-    confirm:'Confirm'
+    confirm:'Confirm',
+    ywr: 'You will recevive'
    
       
      

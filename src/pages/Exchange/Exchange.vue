@@ -32,7 +32,7 @@
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput :lable= "$t('Exc.to')"
+            <frominput :lable= "$t('pool.to')"
                       showmax
                       :balance="token2.balance"
                        v-model="token2Num"
@@ -52,7 +52,7 @@
           <span>{{$t('Exc.Price')}}:</span>
           <span>{{spotPrice.toFixed(4)}} </span>
           <span> {{token2.name}} </span>
-          <span> per </span>
+          <span> {{$t('Exc.per')}}</span>
           <span> {{token1.name}} </span>
           <img src="@/assets/img/icon_slect.png"
                alt=""

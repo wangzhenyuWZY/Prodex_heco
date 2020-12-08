@@ -12,7 +12,7 @@
                    v-model="trxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                   placeholder="Please enter the amout of TRX">
+                  :placeholder= "$t('wtrx.petao')">
             <div class="trx-b"> <samp class="trx-b1">{{$t('wtrx.yog')}} WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
               <el-button class="from_botton"
@@ -30,7 +30,7 @@
                    v-model="wtrxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                   placeholder="Please enter the amout of TRX">
+                   :placeholder= "$t('wtrx.petao1')">
             <div class="wtrx-b"> <samp class="wtrx-b1">{{$t('wtrx.yog')}} TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
               <el-button class="from_botton"

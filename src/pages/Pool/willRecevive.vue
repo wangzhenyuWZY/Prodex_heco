@@ -6,7 +6,7 @@
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
-      <span>You will recevive</span>
+      <span> {{$t('ywr')}} </span>
     </span>
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">

@@ -20,7 +20,7 @@
     </div>
     <div slot="body" style="padding-bottom:40px;">
       <!-- 滑块部分开始 -->
-      <div class="box_top clearfix"><span>Acoout</span><span>Detailed</span></div>
+      <div class="box_top clearfix"><span> {{$t('Stake.Account')}} </span><span>{{$t('Stake.Detailed')}}</span></div>
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">

@@ -84,7 +84,7 @@
           <span>Price: </span>
           <span>0.0020495 </span>
           <span> ETH </span>
-          <span> per </span>
+          <span> {{$t('Exc.per')}}</span>
           <span> DAI </span>
           <img src="@/assets/img/icon_slect.png"
                alt="">

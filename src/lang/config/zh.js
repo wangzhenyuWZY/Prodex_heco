@@ -1,32 +1,33 @@
 module.exports = {
    nav:{
     message:'张三',
-    home1:'主页',
-    Exchange:'交换',
+    home1:'首页',
+    Exchange:'兑换',
     Pool:'流动池',
     FoxDex:'狐狸',
     WTRX:'WTRX',
-    Stake:'赌注',
+    Stake:'抵押',
     CWet:'连接到钱包',
   },
   home:{
     TopPairs:'交易对',
     Name:'名称',
     Assets:'资产',
-    Symbol:'符号',
+    
     Liquidity:'流动性'
   },
   Exc:{
+    per:'每',
     From:'从',
     Balance:'余额',
-    Price:'价钱',
-    Swap:'交易',
+    Price:'价格',
+    Swap:'交换',
     sat:'选择代币',
     tn:'代币名称',
     mprompt:'收到的最低金额提示您的交易将在以下情况下恢复有一个很大的，不利的之前的价格变动确认。',
     Pprompt:' 市场价格和估计价格因交易规模而异。',
     ops:'请选择',
-    mrd:'收到的最低金额',
+    mrd:'最小获得',
     cts1:'您的交易将在以下情况下恢复',
     cts2:'有一个很大的，不利的',           
     cts3:'之前的价格变动',      
@@ -73,7 +74,9 @@ module.exports = {
     titn:'TRX是TRON的本机资产，而WTRX是TRC20代币，其价值与TRX同等。',
     titn1:'存款TRX以铸造等量的WTRX，然后燃烧WTRX以得到等量的TRX。',
     CWetTRC20:'WTRX可以交换其他TRC20令牌吗？',
-    wtitn:'WTRX是TRC20令牌，您可以交换到FoxDex上的任何其他TRC20令牌。'
+    wtitn:'WTRX是TRC20令牌，您可以交换到FoxDex上的任何其他TRC20令牌。',
+    petao:'请输入WTRX的金额',
+    petao1:'请输入TRX的金额'
   },
   Stake:{
     Deposit:'存款',
@@ -85,7 +88,7 @@ module.exports = {
     syuf:'您无抵押的FOXDEX_LP',
     sysfl:'您的权益FOXDEX_LP',
     RLty:'消除流动性页面',
-    Acoout:'Acoout',
+    Account:'账户',
     Detailed:'详细',
     Price:'价钱',
     Approve:'批准',
@@ -99,6 +102,7 @@ module.exports = {
   },
   
   confirm:'确认',
-  Supply:'供应'
+  Supply:'供应',
+  ywr:'您将收到'
 
 }

@@ -74,7 +74,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="token2.name"
-                           :label= "$t('home.Symbol')">
+                           :label= "$t('home.Assets')">
             <template slot-scope="scope">
               <div>
                 {{scope.row.token2Balance ?scope.row.token2Balance :"--"  }}

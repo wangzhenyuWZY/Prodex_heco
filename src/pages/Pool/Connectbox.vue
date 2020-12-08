@@ -113,11 +113,11 @@
             <ul class="pre_list clearfix">
               <li>
                 <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
-                <p>{{token1.name}} per {{token2.name}}</p>
+                <p>{{token1.name}}{{$t('Exc.per')}} {{token2.name}}</p>
               </li>
               <li>
                 <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
-                <p>{{token2.name}} per {{token1.name}}</p>
+                <p>{{token2.name}} {{$t('Exc.per')}} {{token1.name}}</p>
               </li>
               <li>
                 <p>{{share}}%</p>
