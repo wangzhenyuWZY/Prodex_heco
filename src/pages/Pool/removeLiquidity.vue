@@ -11,7 +11,7 @@
           </router-link>
         </span>
 
-        <span class="content_text">Remove Liquidity</span>
+        <span class="content_text">{{$t('rly')}}</span>
       </div>
       <div class="rg_box">
         <img src="@/assets/img/icon_instructions.svg"
@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="weth">
-              <el-button class="weth_btn" @click="showAlert = true">Receive {{pair.pair}}</el-button>
+              <el-button class="weth_btn" @click="showAlert = true">{{$t('rly1')}} {{pair.pair}}</el-button>
               
             </div>
           </div>
@@ -89,7 +89,7 @@
         </div>
         <div class="Approve_btn clearfix" hidden>
               <el-button class="Approve1" @click="approveLpToken">{{$t('Stake.Approve')}}</el-button>
-              <el-button class="Approve1 Approve2" >Enter an amount</el-button>
+              <el-button class="Approve1 Approve2" >{{$t('Enat')}}</el-button>
         </div>
     </div>
   </container>

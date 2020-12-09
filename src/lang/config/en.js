@@ -8,6 +8,10 @@ module.exports = {
       WTRX:'WTRX',
       Stake:'Stake',
       CWet:'Connect to a wallet',
+      tlick:'Tronlink wallet',
+      hitky:'Haven t installed TronLink yet?',
+      che:'Click here>>'
+
     },
     home:{
       TopPairs:'Top Pairs',
@@ -106,14 +110,18 @@ module.exports = {
     pop:{
       TSed:'Transaction Submitted',
       Pname:'配对名称',
-      Ywr:'你会复活',
-  
+      Ywr:'你会复活',  
     },
     Supply:'Supply',
     confirm:'Confirm',
-    ywr: 'You will recevive'
-   
-      
-     
- 
+    ywr: 'You will recevive',
+    ttpd:'The transaction pair does not exist',
+    vot:'View on Tronscan',
+    Close:'Close',
+    WFCn:'Waiting For Confirmation',
+    Enat:'Enter an amount',
+    rly:'Remove Liquidity',
+    rly:'Receive',
+    oiei: 'Output is estimated.If the price change by more than 0.5% your transaction will revert'
+
 }

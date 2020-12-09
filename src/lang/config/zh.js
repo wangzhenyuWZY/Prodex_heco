@@ -8,6 +8,10 @@ module.exports = {
     WTRX:'WTRX',
     Stake:'抵押',
     CWet:'连接到钱包',
+    tlick:'Tronlink 钱包',
+    hitky:'还没有安装TronLink吗？',
+    che:'点击这里>>'
+
   },
   home:{
     TopPairs:'交易对',
@@ -99,10 +103,17 @@ module.exports = {
     TSed:'交易已提交',
     Pname:'配对名称',
     Ywr:'你会复活',
-  },
-  
+  },  
   confirm:'确认',
   Supply:'供应',
-  ywr:'您将收到'
+  ywr:'您将收到',
+  ttpd:'事务对不存在',
+  vot:'查看Tronscan',
+  Close:'关闭',
+  WFCn:'等待确认',
+  Enat:'输入一个数量',
+  rly:'消除流动性',
+  rly1:'消除',
+  oiei:'输出估计。如果价格变动超过0.5%，你的交易将恢复正常'
 
 }

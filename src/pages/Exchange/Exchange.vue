@@ -421,7 +421,7 @@ export default {
     cumpToken1 () {//计算兑换的token1
       if(!this.isPair){
         this.$message({
-          message: 'The transaction pair does not exist',
+          message: this.$t('ttpd'),
           type: 'error'
         });
         return
@@ -441,7 +441,7 @@ export default {
     cumpToken2 () {//计算兑换的token2
       if(!this.isPair){
         this.$message({
-          message: 'The transaction pair does not exist',
+          message: this.$t('ttpd'),
           type: 'error'
         });
         return

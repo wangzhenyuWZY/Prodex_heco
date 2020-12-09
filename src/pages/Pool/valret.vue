@@ -24,10 +24,10 @@
       <div 
           v-if="alertType == 'success'">
         <div class="alert_size">{{$t('pop.TSed')}}</div>
-        <div class="alert_success" @click="openUrl">View on Tronscan</div>
+        <div class="alert_success" @click="openUrl">{{$t('cot')}}</div>
         <div class="alert_button"
             v-show="alertType == 'success'">
-          <el-button class="from_botton" @click="handleClosea">Close</el-button>
+          <el-button class="from_botton" @click="handleClosea">{{$t('Close')}}</el-button>
         </div>
       </div>
   </el-dialog>
