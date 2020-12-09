@@ -60,7 +60,7 @@
         
          
       </div>
-      <div class="hdel"><button @click="hdel">切换</button> </div>
+      <div class="hdel"><button @click="hdel">切换中英文</button> </div>
     </div>
   </div>
 </template>

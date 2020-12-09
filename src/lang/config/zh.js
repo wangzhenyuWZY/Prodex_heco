@@ -8,7 +8,7 @@ module.exports = {
     WTRX:'WTRX',
     Stake:'抵押',
     CWet:'连接到钱包',
-    tlick:'Tronlink 钱包',
+    tlick:'Tronlink钱包',
     hitky:'还没有安装TronLink吗？',
     che:'点击这里>>'
 
@@ -51,13 +51,23 @@ module.exports = {
     lpf2:'将作为一种协议激励，',
     lpf3:'流向流动性提供者。',
     tsk1:'通过搜索查找一个标记',
-    tsk2:'其名称或符号或by',
+    tsk2:'其名称或符号或者',
     tsk3:'将地址粘贴在下面。',
    
 
     
   },
   pool:{
+    Cos:'共同基础',
+    Deoosited:'储存',
+    Adaf:'Acoout分析和预提费用',
+    Rmpl:'阅读更多关于提供流动性的内容',
+    Pooled:'合并',
+    Vafas:'查看预提费用和分析',
+    Yops:'分享你的池',
+    Ytpt:'你的tatal池币',
+    Add:'添加',
+    Remove:'删除',
     to:'到',
     Lpr:'流动性提供者奖励',
     Lpr2:'流动性提供者在所有交易中均按其所占份额的比例收取0.3％的费用。费用会实时添加到池中，可以要求提取您的流动资金。',

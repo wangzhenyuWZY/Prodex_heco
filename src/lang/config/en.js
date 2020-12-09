@@ -57,6 +57,16 @@ module.exports = {
 
     },
     pool:{
+      Cos:'Common bases',
+      Deoosited:'Deoosited',
+      Adaf:'Acoout analytics and accrued fees',
+      Rmpl:'Read more about providing liquidity',
+      Pooled:'Pooled',
+      Vafas:' View accrued fees and analycis',
+      Yops:'Your pool share',
+      Ytpt:'Your tatal pool token',
+      Add:'Add',
+      Remove:'Remove',
       to:'TO',
       Lpr:'Liquidity provider rewards',
       Lpr2:'Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed withdrawing your liquidity.',

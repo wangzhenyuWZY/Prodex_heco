@@ -26,7 +26,7 @@
       </div>
       <div class="select_size select__bases"
            hidden>
-        <span> Common bases</span>
+        <span> {{$t('pool.Cos')}} </span>
         <img class="select_title"
              src="@/assets/img/icon_instructions.svg"
              alt="">

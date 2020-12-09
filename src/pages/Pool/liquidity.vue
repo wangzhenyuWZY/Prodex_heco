@@ -6,7 +6,7 @@
         <p>
           {{$t('pool.Lpr2')}}
         </p>
-        <p v-show="false">Read more about providing liquidity</p>
+        <p v-show="false"> {{$t('pool.Rmpl')}}</p>
       </div>
       <div class="pool-btn clearfix">
         <p class=""></p>
@@ -43,7 +43,7 @@
         </div>
         <div class="fees" v-if="connectFlag">
           <div class="fees_account" v-show="false">
-            Acoout analytics and accrued fees
+            {{$t('pool.Adaf')}}
             <img src="@/assets/img/icon_jump_green.png" alt="" />
           </div>
           <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index" v-show="parseFloat(item.myBalanceInPool)>0">
@@ -70,32 +70,32 @@
                 <div class="fees_share">
                   <div class="received liqui">
                     <div class="lt">
-                      <span>Your tatal pool token:</span>
-                    </div>
+                      <span> {{$t('pool.Ytpt')}} </span>
+                    </div> 
                     <span class="rg">{{item.myBalanceInPool}}</span>
                   </div>
                   <div class="received liqui  mrgtop16">
                     <div class="lt">
                       <img src="@/assets/img/btc.svg" alt="" />
-                      <span>Pooled {{item.token1.name}}:</span>
+                      <span>{{$t('pool.Pooled')}} {{item.token1.name}}:</span>
                     </div>
                     <span class="rg">{{token1Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received  liqui mrgtop16">
                     <div class="lt">
                       <img class="lt_icon" src="@/assets/img/btc.svg" alt="" />
-                      <span>Pooled {{item.token2.name}}:</span>
+                      <span>{{$t('pool.Pooled')}} {{item.token2.name}}:</span>
                     </div>
                     <span class="rg">{{token2Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received liqui mrgtop16">
                     <div class="lt">
-                      <span>Your pool share:</span>
+                      <span> {{$t('pool.Yops')}}:</span>
                     </div>
                     <span class="rg">{{(share*100).toFixed(2)}}%</span>
                   </div>
                   <div class="accrued">
-                    View accrued fees and analycis
+                    {{$t('pool.Vafas')}}
                     <img
                       class="acrued_img"
                       src="@/assets/img/icon_jump_green.png"
@@ -104,10 +104,10 @@
                   </div>
                   <div class="accrued_btn clearfix">
                     <div class="btn_lt fl_lt">
-                        <el-button class="from_botton" @click="toPool(item)">Add</el-button>
+                        <el-button class="from_botton" @click="toPool(item)">{{$t('pool.Add')}}</el-button>
                     </div>
                     <div class="btn_lt fl_rg">
-                        <el-button class="from_botton" @click="toRemove(item)">Remove</el-button>
+                        <el-button class="from_botton" @click="toRemove(item)"> {{$t('pool.Remove')}} </el-button>
                     </div>
                   </div>
                 </div>
