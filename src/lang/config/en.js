@@ -21,6 +21,12 @@ module.exports = {
       Liquidity:'Liquidity'
     },
     Exc:{
+      plsec:'Please select transac tion pair',
+      Vpcs:'View pair analytics',
+      Liyee:'Liquidity Provider Fee',
+      Pre:'Price Impacte',
+      Mrd:'Minimum received',
+      Mandate:'Mandate',
       per:'Per',
       From:'From',
       Balance:'Balance',
@@ -41,9 +47,12 @@ module.exports = {
       cpe2:'market price and estimated',
       cpe3:'price due to trade size.',
       lpf:'Liquidity Provider Fee',
-      lpf1:'',
-      lpf2:'',
-      lpf3:'',
+      lpf1:'A protion of each trade(0.3%)',
+      lpf2:'goes to liquidity providers as a',
+      lpf3:'protocal incentive.',
+      tsk1:'Find a token by searching for',
+      tsk2:'its name or symbol or by',
+      tsk3:'pasting its address below.',
      
 
     },
@@ -67,6 +76,17 @@ module.exports = {
       yops:'Your pool share:',
       Input:'Input',
       Weight:'Weight',
+      wyou1:'When you add liquidity,',
+      wyou2:'you are given pool tokens representing your position.',
+      wyou3:'These tokens automatically earn fees',
+      wyou4:'proportional to your share of the pool,',
+      wyou5:'and can be redeemed at any time.',
+      stkk1:'When you add liquidity,',
+      stkk2:'you are given pool tokens representing your position.',
+      stkk3:'These tokens automatically',
+      stkk4:'earn fees proportional to your share of the pool,',
+      stkk5:'And can be redeemed at anytime.',
+  
     },
     ALy:{
 
@@ -79,8 +99,8 @@ module.exports = {
       CWetTRC20:'Can WTRX exchange to other TRC20 Tokens?',
       wtitn:'WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.',
       petao:'Please enter the amout of WTRX',
-      petao1:'Please enter the amout of TRX'
-  
+      petao1:'Please enter the amout of TRX',
+     
 
     },
     Stake:{
@@ -122,6 +142,20 @@ module.exports = {
     Enat:'Enter an amount',
     rly:'Remove Liquidity',
     rly:'Receive',
-    oiei: 'Output is estimated.If the price change by more than 0.5% your transaction will revert'
+    oiei: 'Output is estimated.If the price change by more than 0.5% your transaction will revert',
+    ars:'Authorization success',
+    sut:'Successful trade',
+    sopl:'Share of Pool',
+    pewe:'Please enter weight',
+    pewe1:'Please enter the added quantity',
+    pewe2:'Insufficient wallet balance',
+    pewe3:'Unauthorized, please authorize first',
+    pewe4:'Please select transaction pair first',
+    pewe5:'Weight addition cannot be greater than 50',
+    pewe6:'Successful, please wait for block confirmation',
+    pewe7:'System error',
+    pewe8:'success'
+
+
 
 }

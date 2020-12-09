@@ -133,9 +133,9 @@
                   <span>{{$t('Exc.lpf')}}
                      <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                        A protion of each trade <br> 
-                        goes to liquidity providers as a <br>
-                        protocal incentive.<br>             
+                        {{$t('Exc.lpf1')}}<br> 
+                        {{$t('Exc.lpf2')}}<br>
+                        {{$t('Exc.lpf3')}}<br>             
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>        
@@ -366,7 +366,7 @@ export default {
           this.btnDisabled2 = false;
         })
       } else {
-        this.$message.error('Please select transac tion pair')
+        this.$message.error( this.$t('Exc.plsec'))
       }
     },
     async getPairAddress () {
@@ -568,7 +568,7 @@ export default {
           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
-            that.$message.success('Successful trade');
+            that.$message.success(this.$t('aut'));
             that.token1Num = 0;
             that.token2Num = 0;
             that.getBalance(that.token1)

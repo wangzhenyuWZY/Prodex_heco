@@ -95,7 +95,7 @@
           </div>
         </div>
          <div class="selt_btn clearfix">
-          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">STAKE</el-button>
+          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">{{$t('nav.Stake')}}</el-button>
         </div>
       </div>
     </container>

@@ -11,9 +11,9 @@
                    effect="light"
                   >
                   <div slot="content" class="slotp"> 
-                    Find a token by searching for <br> 
-                    its  name  or  symbol  or  by <br>
-                    pasting its address below.</div>
+                   {{$t('Exc.tsk1')}} <br> 
+                   {{$t('Exc.tsk2')}} <br>
+                   {{$t('Exc.tsk3')}} </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
     </span>

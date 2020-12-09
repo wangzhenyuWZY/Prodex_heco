@@ -233,7 +233,7 @@ export default {
             that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txid;
             getConfirmedTransaction(res.txid).then((res1)=>{
               console.log(res1);
-                 that.$message.success('Successful trade')
+                 that.$message.success(this.$t('aut'))
                 if (that.stup != 1) {
                     that.proNmae = 'Confirm';
                 }
