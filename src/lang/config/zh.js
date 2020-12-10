@@ -17,8 +17,10 @@ module.exports = {
     TopPairs:'交易对',
     Name:'名称',
     Assets:'资产',
-    
-    Liquidity:'流动性'
+    Liquidity:'流动性',
+    Volume:'成交量（24hrs）',
+    price:'价格',
+    Change:'涨跌幅(24hrs)'
   },
   Exc:{
     plsec:'请选择转换对',

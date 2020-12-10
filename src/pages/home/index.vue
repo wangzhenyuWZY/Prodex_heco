@@ -91,7 +91,33 @@
             </template>
             <span></span>
           </el-table-column>
-
+          <el-table-column prop="price"
+                           :label= "$t('home.price')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.trade_price ? scope.row.trade_price  : "--"}}
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
+          <el-table-column prop="Volume"
+                           :label= "$t('home.Volume')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.base_quantity ? scope.row.base_quantity  : "--"}}
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
+          <el-table-column prop="Change"
+                           :label= "$t('home.Change')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.price_change_24 ? scope.row.price_change_24*100  : "--"}}%
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
         </el-table>
         <el-table v-if="!mobile"
                   :data="pairList"
@@ -161,7 +187,7 @@
 </template>
 
 <script>
-
+import {api} from '../../api/api'
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
@@ -182,7 +208,7 @@ export default {
     this.$initTronWeb().then(function (tronWeb) {
       that.init();
     })
-    
+    that.getVolPrice24()
   },
   methods: {
      requierImg (name,number) {
@@ -220,22 +246,38 @@ export default {
         let res2 = await getLpBalanceInPool(el);
         if(el.token1.name=='USDT'){
           let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
-          el.liquidity = bil*parseFloat(res1)
+          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
         }else if(el.token2.name=='USDT'){
           let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
-          el.liquidity = bil*parseFloat(res1)
+          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
         }
-        el.token1Balance = res;
-        el.token2Balance = res1;
+        el.token1Balance = res.toFixed(4);
+        el.token2Balance = res1.toFixed(4);
         pairList.push(el)
       }
       this.pairList = pairList
+    },
+    async getVolPrice24 () {//获取24小时量和价格
+      let res = await api.get24HourTradingVolume()
+      if(res.data.code==0){
+        let data = res.data.data
+        this.pairList.forEach((rsp)=>{
+          data.forEach((rsp2)=>{
+            if(rsp.pair.toUpperCase() == rsp2.full_name.toUpperCase()){
+              rsp.base_quantity = rsp2.base_quantity.toFixed(4)
+              rsp.trade_price = rsp2.trade_price.toFixed(4)
+              rsp.price_change_24 = rsp2.price_change_24.toFixed(4)
+            }
+          })
+        })
+      }
     }
   },
 }
 </script>
 <style  lang="scss" scoped>
 .reqimg{
+  white-space: nowrap;
   img{
     width: 25px;
     height: 25px;

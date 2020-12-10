@@ -98,7 +98,7 @@
          
          <span class="ctw"> <div class="ctx_1 fl_lt ">
             <frominput 
-            lable="Sponsors"
+            lable="Creator fee"
             placeholder="Please Enter" 
             v-model="sponsors">
             </frominput>

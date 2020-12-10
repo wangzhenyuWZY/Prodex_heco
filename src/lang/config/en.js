@@ -17,8 +17,10 @@ module.exports = {
       TopPairs:'Top Pairs',
       Name:'Name',
       Assets:'Assets',
-      
-      Liquidity:'Liquidity'
+      Liquidity:'Liquidity',
+      Volume:'Volume(24hrs)',
+      price:'price',
+      Change:'Price Change(24hrs)'
     },
     Exc:{
       plsec:'Please select transac tion pair',
