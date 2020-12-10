@@ -45,7 +45,7 @@ import {TokenData} from '../../utils/index'
         default: "",
       },
       balance: {
-        type: Number,
+        type: [Number,String],
         default: 0,
       },
       hideSlect: {

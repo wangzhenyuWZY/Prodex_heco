@@ -28,7 +28,6 @@ const allowance = (coinAddress,contractAddress) => {//查询授权
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
-                
                     resolve(res)
                 })
             })
