@@ -32,7 +32,7 @@
           </div>
       </div>
     </div>
-    <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
+    <div class="receive__size">{{$t('oiei')}}</div>
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">

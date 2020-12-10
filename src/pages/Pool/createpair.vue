@@ -12,13 +12,18 @@
           <span class="content_text">{{$t('pool.cj1')}}</span>
         </div>
         <div class="rg_box">
-          <el-tooltip class="item" 
-                  effect="dark" 
-                  popper-class="tipstyle"
-                  content="When you add liquidity,you are given pool tokens representing your position.These tokens automatically earn fees proportional to your share of the pool,and can be redeemed at any time." 
-                  placement="left">
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
+                <el-tooltip placement="left"   effect="light">
+                      <div slot="content"
+                           >
+                        {{$t('pool.wyou1')}}<br>
+                        {{$t('pool.wyou2')}} <br>
+                         {{$t('pool.wyou3')}}<br>
+                         {{$t('pool.wyou4')}} <br>
+                          {{$t('pool.wyou5')}}
+                      </div>
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
         </div>
       </div>
       <div slot="body">
@@ -118,7 +123,7 @@
 
           <span class="pair_mandate"
                 v-show="false">
-            <el-button class="from_botton pair_mandate  pair_mandate_btb"> Mandate</el-button>
+            <el-button class="from_botton pair_mandate  pair_mandate_btb"> {{$t('Exc.Mandate')}} </el-button>
           </span>
           <el-button class="from_botton pair_mandate pair_swap "
                      :loading="btnLoading1"
@@ -135,26 +140,26 @@
             <div class="">
               <div class="received">
                 <div class="lt">
-                  <span>Minimum received <img src="@/assets/img/icon_instructions.svg"
+                  <span> {{$t('Exc.Mrd')}} <img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="rgs">441.4 aDAI</span>
               </div>
               <div class="received setmage">
                 <div class="lt">
-                  <span>Price Impacte <img src="@/assets/img/icon_instructions.svg"
+                  <span>{{$t('Exc.Pre')}}<img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="rec_red">5.30%</span>
               </div>
               <div class="received">
                 <div class="lt">
-                  <span>Liquidity Provider Fee <img src="@/assets/img/icon_instructions.svg"
+                  <span>{{$t('Exc.Liyee')}}<img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="">0.003 ETH</span>
               </div>
-              <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
+              <div class="fees_account">{{$t('Exc.Vpcs')}}<img src="@/assets/img/icon_jump_green.png"
                      alt=""></div>
             </div>
           </div>
@@ -221,19 +226,19 @@ export default {
       // this.login = !this.login
       if (!this.firstTokenNum || this.firstTokenNum == 0 || this.firstTokenNum == '' || !this.secondTokenNum || this.secondTokenNum == 0 || this.secondTokenNum == '') {
         this.$message({
-          message: 'Please enter the added quantity',
+          message: this.$t('pewe'),
           type: 'error'
         });
         return
       } else if (!this.firstTokenWeight || this.firstTokenWeight == 0 || this.firstTokenWeight == '' || !this.secondTokenWeight || this.secondTokenWeight == 0 || this.secondTokenWeight == '') {
         this.$message({
-          message: 'Please enter weight',
+          message: this.$t('pewe1'),
           type: 'error'
         });
         return
       } else if ((this.firstTokenWeight + this.secondTokenWeight) > 50) {
         this.$message({
-          message: 'Weight addition cannot be greater than 50',
+          message: this.$t('pewe5'),
           type: 'error'
         });
         return
@@ -275,7 +280,7 @@ export default {
       this.loading1(1);
       
       this.$message({
-        message: 'Successful, please wait for block confirmation',
+        message:  this.$t('pewe6'),
         type: 'success'
       });
       try {
@@ -306,7 +311,7 @@ export default {
       catch (error) {
         that.loading1();
           this.$message({
-        message: 'System error',
+        message: this.$t('pewe7'),
         type: 'error'
       });
         console.log(error);
@@ -364,7 +369,7 @@ export default {
            that.showAlert1 = true;
            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
           that.loading1(1);
-          that.$message.success('success');
+          that.$message.success(this.$t('pewe8'));
         });
       })
     },
@@ -475,6 +480,7 @@ export default {
 }
 
 .createpair {
+  
   padding-top: 120px;
 
   .whe {

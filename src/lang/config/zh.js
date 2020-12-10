@@ -8,6 +8,10 @@ module.exports = {
     WTRX:'WTRX',
     Stake:'抵押',
     CWet:'连接到钱包',
+    tlick:'Tronlink钱包',
+    hitky:'还没有安装TronLink吗？',
+    che:'点击这里>>'
+
   },
   home:{
     TopPairs:'交易对',
@@ -17,6 +21,12 @@ module.exports = {
     Liquidity:'流动性'
   },
   Exc:{
+    plsec:'请选择转换对',
+    Vpcs:'视图对分析',
+    Liyee:'流动性提供者的费用',
+    Pre:'价格Impacte',
+    Mrd:'最低了',
+    Mandate:'授权',
     per:'每',
     From:'从',
     Balance:'余额',
@@ -37,13 +47,27 @@ module.exports = {
     cpe2:'市场价格和估计',
     cpe3:'价格因交易规模而异。',
     lpf:'流动性提供者费用',
-    lpf1:'',
-    lpf2:'',
-    lpf3:'',
+    lpf1:'每笔交易的一部分(0.3%)',
+    lpf2:'将作为一种协议激励，',
+    lpf3:'流向流动性提供者。',
+    tsk1:'通过搜索查找一个标记',
+    tsk2:'其名称或符号或者',
+    tsk3:'将地址粘贴在下面。',
    
+
     
   },
   pool:{
+    Cos:'共同基础',
+    Deoosited:'储存',
+    Adaf:'Acoout分析和预提费用',
+    Rmpl:'阅读更多关于提供流动性的内容',
+    Pooled:'合并',
+    Vafas:'查看预提费用和分析',
+    Yops:'分享你的池',
+    Ytpt:'你的tatal池币',
+    Add:'添加',
+    Remove:'删除',
     to:'到',
     Lpr:'流动性提供者奖励',
     Lpr2:'流动性提供者在所有交易中均按其所占份额的比例收取0.3％的费用。费用会实时添加到池中，可以要求提取您的流动资金。',
@@ -62,7 +86,18 @@ module.exports = {
     yopn:'你的职位:',
     yops:'您的共享池:',
     Input:'输入',
-    Weight:'权重'
+    Weight:'权重',
+    wyou1:'当你增加流动性时，',
+    wyou2:'你会得到代表你位置的池牌。',
+    wyou3:'这些代币自动赚取费用',
+    wyou4:'与你在泳池中的份额成比例，',
+    wyou5:'可以随时赎回。',
+    stkk1:'当你增加流动性时，',
+    stkk2:'你被给予代表你的位置的池标记。',
+    stkk3:'这些代币自动赚取',
+    stkk4:'与你在池中的份额成比例的费用，',
+    stkk5:'可以随时赎回。',
+
 
   },
   ALy:{
@@ -99,10 +134,30 @@ module.exports = {
     TSed:'交易已提交',
     Pname:'配对名称',
     Ywr:'你会复活',
-  },
-  
+  },  
   confirm:'确认',
   Supply:'供应',
-  ywr:'您将收到'
+  ywr:'您将收到',
+  ttpd:'事务对不存在',
+  vot:'查看Tronscan',
+  Close:'关闭',
+  WFCn:'等待确认',
+  Enat:'输入一个数量',
+  rly:'消除流动性',
+  rly1:'消除',
+  oiei:'输出估计。如果价格变动超过0.5%，你的交易将恢复正常',
+  ars:'授权成功',
+  aut:'交易成功',
+  sopl:'共享的池',
+  pewe:'请选择权重',
+  pewe1:'请输入添加数量',
+  pewe2:'钱包余额不足',
+  pewe3:'未授权，请先授权',
+  pewe4:'请先选择事务对',
+  pewe5:'权重相加不能大于50',
+  pewe6:'成功，请等待阻塞确认',
+  pewe7:'系统错误',
+  pewe8:'成功',
+ 
 
 }

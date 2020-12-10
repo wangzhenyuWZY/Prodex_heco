@@ -65,7 +65,7 @@ const approved = (coinAddress,contractAddress) => {//授权
                     if(res){
                         Message({
                             showClose: true,
-                            message: 'Authorization success',
+                            message: this.$t('ars'),
                             type: 'success'
                         })
                         resolve(res);

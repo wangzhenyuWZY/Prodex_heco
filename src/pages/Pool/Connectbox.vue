@@ -27,18 +27,12 @@
         <div class="rg_box  fl_rg">
            <el-tooltip placement="left"   >
                       <div slot="content"
-                           >
-                        When you add liquidity, <br>
-                        you are given pool tokens <br>
-                        representing your<br>
-                        position. These tokens <br>
-                        automatically earn fees <br>
-                        proportional to your <br>
-                        share of the pool, and <br>
-                        can be redeemed at <br>
-                        anytime.
-
-
+                          >
+                       {{$t('pool.stkk1')}} <br>
+                       {{$t('pool.stkk2')}} <br>
+                       {{$t('pool.stkk3')}} <br>
+                       {{$t('pool.stkk4')}} <br>
+                       {{$t('pool.stkk5')}} <br>
                       </div>
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
@@ -121,7 +115,7 @@
               </li>
               <li>
                 <p>{{share}}%</p>
-                <p>Share of Pool</p>
+                <p> {{$t('sopl')}} </p>
               </li>
             </ul>
           </div>
@@ -361,12 +355,12 @@ export default {
     checkSupply () {
       if (!this.token1Num || this.token1Num == '' || this.token1Num == 0) {
         this.$message({
-          message: 'Please enter the added quantity',
+          message: this.$t('pewe1'),
           type: 'error'
         });
       } else if (this.token1Num > this.token1.balance) {
         this.$message({
-          message: 'Insufficient wallet balance',
+          message: this.$t('pewe2'),
           type: 'error'
         });
       }
@@ -374,7 +368,7 @@ export default {
     confirmSupply () {//输出的lptoken数量
       if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
-          message: 'Insufficient wallet balance',
+          message: this.$t('pewe2'),
           type: 'error'
         });
         return
@@ -607,7 +601,7 @@ export default {
       this.charm1(1);
       if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
         this.$message({
-          message: 'Unauthorized, please authorize first',
+          message: this.$t('pewe3'),
           type: 'error'
         });
         return
@@ -733,7 +727,7 @@ export default {
           })
         }
       } else {
-        this.$layer.msg('Please select transaction pair')
+        this.$layer.msg( this.$t('pewe4'))
       }
     },
     async getBalance (token) {//获取余额
@@ -803,7 +797,7 @@ export default {
         this.selectType = this.token1.name
       } else {
         this.$message({
-          message: 'Please select transaction pair first',
+          message:  this.$t('pewe4'),
           type: 'error'
         });
       }

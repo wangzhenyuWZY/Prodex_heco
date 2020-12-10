@@ -36,7 +36,7 @@
           </div>
           <div class="drawer_btn">
             <div class="nav-butt">
-              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
+              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button>
               <div class="login_wallet drawer_wallet" v-if="connectFlag">
                 <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
                 <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -60,7 +60,7 @@
         
          
       </div>
-      <div class="hdel"><button @click="hdel">切换</button> </div>
+      <div class="hdel"><button @click="hdel">切换中英文</button> </div>
     </div>
   </div>
 </template>
