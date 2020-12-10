@@ -98,7 +98,7 @@
          
          <span class="ctw"> <div class="ctx_1 fl_lt ">
             <frominput 
-            lable="Creator fee"
+            :lable= "$t('Creatorfee')"
             placeholder="Please Enter" 
             v-model="sponsors">
             </frominput>
@@ -106,7 +106,7 @@
 
           <div class="ctx_2 fl_lt ">
             <frominput 
-            lable="FoxDex"
+            :lable="$t('FoxDex')"
             placeholder="Please Enter" 
             v-model="foxDex">
             </frominput>

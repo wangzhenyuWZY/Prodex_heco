@@ -130,7 +130,7 @@ module.exports = {
       RLty:'消除流动性页面',
       Account:'Account',
       Detailed:'Detailed',
-      Price:'价钱',
+      Price:'Price',
    
       Approve:'Approve',
       Eat:'Enter an amount',
@@ -144,6 +144,8 @@ module.exports = {
       Pname:'配对名称',
       Ywr:'你会复活',  
     },
+    FoxDex:'FoxDex',
+    Creatorfee:'Creator fee',
     Supply:'Supply',
     confirm:'Confirm',
     ywr: 'You will recevive',
