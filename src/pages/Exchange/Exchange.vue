@@ -176,6 +176,7 @@
 
 <script>
 const Web3Utils = require('web3');
+const MAX = Web3Utils.utils.toTwosComplement(-1);
 import BigNumber from 'bignumber.js'
 const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
@@ -227,7 +228,10 @@ export default {
       btnDisabled2:false,
       isPc:IsPc(),
       tips:'',
-      typeUrl:''
+      typeUrl:'',
+      minAmountOut:0,
+      tolerance:0.1,
+      maxPrice:MAX
     }
   },
   computed: {
@@ -242,7 +246,7 @@ export default {
     removealert
   },
   created () {
-
+    console.log('tolerance============'+this.$store.state.tolerance)
   },
   watch: {
     token1Num () {
@@ -452,15 +456,24 @@ export default {
         return
       }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
+        this.getMinAmountOut()
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
+        // console.log(this.spotPrice.toString())
+        // console.log(afterPrice.toString())
         let percentage = (Decimal(this.spotPrice).minus(afterPrice)).div(afterPrice).mul(Decimal(100))
-        console.log('----------',this.token1Balance,this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num,this.swapFee)
-        console.log('afterPrice============='+afterPrice,this.spotPrice.toFixed())
+        this.maxPrice = Decimal(this.spotPrice).mul(1+this.tolerance)
         this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
+    },
+    getMinAmountOut(){
+      this.tolerance = this.$store.state.tolerance
+      let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, 1, this.swapFee)
+      let maxNumber = token2Num.mul(this.token1Num).mul(1-this.tolerance)
+      maxNumber = new BigNumber(maxNumber)
+      this.minAmountOut = maxNumber.times(Math.pow(10,this.token2.decimals)).toFixed(0)
     },
     getSpotPrice () {//计算token1的价格
       if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
@@ -551,12 +564,12 @@ export default {
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       let token1num = new BigNumber(that.token1Num)
       token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
-      const MAX = Web3Utils.utils.toTwosComplement(-1);
+      console.log('that.maxPrice==========='+that.maxPrice)
       var parameter = [
         { type: 'address', value: that.token1.address },
         { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
-        { type: 'uint256', value: 0 },
+        { type: 'uint256', value: that.minAmountOut },
         { type: 'uint256', value: MAX }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);

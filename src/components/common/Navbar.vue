@@ -8,7 +8,6 @@
 
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
-             
              ref="header">
           <span v-for="(idx, index) in tag"
                 :key="idx.path"
@@ -29,14 +28,14 @@
         <div class="nav_merge" v-show="!moble">
           <img class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
         </div>
-        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false">
+        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
           <div class="drawer_logo">
             <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png" alt="" /></div>
-            <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click="drawer = false"> </div>
+            <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click.stop="drawer = false"> </div>
           </div>
           <div class="drawer_btn">
             <div class="nav-butt">
-              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button>
+              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click.stop="btnClick">{{$t('nav.CWet')}}</el-button>
               <div class="login_wallet drawer_wallet" v-if="connectFlag">
                 <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
                 <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -45,9 +44,13 @@
             </div>
           </div>
           <ul class="drawer_nav">
-            <li v-for="(idx, index) in tag" :key="idx.path+'drawer'+index" @click="handelActive(idx.path, index)"
+            <li v-for="(idx, index) in tag" :key="idx.path+'drawer'+index" @click.stop="handelActive(idx.path, index)"
                 :class="navIndex == index ?'drawer_nav_active':''">{{idx.name }}</li>
           </ul>
+          <div class="langAndSet">
+            <div class="setbox" @click.stop="tolerPop=true"><i class="setico"></i>Setting</div>
+            <div class="setbox fr" @click="hdel"><i class="langico"></i>{{this.$i18n.locale=='zh'?'简体中文':'English'}}</div>
+          </div>
           <ul class="drawer_nav_aubt">
             <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
             <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
@@ -58,9 +61,19 @@
           </ul>
         </el-drawer>
         
-         
+        <div class="lang"  @click="hdel">{{this.$i18n.locale=='zh'?'简体中文':'English'}}<i></i></div>
+        <i class="setting" @click="tolerPop=!tolerPop"></i>
+        <div class="setPanel" v-show="tolerPop">
+          <h2>Transaction Settings</h2>
+          <p class="title">Slippage tolerance<i></i></p>
+          <div class="tolerTab">
+            <span @click="changeToler(0.01);num=1" :class="num==1?'active':''">1%</span>
+            <span @click="changeToler(0.05);num=2" :class="num==2?'active':''">5%</span>
+            <span @click="changeToler(0.1);num=3" :class="num==3?'active':''">10%</span>
+            <span @click="changeToler(0.3);num=4" :class="num==4?'active':''">30%</span>
+          </div>
+        </div>
       </div>
-      <div class="hdel"><button @click="hdel">切换中英文</button> </div>
     </div>
   </div>
 </template>
@@ -71,6 +84,8 @@ import { IsPc } from '../../utils/index';
 export default {
   data() {
     return {
+      tolerPop:false,
+      num:0,
       key: "31",
       navIndex: 0,
       drawer: false,
@@ -159,6 +174,11 @@ export default {
       this.tag = a;
       }
 
+    },
+    drawer(val){
+      if(!val){
+        this.tolerPop = false
+      }
     }
   },
   mounted () {
@@ -184,6 +204,9 @@ export default {
   },
 
   methods: {
+    changeToler(num){
+      this.$store.commit('changeTolerance',num)
+    },
     btnClick() {
       this.$popup({
         // showAlert:true,
@@ -266,6 +289,7 @@ export default {
 };
 </script>
 <style >
+
 .nav .drawer_body {
   width: 69% !important;
   background: #070a0e;
@@ -277,6 +301,84 @@ export default {
 </style>
 <style lang="scss" scoped>
 
+.setPanel{
+  background:#fff;
+  padding:24px 20px;
+  border-radius:20px;
+  box-sizing: border-box;
+  width:364px;
+  position:fixed;
+  right:48px;
+  top:80px;
+  z-index:9999;
+}
+.setPanel h2{
+  font-size:18px;
+  color:#070A0E;
+  line-height:100%;
+  padding-bottom:18px;
+}
+.setPanel .title{
+  font-size:16px;
+  color:#878B97;
+  line-height:100%;
+  padding-bottom:11px;
+}
+.setPanel .title i{
+  display:inline-block;
+  vertical-align: middle;
+  width:24px;
+  height:24px;
+  background:url(../../assets/img/icon_instructions.png) no-repeat center;
+  background-size:100% 100%;
+  margin-left:4px;
+}
+.setPanel .tolerTab{
+  overflow: hidden;
+}
+.setPanel .tolerTab span{
+  float:left;
+  width:72px;
+  height:36px;
+  line-height:36px;
+  text-align:center;
+  border-radius:32px;
+  background: #F6F7FB;
+  font-size:16px;
+  color:#878B97;
+  margin-left:12px;
+  cursor: pointer;
+}
+.setPanel .tolerTab span:first-child{
+  margin-left:0;
+}
+.setPanel .tolerTab span.active{
+  background:#05C98E;
+  color:#FFFFFF;
+}
+.setting{
+  width:32px;
+  height: 32px;
+  background: url(../../assets/img/setIco.png) no-repeat center;
+  background-size:100% 100%;
+  margin-left:16px;
+}
+.lang{
+  color:#A6AEB7;
+  line-height:40px;
+  font-size:16px;
+  margin-top:18px;
+  margin-left:36px;
+  cursor:pointer;
+}
+.lang i{
+  display:inline-block;
+  vertical-align: middle;
+  width:32px;
+  height:32px;
+  background: url(../../assets/img/langIco.png) no-repeat center;
+  background-size:100% 100%;
+}
 // .logop{
 //   float: left;
 //   // margin-top: 8px;
@@ -429,6 +531,7 @@ export default {
   color: #a6aeb7;
   position: relative;
   // margin-left: 22px;
+  
 }
 .active {
   font-family: roboto-mediumitalic;
@@ -552,6 +655,47 @@ export default {
   .bimg {
     height: 4.58rem;
     background-size: 100% 4.58rem;
+  }
+  .setPanel{
+    width:auto;
+    left:15px;
+    right:15px;
+    top:30%;
+    padding: 24px 15px;
+  }
+  .setPanel .tolerTab span{
+    margin-left:6px;
+  }
+  .lang{display:none;}
+  .setting{display:none;}
+  .langAndSet{
+    position:absolute;
+    bottom:2rem;
+    width:100%;
+    text-align:center;
+  }
+  .langAndSet .setbox{
+    float:left;
+    font-size:0.37rem;
+    line-height:44px;
+    padding-left:24px;
+  }
+  .langAndSet .setbox.fr{float:right;padding-right:24px;}
+  .langAndSet .setbox .setico{
+    display:inline-block;
+    vertical-align: middle;
+    width:0.8rem;
+    height:0.8rem;
+    background:url(../../assets/img/setIco.png) no-repeat center;
+    background-size:100% 100%;
+  }
+  .langAndSet .setbox .langico{
+    display:inline-block;
+    vertical-align: middle;
+    width:0.8rem;
+    height:0.8rem;
+    background:url(../../assets/img/langIco.png) no-repeat center;
+    background-size:100% 100%;
   }
 }
 </style>
