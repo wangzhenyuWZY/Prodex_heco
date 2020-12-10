@@ -52,7 +52,7 @@
           </div>
         </div>
         <!--  -->
-        <div class="text_border"> {{$t('Stake.sfox')}} <span class="colorF">them here</span> </div>
+        <div class="text_border"> {{$t('Stake.sfox')}} <span class="colorF"></span> </div>
         <div class="received">
           <div class="lt">
             <span> {{$t('Stake.stfe')}}</span>
