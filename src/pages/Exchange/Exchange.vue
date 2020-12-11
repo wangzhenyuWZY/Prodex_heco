@@ -51,9 +51,9 @@
              v-show="connectFlag">
           <span>{{$t('Exc.Price')}}:</span>
           <span>{{spotPrice.toFixed(4)}} </span>
-          <span> {{token2.name}} </span>
-          <span> {{$t('Exc.per')}}</span>
           <span> {{token1.name}} </span>
+          <span> {{$t('Exc.per')}}</span>
+          <span> {{token2.name}} </span>
           <img src="@/assets/img/icon_slect.png"
                alt=""
                @click="convert">
@@ -456,14 +456,13 @@ export default {
         return
       }
       if (this.token1Balance && this.token1Weight && this.token2Balance && this.token2Weight && this.swapFee && this.token1Num) {
-        this.getMinAmountOut()
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
-        // console.log(this.spotPrice.toString())
-        // console.log(afterPrice.toString())
-        let percentage = (Decimal(this.spotPrice).minus(afterPrice)).div(afterPrice).mul(Decimal(100))
-        this.maxPrice = Decimal(this.spotPrice).mul(1+this.tolerance)
+        console.log('spotPrice'+this.spotPrice.toString())
+        // console.log('afterPrice'+afterPrice.toString())
+        let percentage = (Decimal(afterPrice).minus(this.spotPrice)).div(this.spotPrice).mul(Decimal(100))
+        this.maxPrice = Decimal(this.spotPrice).mul(1+this.tolerance).mul(Math.pow(10,18)).toFixed(0)
         this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
@@ -471,13 +470,13 @@ export default {
     getMinAmountOut(){
       this.tolerance = this.$store.state.tolerance
       let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, 1, this.swapFee)
-      let maxNumber = token2Num.mul(this.token1Num).mul(1-this.tolerance)
+      let maxNumber = token2Num.mul(this.token1Num).mul(1+this.tolerance)
       maxNumber = new BigNumber(maxNumber)
-      this.minAmountOut = maxNumber.times(Math.pow(10,this.token2.decimals)).toFixed(0)
+      this.maxPrice = maxNumber.times(Math.pow(10,18)).toFixed(0)
     },
     getSpotPrice () {//计算token1的价格
       if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
-        this.spotPrice = calcSpotPrice(this.token2Balance, this.token2Weight, this.token1Balance, this.token1Weight, this.swapFee)
+        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.swapFee)
       }
       if (this.token1Num) {
         this.cumpToken2()
@@ -564,13 +563,14 @@ export default {
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
       let token1num = new BigNumber(that.token1Num)
       token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      // this.getMinAmountOut()
       console.log('that.maxPrice==========='+that.maxPrice)
       var parameter = [
         { type: 'address', value: that.token1.address },
         { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
-        { type: 'uint256', value: that.minAmountOut },
-        { type: 'uint256', value: MAX }
+        { type: 'uint256', value: 0 },
+        { type: 'uint256', value: that.maxPrice }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
@@ -581,7 +581,7 @@ export default {
           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
-            that.$message.success(this.$t('aut'));
+            that.$message.success(that.$t('aut'));
             that.token1Num = 0;
             that.token2Num = 0;
             that.getBalance(that.token1)
@@ -826,7 +826,7 @@ export default {
   }
   .el-slider__button::before {
     content: "";
-    background:#05C98E;
+    background:#02B27D;
     width: 20px;
     height: 20px;
     line-height: 32px;

@@ -18,7 +18,11 @@
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button>
+          <div class="login_wallet" v-if="!connectFlag"  @click="btnClick">
+            <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+            <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
+          </div>
+          <!-- <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button> -->
           <div class="login_wallet" v-if="connectFlag&&moble">
             <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
             <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -35,7 +39,13 @@
           </div>
           <div class="drawer_btn">
             <div class="nav-butt">
-              <el-button class="from_botton nav_btn " v-if="!connectFlag" @click.stop="btnClick">{{$t('nav.CWet')}}</el-button>
+              <div class="login_wallet drawer_wallet" v-if="!connectFlag" @click.stop="btnClick">
+                <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+                <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
+              </div>
+              <!-- <el-button class="from_botton nav_btn " v-if="!connectFlag" @click.stop="btnClick">
+                {{$t('nav.CWet')}}
+              </el-button> -->
               <div class="login_wallet drawer_wallet" v-if="connectFlag">
                 <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
                 <span class="wallet_addrs">{{walletAddres.address|address}}</span>
@@ -65,7 +75,7 @@
         <i class="setting" @click="tolerPop=!tolerPop"></i>
         <div class="setPanel" v-show="tolerPop">
           <h2>Transaction Settings</h2>
-          <p class="title">Slippage tolerance<i></i></p>
+          <p class="totletitle">Slippage tolerance<i></i></p>
           <div class="tolerTab">
             <span @click="changeToler(0.01);num=1" :class="num==1?'active':''">1%</span>
             <span @click="changeToler(0.05);num=2" :class="num==2?'active':''">5%</span>
@@ -318,13 +328,13 @@ export default {
   line-height:100%;
   padding-bottom:18px;
 }
-.setPanel .title{
+.setPanel .totletitle{
   font-size:16px;
   color:#878B97;
   line-height:100%;
   padding-bottom:11px;
 }
-.setPanel .title i{
+.setPanel .totletitle i{
   display:inline-block;
   vertical-align: middle;
   width:24px;
@@ -353,15 +363,17 @@ export default {
   margin-left:0;
 }
 .setPanel .tolerTab span.active{
-  background:#05C98E;
+  background:#02B27D;
   color:#FFFFFF;
 }
 .setting{
-  width:32px;
-  height: 32px;
+  width:28px;
+  height: 28px;
   background: url(../../assets/img/setIco.png) no-repeat center;
   background-size:100% 100%;
   margin-left:16px;
+  margin-top:18px;
+  cursor: pointer;
 }
 .lang{
   color:#A6AEB7;
@@ -432,7 +444,7 @@ export default {
   }
 }
 .drawer_nav_active {
-  background-color: #05c98e26;
+  background-color: #02B27D;
   color: #05c98e;
   font-family: roboto-mediumitalic;
 }
@@ -543,7 +555,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #05c98e;
+  background: #02B27D;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -588,7 +600,7 @@ export default {
     padding: 0 16px;
     height: 24px;
     line-height: 24px;
-    background: #05c98e;
+    background: #02B27D;
     border-radius: 28px;
     font-size: 18px;
     font-family: roboto-mediumitalic;

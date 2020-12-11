@@ -430,7 +430,7 @@ color: #0F1730;
   }
   .el-slider__button::before {
     content: "";
-    background:#05C98E;
+    background:#02B27D;
     width: 20px;
     height: 20px;
     line-height: 32px;

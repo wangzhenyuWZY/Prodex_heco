@@ -720,7 +720,7 @@ export default {
     }
     .el-slider__button::before {
       content: "";
-      background: #05c98e;
+      background: #02B27D;
       width: 20px;
       height: 20px;
       line-height: 32px;

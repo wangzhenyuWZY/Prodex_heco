@@ -437,9 +437,11 @@ export default {
         } else {
           getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
             that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
+            console.log('token1denormalizedWeight========='+that.token1denormalizedWeight)
           })
           getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
             that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
+            console.log('token2denormalizedWeight========='+that.token2denormalizedWeight)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
@@ -1092,7 +1094,7 @@ font-size: 18px;
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #05c98e;
+  background:#02B27D;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;

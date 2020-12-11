@@ -23,7 +23,7 @@
         </div>
       </div>
       <div class="con-p">
-        <samp class="con-p1">H11aven't installed TronLink yet?
+        <samp class="con-p1">Haven't installed TronLink yet?
           <samp class="con-p2">Click here>></samp>
         </samp>
 
