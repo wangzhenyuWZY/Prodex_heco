@@ -1,10 +1,10 @@
 <template>
 <div class="input_select">
-  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> Balance: <span class="balance_size">{{balance}}</span></span>  </div>
+  <div class="from_lable" :style="{visibility: lable?'inherit':'hidden'}"> <span class="pads"> {{$t('Exc.Balance')}}: <span class="balance_size">{{balance}}</span></span>  </div>
   <div class="input_content" @click.stop="showModel" >
       <div class="from_select">
         <span class="from_icon" @click.stop="iconHlep" v-show="imgUrl!==null"> <img :src="requierImg()" alt=""> </span>
-        <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:'Optional pass'}}</span>
+        <span class="from_size" :class="showSelect ? '' : 'show_size'">{{text?text:$t('Exc.ops')}}</span>
         <img src="@/assets/img/icon_down.svg" alt="" />
       </div>
       <!-- <ul class="select_model" :class="className" @click="addClass">
@@ -18,7 +18,7 @@
 
 <script>
 
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
   export default {
     props: {
       lable: {
@@ -45,7 +45,7 @@ import tokenData from '../../utils/token'
         default: "",
       },
       balance: {
-        type: Number,
+        type: [Number,String],
         default: 0,
       },
       hideSlect: {
@@ -57,7 +57,7 @@ import tokenData from '../../utils/token'
     return {
       isShow: false,
       className: "",
-      tokenList: tokenData.tokenList,
+      tokenList: TokenData(),
       itemToken:{}
     };
   },

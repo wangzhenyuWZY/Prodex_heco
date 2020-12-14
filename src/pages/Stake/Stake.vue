@@ -9,7 +9,7 @@
           <div class="fl_rg conted_btn">
             <el-button class="from_botton"> <img class="whe_img"
                    src="@/assets/img/icon_my_wallet.svg"
-                   alt=""> Connect to a wallet</el-button>
+                   alt=""> {{$t('nav.CWet')}}</el-button>
           </div>
           <div class="fl_rg text_two">You haven't connected a wallet.</div>
         </div>
@@ -32,8 +32,8 @@
             </span>
           </div>
           <div class="stake_addres">
-            <div> <span class="lt_addres">Deposit:</span> <span class="rg_addres">{{idx.pair}}</span></div>
-            <div class="mrg"> <span class="lt_addres">Earn:</span> <span class="rg_addres">FOX</span></div>
+            <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
+            <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
           </div>
           <div class="stake_btn"
                @click="showModels(idx)">12.04%APY</div>
@@ -63,7 +63,8 @@ const Decimal = require('decimal.js');
 import ipConfig from '../../config/ipconfig.bak'
 import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
-import tokenData from '../../utils/token';
+// import tokenData from '../../utils/token';
+import {TokenData} from '../../utils/index'
 
 export default {
   data () {
@@ -75,7 +76,7 @@ export default {
       poolIndex: 0,
       login: false,
       showModel: false,
-      farmList: tokenData.pairList,
+      farmList: TokenData().pairList,
       item:{},
       total: {
         farmTotal: 0, // 总数
@@ -201,7 +202,7 @@ export default {
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         {type:'address',value:ipConfig.MasterChef},
-        {type:'uint256',value:MAX}
+        {type:'uint256',value:'1000000000000000000000000000000'}
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(item.address,functionSelector,{shouldPollResponse:true}, parameter);
       if (!transaction.result || !transaction.result.result)
@@ -209,7 +210,7 @@ export default {
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
           window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
             getConfirmedTransaction(res.txid).then(()=>{
-              that.total.defaultAddress = res.txid;
+              that.total.defaultAddress =  'https://shasta.tronscan.org/#/transaction/'+ res.txid;
               that.deposit(item,n);
               that.total.btnFlag1 = false;
             })
@@ -236,8 +237,13 @@ export default {
       this.total.token1 = item.token1.name
       this.total.token2 = item.token2.name
       console.log(item)
-      await this.getContracts(item);
-      await this.tokenPerBlock(item);
+      try {
+            await this.getContracts(item);
+          await this.tokenPerBlock(item);
+      } catch (error) {
+        console.log(error)
+      }
+  
       let userInfo = await this.MasterChefContract.userInfo(item.index, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
       let res = await this.toDecimal(userInfo.amount._hex);
       await this.pendingTokens(item.index);
@@ -298,11 +304,13 @@ export default {
 
     async pendingTokens (index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
-      let pre = await this.toDecimal(penaccount);
+      // let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
-      this.total.uniswaplp = parseInt(pre,16)/Math.pow(10,18);
+      console.log('penaccount._hex', penaccount._hex);
+      this.total.uniswaplp = (parseInt(penaccount._hex,16)/Math.pow(10,18)).toFixed(6);
     },
     async deposit (item,n) { // 质押  
+    
       // （1）PoolInfo[]数组的序号
       // （2）质押的数量,为0的时候只领取奖励，不进行质押
       let data = {  // 使用send来执行non-pure或modify智能合约方法，这些方法确实修改了区块链，消耗资源（bandwidth 和 energy）并且还广播到网络。
@@ -312,6 +320,7 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
+      this.total.defaultAddress ='https://shasta.tronscan.org/#/address/'+window.tronWeb.defaultAddress.base58;
       this.total.showAlert1 = true
       let num ;
       n = n * Math.pow(10, this.total.decimals);
@@ -331,6 +340,13 @@ export default {
       this.total.btnFlag1 = false;
     },
     withdraw (x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
+     if (x === 0) { // 领取奖励
+          this.total.btnFlag2 = true;
+      } else {
+          this.total.btnFlag3 = true;
+      }
+      this.total.defaultAddress ='https://shasta.tronscan.org/#/address/'+window.tronWeb.defaultAddress.base58;
+      this.total.showAlert1 = true;
       let that = this
       let arr = Decimal(this.total.shareToal).mul(Math.pow(10, this.total.decimals)).toString();
       let num = null
@@ -347,6 +363,8 @@ export default {
         } else {
           that.total.btnFlag3 = false;
         }
+      }).catch(err=>{
+        console.log(err);
       })
       
     },

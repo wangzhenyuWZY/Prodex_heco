@@ -46,16 +46,8 @@ function calcOutGivenInAfterPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut
     const tokenAmountOut = Decimal(tokenBalanceOut).times(bar);
     const newTokenBalanceIn = Decimal(tokenBalanceIn).add(Decimal(tokenAmountIn));
     const newTokenBalanceOut = Decimal(tokenBalanceOut).sub(tokenAmountOut);
-    console.log('weightRatio----------'+weightRatio)
-    console.log('adjustedIn----------'+adjustedIn)
-    console.log('y----------'+y)
-    console.log('foo----------'+foo)
-    console.log('bar----------'+bar)
-    console.log('tokenAmountOut----------'+tokenAmountOut)
-    console.log('newTokenBalanceIn----------'+newTokenBalanceIn)
-    console.log('newTokenBalanceOut----------'+newTokenBalanceOut)
-    console.log('swapFeeswapFeeswapFeeswapFee----------'+swapFee)
-    return calcSpotPrice(newTokenBalanceOut, tokenWeightOut,newTokenBalanceIn, tokenWeightIn, swapFee);
+    debugger
+    return calcSpotPrice(newTokenBalanceIn, tokenWeightIn,newTokenBalanceOut, tokenWeightOut, swapFee);
 
 }
 

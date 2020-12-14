@@ -6,14 +6,14 @@
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
-      <span>Select a token</span>
+      <span>{{$t('Exc.sat')}}</span>
       <el-tooltip  placement="bottom" 
                    effect="light"
                   >
                   <div slot="content" class="slotp"> 
-                    Find a token by searching for <br> 
-                    its  name  or  symbol  or  by <br>
-                    pasting its address below.</div>
+                   {{$t('Exc.tsk1')}} <br> 
+                   {{$t('Exc.tsk2')}} <br>
+                   {{$t('Exc.tsk3')}} </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
     </span>
@@ -26,7 +26,7 @@
       </div>
       <div class="select_size select__bases"
            hidden>
-        <span> Common bases</span>
+        <span> {{$t('pool.Cos')}} </span>
         <img class="select_title"
              src="@/assets/img/icon_instructions.svg"
              alt="">
@@ -54,7 +54,7 @@
         </li>
       </ul>
       <div class="select_size select__sorting ">
-        <span>Token Name</span>
+        <span>{{$t('Exc.tn')}}</span>
         <img class="sorting"
             :class="iSort==0?'':(iSort==1?'sorttrue':'sortfalse')"
             @click="changeSort"
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import {IsPc} from '../../utils/index'
 export default {
   props: {
@@ -115,6 +115,7 @@ export default {
       mobile: IsPc(),
       filterName: '',
       iSort:0,
+      tokenData:TokenData()
       // tokenList: tokenData.tokenList,
     }
   },
@@ -123,11 +124,11 @@ export default {
          let filtername = this.filterName
          let iSort = this.iSort
          if (this.selectType == '') {
-           return tokenData.tokenList.filter((el) => {
+           return this.tokenData.tokenList.filter((el) => {
              return el.name.includes(filtername.toUpperCase())
            })
          } else {
-           let arry = tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           let arry = this.tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
            return arry.filter((el) => {
              return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
            })

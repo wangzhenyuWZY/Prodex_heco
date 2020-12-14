@@ -6,7 +6,7 @@
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
-      <span>You will recevive</span>
+      <span> {{$t('ywr')}} </span>
     </span>
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
@@ -32,7 +32,7 @@
           </div>
       </div>
     </div>
-    <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
+    <div class="receive__size">{{$t('oiei')}}</div>
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">
@@ -56,7 +56,7 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn" @click="clickFn  ">Confirm</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickFn  ">{{$t('confirm')}}</el-button>
   </el-dialog>
 </template>
 

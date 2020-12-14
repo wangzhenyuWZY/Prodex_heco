@@ -8,7 +8,7 @@
              :before-close="handleClose">
     <span slot="title"
           class="select_size">
-      <span>Confirm Swap</span>
+      <span>{{$t('confirm')}} {{$t('Exc.Swap')}}</span>
     </span>
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
@@ -36,12 +36,12 @@
         </div>
       </div>
     </div>
-    <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
+    <div class="receive__size">{{$t('oiei')}}</div>
       <div class="Price_text" > 
-            <span>Price: </span> 
+            <span>{{$t('Exc.Price')}}: </span> 
             <span>{{spotPrice.toFixed(8)}} </span>
                 <span> {{token1.name}} </span> 
-               <span> per </span>
+               <span>{{$t('Exc.per')}} </span>
                <span> {{token2.name}} </span> 
                <img src="@/assets/img/icon_slect.png" alt=""></div>
     <div class="box_sizes">
@@ -50,14 +50,15 @@
           <div class="changes_rece  changes_rece">
             <div class="lt change_img">
               
-              <span>Minimum received</span>
+              <span>{{$t('Exc.mrd')}}</span>
                     <el-tooltip placement="right"   effect="light">
                       <div slot="content"
                            >
-                        Your transaction will revert if<br>
-                        there is a large,unfavorable <br>
-                        price movement before it is
-                        <br>confirmed.
+                        {{$t('Exc.cts1')}}<br>
+                        {{$t('Exc.cts2')}} <br>
+                        {{$t('Exc.cts3')}}<br>
+                        {{$t('Exc.cts4')}}
+                       
                       </div>
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
@@ -68,10 +69,12 @@
             <div class="changes_rece change20">
             <div class="lt change_img">
               
-              <span>Price Impacte</span>
+              <span>{{$t('Exc.cpe')}}</span>
                <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       The difference between the<br> market price and estimated <br>price due to trade size.<br> 
+                      {{$t('Exc.cpe1')}}<br> 
+                      {{$t('Exc.cpe2')}}<br>
+                      {{$t('Exc.cpe3')}}<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip> 
@@ -81,14 +84,15 @@
             <div class="changes_rece ">
             <div class="lt change_img">
               
-              <span>Liquidity Provider Fee</span>
-              
+              <span>{{$t('Exc.lpf')}}</span>
                    <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       A protion of each trade(0.0010%) <br> goes to liquidity providers <br> as a protocal incentive.
+                        A protion of each trade <br> 
+                        goes to liquidity providers<br>
+                        as a protocal incentive.<br>             
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip> 
+                </el-tooltip>      
             </div>
             <span class="rg ">{{swapFee}} {{token1.name}}</span>
           </div>
@@ -97,7 +101,7 @@
         </div>
       </div>
       </div>
-      <el-button class="from_botton recevive_btn" @click="doConfirm">Confirm Swap</el-button>
+      <el-button class="from_botton recevive_btn" @click="doConfirm">{{$t('confirm')}} {{$t('Exc.Swap')}}</el-button>
       </el-dialog>
   </div>
 </template>

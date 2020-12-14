@@ -28,7 +28,6 @@ const allowance = (coinAddress,contractAddress) => {//查询授权
         try {
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
-                
                     resolve(res)
                 })
             })
@@ -55,17 +54,18 @@ const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
         }
     })
 }
-const Web3Utils = require('web3');
-const MAX = Web3Utils.utils.toTwosComplement(-1);
+// const Web3Utils = require('web3');
+// const MAX = Web3Utils.utils.toTwosComplement(-1);
 const approved = (coinAddress,contractAddress) => {//授权
     return new Promise(function (resolve, reject) {
         try {
+            // console.log('MAX================'+MAX)
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["approve"](contractAddress,MAX).send({shouldPollResponse:true}).then((res)=>{
+                Contract["approve"](contractAddress,'1000000000000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
                         Message({
                             showClose: true,
-                            message: 'Authorization success',
+                            message: this.$t('ars'),
                             type: 'success'
                         })
                         resolve(res);

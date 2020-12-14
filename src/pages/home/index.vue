@@ -27,9 +27,19 @@
     </div> -->
     <div class="c-box2">
       <div class="b2-top">
-        <samp class="top1">Top Pairs</samp>
+        <samp class="top1">{{$t('home.TopPairs')}}</samp>
+
+        <!-- <template slot-scope="scope">
+              <div>   
+                <img :src="requierImg(scope.row.token1.name,1)"
+                   alt="" /> 
+                   <img :src="requierImg(scope.row.token1.name,0)"
+                   alt="" />
+              </div>
+            </template> -->
 
       </div>
+      
       <div class="table">
         <el-table v-if="mobile"
                   :data="pairList"
@@ -39,19 +49,32 @@
                   cell-class-name="dddsadsa"
                   style="width: 100%">
           <el-table-column prop="pair"
-                           label="name">
-          </el-table-column>
+                           :label= "$t('home.Name')" >
+         <template slot-scope="scope">
+              <div class="reqimg">   
+                <img :src="requierImg(scope.row.token1.name,0)"
+                   alt="" /> 
+                   <img :src="requierImg(scope.row.token2.name,0)"
+                   alt="" />
+                    {{scope.row.token1.name}}/ 
+                     {{scope.row.token2.name}}
+              </div>
+            </template>           
+          
+        </el-table-column>
+          
           <el-table-column prop="token1.name"
-                           label="Assets">
+                           :label= "$t('home.Assets')">
             <template slot-scope="scope">
-              <div>
+              <div>   
                 {{scope.row.token1Balance ?scope.row.token1Balance :"--"  }}
-                {{scope.row.token1.name}}
+                {{scope.row.token1.name}} 
+
               </div>
             </template>
           </el-table-column>
           <el-table-column prop="token2.name"
-                           label="Symbol">
+                           :label= "$t('home.Assets')">
             <template slot-scope="scope">
               <div>
                 {{scope.row.token2Balance ?scope.row.token2Balance :"--"  }}
@@ -60,7 +83,7 @@
             </template>
           </el-table-column>
           <el-table-column prop="liquidity"
-                           label="liquidity">
+                           :label= "$t('home.Liquidity')">
             <template slot-scope="scope">
               <div>
                 {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
@@ -68,7 +91,33 @@
             </template>
             <span></span>
           </el-table-column>
-
+          <el-table-column prop="price"
+                           :label= "$t('home.price')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.trade_price ? scope.row.trade_price  : "--"}}
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
+          <el-table-column prop="Volume"
+                           :label= "$t('home.Volume')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.base_quantity ? scope.row.base_quantity  : "--"}}
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
+          <el-table-column prop="Change"
+                           :label= "$t('home.Change')">
+            <template slot-scope="scope">
+              <div>
+                {{scope.row.price_change_24 ? scope.row.price_change_24*100  : "--"}}%
+              </div>
+            </template>
+            <span></span>
+          </el-table-column>
         </el-table>
         <el-table v-if="!mobile"
                   :data="pairList"
@@ -82,9 +131,13 @@
                            label="name">
             <template slot-scope="scope">
               <div class="table_size">
-                {{scope.$index+1}} <img :src="scope.row.token1.img"
-                     alt=""><img :src="scope.row.token2.img"
-                     alt=""> {{scope.row.token1.name}}-{{scope.row.token2.name}}
+               
+                {{scope.$index+1}} 
+                <img :src="scope.row.token1.img"
+                     alt="">
+                <img :src="scope.row.token2.img"
+                     alt=""> 
+                     {{scope.row.token1.name}}-{{scope.row.token2.name}}
               </div>
             </template>
           </el-table-column>
@@ -101,7 +154,7 @@
                 <p>
                    <span style="color:#05C98E">{{scope.row.token2.widget ? scope.row.token2.widget: '--'}}</span>
                        {{scope.row.token2.name}}
-                   {{scope.row.token1Balance ?scope.row.token1Balance : '--'  }}
+                   {{scope.row.token2Balance ?scope.row.token2Balance : '--'  }}
                 
                 </p>
                
@@ -134,19 +187,20 @@
 </template>
 
 <script>
-
+import {api} from '../../api/api'
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import { IsPc } from '../../utils/index'
 import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool,getTokenDenormalizedWeight } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
   data () {
     return {
-      pairList:tokenData.pairList,
-      mobile: IsPc()
+      pairList:TokenData().pairList,
+      mobile: IsPc(),
+      tokenData:TokenData()
     }
   },
   mounted () {
@@ -154,10 +208,10 @@ export default {
     this.$initTronWeb().then(function (tronWeb) {
       that.init();
     })
-    
+    that.getVolPrice24()
   },
   methods: {
-        requierImg (name,number) {
+     requierImg (name,number) {
       let str;
       // debugger
       if (name) {
@@ -165,6 +219,7 @@ export default {
            if (number != undefined) {
               str = name.split('/');
               return require('@/assets/img/currency/'+str[number]+'.png')
+              
            }
             return require('@/assets/img/currency/'+name+'.png')
         } catch (error) {
@@ -178,8 +233,8 @@ export default {
       let that = this
       // this.pairList = tokenData.pairList
       let pairList = []
-      for (let index = 0; index < tokenData.pairList.length; index++) {
-        const el = tokenData.pairList[index];
+      for (let index = 0; index < this.tokenData.pairList.length; index++) {
+        const el = this.tokenData.pairList[index];
         getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
           el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
         })  
@@ -191,21 +246,47 @@ export default {
         let res2 = await getLpBalanceInPool(el);
         if(el.token1.name=='USDT'){
           let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
-          el.liquidity = bil*parseFloat(res1)
+          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
         }else if(el.token2.name=='USDT'){
           let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
-          el.liquidity = bil*parseFloat(res1)
+          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
         }
-        el.token1Balance = res;
-        el.token2Balance = res1;
+        el.token1Balance = res.toFixed(4);
+        el.token2Balance = res1.toFixed(4);
         pairList.push(el)
       }
       this.pairList = pairList
+    },
+    async getVolPrice24 () {//获取24小时量和价格
+      let res = await api.get24HourTradingVolume()
+      if(res.data.code==0){
+        let data = res.data.data
+        this.pairList.forEach((rsp)=>{
+          data.forEach((rsp2)=>{
+            if(rsp.pair.toUpperCase() == rsp2.full_name.toUpperCase()){
+              rsp.base_quantity = rsp2.base_quantity.toFixed(4)
+              rsp.trade_price = rsp2.trade_price.toFixed(4)
+              rsp.price_change_24 = rsp2.price_change_24.toFixed(4)
+            }
+          })
+        })
+      }
     }
   },
 }
 </script>
 <style  lang="scss" scoped>
+.reqimg{
+  white-space: nowrap;
+  img{
+    width: 25px;
+    height: 25px;
+  }
+
+  img:nth-child(2) {
+      transform: translateX(-12px);
+    }
+}
 .container {
   padding-top: 120px;
 }
@@ -363,7 +444,7 @@ export default {
 }
 >>> .adddd {
   background-color: #f4f8fb;
-  margin-left: 41px;
+  margin-left: 20px;
 }
 >>> .el-table__row {
   height: 72px;

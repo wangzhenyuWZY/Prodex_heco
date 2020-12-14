@@ -11,7 +11,7 @@
           </router-link>
         </span>
 
-        <span class="content_text">Remove Liquidity</span>
+        <span class="content_text">{{$t('rly')}}</span>
       </div>
       <div class="rg_box">
         <img src="@/assets/img/icon_instructions.svg"
@@ -20,7 +20,7 @@
     </div>
     <div slot="body" style="padding-bottom:40px;">
       <!-- 滑块部分开始 -->
-      <div class="box_top clearfix"><span>Acoout</span><span>Detailed</span></div>
+      <div class="box_top clearfix"><span> {{$t('Stake.Account')}} </span><span>{{$t('Stake.Detailed')}}</span></div>
       <div class="box_sizes ">
         <div class="provider add_marg">
           <div class="box_slider">
@@ -67,7 +67,7 @@
               </div>
             </div>
             <div class="weth">
-              <el-button class="weth_btn" @click="showAlert = true">Receive {{pair.pair}}</el-button>
+              <el-button class="weth_btn" @click="showAlert = true">{{$t('rly1')}} {{pair.pair}}</el-button>
               
             </div>
           </div>
@@ -88,8 +88,8 @@
           </div>
         </div>
         <div class="Approve_btn clearfix" hidden>
-              <el-button class="Approve1" @click="approveLpToken">Approve</el-button>
-              <el-button class="Approve1 Approve2" >Enter an amount</el-button>
+              <el-button class="Approve1" @click="approveLpToken">{{$t('Stake.Approve')}}</el-button>
+              <el-button class="Approve1 Approve2" >{{$t('Enat')}}</el-button>
         </div>
     </div>
   </container>
@@ -430,7 +430,7 @@ color: #0F1730;
   }
   .el-slider__button::before {
     content: "";
-    background:#05C98E;
+    background:#02B27D;
     width: 20px;
     height: 20px;
     line-height: 32px;

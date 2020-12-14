@@ -1,12 +1,11 @@
 <template>
-  <div >
+  <div>
     <div class="bimg"> </div>
     <div class="nav ">
-      <div class="logo"><img src="../../assets/img/logo_FoxDex.png"
-             alt="" />
-             <!-- <span class="logop">FoxDex</span> -->
-             </div>
-             
+      <div class="logo"><img src="../../assets/img/logo_FoxDex.png" alt="" />
+        <!-- <span class="logop">FoxDex</span> -->
+      </div>
+
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list"
              ref="header">
@@ -15,139 +14,210 @@
                 @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
-        <div class="active-bar"
-             :style="{ transform: `translateX(${key}px)` }"></div>
+        <div class="active-bar" :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
-          <div class="login_wallet" v-if="connectFlag">
-              <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
-              <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-               <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
+          <div class="login_wallet" v-if="!connectFlag"  @click="btnClick">
+            <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+            <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
+          </div>
+          <!-- <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">{{$t('nav.CWet')}}</el-button> -->
+          <div class="login_wallet" v-if="connectFlag&&moble">
+            <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+            <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+            <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
           </div>
         </div>
         <div class="nav_merge" v-show="!moble">
-              <img  class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
+          <img class="merge_img" src="@/assets/img/icon_nav.svg" @click="drawer = true" alt="">
         </div>
-        <el-drawer
-          title="我是标题"
-          :visible.sync="drawer"
-           :show-close ="false"
-           custom-class="drawer_body"
-          :with-header="false">
-            <div class="drawer_logo">
-               <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png"
-             alt="" /></div>
-               <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click="drawer = false"> </div>
+        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
+          <div class="drawer_logo">
+            <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png" alt="" /></div>
+            <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click.stop="drawer = false"> </div>
+          </div>
+          <div class="drawer_btn">
+            <div class="nav-butt">
+              <div class="login_wallet drawer_wallet" v-if="!connectFlag" @click.stop="btnClick">
+                <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+                <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
+              </div>
+              <!-- <el-button class="from_botton nav_btn " v-if="!connectFlag" @click.stop="btnClick">
+                {{$t('nav.CWet')}}
+              </el-button> -->
+              <div class="login_wallet drawer_wallet" v-if="connectFlag">
+                <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
+                <span class="wallet_addrs">{{walletAddres.address|address}}</span>
+                <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
+              </div>
             </div>
-            <div class="drawer_btn">
-                <div class="nav-butt">
-                  <el-button class="from_botton nav_btn " v-if="!connectFlag" @click="btnClick">Connect to a wallet</el-button>
-                  <div class="login_wallet drawer_wallet" v-if="connectFlag">
-                      <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
-                      <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-                      <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
-                  </div>
-                </div>
-            </div>
-            <ul class="drawer_nav">
-                <li  v-for="(idx, index) in tag"
-                :key="idx.path+'drawer'+index"
-                @click="handelActive(idx.path, index)"
+          </div>
+          <ul class="drawer_nav">
+            <li v-for="(idx, index) in tag" :key="idx.path+'drawer'+index" @click.stop="handelActive(idx.path, index)"
                 :class="navIndex == index ?'drawer_nav_active':''">{{idx.name }}</li>
-            </ul>
-            <ul class="drawer_nav_aubt">
-                <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_telegram.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_discord.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_medium.svg" alt=""></li>
-                <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
-            </ul>
+          </ul>
+          <div class="langAndSet">
+            <div class="setbox" @click.stop="tolerPop=true"><i class="setico"></i>Setting</div>
+            <div class="setbox fr" @click="hdel"><i class="langico"></i>{{this.$i18n.locale=='zh'?'简体中文':'English'}}</div>
+          </div>
+          <ul class="drawer_nav_aubt">
+            <li> <img src="@/assets/img/icon_feckbook.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_tetile.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_telegram.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_discord.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_medium.svg" alt=""></li>
+            <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
+          </ul>
         </el-drawer>
+        
+        <div class="lang"  @click="hdel">{{this.$i18n.locale=='zh'?'简体中文':'English'}}<i></i></div>
+        <i class="setting" @click="tolerPop=!tolerPop"></i>
+        <div class="setPanel" v-show="tolerPop">
+          <h2>Transaction Settings</h2>
+          <p class="totletitle">Slippage tolerance<i></i></p>
+          <div class="tolerTab">
+            <span @click="changeToler(0.01);num=1" :class="num==1?'active':''">1%</span>
+            <span @click="changeToler(0.05);num=2" :class="num==2?'active':''">5%</span>
+            <span @click="changeToler(0.1);num=3" :class="num==3?'active':''">10%</span>
+            <span @click="changeToler(0.3);num=4" :class="num==4?'active':''">30%</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from "vuex"
-import {IsPc} from '../../utils/index';
+import { mapState } from "vuex"
+import { IsPc } from '../../utils/index';
 export default {
-  data () {
+  data() {
     return {
+      tolerPop:false,
+      num:0,
       key: "31",
       navIndex: 0,
-      drawer:false,
+      drawer: false,
       childrenNode: [
-            102,
-            133,
-            87,
-            113,
-            103,
-            97
+        102,
+        133,
+        87,
+        113,
+        103,
+        97
       ],
-      moble:true,
+      moble: true,
       tag: [
         {
           path: '/',
-          name: 'Home'
+          name:this.$t('nav.home1')
         },
         {
           path: "/exchange",
-          name: "Exchange",
+          name: this.$t('nav.Exchange'),
         },
         {
           path: "/pool",
-          name: "Pool",
+          name: this.$t('nav.Pool'),
         },
         {
           path: "/foxdex",
-          name: "FoxDex",
+          name: this.$t('nav.FoxDex'),
         },
         {
           path: "/wtrx",
-          name: "WTRX",
+          name: this.$t('nav.WTRX'),
         },
         {
           path: "/stake",
-          name: "Stake",
+          name: this.$t('nav.Stake'),
         },
       ],
     };
   },
+
   created() {
     this.moble = IsPc();
   },
   computed: {
     ...mapState(['walletAddres','connectFlag'])
+    
   },
+  watch :{
+    '$i18n.locale':{
+      handler:function(val) {
+       
+        // this.doc = false
+        // setTimeout(()=>{
+        //   this.doc = true;
+        //   this.$forceUpdate();
+        //   console.log(this.$t('nav.home1'))
+        // })
+        var a =  [
+        {
+          path: '/',
+          name:this.$t('nav.home1')
+        },
+        {
+          path: "/exchange",
+          name: this.$t('nav.Exchange'),
+        },
+        {
+          path: "/pool",
+          name: this.$t('nav.Pool'),
+        },
+        {
+          path: "/foxdex",
+          name: this.$t('nav.FoxDex'),
+        },
+        {
+          path: "/wtrx",
+          name: this.$t('nav.WTRX'),
+        },
+        {
+          path: "/stake",
+          name: this.$t('nav.Stake'),
+        },
+      ];
+      console.log(a)
+      this.tag = a;
+      }
 
+    },
+    drawer(val){
+      if(!val){
+        this.tolerPop = false
+      }
+    }
+  },
   mounted () {
     try {
       // setTimeout(()=>{
-        // this.$refs.header.children.forEach((element) => {
-        //     let str = element.getBoundingClientRect();
-        //     // console.log(str);
-        //   this.childrenNode.push(element.offsetWidth);
-        // });
-        let hash = location.hash;
-        let str = hash.split("#")[1];
-        if (str) {
-          this.handelActive(str);
-        } else {
-          this.handelActive("/");
-        }
+      // this.$refs.header.children.forEach((element) => {
+      //     let str = element.getBoundingClientRect();
+      //     // console.log(str);
+      //   this.childrenNode.push(element.offsetWidth);
+      // });
+      let hash = location.hash;
+      let str = hash.split("#")[1];
+      if (str) {
+        this.handelActive(str);
+      } else {
+        this.handelActive("/");
+      }
       // },1000)
- 
+
     } catch (error) {
       console.log(error);
     }
   },
 
   methods: {
-     btnClick () {
+    changeToler(num){
+      this.$store.commit('changeTolerance',num)
+    },
+    btnClick() {
       this.$popup({
         // showAlert:true,
         click: () => {
@@ -157,10 +227,35 @@ export default {
         }
       })
     },
+    hdel(n){
+        let i18n =  this.$i18n.locale;
+    this.$i18n.locale = i18n == 'en' ? 'zh':'en';
+    this.childrenNode = [];
+    try {
+               setTimeout(()=>{
+        this.$refs.header.children.forEach((element) => {
+            let str = element.getBoundingClientRect();
+            // console.log(str);
+          this.childrenNode.push(element.offsetWidth);
+        });
+        let hash = location.hash;
+        let str = hash.split("#")[1];
+        if (str) {
+          this.handelActive(str);
+        } else {
+          this.handelActive("/");
+        }
+       })
+    } catch (error) {
+      
+    }
+
+    },
+        
 
 
-    handelActive (e, index) {
-        this.drawer = false;
+    handelActive(e, index) {
+      this.drawer = false;
 
       if (e == '/') {
         this.navIndex = 0;
@@ -179,11 +274,11 @@ export default {
       this.$router.push(e);
 
     },
-    handleCommand (res) {
+    handleCommand(res) {
       this.$router.push(res);
-          console.log(res);
+      console.log(res);
     },
-    setActive (n) {
+    setActive(n) {
       let num = 0;
       for (let index = 0; index <= n; index++) {
         num = (this.childrenNode[index] + num) * 1;
@@ -192,27 +287,110 @@ export default {
       return num1;
     },
   },
-  filters:{
-    address (n) {
+  filters: {
+    address(n) {
       if (!n) return '';
-      let pop  = n.slice(0, 6);
-      let len  =  n.substring(n.length-4);
-      let str = pop+'....' + len ;
-          return str;
+      let pop = n.slice(0, 6);
+      let len = n.substring(n.length - 4);
+      let str = pop + '....' + len;
+      return str;
     }
   }
 };
 </script>
 <style >
-.nav .drawer_body{
-      width: 69% !important;
-      background: #070A0E;
-      border-radius: 16px 0px 0px 16px;
-      color: #FFFFFF;
-      /* position: relative; */
-  }
+
+.nav .drawer_body {
+  width: 69% !important;
+  background: #070a0e;
+  border-radius: 16px 0px 0px 16px;
+  color: #ffffff;
+  /* position: relative; */
+  outline: 0;
+}
 </style>
 <style lang="scss" scoped>
+
+.setPanel{
+  background:#fff;
+  padding:24px 20px;
+  border-radius:20px;
+  box-sizing: border-box;
+  width:364px;
+  position:fixed;
+  right:48px;
+  top:80px;
+  z-index:9999;
+}
+.setPanel h2{
+  font-size:18px;
+  color:#070A0E;
+  line-height:100%;
+  padding-bottom:18px;
+}
+.setPanel .totletitle{
+  font-size:16px;
+  color:#878B97;
+  line-height:100%;
+  padding-bottom:11px;
+}
+.setPanel .totletitle i{
+  display:inline-block;
+  vertical-align: middle;
+  width:24px;
+  height:24px;
+  background:url(../../assets/img/icon_instructions.png) no-repeat center;
+  background-size:100% 100%;
+  margin-left:4px;
+}
+.setPanel .tolerTab{
+  overflow: hidden;
+}
+.setPanel .tolerTab span{
+  float:left;
+  width:72px;
+  height:36px;
+  line-height:36px;
+  text-align:center;
+  border-radius:32px;
+  background: #F6F7FB;
+  font-size:16px;
+  color:#878B97;
+  margin-left:12px;
+  cursor: pointer;
+}
+.setPanel .tolerTab span:first-child{
+  margin-left:0;
+}
+.setPanel .tolerTab span.active{
+  background:#02B27D;
+  color:#FFFFFF;
+}
+.setting{
+  width:28px;
+  height: 28px;
+  background: url(../../assets/img/setIco.png) no-repeat center;
+  background-size:100% 100%;
+  margin-left:16px;
+  margin-top:18px;
+  cursor: pointer;
+}
+.lang{
+  color:#A6AEB7;
+  line-height:40px;
+  font-size:16px;
+  margin-top:18px;
+  margin-left:36px;
+  cursor:pointer;
+}
+.lang i{
+  display:inline-block;
+  vertical-align: middle;
+  width:32px;
+  height:32px;
+  background: url(../../assets/img/langIco.png) no-repeat center;
+  background-size:100% 100%;
+}
 // .logop{
 //   float: left;
 //   // margin-top: 8px;
@@ -224,70 +402,69 @@ export default {
 //   // margin-left: 116px;
 //   margin-right: 22px;
 // }
-.drawer_logo{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 0.2rem;
-    .lt_logo{
-      padding-left: 0.3rem;
-      img{
-        width: 3.5rem;
-        
-      }
+.drawer_logo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.2rem;
+  .lt_logo {
+    padding-left: 0.3rem;
+    img {
+      width: 3.5rem;
     }
-    .rg_colse{
-      padding-right: 0.4rem;
-      img{
-        width: 0.9rem;
-      }
+  }
+  .rg_colse {
+    padding-right: 0.4rem;
+    img {
+      // width: 0.9rem;
+      width: 0.58rem;
     }
-   
+  }
 }
-.drawer_nav_aubt{
+.drawer_nav_aubt {
   position: absolute;
   left: 0;
   bottom: 0.7rem;
   width: 100%;
   display: flex;
   justify-content: space-around;
-  li{
-  
-    img{
-       width: 0.9rem;
+  li {
+    img {
+      width: 0.58667rem;
     }
   }
 }
- .drawer_nav{
-      font-size: 0.5rem;
-      margin-top: 0.5rem;
-      li{
-        line-height: 1.3rem;
-        padding-left: 0.8rem;
-      }
-    }
-    .drawer_nav_active{
-        background-color:#05c98e26;
-        color: #05C98E;
-        font-family: roboto-mediumitalic;
-    }
-   
- .drawer_btn{
-      padding: 0.4rem;
-      .drawer_wallet{
-        display: flex;
-        justify-content: center;
-      }
-    }
-.iconsv{
+.drawer_nav {
+  // font-size: 0.5rem;
+  font-size: 0.426667rem;
+  margin-top: 0.5rem;
+  li {
+    line-height: 1.3rem;
+    padding-left: 0.8rem;
+  }
+}
+.drawer_nav_active {
+  background-color: #02B27D;
+  color: #05c98e;
+  font-family: roboto-mediumitalic;
+}
+
+.drawer_btn {
+  padding: 0.4rem;
+  .drawer_wallet {
+    display: flex;
+    justify-content: center;
+  }
+}
+.iconsv {
   margin-left: 50px;
 }
 .icons {
   font-size: 34px;
-  color: #05C98E;
+  color: #05c98e;
   vertical-align: sub;
 }
-.bimg{
+.bimg {
   position: absolute;
   width: 100%;
   height: 380px;
@@ -299,12 +476,12 @@ export default {
 }
 .nav {
   position: relative;
-    overflow: hidden;
-  /* width: 1920px; */  
+  overflow: hidden;
+  /* width: 1920px; */
   line-height: 72px;
   height: 72px;
 }
-.drawer_body{
+.drawer_body {
   width: 50%;
 }
 .nav-butt {
@@ -317,7 +494,7 @@ export default {
     margin-top: -3px;
     cursor: pointer;
   }
-  .merge_img{
+  .merge_img {
     width: 0.8rem;
     height: auto;
   }
@@ -346,33 +523,31 @@ export default {
 
 .logo {
   float: left;
-    display: flex;
-    align-items: center;
-    
-    margin-top: 2px;
-    margin-left: 38px;
+  display: flex;
+  align-items: center;
+
+  margin-top: 2px;
+  margin-left: 38px;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
   //   margin-left: 10px;
-    
+
   // }
 }
 .logo img {
   width: 100%;
-  width:180px ;
-    height: 64px;
+  width: 180px;
+  height: 64px;
 }
 .nav-header {
-   
-  color: #A6AEB7;
+  color: #a6aeb7;
   position: relative;
   // margin-left: 22px;
-
+  
 }
 .active {
   font-family: roboto-mediumitalic;
-  color: #05C98E;
-
+  color: #05c98e;
 }
 .active-bar {
   position: absolute;
@@ -380,7 +555,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #05C98E;
+  background: #02B27D;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -394,52 +569,51 @@ export default {
 .on {
   color: #ffffff;
 }
-.login_wallet{
+.login_wallet {
   margin-top: 18px;
   height: 40px;
   line-height: 40px;
   border-radius: 28px;
-  background: #19242E;
-  color:#05C98E;
+  background: #19242e;
+  color: #05c98e;
   padding: 0 32px;
   display: flex;
   align-items: center;
-      cursor: pointer;
-    img{
-      margin-right: 2px;
-    }
-  .wallet_icon{
+  cursor: pointer;
+  img {
+    margin-right: 2px;
+  }
+  .wallet_icon {
     font-size: 24px;
     vertical-align: sub;
-   
   }
-  .wallet_addrs{
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-       margin-left: 4px;
-       margin-right: 16px;
+  .wallet_addrs {
+    font-size: 18px;
+    font-family: roboto-mediumitalic;
+    margin-left: 4px;
+    margin-right: 16px;
   }
-  span{
-      vertical-align: sub;
+  span {
+    vertical-align: sub;
   }
-  .conversion{
-      padding: 0 16px;
-      height: 24px;
-      line-height: 24px;
-      background:#05C98E;
-      border-radius: 28px;
-      font-size: 18px;
-      font-family: roboto-mediumitalic;
-      font-weight: normal;
-      color: #FFFFFF;
+  .conversion {
+    padding: 0 16px;
+    height: 24px;
+    line-height: 24px;
+    background: #02B27D;
+    border-radius: 28px;
+    font-size: 18px;
+    font-family: roboto-mediumitalic;
+    font-weight: normal;
+    color: #ffffff;
   }
 }
-.nav_btn{
+.nav_btn {
   margin-top: 17px;
   margin-right: 8px;
 }
-@media screen and (max-width: 750px)  {
-   .nav{
+@media screen and (max-width: 750px) {
+  .nav {
     padding-top: 0px;
     height: auto;
     display: flex;
@@ -449,51 +623,91 @@ export default {
     padding-top: 0.4rem;
 
     // padding-bottom: 1.2rem;
-    .logop{
+    .logop {
       font-size: 0.5rem;
       margin-top: 0;
       margin-left: 0;
       margin-right: 0;
     }
-    .logo{
+    .logo {
       // transform: scale(0.9);
       margin-left: 0px;
-      img{
+      img {
         width: 3rem;
         height: auto;
         // transform: scale(0.9);
       }
     }
   }
-  .nav-right{
+  .nav-right {
     padding-right: 15px;
-      .nav_merge{
-        margin-left: 14px;
+    .nav_merge {
+      margin-left: 14px;
     }
-    .login_wallet{
+    .login_wallet {
       padding: 0 20px;
       margin-top: 0px;
     }
-      .wallet_addrs{
-    margin: 0;
+    .wallet_addrs {
+      margin: 0;
+      font-size: 0.35rem;
+    }
+    .nav_btn {
+      width: 100%;
+      padding: 0 0.25rem;
+      font-size: 0.4rem;
+    }
+    .nav_btn {
+      margin-top: 0;
+    }
   }
-  .nav_btn{
-    width: 100%;
-    padding: 0 0.25rem;
-    font-size: 0.4rem;
-  }.nav_btn{
-    margin-top: 0;
-  }
- 
-  }
-  .content_text{
+  .content_text {
     display: none;
   }
-  .bimg{
+  .bimg {
     height: 4.58rem;
-    background-size: 100%  4.58rem;
+    background-size: 100% 4.58rem;
   }
-    
+  .setPanel{
+    width:auto;
+    left:15px;
+    right:15px;
+    top:30%;
+    padding: 24px 15px;
+  }
+  .setPanel .tolerTab span{
+    margin-left:6px;
+  }
+  .lang{display:none;}
+  .setting{display:none;}
+  .langAndSet{
+    position:absolute;
+    bottom:2rem;
+    width:100%;
+    text-align:center;
+  }
+  .langAndSet .setbox{
+    float:left;
+    font-size:0.37rem;
+    line-height:44px;
+    padding-left:24px;
+  }
+  .langAndSet .setbox.fr{float:right;padding-right:24px;}
+  .langAndSet .setbox .setico{
+    display:inline-block;
+    vertical-align: middle;
+    width:0.8rem;
+    height:0.8rem;
+    background:url(../../assets/img/setIco.png) no-repeat center;
+    background-size:100% 100%;
+  }
+  .langAndSet .setbox .langico{
+    display:inline-block;
+    vertical-align: middle;
+    width:0.8rem;
+    height:0.8rem;
+    background:url(../../assets/img/langIco.png) no-repeat center;
+    background-size:100% 100%;
+  }
 }
-
 </style>

@@ -7,47 +7,47 @@
             <samp class="trx">TRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.svg"
                    alt=""> WTRX</samp>
-            <div class="trx-a"> <samp class="trx-a1">TRX Balance:</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
+            <div class="trx-a"> <samp class="trx-a1">TRX{{$t('Exc.Balance')}} :</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
             <input type="number"
                    v-model="trxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                   placeholder="Please enter the amout of TRX">
-            <div class="trx-b"> <samp class="trx-b1">You will get WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
+                  :placeholder= "$t('wtrx.petao')">
+            <div class="trx-b"> <samp class="trx-b1">{{$t('wtrx.yog')}} WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
               <el-button class="from_botton"
                          :loading="btnLoading1"
                          :disabled="btnDisabled1"
-                         @click="changeWtrx">Confim</el-button>
+                         @click="changeWtrx">{{$t('confirm')}}</el-button>
             </div>
           </div>
           <div class="wtrx-right">
             <samp class="wtrx1">WTRX <img class="wtrx_img"
                    src="@/assets/img/icon_arrow_right.svg"
                    alt=""> TRX</samp>
-            <div class="wtrx-a"> <samp class="wtrx-a1">WTRX Balance:</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
+            <div class="wtrx-a"> <samp class="wtrx-a1">WTRX {{$t('Exc.Balance')}} :</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
             <input type="number"
                    v-model="wtrxNum"
                    :disabled="inputdisabled1"
                    onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                   placeholder="Please enter the amout of TRX">
-            <div class="wtrx-b"> <samp class="wtrx-b1">You will get TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
+                   :placeholder= "$t('wtrx.petao1')">
+            <div class="wtrx-b"> <samp class="wtrx-b1">{{$t('wtrx.yog')}} TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
               <el-button class="from_botton"
                          :loading="btnLoading2"
                          :disabled="btnDisabled2"
-                         @click="getAllowance">{{proNmae}}</el-button>
+                         @click="getAllowance">{{$t('confirm')}}</el-button>
             </div>
           </div>
         </div>
 
         <div class="wtrx-bottom">
-          <p>What is WTRX?</p>
-          <p>TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.
-            <br> DepositTRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.
+          <p>{{$t('wtrx.Whatis')}} WTRX?</p>
+          <p>{{$t('wtrx.titn')}}
+            <br> {{$t('wtrx.titn1')}}
           </p>
-          <p>Can WTRX exchange to other TRC20 Tokens?</p>
-          <p>WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.</p>
+          <p>{{$t('wtrx.CWetTRC20')}}</p>
+          <p>{{$t('wtrx.wtitn')}}</p>
         </div>
       </div>
     </div>
@@ -78,7 +78,7 @@ export default {
       inputdisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
-      proNmae:'Confim',
+      proNmae:'Confirm',
       showAlert:false,
       typeName:'success',
       stup:1,
@@ -188,7 +188,7 @@ export default {
                   // that.showAlert = true;
                   approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then(res=>{
                      console.log(res);
-                      that.proNmae = 'Confim';
+                      that.proNmae = 'Confirm';
                       that.loading2(0);
                   }).catch(err=>{
                     that.$message.error('privilege grant failed');
@@ -233,9 +233,9 @@ export default {
             that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txid;
             getConfirmedTransaction(res.txid).then((res1)=>{
               console.log(res1);
-                 that.$message.success('Successful trade')
+                 that.$message.success(this.$t('aut'))
                 if (that.stup != 1) {
-                    that.proNmae = 'Confim';
+                    that.proNmae = 'Confirm';
                 }
                 that.stup = 1;
                 that.getWtrx();
@@ -376,7 +376,7 @@ export default {
   padding-left: 50px;
   margin-top: 12px;
   font-size: 16px;
-  font-family: roboto-mediumitalic;
+  font-family: roboto;
   font-weight: 400;
   color: #878b97;
   line-height: 18px;
@@ -447,7 +447,7 @@ export default {
 .wtrx-right input {
   box-sizing: border-box;
   font-size: 16px;
-  font-family: roboto-mediumitalic;
+  font-family: roboto;
   color: #878b97;
   line-height: 18px;
   margin-top: 12px;
@@ -575,9 +575,13 @@ export default {
       font-size: 0.4rem;
       p:nth-child(2),p:nth-child(4){
           font-size: 0.3rem;
+          padding: 0 0.5rem;
       }
       p:nth-child(4){
         padding-bottom: 1rem;
+      }
+      p{
+        
       }
     }
   }

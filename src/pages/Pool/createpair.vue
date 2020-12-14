@@ -9,16 +9,21 @@
               <i class="el-icon-back back_icon"></i>
             </span>
           </router-link>
-          <span class="content_text">Create a pair</span>
+          <span class="content_text">{{$t('pool.cj1')}}</span>
         </div>
         <div class="rg_box">
-          <el-tooltip class="item" 
-                  effect="dark" 
-                  popper-class="tipstyle"
-                  content="When you add liquidity,you are given pool tokens representing your position.These tokens automatically earn fees proportional to your share of the pool,and can be redeemed at any time." 
-                  placement="left">
-                  <img src="@/assets/img/icon_instructions.svg" alt="">
-                </el-tooltip>
+                <el-tooltip placement="left"   effect="light">
+                      <div slot="content"
+                           >
+                        {{$t('pool.wyou1')}}<br>
+                        {{$t('pool.wyou2')}} <br>
+                         {{$t('pool.wyou3')}}<br>
+                         {{$t('pool.wyou4')}} <br>
+                          {{$t('pool.wyou5')}}
+                      </div>
+                      <img src="@/assets/img/icon_instructions.svg"
+                           alt="">
+                    </el-tooltip>
         </div>
       </div>
       <div slot="body">
@@ -26,22 +31,22 @@
           <div class="provider ">
             <div class="">
               <div class=" pair_ved">
-                <p class="pair_title">You are the first liquidity provider.</p>
-                <p class="pair_size pair_mag">The ratio of tokens you add will set the price of this pool.</p>
-                <p>Once you are happy with the rate click supply to review.</p>
+                <p class="pair_title">{{$t('pool.yat')}}</p>
+                <p class="pair_size pair_mag">{{$t('pool.tro')}}</p>
+                <p>{{$t('pool.tro1')}}</p>
               </div>
             </div>
           </div>
         </div>
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
-            <frominput lable="Input"
+            <frominput  :lable= "$t('pool.Input')"
                         showmax
                         :balance="token1.balance"
                        v-model="firstTokenNum"></frominput>
           </div>
           <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput :lable= "$t('pool.Weight')"
                        placeholder="1-50"
                        v-model="firstTokenWeight"></frominput>
           </div>
@@ -59,7 +64,7 @@
         </div>
         <div class="setInput  clearfix">
           <div class="ctx_1    fl_lt">
-            <frominput lable="Input"
+            <frominput :lable= "$t('pool.Input')"
 
                        v-model="secondTokenNum"
                        showmax
@@ -67,7 +72,7 @@
                        ></frominput>
           </div>
           <div class="ctx_2   fl_lt">
-            <frominput lable="weight"
+            <frominput :lable= "$t('pool.Weight')"
                        placeholder="1-50"
                        v-model="secondTokenWeight"></frominput>
           </div>
@@ -84,27 +89,16 @@
           <span>Price: </span>
           <span>0.0020495 </span>
           <span> ETH </span>
-          <span> per </span>
+          <span> {{$t('Exc.per')}}</span>
           <span> DAI </span>
           <img src="@/assets/img/icon_slect.png"
                alt="">
         </div>
-        <div class="whe clearfix">
-
-          <span class="pair_mandate"
-                v-show="false">
-            <el-button class="from_botton pair_mandate  pair_mandate_btb"> Mandate</el-button>
-          </span>
-          <el-button class="from_botton pair_mandate pair_swap "
-                     :loading="btnLoading1"
-                     :disabled="disabled1"
-                     @click="handel">Confim</el-button>
-        </div>
-        <div class="setInput pair_input clearfix">
+          <div class="setInput pair_input clearfix">
          
          <span class="ctw"> <div class="ctx_1 fl_lt ">
             <frominput 
-            lable="Sponsors"
+            :lable= "$t('Creatorfee')"
             placeholder="Please Enter" 
             v-model="sponsors">
             </frominput>
@@ -112,7 +106,7 @@
 
           <div class="ctx_2 fl_lt ">
             <frominput 
-            lable="FoxDex"
+            :lable="$t('FoxDex')"
             placeholder="Please Enter" 
             v-model="foxDex">
             </frominput>
@@ -125,6 +119,18 @@
             </frominput>
           </div>
         </div>
+        <div class="whe clearfix">
+
+          <span class="pair_mandate"
+                v-show="false">
+            <el-button class="from_botton pair_mandate  pair_mandate_btb"> {{$t('Exc.Mandate')}} </el-button>
+          </span>
+          <el-button class="from_botton pair_mandate pair_swap "
+                     :loading="btnLoading1"
+                     :disabled="disabled1"
+                     @click="handel">{{$t('confirm')}}</el-button>
+        </div>
+      
       </div>
       <div slot="footer"
            v-show="login"
@@ -134,26 +140,26 @@
             <div class="">
               <div class="received">
                 <div class="lt">
-                  <span>Minimum received <img src="@/assets/img/icon_instructions.svg"
+                  <span> {{$t('Exc.Mrd')}} <img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="rgs">441.4 aDAI</span>
               </div>
               <div class="received setmage">
                 <div class="lt">
-                  <span>Price Impacte <img src="@/assets/img/icon_instructions.svg"
+                  <span>{{$t('Exc.Pre')}}<img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="rec_red">5.30%</span>
               </div>
               <div class="received">
                 <div class="lt">
-                  <span>Liquidity Provider Fee <img src="@/assets/img/icon_instructions.svg"
+                  <span>{{$t('Exc.Liyee')}}<img src="@/assets/img/icon_instructions.svg"
                          alt=""></span>
                 </div>
                 <span class="">0.003 ETH</span>
               </div>
-              <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
+              <div class="fees_account">{{$t('Exc.Vpcs')}}<img src="@/assets/img/icon_jump_green.png"
                      alt=""></div>
             </div>
           </div>
@@ -220,19 +226,19 @@ export default {
       // this.login = !this.login
       if (!this.firstTokenNum || this.firstTokenNum == 0 || this.firstTokenNum == '' || !this.secondTokenNum || this.secondTokenNum == 0 || this.secondTokenNum == '') {
         this.$message({
-          message: 'Please enter the added quantity',
+          message: this.$t('pewe'),
           type: 'error'
         });
         return
       } else if (!this.firstTokenWeight || this.firstTokenWeight == 0 || this.firstTokenWeight == '' || !this.secondTokenWeight || this.secondTokenWeight == 0 || this.secondTokenWeight == '') {
         this.$message({
-          message: 'Please enter weight',
+          message: this.$t('pewe1'),
           type: 'error'
         });
         return
       } else if ((this.firstTokenWeight + this.secondTokenWeight) > 50) {
         this.$message({
-          message: 'Weight addition cannot be greater than 50',
+          message: this.$t('pewe5'),
           type: 'error'
         });
         return
@@ -241,6 +247,7 @@ export default {
     },
     init () {//初始化tronweb
       let that = this
+      debugger
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
         that.getSwapFeeForDex()
@@ -249,13 +256,15 @@ export default {
       })
     },
     async getBFactoryContract () {//链接BFactory合约
+      console.log('ipConfig.BFactory====='+ipConfig.BFactory)
       this.BFactoryContract = await window.tronWeb.contract().at(ipConfig.BFactory);
     },
     async getSwapFeeForDex () {
+      console.log('ipConfig.BFactory====='+ipConfig.BFactory)
       var functionSelector = 'swapFeeForDex()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
-      this.foxDex = parseInt(transaction.constant_result[0], 16)
+      this.foxDex = parseInt(transaction.constant_result[0], 16)/Math.pow(10,18)
     },
     loading1 (n) {
       if (n) {
@@ -271,7 +280,7 @@ export default {
       this.loading1(1);
       
       this.$message({
-        message: 'Successful, please wait for block confirmation',
+        message:  this.$t('pewe6'),
         type: 'success'
       });
       try {
@@ -302,7 +311,7 @@ export default {
       catch (error) {
         that.loading1();
           this.$message({
-        message: 'System error',
+        message: this.$t('pewe7'),
         type: 'error'
       });
         console.log(error);
@@ -360,7 +369,7 @@ export default {
            that.showAlert1 = true;
            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
           that.loading1(1);
-          that.$message.success('success');
+          that.$message.success(this.$t('pewe8'));
         });
       })
     },
@@ -471,10 +480,11 @@ export default {
 }
 
 .createpair {
+  
   padding-top: 120px;
 
   .whe {
-    margin-top: 16px;
+    padding-bottom: 16px;
     display: flex;
     justify-content: space-between;
   }
@@ -575,7 +585,7 @@ export default {
   .pair_input {
     
     margin-top: 30px;
-    padding-bottom: 40px;
+    padding-bottom: 0px;
    
   }
   .lt_box {
@@ -710,7 +720,7 @@ export default {
     }
     .el-slider__button::before {
       content: "";
-      background: #05c98e;
+      background: #02B27D;
       width: 20px;
       height: 20px;
       line-height: 32px;
@@ -840,6 +850,9 @@ export default {
 @media screen and (max-width: 750px) {
   .createpair {
     padding-top: 0;
+    .from_contentIcon{
+      margin: 0;
+    }
     .from_botton {
       margin-top: 0;
     }
@@ -858,7 +871,8 @@ export default {
       margin-top: 17px;
     }
     .pair_input {
-      padding-bottom: 20px;
+      margin-top: 15px;
+      padding-bottom: 0px;
     }
     .ctx_2 {
       width: 22%;

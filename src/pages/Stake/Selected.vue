@@ -9,7 +9,7 @@
           <span class="icon_box" @click="handelInit">
             <i class="el-icon-back back_icon"></i>
           </span>
-          <span class="content_text">Your Selected Pool</span>
+          <span class="content_text">{{$t('Stake.Yol')}}</span>
         </div>
       </div>
       <div slot="body">
@@ -19,7 +19,7 @@
             <el-button class="from_botton" @click="butlink"> <img class="whe_img"
                   
                    src="@/assets/img/icon_my_wallet.svg"
-                   alt=""> Connect to a wallet</el-button>
+                   alt="">{{$t('nav.CWet')}}</el-button>
           </p>
 
         </div>
@@ -52,30 +52,30 @@
           </div>
         </div>
         <!--  -->
-        <div class="text_border">To stake FOXDEX_LP tokens, acquire <span class="colorF">them here</span> </div>
+        <div class="text_border"> {{$t('Stake.sfox')}} <span class="colorF"></span> </div>
         <div class="received">
           <div class="lt">
-            <span>Total FOX Earned</span>
+            <span> {{$t('Stake.stfe')}}</span>
           </div>
           <div class="rg ftblod">{{farmtoal.uniswaplp}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Unstaked FOXDEX_LP</span>
+            <span> {{$t('Stake.syuf')}}</span>
           </div>
           <div class="rg ftblod">{{farmtoal.balanceOf}}</div>
         </div>
         <div class="received mrgtop16">
           <div class="lt">
-            <span>Your Staked FOXDEX_LP</span>
+            <span> {{$t('Stake.sysfl')}}</span>
           </div>
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btns clearfix">
-          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">UNDTSKE&CLAIM</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve">UNSTAKE&CLAIM</el-button>
           <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">CLAIM REWARDS</el-button>
         </div>
-        <div class="ftblod mrge12">Amount</div>
+        <div class="ftblod mrge12"> {{$t('Stake.Approve')}}</div>
         <div class="box_sizes box_Price">
           <div class="provider ">
             <div class="">
@@ -95,7 +95,7 @@
           </div>
         </div>
          <div class="selt_btn clearfix">
-          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">STAKE</el-button>
+          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">{{$t('nav.Stake')}}</el-button>
         </div>
       </div>
     </container>
@@ -510,6 +510,9 @@ export default {
       }
       .Approve_btns{
         display: flex;
+        .Approve1{
+          font-size: 0.37rem;
+        }
       }
       .box_Price{
           height: auto;

@@ -2,24 +2,22 @@
   <div class="pool-box">
     <div class="pool_bg clearfix">
       <div class="pool-box1">
-        <p>Liquidity provider rewards</p>
+        <p>{{$t('pool.Lpr')}}</p>
         <p>
-          Liquidity providers earn a 0.3% fee on all trades proportional to
-          their share of the pool. Fees are added to the pool, accrue in real
-          time and can be claimed withdrawing your liquidity.
+          {{$t('pool.Lpr2')}}
         </p>
-        <p v-show="false">Read more about providing liquidity</p>
+        <p v-show="false"> {{$t('pool.Rmpl')}}</p>
       </div>
       <div class="pool-btn clearfix">
         <p class=""></p>
       </div>
       <div class="pool-box2">
         <div class="pool-butt">
-          <samp class="pool-p">Your liquidity</samp>
+          <samp class="pool-p">{{$t('pool.Yly')}}</samp>
           <div class="pool-butt1">
             <router-link to="/pool/pairs">
               <el-button class="from_botton red_button bottun_hei"
-                >Create a pair</el-button
+                >{{$t('pool.cj1')}}</el-button
               >
             </router-link>
           </div>
@@ -28,24 +26,24 @@
               <el-button 
               
               class="from_botton bottun_hei1"
-                >Add Liquidity</el-button
+                >{{$t('pool.al')}}</el-button
               >
             </router-link>
           </div>
         </div>
         <div class="pool_boxbg" v-if="!connectFlag">
           <samp class="pool-p1"
-            >Connect to a wallet to view your liquidity.</samp
+            >{{$t('pool.cta')}}</samp
           >
           <samp class="pool-p2">
-            Don't see a pool you joined?<samp class="pool-p3">
-              Import it.</samp
-            ></samp
-          >
+            {{$t('pool.dts')}}<samp class="pool-p3">
+            {{$t('pool.imp')}}</samp
+            >
+            </samp>
         </div>
         <div class="fees" v-if="connectFlag">
           <div class="fees_account" v-show="false">
-            Acoout analytics and accrued fees
+            {{$t('pool.Adaf')}}
             <img src="@/assets/img/icon_jump_green.png" alt="" />
           </div>
           <div class="cyrny_bg" v-for="(item,index) in pairList" :key="index" v-show="parseFloat(item.myBalanceInPool)>0">
@@ -72,32 +70,32 @@
                 <div class="fees_share">
                   <div class="received liqui">
                     <div class="lt">
-                      <span>Your tatal pool token:</span>
-                    </div>
+                      <span> {{$t('pool.Ytpt')}} </span>
+                    </div> 
                     <span class="rg">{{item.myBalanceInPool}}</span>
                   </div>
                   <div class="received liqui  mrgtop16">
                     <div class="lt">
                       <img src="@/assets/img/btc.svg" alt="" />
-                      <span>Pooled {{item.token1.name}}:</span>
+                      <span>{{$t('pool.Pooled')}} {{item.token1.name}}:</span>
                     </div>
                     <span class="rg">{{token1Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received  liqui mrgtop16">
                     <div class="lt">
                       <img class="lt_icon" src="@/assets/img/btc.svg" alt="" />
-                      <span>Pooled {{item.token2.name}}:</span>
+                      <span>{{$t('pool.Pooled')}} {{item.token2.name}}:</span>
                     </div>
                     <span class="rg">{{token2Balance.toFixed(6)}}</span>
                   </div>
                   <div class="received liqui mrgtop16">
                     <div class="lt">
-                      <span>Your pool share:</span>
+                      <span> {{$t('pool.Yops')}}:</span>
                     </div>
                     <span class="rg">{{(share*100).toFixed(2)}}%</span>
                   </div>
                   <div class="accrued">
-                    View accrued fees and analycis
+                    {{$t('pool.Vafas')}}
                     <img
                       class="acrued_img"
                       src="@/assets/img/icon_jump_green.png"
@@ -106,10 +104,10 @@
                   </div>
                   <div class="accrued_btn clearfix">
                     <div class="btn_lt fl_lt">
-                        <el-button class="from_botton" @click="toPool(item)">Add</el-button>
+                        <el-button class="from_botton" @click="toPool(item)">{{$t('pool.Add')}}</el-button>
                     </div>
                     <div class="btn_lt fl_rg">
-                        <el-button class="from_botton" @click="toRemove(item)">Remove</el-button>
+                        <el-button class="from_botton" @click="toRemove(item)"> {{$t('pool.Remove')}} </el-button>
                     </div>
                   </div>
                 </div>
@@ -117,14 +115,14 @@
             </div>
           </div>
           <div class="pool_it">
-            <samp class="pool-p2">
+            <!-- <samp class="pool-p2">
               Don't see a pool you joined?
                  <router-link to="/pool/importpool"><samp class="pool-p3">
             Import it. </samp>
-            </router-link>
+            </router-link> -->
               
-              </samp
-            >
+              <!-- </samp
+            > -->
           </div>
         </div>
       </div>
@@ -135,7 +133,7 @@
 <script>
 const Decimal = require('decimal.js');
 import { mapActions, mapState } from "vuex";
-import tokenData from "../../utils/token"
+import {TokenData} from '../../utils/index'
 import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
 export default {
   data() {
@@ -146,7 +144,8 @@ export default {
       token2Balance:0,
       myBalanceInPool:0,
       lpTotal:0,
-      share:0
+      share:0,
+      tokenData:TokenData()
     };
   },
   computed: {
@@ -187,7 +186,7 @@ export default {
     },
     getpairList(){
       let that = this
-      tokenData.pairList.forEach((item)=>{
+      this.tokenData.pairList.forEach((item)=>{
         item.show = false
         getMyBalanceInPool(item).then((res)=>{
           item.myBalanceInPool = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()
@@ -355,6 +354,7 @@ export default {
 @media screen and (max-width: 750px) {
    .removeLq{
      margin-top: 0px;
+
        .pool-box{
     width: 100%;
     // padding: 0 0.4rem ;
@@ -368,6 +368,14 @@ export default {
      }
     } 
    }
+      .fees .fees_share{
+       padding:  0 12px;
+       padding-top: 16px;
+       
+     }
+    .fees .accrued_btn .btn_lt {
+      width: 48%;
+     }
 
 }
 

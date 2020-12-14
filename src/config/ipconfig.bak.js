@@ -12,9 +12,9 @@ if (process.env.NODE_ENV === 'development') {
 }else{
   ipConfig = {
     wtrxAddress: 'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
-    BFactory:'TEG4wm38LS96HSWybWDGXLsZ27BY8G7Xes ',
-    MasterChef:'TEDKHvxU89jA61e7BhmXptUaaBkHZhziC8 ',
-    FactoryManager:'TJYT1XbS9bHTTFbhSDpgr3Kmk41csKxrRa '
+    BFactory:'TEG4wm38LS96HSWybWDGXLsZ27BY8G7Xes',
+    MasterChef:'TEDKHvxU89jA61e7BhmXptUaaBkHZhziC8',
+    FactoryManager:'TJYT1XbS9bHTTFbhSDpgr3Kmk41csKxrRa'
   }
 }
 export default ipConfig

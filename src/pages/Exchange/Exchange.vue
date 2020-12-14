@@ -5,7 +5,7 @@
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
           <frominput 
-            lable="From"
+            :lable= "$t('Exc.From')" 
             showmax
             v-model="token1Num" 
             :balance="token1.balance"
@@ -26,13 +26,13 @@
 
         <div class="from_contentIcon">
 
-          <img src="../../assets/img/icon_down.png" alt="" @click="convert">
+          <img @click="purples" src="../../assets/img/icon_down.png" alt="">
           <!-- <i class="el-icon-back cursor tran_icon"
              @click="purples"></i> -->
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput lable="To"
+            <frominput :lable= "$t('pool.to')"
                       showmax
                       :balance="token2.balance"
                        v-model="token2Num"
@@ -49,11 +49,11 @@
         </div>
         <div class="Price_text"
              v-show="connectFlag">
-          <span>Price: </span>
+          <span>{{$t('Exc.Price')}}:</span>
           <span>{{spotPrice.toFixed(4)}} </span>
-          <span> {{token2.name}} </span>
-          <span> per </span>
           <span> {{token1.name}} </span>
+          <span> {{$t('Exc.per')}}</span>
+          <span> {{token2.name}} </span>
           <img src="@/assets/img/icon_slect.png"
                alt=""
                @click="convert">
@@ -67,21 +67,21 @@
               <el-button class="from_botton"
                         :disabled="btnDisabled2"
                          :loading="btnLoading2"
-                         @click="doApprove">Approve {{token1.name}}</el-button>
+                         @click="doApprove">{{$t('Stake.Approve')}} {{token1.name}}</el-button>
             </div>
             <div class="whe fl_rg" v-show="!Approved()">
               <span> <el-button class="from_botton"
                          v-show="!connectFlag"
                          @click="btnClick"> <img class="whe_img"
                      src="@/assets/img/icon_my_wallet.svg"
-                     alt=""> {{connectFlag?'Swap':'Connect to a wallet'}}
+                     alt=""> {{connectFlag?$t('Exc.Swap'): $t('nav.CWet')}}
                      </el-button></span>
 
              <span>  <el-button class="from_botton"
                          :loading="btnLoading1"
                          v-show="connectFlag" 
                          :disabled="tobtnDisabled()"
-                         @click="confirmSwap">Swap</el-button></span>
+                         @click="confirmSwap">{{$t('Exc.Swap')}}</el-button></span>
             </div>
           </div>
         </div>
@@ -95,14 +95,14 @@
             <div class="">
               <div class="received">
                 <div class="lt1">
-                  <span>Minimum received
+                  <span>{{$t('Exc.mrd')}}
                     <el-tooltip placement="right"   effect="light">
                       <div slot="content"
                            >
-                        Your transaction will revert if<br>
-                        there is a large,unfavorable <br>
-                        price movement before it is
-                        <br>confirmed.
+                        {{$t('Exc.cts1')}}<br>
+                        {{$t('Exc.cts2')}} <br>
+                        {{$t('Exc.cts3')}}<br>
+                        {{$t('Exc.cts4')}}
                       </div>
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
@@ -115,10 +115,12 @@
             </div>
             <div class="received setmage">
               <div class="lt">
-                <span>Price Impacte 
+                <span>{{$t('Exc.cpe')}}
                     <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                       The difference between the<br> market price and estimated <br>price due to trade size.<br> 
+                      {{$t('Exc.cpe1')}}<br> 
+                      {{$t('Exc.cpe2')}}<br>
+                      {{$t('Exc.cpe3')}}<br> 
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>          
@@ -128,20 +130,21 @@
               </div>
               <div class="received"  >
                 <div class="lt">
-                  <span>Liquidity Provider Fee
-                    <el-tooltip class="item"
-                              effect="light"
-                                :content="tips"
-                                placement="right">
-                      <img src="@/assets/img/icon_instructions.svg"
-                           alt="">
-                    </el-tooltip>
+                  <span>{{$t('Exc.lpf')}}
+                     <el-tooltip placement="right" effect="light">
+                  <div slot="content" > 
+                        {{$t('Exc.lpf1')}}<br> 
+                        {{$t('Exc.lpf2')}}<br>
+                        {{$t('Exc.lpf3')}}<br>             
+                      </div>
+                  <img src="@/assets/img/icon_instructions.svg" alt="">
+                </el-tooltip>        
                   </span>
                 </div>
                 <span class="setspan">{{thisswapFee}} {{token1.name}}</span>
               </div>
-              <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
-                     alt=""></div>
+              <!-- <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
+                     alt=""></div> -->
             </div>
           </div>
         </div>
@@ -172,6 +175,9 @@
 </template>
 
 <script>
+const Web3Utils = require('web3');
+const MAX = Web3Utils.utils.toTwosComplement(-1);
+import BigNumber from 'bignumber.js'
 const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
@@ -222,7 +228,10 @@ export default {
       btnDisabled2:false,
       isPc:IsPc(),
       tips:'',
-      typeUrl:''
+      typeUrl:'',
+      minAmountOut:0,
+      tolerance:0.1,
+      maxPrice:MAX
     }
   },
   computed: {
@@ -237,7 +246,7 @@ export default {
     removealert
   },
   created () {
-
+    console.log('tolerance============'+this.$store.state.tolerance)
   },
   watch: {
     token1Num () {
@@ -329,7 +338,8 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (token) {
-        let balance = parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)
+        console.log('tokenBalance._hex==============='+tokenBalance._hex,token.decimals,token.name)
+        let balance = (parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)).toFixed(6)
         token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
         if (this.token1.address && this.token2.address) {
           this.getPairAddress(token)
@@ -360,7 +370,7 @@ export default {
           this.btnDisabled2 = false;
         })
       } else {
-        this.$message.error('Please select transac tion pair')
+        this.$message.error( this.$t('Exc.plsec'))
       }
     },
     async getPairAddress () {
@@ -377,7 +387,7 @@ export default {
         console.log('getPairAddress=========')
         allowance(that.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex, 16);
+            let approveBalance = parseInt(res._hex?res._hex:res.constant_result[0], 16);
             console.log('approveBalance ====='+approveBalance)
             if (approveBalance == 0) {
               that.isApproved = true
@@ -415,7 +425,7 @@ export default {
     cumpToken1 () {//计算兑换的token1
       if(!this.isPair){
         this.$message({
-          message: 'The transaction pair does not exist',
+          message: this.$t('ttpd'),
           type: 'error'
         });
         return
@@ -435,7 +445,7 @@ export default {
     cumpToken2 () {//计算兑换的token2
       if(!this.isPair){
         this.$message({
-          message: 'The transaction pair does not exist',
+          message: this.$t('ttpd'),
           type: 'error'
         });
         return
@@ -449,16 +459,24 @@ export default {
         let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
-        let percentage = (Decimal(this.spotPrice).minus(afterPrice)).div(afterPrice).mul(Decimal(100))
-        console.log('----------',this.token1Balance,this.token1Weight, this.token2Balance, this.token2Weight, this.token1Num,this.swapFee)
-        console.log('afterPrice============='+afterPrice,this.spotPrice.toFixed())
+        console.log('spotPrice'+this.spotPrice.toString())
+        // console.log('afterPrice'+afterPrice.toString())
+        let percentage = (Decimal(afterPrice).minus(this.spotPrice)).div(this.spotPrice).mul(Decimal(100))
+        this.maxPrice = Decimal(this.spotPrice).mul(1+this.tolerance).mul(Math.pow(10,18)).toFixed(0)
         this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
     },
+    getMinAmountOut(){
+      this.tolerance = this.$store.state.tolerance
+      let token2Num = calcOutGivenIn(this.token1Balance, this.token1Weight, this.token2Balance, this.token2Weight, 1, this.swapFee)
+      let maxNumber = token2Num.mul(this.token1Num).mul(1+this.tolerance)
+      maxNumber = new BigNumber(maxNumber)
+      this.maxPrice = maxNumber.times(Math.pow(10,18)).toFixed(0)
+    },
     getSpotPrice () {//计算token1的价格
       if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
-        this.spotPrice = calcSpotPrice(this.token2Balance, this.token2Weight, this.token1Balance, this.token1Weight, this.swapFee)
+        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.swapFee)
       }
       if (this.token1Num) {
         this.cumpToken2()
@@ -523,6 +541,11 @@ export default {
       let token2 = this.token2
       this.token1 = token2
       this.token2 = token1
+      this.token2Balance = 0
+      this.token2Weight = 0 
+      this.token1Balance = 0
+      this.token1Weight = 0
+      this.swapFee = 0
       this.getPairAddress()
     },
     async doswap () {
@@ -538,12 +561,16 @@ export default {
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
+      let token1num = new BigNumber(that.token1Num)
+      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      // this.getMinAmountOut()
+      console.log('that.maxPrice==========='+that.maxPrice)
       var parameter = [
         { type: 'address', value: that.token1.address },
-        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
         { type: 'uint256', value: 0 },
-        { type: 'uint256', value: '1000000000000000000000000' }
+        { type: 'uint256', value: that.maxPrice }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
@@ -554,7 +581,7 @@ export default {
           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
-            that.$message.success('Successful trade');
+            that.$message.success(that.$t('aut'));
             that.token1Num = 0;
             that.token2Num = 0;
             that.getBalance(that.token1)
@@ -799,7 +826,7 @@ export default {
   }
   .el-slider__button::before {
     content: "";
-    background:#05C98E;
+    background:#02B27D;
     width: 20px;
     height: 20px;
     line-height: 32px;
@@ -831,6 +858,7 @@ export default {
 .setspan{
   line-height: 24px;
   color:#ffffff;
+  // padding-bottom: 20px;
 }
 .Price_text {
   font-size: 20px;

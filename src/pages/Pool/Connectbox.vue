@@ -9,36 +9,30 @@
                        class="disa">
             <i class="el-icon-back back_icon"></i>
           </router-link>
-          <span class="content_text fl_lt">Add Liquidity</span>
+          <span class="content_text fl_lt">{{$t('pool.al')}}</span>
           <div class="text_btn conct_btn fl_lt">
                <el-button class="from_botton connect_btns"
                       :class="iSingle?'green_btn':'fff_button'"
                      @click="iSingle=true"
-                     type="small">Single assets</el-button>
+                     type="small">{{$t('pool.assets1')}}</el-button>
           </div>
          <div class="text_btn fl_lt">
               <el-button class=" from_botton connect_btns"
                     :class="!iSingle?'green_btn':'fff_button'"
                      @click="iSingle=false"
-                     type="small">Double assets</el-button>
+                     type="small">{{$t('pool.assets2')}}</el-button>
          </div>
         
         </div>
         <div class="rg_box  fl_rg">
            <el-tooltip placement="left"   >
                       <div slot="content"
-                           >
-                        When you add liquidity, <br>
-                        you are given pool tokens <br>
-                        representing your<br>
-                        position. These tokens <br>
-                        automatically earn fees <br>
-                        proportional to your <br>
-                        share of the pool, and <br>
-                        can be redeemed at <br>
-                        anytime.
-
-
+                          >
+                       {{$t('pool.stkk1')}} <br>
+                       {{$t('pool.stkk2')}} <br>
+                       {{$t('pool.stkk3')}} <br>
+                       {{$t('pool.stkk4')}} <br>
+                       {{$t('pool.stkk5')}} <br>
                       </div>
                       <img src="@/assets/img/icon_instructions.svg"
                            alt="">
@@ -68,7 +62,7 @@
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput lable="input"
+            <frominput :lable= "$t('pool.Input')"
                        showmax
                        :balance='token1.balance'
                        v-model="token1Num"
@@ -90,7 +84,7 @@
         <div class="setInput clearfix"
              v-show="!iSingle">
           <div class="ctx_1 fl_lt">
-            <frominput lable="input"
+            <frominput :lable= "$t('pool.Input')"
                        placeholder=""
                        showmax
                        :balance='token2.balance'
@@ -109,36 +103,36 @@
         <div class="box_sizes"
              v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
           <div class="provider connectbox">
-            <div class="box_title">Prices and pool share</div>
+            <div class="box_title">{{$t('pool.paps')}}</div>
             <ul class="pre_list clearfix">
               <li>
                 <p>{{justPrice?justPrice.toFixed(4):'--'}}</p>
-                <p>{{token1.name}} per {{token2.name}}</p>
+                <p>{{token1.name}}{{$t('Exc.per')}} {{token2.name}}</p>
               </li>
               <li>
                 <p>{{reversePrice?reversePrice.toFixed(4):'--'}}</p>
-                <p>{{token2.name}} per {{token1.name}}</p>
+                <p>{{token2.name}} {{$t('Exc.per')}} {{token1.name}}</p>
               </li>
               <li>
                 <p>{{share}}%</p>
-                <p>Share of Pool</p>
+                <p> {{$t('sopl')}} </p>
               </li>
             </ul>
           </div>
         </div>
         <div class="connect_btn clearfix">
           <div class="whe fl_lt"
-               v-show="disableds()">
+               v-show="!isApproved">
             <el-button class="from_botton"
                         :loading="charm.btnLoading2"
                        :disabled="charm.disabled2"
-                       @click="doApprove">Approve</el-button>
+                       @click="doApprove">{{$t('Stake.Approve')}}</el-button>
           </div>
           <div class="whe fl_rg">
             <el-button class="from_botton"
                        :loading="charm.btnLoading1"
                        :disabled="btndisable()"
-                       @click="confirmSupply">Supply</el-button>
+                       @click="confirmSupply">{{$t('Supply')}}</el-button>
           </div>
         </div>
       </div>
@@ -150,7 +144,7 @@
             <div class="">
               <div class="received metitle ">
                 <div class=" ">
-                  Your position
+                  {{$t('pool.yopn')}}
                 </div>
                 <div class="rg connect_currency">
                   <div class="metits">
@@ -169,7 +163,7 @@
               </div>
               <div class="received mrge12 mrgtop16">
                 <div class="lt1">
-                  <span class="wlt">Your pool share:</span>
+                  <span class="wlt"> {{$t('pool.yops')}}</span>
                 </div>
                 <span class="rg1">{{(myShare*100).toFixed(2)}}%</span>
               </div>
@@ -225,7 +219,7 @@ import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
-import tokenData from '../../utils/token'
+import {TokenData} from '../../utils/index'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool, getTokenDenormalizedWeight } from '../../utils/tronwebFn'
 import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
@@ -278,7 +272,8 @@ export default {
       showAlert1: false,
       alertType: 'success',
       token1ApproveBalance:0,
-      token2ApproveBalance:0
+      token2ApproveBalance:0,
+      tokenData:TokenData()
     }
   },
   components: {
@@ -323,10 +318,10 @@ export default {
     },
     disableds () {
       if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
-              if (this.token1ApproveBalance==0) {
+        if (this.token1ApproveBalance==0) {
           return true
         } else {
-           if(this.token2ApproveBalance == 0) {
+          if(this.token2ApproveBalance == 0) {
             return true;
           } else {
             return false
@@ -360,12 +355,12 @@ export default {
     checkSupply () {
       if (!this.token1Num || this.token1Num == '' || this.token1Num == 0) {
         this.$message({
-          message: 'Please enter the added quantity',
+          message: this.$t('pewe1'),
           type: 'error'
         });
       } else if (this.token1Num > this.token1.balance) {
         this.$message({
-          message: 'Insufficient wallet balance',
+          message: this.$t('pewe2'),
           type: 'error'
         });
       }
@@ -373,7 +368,7 @@ export default {
     confirmSupply () {//输出的lptoken数量
       if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
-          message: 'Insufficient wallet balance',
+          message: this.$t('pewe2'),
           type: 'error'
         });
         return
@@ -442,9 +437,11 @@ export default {
         } else {
           getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
             that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
+            console.log('token1denormalizedWeight========='+that.token1denormalizedWeight)
           })
           getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
             that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
+            console.log('token2denormalizedWeight========='+that.token2denormalizedWeight)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
@@ -491,15 +488,26 @@ export default {
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0], 16)
     },
+    async getCreateToken(item){
+      let that = this
+      var functionSelector = 'getCurrentTokens()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(item.address, functionSelector, { shouldPollResponse: true }, parameter);
+      if (!transaction.result || !transaction.result.result){
+           return console.error('Unknown error: ' + transaction, null, 2);
+      }
+      console.log(transaction)
+    },
     async getPairAddress () {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = tokenData.pairList.filter((item) => {
+      let pair = this.tokenData.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
         this.pair = pair[0]
+        // this.getCreateToken(pair[0])
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
         this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
@@ -532,7 +540,7 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            that.token1ApproveBalance = parseInt(res._hex, 16);
+            that.token1ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16);
             console.log(that.token1ApproveBalance)
             if (that.token1ApproveBalance == 0) {
               that.isApproved = false
@@ -543,7 +551,7 @@ export default {
         })
         allowance(this.token2.address, pair[0].address).then((res) => {
           if (res) {
-            that.token2ApproveBalance = parseInt(res._hex, 16)
+            that.token2ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16)
             if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {
@@ -595,7 +603,7 @@ export default {
       this.charm1(1);
       if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
         this.$message({
-          message: 'Unauthorized, please authorize first',
+          message: this.$t('pewe3'),
           type: 'error'
         });
         return
@@ -620,7 +628,7 @@ export default {
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
         { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: [MAX, MAX] },
+        { type: 'uint256[]', value: ['1000000000000000000000000000000', '1000000000000000000000000000000'] },
       ]
       console.log(parameter)
       try {
@@ -721,7 +729,7 @@ export default {
           })
         }
       } else {
-        this.$layer.msg('Please select transaction pair')
+        this.$layer.msg( this.$t('pewe4'))
       }
     },
     async getBalance (token) {//获取余额
@@ -791,7 +799,7 @@ export default {
         this.selectType = this.token1.name
       } else {
         this.$message({
-          message: 'Please select transaction pair first',
+          message:  this.$t('pewe4'),
           type: 'error'
         });
       }
@@ -1086,7 +1094,7 @@ font-size: 18px;
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #05c98e;
+  background:#02B27D;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;

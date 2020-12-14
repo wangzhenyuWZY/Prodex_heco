@@ -16,7 +16,8 @@
         <div class="">{{popsData.token1.name}}{{popsData.token2.name}} Pool Tokens</div>
       </div>
     </div>
-    <div class="receive__size">Output is estimated.If the price change by more than 0.5% your transaction will revert</div>
+    <div class="receive__size">{{$t('oiei')}}</div>
+    <div class="receive__size"></div>
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">
@@ -53,7 +54,7 @@
         </div>
       </div>
     </div>
-    <el-button class="from_botton recevive_btn" @click="clickHadel">Confirm Supply</el-button>
+    <el-button class="from_botton recevive_btn" @click="clickHadel">{{$t('confirm')}} {{$t('Supply')}}</el-button>
   </el-dialog>
 </template>
 

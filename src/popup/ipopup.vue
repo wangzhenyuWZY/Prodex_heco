@@ -34,11 +34,12 @@
 </template>
 
 <script>
-import tokenData from '../utils/token'
+// import tokenData from '../utils/token'
 import { mapState } from 'vuex'
 import store from '../store/index'
 import { Notification } from 'element-ui';
 import {IsPc} from '../utils/index'
+import initTronWeb from '../utils/tronwebFn'
 export default {
   data () {
     return {
@@ -46,7 +47,8 @@ export default {
       showAlert: false,
       connect: null,
       index: 1,
-      mobile:IsPc()
+      mobile:IsPc(),
+      conter:1,
       // tokenList: tokenData.tokenList,
     }
   },
@@ -87,17 +89,27 @@ export default {
           return;
         }
         if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-            clearInterval(this.connect);
-            store.dispatch('connectWallett');
-            this.index = 0;
-            this.connect = null;
-            that.showAlert = false;
-            Notification({
-              title: '连接成功',
-              message: '请检查钱包',
-              position: 'bottom-right',
-              type: 'success'
-            });
+            initTronWeb().then(res=>{
+               clearInterval(this.connect);
+               that.conter +=1;
+               if (that.conter == 2) {
+                 that.conter = false;
+                  store.dispatch('connectWallett');
+                  that.index = 0;
+                  that.connect = null;
+                  that.showAlert = false;
+                    Notification({
+                      title: '连接成功',
+                      message: '请检查钱包',
+                      position: 'bottom-right',
+                      type: 'success'
+                    });
+                  
+               } 
+           
+              })
+            // store.dispatch('connectWallett');
+           
 
           }
 

@@ -1,7 +1,8 @@
 <template>
 <div class="cont">
-    <!-- {{$t('message')}} -->
-    <!-- <button @click="hdel">切换</button> -->
+    {{$t('nav.message')}} 
+    {{$t('nav.Home')}} 
+    <button @click="hdel">切换</button>
 </div>
 
 </template> 
