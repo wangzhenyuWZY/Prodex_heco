@@ -162,6 +162,8 @@ module.exports = {
   pewe6:'成功，请等待阻塞确认',
   pewe7:'系统错误',
   pewe8:'成功',
+  Tnos:'事务设置',
+  Sete:'滑移宽容'
  
 
 }
