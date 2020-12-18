@@ -1,5 +1,7 @@
  import {
-  CONNECT_WALLET
+  CONNECT_WALLET,
+  SET_TOKEN_DATA,
+  SET_PAIR_DATA
  }  from './action-types';
 
 
@@ -12,6 +14,12 @@
   },
   changeTolerance(state,num){
     state.tolerance = num
+  },
+  [SET_TOKEN_DATA] (state,payload) {
+    state.tokenData = payload;
+  },
+  [SET_PAIR_DATA] (state,payload) {
+    state.pairData = payload;
   }
    
 }

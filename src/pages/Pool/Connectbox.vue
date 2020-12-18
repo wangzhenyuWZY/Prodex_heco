@@ -219,12 +219,12 @@ import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
-import {TokenData} from '../../utils/index'
+import {PairData} from '../../utils/index'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool, getTokenDenormalizedWeight } from '../../utils/tronwebFn'
 import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
 import removealert from './valret';
-
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -273,7 +273,7 @@ export default {
       alertType: 'success',
       token1ApproveBalance:0,
       token2ApproveBalance:0,
-      tokenData:TokenData()
+      pairList:[]
     }
   },
   components: {
@@ -284,6 +284,9 @@ export default {
     recevive,
     removealert
   },
+  computed: {
+    ...mapState(['pairData'])
+  },  
   created () {
     if (this.$route.params.pair) {
       let pair = JSON.parse(this.$route.params.pair)
@@ -294,6 +297,7 @@ export default {
       this.getBasicInfo(this.token1)
       this.getBasicInfo(this.token2)
     }
+    this.pairList = JSON.parse(JSON.stringify(this.pairData))
   },
   watch: {
     token1Num () {
@@ -304,17 +308,20 @@ export default {
     },
     iSingle () {
       this.validity();
+    },
+    pairData(list){
+      this.pairList = JSON.parse(JSON.stringify(list)) 
     }
   },
   methods: {
-      requierImg (name) {
-        if (name) {
-           try {
-               return require('@/assets/img/currency/'+name+'.png')
-           } catch (error) {
-              return require('@/assets/img/currency/avitve.png')
-           }
-        }
+    requierImg (name) {
+      if (name) {
+          try {
+              return require('@/assets/img/currency/'+name+'.png')
+          } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+          }
+      }
     },
     disableds () {
       if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
@@ -502,7 +509,7 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = this.tokenData.pairList.filter((item) => {
+      let pair = this.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {

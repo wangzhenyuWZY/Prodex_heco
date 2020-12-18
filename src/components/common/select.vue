@@ -17,8 +17,6 @@
 </template>
 
 <script>
-
-import {TokenData} from '../../utils/index'
   export default {
     props: {
       lable: {
@@ -57,7 +55,7 @@ import {TokenData} from '../../utils/index'
     return {
       isShow: false,
       className: "",
-      tokenList: TokenData(),
+      tokenList: [],
       itemToken:{}
     };
   },
