@@ -28,7 +28,7 @@
             <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
             <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
           </div>
-          <div class="stake_btn" @click="showModels(idx)">12.04%APY</div>
+          <div class="stake_btn" @click="showModels(idx)">{{getEcthapy(idx.pair)}}%APY</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
@@ -65,6 +65,7 @@ export default {
       showModel: false,
       farmList: [],
       item: {},
+      apyList: [],
       total: {
         farmTotal: 0, // 总数
         shareToal: 0, // 抵押数量
@@ -79,12 +80,13 @@ export default {
         token2: '',
         showAlert1: false,
         defaultAddress: '',
+        apy: '--'
       },
     }
   },
   watch: {
     pairData(list) {
-      this.farmList = JSON.parse(JSON.stringify(list))
+      this.farmList = JSON.parse(JSON.stringify(list));
     }
   },
   components: {
@@ -112,13 +114,14 @@ export default {
         btnFlag3: false,
         showAlert1: false,
         defaultAddress: '',
+        apy: '--'
       }
     },
     async init() {//初始化tronweb
       let that = this
       this.$initTronWeb().then(function(tronWeb) {
         that.grtMasterChef()
-        that.getLpComputeApy();
+
       })
     },
     requierImg(name, number) {
@@ -217,8 +220,8 @@ export default {
     },
     async grtMasterChef() {//连接MasterChef合约需要对应的合约base58信息
       this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
-      console.log(this.MasterChefContract)
       if (this.MasterChefContract) {
+        await this.getLpComputeApy();
         await this.getMasterChefContract();
       }
     },
@@ -234,7 +237,7 @@ export default {
       this.total.item = item;
       this.total.token1 = item.token1.name
       this.total.token2 = item.token2.name
-      console.log(item)
+      this.total.apy = this.getEcthapy(item.pair);
       try {
         await this.getContracts(item);
         await this.tokenPerBlock(item);
@@ -290,7 +293,7 @@ export default {
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
           this.farmList.forEach((item) => {
             if (item.address == lpToken) {
-              item.index = index
+              item.index = index;
             }
           })
         }
@@ -383,13 +386,35 @@ export default {
 
     },
     async getLpComputeApy() {
-      let res = await api.getLpComputeApy();
-      if (res.data.code == 0) {
-        let data = res.data.data;
-        console.log(data);
+      try {
+        let res = await api.getLpComputeApy();
+        if (res.data.code == 0) {
+          this.apyList = res.data.data;
+          if (this.showModels) {
+            this.total.apy = this.getEcthapy(this.total.item.pair);
+          }
+        }
+      } catch (error) {
+        console.log(error)
       }
+
+    },
+    getEctlist() {
+      let arr = this.farmList;
+      arr.forEach(idx => {
+        idx.pay = this.getEcthapy(idx.pair);
+      })
+      this.farmList = arr;
+    },
+    getEcthapy(name) {
+      if (this.apyList.length == 0) return '--';
+      let a = this.apyList.filter((idx) => {
+        return idx.full_name == name;
+      })
+      if (a.length == 0) return '--';
+      return a[0].current_apy;
     }
-  }
+  },
   // 1. 初始化tronweb
   // 2. 链接对应的合约地址
   /// 4 授权 才能  抵押或者 提现

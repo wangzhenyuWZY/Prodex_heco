@@ -3,8 +3,7 @@
     <!-- <h3 class="selct_top">Earn FARM with FoxDex</h3> -->
     <container top="24">
       <!-- top="0" -->
-      <div class="title"
-           slot="title">
+      <div class="title" slot="title">
         <div class="lt_box">
           <span class="icon_box" @click="handelInit">
             <i class="el-icon-back back_icon"></i>
@@ -16,10 +15,8 @@
         <div class="select_top clearfix" v-show="!connectFlag">
           <p class="top__size">You haven't connected a wallet.</p>
           <p class="top__btn">
-            <el-button class="from_botton" @click="butlink"> <img class="whe_img"
-                  
-                   src="@/assets/img/icon_my_wallet.svg"
-                   alt="">{{$t('nav.CWet')}}</el-button>
+            <el-button class="from_botton" @click="butlink"> <img class="whe_img" src="@/assets/img/icon_my_wallet.svg" alt="">{{$t('nav.CWet')}}
+            </el-button>
           </p>
 
         </div>
@@ -28,22 +25,18 @@
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token1.name:''}}</span>
-                <img class="lt_icon"
-                     src="@/assets/img/icon_jump_green.png"
-                     alt="">
+                <img class="lt_icon" src="@/assets/img/icon_jump_green.png" alt="">
               </div>
-             
+
             </div>
             <div class="text_conent ftblod">FOXDEX_LP
-               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">322.16%</span></div>
-               </div> 
-           
+              <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">{{farmtoal.apy}}%</span></div>
+            </div>
+
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
-                <img class="lt_icon"
-                     src="@/assets/img/icon_jump_green.png"
-                     alt="">
+                <img class="lt_icon" src="@/assets/img/icon_jump_green.png" alt="">
               </div>
               <!-- <div class="rg"> 
                 <span class="text_color">APR:</span> <span class="ftblod">322.16%</span>
@@ -81,87 +74,79 @@
             <div class="">
               <div class="received ">
                 <div class="lt">
-                 <frominput
-                    showmax
-                    :balance="farmtoal.balanceOf"
-                    :disabled ="!connectFlag"
-                      :placeholder="0.0"
-                    v-model="test1"
-                 />
+                  <frominput showmax :balance="farmtoal.balanceOf" :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
                 </div>
                 <div class="rg mobles_rg">FOXDEX_LP</div>
               </div>
             </div>
           </div>
         </div>
-         <div class="selt_btn clearfix">
-          <el-button class="from_botton "   :loading="farmtoal.btnFlag1"  :disabled="stakes" @click="stake">{{$t('nav.Stake')}}</el-button>
+        <div class="selt_btn clearfix">
+          <el-button class="from_botton " :loading="farmtoal.btnFlag1" :disabled="stakes" @click="stake">{{$t('nav.Stake')}}</el-button>
         </div>
       </div>
     </container>
-    <valret :isShow="farmtoal.showAlert1"
-            :url="farmtoal.defaultAddress"
-            @close='farmtoal.showAlert1=false' />
+    <valret :isShow="farmtoal.showAlert1" :url="farmtoal.defaultAddress" @close='farmtoal.showAlert1=false' />
   </div>
 </template>
 
 <script>
 import { container, frominput, setselect } from '../../components/index'
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 import valret from '../Pool/valret'
 export default {
   props: {
-     farmtoal:{
-       default:{
-         farmTotal:0,
-        shareToal:0,
-        uniswaplp:0,
-        maxamount:0,
-        balanceOf:0,
-        foxBalance:0,
-        btnFlag1:false,
-        btnFlag2:false,
-        btnFlag3:false,
-        showAlert1:false,
-        defaultAddress:'',
-        item:{token1:{},token2:{}}
-       }
-     },
-     farmList:{
+    farmtoal: {
+      default: {
+        farmTotal: 0,
+        shareToal: 0,
+        uniswaplp: 0,
+        maxamount: 0,
+        balanceOf: 0,
+        foxBalance: 0,
+        btnFlag1: false,
+        btnFlag2: false,
+        btnFlag3: false,
+        showAlert1: false,
+        defaultAddress: '',
+        item: { token1: {}, token2: {} }
+      }
+    },
+    farmList: {
 
-     }
+    }
   },
   computed: {
     ...mapState(['connectFlag']),
-    reward () {
-          if (this.connectFlag && this.farmtoal.uniswaplp!=0)  {
-              if (!this.farmtoal.btnFlag2) {
-                  return false
-                }
-                return true
-          }
-          return true
+    reward() {
+      if (this.connectFlag && this.farmtoal.uniswaplp != 0) {
+        if (!this.farmtoal.btnFlag2) {
+          return false
+        }
+        return true
+      }
+      return true
     },
-    Withdrawal () {
-         if (this.connectFlag && this.farmtoal.shareToal!=0)  {
-           if (!this.farmtoal.btnFlag3) {
-           return false
-         }
-         return true
-         }
-          return true;
+    Withdrawal() {
+      if (this.connectFlag && this.farmtoal.shareToal != 0) {
+        if (!this.farmtoal.btnFlag3) {
+          return false
+        }
+        return true
+      }
+      return true;
     },
-    stakes () {
-      if (this.connectFlag && this.test1!=''){
-         if (!this.farmtoal.btnFlag1) {
-           return false
-         }
-         return true
-      } 
-           return true;
+    stakes() {
+      if (this.connectFlag && this.test1 != '') {
+        if (!this.farmtoal.btnFlag1) {
+          return false
+        }
+        return true
+      }
+      return true;
     }
   },
-  data () {
+  data() {
     return {
       test1: '',
       value1: '',
@@ -172,68 +157,68 @@ export default {
     }
   },
   watch: {
-    
+
   },
   components: {
     // vButton: vbutton,
     container,
-    frominput, 
+    frominput,
     // vfromInput: fromInput,
     // setselect
     valret
   },
   methods: {
 
-    hadelClick (e) {
+    hadelClick(e) {
       console.log('22222')
-        console.log(e)
+      console.log(e)
     },
-    Approve () {
+    Approve() {
       debugger
-        this.$emit('Approve')
+      this.$emit('Approve')
     },
-    amount () {
-        this.$emit('amount',this.test1)
+    amount() {
+      this.$emit('amount', this.test1)
     },
-    stake () {
-      this.$emit('stake',this.farmtoal.item,this.test1)
+    stake() {
+      this.$emit('stake', this.farmtoal.item, this.test1)
     },
     handelInit() {
       this.test1 = '';
       this.$emit('back')
     },
-    butlink(){
+    butlink() {
       console.log("点击了");
-       this.$popup({
+      this.$popup({
         click: () => {
           // 点击按钮事件 
-        
+
           this.$router.push('../../popup/popup')
 
         }
       })
     }
-    
+
   },
 }
 </script>
 
 <style lang="scss"   scoped>
-.fbbb{
-  color: #05C98E;
+.fbbb {
+  color: #05c98e;
 }
-.rgh{
+.rgh {
   float: right;
 }
-.colorF{
-  color: #05C98E;
+.colorF {
+  color: #05c98e;
 }
 .stake_slect {
   color: #0f1730;
   font-size: 18px;
   // margin-top: 50px;
   padding-top: 120px;
-  .selct_top{
+  .selct_top {
     margin-bottom: 14px;
     text-align: center;
     font-size: 24px;
@@ -279,7 +264,7 @@ export default {
     .between {
       font-size: 56px;
       font-weight: normal;
-      color:#05C98E;
+      color: #05c98e;
       width: 144px;
     }
     .demonstration {
@@ -287,14 +272,12 @@ export default {
       padding-top: 10px;
     }
   }
-  .box_Price{
-
+  .box_Price {
     height: 72px;
     line-height: 72px;
-    padding-right: 24px;   
+    padding-right: 24px;
     overflow: hidden;
-     .rg{
-      
+    .rg {
     }
   }
   .title {
@@ -319,7 +302,6 @@ export default {
     .lt_icon {
       // margin-top: 4px;
       margin-right: 12px;
-
     }
     .rg_icon {
       img {
@@ -329,16 +311,16 @@ export default {
     }
     .lt_box {
       .back_icon {
-        color: #070A0E;
-        
-// color: #0F1730;
+        color: #070a0e;
+
+        // color: #0F1730;
         width: 40px;
         height: 40px;
         text-align: center;
         line-height: 40px;
         border-radius: 50%;
-          background: #F4F6FC;
-          font-size: 18px;
+        background: #f4f6fc;
+        font-size: 18px;
         cursor: pointer;
       }
     }
@@ -363,10 +345,10 @@ export default {
     color: #878b97;
   }
   .text_conent {
-   width: 300px;
+    width: 300px;
     font-size: 22px;
     // text-align: center;
-    margin-left:90px ;
+    margin-left: 90px;
   }
   .margintop {
     width: 320px;
@@ -388,16 +370,16 @@ export default {
     color: #0f1730;
     .lt {
       span {
-        font-size: 16px; 
-        color: #0F1730;
-      
-// color: #0F1730;
+        font-size: 16px;
+        color: #0f1730;
+
+        // color: #0F1730;
       }
     }
     .rg {
       span {
         font-size: 16px;
-        color: #0F1730;
+        color: #0f1730;
       }
     }
     span {
@@ -412,7 +394,7 @@ export default {
     .rg {
     }
     .setColr {
-      color:#05C98E;
+      color: #05c98e;
     }
   }
   .setSlider {
@@ -431,7 +413,7 @@ export default {
       cursor: pointer;
     }
   }
- 
+
   .add_marg {
     padding: 24px;
   }
@@ -456,18 +438,18 @@ export default {
       border-radius: 28px;
       border: 1px solid#05C98E;
       font-size: 20px;
-      color:#05C98E;
+      color: #05c98e;
       padding: 0;
       width: 200px;
       height: 32px;
     }
   }
-  .selt_btn{
+  .selt_btn {
     padding-top: 24px;
     padding-bottom: 48px;
     .Approve1 {
       height: 56px;
-      width:210px;
+      width: 210px;
       border-radius: 25px;
       font-size: 20px;
     }
@@ -479,7 +461,6 @@ export default {
       width: 210px;
       height: 56px;
       border-radius: 25px;
- 
     }
     .Approve2 {
       float: right;
@@ -487,43 +468,42 @@ export default {
   }
 }
 @media screen and (max-width: 750px) {
-  .stake_slect{
+  .stake_slect {
     padding-top: 0;
     .add_marg {
       padding: 24px 14px;
     }
-     .received .lt span {
-        font-size: 0.37rem;
-     }
-      .received .rg span{
+    .received .lt span {
+      font-size: 0.37rem;
+    }
+    .received .rg span {
+      font-size: 0.37rem;
+    }
+    .text_conent {
+      padding-left: 90px;
+      font-size: 0.4rem;
+      text-align: center;
+      margin-left: 0;
+      width: 100%;
+    }
+    .text_border {
+      font-size: 0.37rem;
+    }
+    .Approve_btns {
+      display: flex;
+      .Approve1 {
         font-size: 0.37rem;
       }
-      .text_conent{
-        padding-left: 90px;
-        font-size: 0.4rem;
-        text-align: center;
-        margin-left: 0;
-        width: 100%;
-      }
-      .text_border{
-        font-size: 0.37rem;
-      }
-      .Approve_btns{
+    }
+    .box_Price {
+      height: auto;
+      line-height: inherit;
+      .mobles_rg {
         display: flex;
-        .Approve1{
-          font-size: 0.37rem;
-        }
+        align-items: center;
+        font-size: 0.4rem;
       }
-      .box_Price{
-          height: auto;
-          line-height: inherit;
-          .mobles_rg{
-            display: flex;
-            align-items: center;
-            font-size: 0.4rem;
-          }
-      }
+    }
   }
-  
 }
 </style>
