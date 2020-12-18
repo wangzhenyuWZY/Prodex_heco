@@ -1,15 +1,11 @@
 <template>
   <div class="container glbale_pd">
-    <div class="stake"
-         v-show="!showModel">
-      <div class="content_top"
-           v-if="login">
+    <div class="stake" v-show="!showModel">
+      <div class="content_top" v-if="login">
         <div class="connected clearfix">
           <div class="text_one fl_lt">Earn FARM with FoxDex</div>
           <div class="fl_rg conted_btn">
-            <el-button class="from_botton"> <img class="whe_img"
-                   src="@/assets/img/icon_my_wallet.svg"
-                   alt=""> {{$t('nav.CWet')}}</el-button>
+            <el-button class="from_botton"> <img class="whe_img" src="@/assets/img/icon_my_wallet.svg" alt=""> {{$t('nav.CWet')}}</el-button>
           </div>
           <div class="fl_rg text_two">You haven't connected a wallet.</div>
         </div>
@@ -18,14 +14,11 @@
         </div>
       </div>
       <ul class="stake_list">
-        <li v-for="(idx,index) in farmList"
-            :key='index'>
+        <li v-for="(idx,index) in farmList" :key='index'>
           <div class="stake_top">
             <span class="lt_icon ">
-              <img :src="requierImg(idx.pair,1)"
-                   alt="" />
-              <img :src="requierImg(idx.pair,0)"
-                   alt="" />
+              <img :src="requierImg(idx.pair,1)" alt="" />
+              <img :src="requierImg(idx.pair,0)" alt="" />
             </span>
             <span class="content_zise">
               {{idx.pair}}
@@ -35,8 +28,7 @@
             <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
             <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
           </div>
-          <div class="stake_btn"
-               @click="showModels(idx)">12.04%APY</div>
+          <div class="stake_btn" @click="showModels(idx)">12.04%APY</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
@@ -47,13 +39,8 @@
         </li>
       </ul>
     </div>
-    <selected v-if="showModel"
-              :farmtoal="total"
-              @Approve="Approve"
-              @amount="clickAmount"
-              @back="initColse"
-              @stake="stake" />
-    
+    <selected v-if="showModel" :farmtoal="total" @Approve="Approve" @amount="clickAmount" @back="initColse" @stake="stake" />
+
   </div>
 </template>
 
@@ -61,15 +48,15 @@
 const Web3Utils = require('web3');
 const Decimal = require('decimal.js');
 import ipConfig from '../../config/ipconfig.bak'
-import { approved,getMyBalanceInPool,allowance,getLpBalanceInPool,bPoolAllowance,getConfirmedTransaction } from '../../utils/tronwebFn'
+import { approved, getMyBalanceInPool, allowance, getLpBalanceInPool, bPoolAllowance, getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
 // import tokenData from '../../utils/token';
-import {TokenData} from '../../utils/index'
-
+import { TokenData } from '../../utils/index'
+import { api } from '../../api/api'
 export default {
-  data () {
+  data() {
     return {
-      
+
       MasterChefContract: null,
       getContract: null,
       poolLength: 0,
@@ -77,7 +64,7 @@ export default {
       login: false,
       showModel: false,
       farmList: TokenData().pairList,
-      item:{},
+      item: {},
       total: {
         farmTotal: 0, // 总数
         shareToal: 0, // 抵押数量
@@ -87,60 +74,62 @@ export default {
         btnFlag1: false,
         btnFlag2: false,
         btnFlag3: false,
-        item:{},
-        token1:'',
-        token2:'',
-        showAlert1:false,
-        defaultAddress:'',
+        item: {},
+        token1: '',
+        token2: '',
+        showAlert1: false,
+        defaultAddress: '',
       },
     }
   },
   components: {
     selected
   },
-  created () {
+  created() {
     this.init();
+
   },
   methods: {
-    initColse () {
-        this.showModel = false;
-        this.total = {
-          farmTotal: 0, // 总数
-          shareToal: 0, // 抵押数量
-          uniswaplp: 0, // 计算用户收益
-          balanceOf: 0, // 钱包余额
-          decimals: 0, // 精度 查询减 发送合约加
-          btnFlag1: false,
-          btnFlag2: false,
-          btnFlag3: false,
-          showAlert1:false,
-          defaultAddress:'',
-        }
+    initColse() {
+      this.showModel = false;
+      this.total = {
+        farmTotal: 0, // 总数
+        shareToal: 0, // 抵押数量
+        uniswaplp: 0, // 计算用户收益
+        balanceOf: 0, // 钱包余额
+        decimals: 0, // 精度 查询减 发送合约加
+        btnFlag1: false,
+        btnFlag2: false,
+        btnFlag3: false,
+        showAlert1: false,
+        defaultAddress: '',
+      }
     },
-    async init () {//初始化tronweb
+    async init() {//初始化tronweb
       let that = this
-      this.$initTronWeb().then(function (tronWeb) {
+      this.$initTronWeb().then(function(tronWeb) {
         that.grtMasterChef()
+        that.getLpComputeApy();
       })
     },
-    requierImg (name,number) {
+    requierImg(name, number) {
       let str;
       // debugger
       if (name) {
         try {
-           if (number != undefined) {
-              str = name.split('/');
-              return require('@/assets/img/currency/'+str[number]+'.png')
-           }
-            return require('@/assets/img/currency/'+name+'.png')
+          if (number != undefined) {
+            str = name.split('/');
+            return require('@/assets/img/currency/' + str[number] + '.png')
+          }
+          return require('@/assets/img/currency/' + name + '.png')
         } catch (error) {
-            return require('@/assets/img/currency/avitve.png')
+          return require('@/assets/img/currency/avitve.png')
         }
       } else {
-           return require('@/assets/img/currency/avitve.png')
+        return require('@/assets/img/currency/avitve.png')
       }
     },
-    Approve (x) { //  提现 x = 0 ;领取奖励
+    Approve(x) { //  提现 x = 0 ;领取奖励
       this.withdraw()
       // if (x === 0) { // 领取奖励
       //     this.total.btnFlag2 = true;
@@ -177,73 +166,73 @@ export default {
       //   console.log(error)
       // }
     },
-    async clickAmount () { // 领取奖励
+    async clickAmount() { // 领取奖励
       this.withdraw(0);
       // this.Approve(0);
     },
-    async devFundDivRate () {
+    async devFundDivRate() {
 
     },
-    async stake (item,n) { // 抵押
+    async stake(item, n) { // 抵押
       let that = this
       this.total.btnFlag1 = true;
-      bPoolAllowance(item.address,ipConfig.MasterChef).then((res)=>{
+      bPoolAllowance(item.address, ipConfig.MasterChef).then((res) => {
         let isApproved = parseInt(res.constant_result[0], 16)
-        if(isApproved==0){
-          that.doApproved(item,n)
-        }else{
-          that.deposit(item,n);
+        if (isApproved == 0) {
+          that.doApproved(item, n)
+        } else {
+          that.deposit(item, n);
         }
       })
     },
-    async doApproved(item,n){
+    async doApproved(item, n) {
       let that = this
       var functionSelector = 'approve(address,uint256)';
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
-        {type:'address',value:ipConfig.MasterChef},
-        {type:'uint256',value:'1000000000000000000000000000000'}
+        { type: 'address', value: ipConfig.MasterChef },
+        { type: 'uint256', value: '1000000000000000000000000000000' }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(item.address,functionSelector,{shouldPollResponse:true}, parameter);
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(item.address, functionSelector, { shouldPollResponse: true }, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-            getConfirmedTransaction(res.txid).then(()=>{
-              that.total.defaultAddress =  'https://shasta.tronscan.org/#/transaction/'+ res.txid;
-              that.deposit(item,n);
-              that.total.btnFlag1 = false;
-            })
-          });
-      }) 
+      window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+          getConfirmedTransaction(res.txid).then(() => {
+            that.total.defaultAddress = 'https://shasta.tronscan.org/#/transaction/' + res.txid;
+            that.deposit(item, n);
+            that.total.btnFlag1 = false;
+          })
+        });
+      })
     },
-    async grtMasterChef () {//连接MasterChef合约需要对应的合约base58信息
+    async grtMasterChef() {//连接MasterChef合约需要对应的合约base58信息
       this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
       console.log(this.MasterChefContract)
       if (this.MasterChefContract) {
         await this.getMasterChefContract();
       }
     },
-    getContracts (item) { // 查询对应合约余额
+    getContracts(item) { // 查询对应合约余额
       let that = this
-      getMyBalanceInPool(item).then((res)=>{
-        that.total.balanceOf = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()
+      getMyBalanceInPool(item).then((res) => {
+        that.total.balanceOf = Decimal(res).div(Math.pow(10, 18)).toFixed(6).toString()
         that.total.decimals = 18
       })
     },
-    async showModels (item) { // 弹框
+    async showModels(item) { // 弹框
       this.showModel = true;
       this.total.item = item;
       this.total.token1 = item.token1.name
       this.total.token2 = item.token2.name
       console.log(item)
       try {
-            await this.getContracts(item);
-          await this.tokenPerBlock(item);
+        await this.getContracts(item);
+        await this.tokenPerBlock(item);
       } catch (error) {
         console.log(error)
       }
-  
+
       let userInfo = await this.MasterChefContract.userInfo(item.index, window.tronWeb.defaultAddress.base58).call(); // 返回抵押多少
       let res = await this.toDecimal(userInfo.amount._hex);
       await this.pendingTokens(item.index);
@@ -251,7 +240,7 @@ export default {
 
       console.log(res);
     },
-    async updata (item) { // 提现 抵押 更新 余额  抵押数
+    async updata(item) { // 提现 抵押 更新 余额  抵押数
       await this.getContracts(item)
       // try {
       //   let balanceOf = await this.getContract.balanceOf(window.tronWeb.defaultAddress.base58).call(); // 查询钱包余额余额
@@ -271,7 +260,7 @@ export default {
       //   console.log(error);
       // }
     },
-    async getMasterChefContract () {//1.获取PoolInfo[] 返回列表一个数组，数组里的信息包括：lptoken的地址
+    async getMasterChefContract() {//1.获取PoolInfo[] 返回列表一个数组，数组里的信息包括：lptoken的地址
       let that = this
       try {
         let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
@@ -290,8 +279,8 @@ export default {
           // console.log('利率======',res6)
           //  console.log(res1)
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
-          this.farmList.forEach((item)=>{
-            if(item.address==lpToken){
+          this.farmList.forEach((item) => {
+            if (item.address == lpToken) {
               item.index = index
             }
           })
@@ -302,15 +291,15 @@ export default {
       }
     },
 
-    async pendingTokens (index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
+    async pendingTokens(index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       // let pre = await this.toDecimal(penaccount);
       console.log('pendingTokens', penaccount);
       console.log('penaccount._hex', penaccount._hex);
-      this.total.uniswaplp = (parseInt(penaccount._hex,16)/Math.pow(10,18)).toFixed(6);
+      this.total.uniswaplp = (parseInt(penaccount._hex, 16) / Math.pow(10, 18)).toFixed(6);
     },
-    async deposit (item,n) { // 质押  
-    
+    async deposit(item, n) { // 质押  
+
       // （1）PoolInfo[]数组的序号
       // （2）质押的数量,为0的时候只领取奖励，不进行质押
       let data = {  // 使用send来执行non-pure或modify智能合约方法，这些方法确实修改了区块链，消耗资源（bandwidth 和 energy）并且还广播到网络。
@@ -320,17 +309,17 @@ export default {
         // tokenId:0,  // 本次调用往合约中转账TRC10的tokenId。如果没有，不需要设置
         // tokenValue:0 // 本次调用往合约中转账TRC10的数量，如果不设置tokenId，这项不设置。
       };
-      this.total.defaultAddress ='https://shasta.tronscan.org/#/address/'+window.tronWeb.defaultAddress.base58;
+      this.total.defaultAddress = 'https://shasta.tronscan.org/#/address/' + window.tronWeb.defaultAddress.base58;
       this.total.showAlert1 = true
-      let num ;
+      let num;
       n = n * Math.pow(10, this.total.decimals);
-      n = n+'';
+      n = n + '';
       try {
-       num = await this.MasterChefContract['deposit'](item.index, n).send(data);
-       console.log(num)
+        num = await this.MasterChefContract['deposit'](item.index, n).send(data);
+        console.log(num)
       } catch (error) {
         console.log(error);
-         this.total.btnFlag1 = false;
+        this.total.btnFlag1 = false;
       }
       if (num) {
         window.location.reload()
@@ -339,20 +328,20 @@ export default {
       }
       this.total.btnFlag1 = false;
     },
-    withdraw (x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
-     if (x === 0) { // 领取奖励
-          this.total.btnFlag2 = true;
+    withdraw(x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
+      if (x === 0) { // 领取奖励
+        this.total.btnFlag2 = true;
       } else {
-          this.total.btnFlag3 = true;
+        this.total.btnFlag3 = true;
       }
-      this.total.defaultAddress ='https://shasta.tronscan.org/#/address/'+window.tronWeb.defaultAddress.base58;
+      this.total.defaultAddress = 'https://shasta.tronscan.org/#/address/' + window.tronWeb.defaultAddress.base58;
       this.total.showAlert1 = true;
       let that = this
       let arr = Decimal(this.total.shareToal).mul(Math.pow(10, this.total.decimals)).toString();
       let num = null
-      this.MasterChefContract.withdraw(that.total.item.index, x==0?0:arr).send({
+      this.MasterChefContract.withdraw(that.total.item.index, x == 0 ? 0 : arr).send({
         shouldPollResponse: true
-      }).then((res)=>{
+      }).then((res) => {
         if (res) {
           window.location.reload()
           this.updata(that.total.item);
@@ -363,18 +352,18 @@ export default {
         } else {
           that.total.btnFlag3 = false;
         }
-      }).catch(err=>{
+      }).catch(err => {
         console.log(err);
       })
-      
+
     },
-    tokenPerBlock (item) { // 转换 数值 
+    tokenPerBlock(item) { // 转换 数值 
       let that = this
       getLpBalanceInPool(item).then((res) => {//获取lptoken总量
-        that.total.farmTotal = Decimal(res).div(Math.pow(10,18))
+        that.total.farmTotal = Decimal(res).div(Math.pow(10, 18))
       })
     },
-    async toDecimal (n) { // 16进制转10进制
+    async toDecimal(n) { // 16进制转10进制
       try {
         let num = await window.tronWeb.toDecimal(n);
         return num;
@@ -383,8 +372,14 @@ export default {
         return 0;
       }
 
+    },
+    async getLpComputeApy() {
+      let res = await api.getLpComputeApy();
+      if (res.data.code == 0) {
+        let data = res.data.data;
+        console.log(data);
+      }
     }
-
   }
   // 1. 初始化tronweb
   // 2. 链接对应的合约地址
@@ -401,8 +396,8 @@ export default {
   // （1）PoolInfo[]数组的序号 池子一天的收益* 价格* / 质押数量* 质押币种价格 ==  1天;  apy  *  365;
   // （2）用户的地址
   // 收益率  总数/余额/ 价格 
-  
-   //  0:"lpToken: TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C"   UNISWAP_LP
+
+  //  0:"lpToken: TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C"   UNISWAP_LP
   //  1:"allocPoint: 1"    占比
   //  2:"lastRewardBlock: 9,925,699" 
   //  3:"accFoxPerShare: 0"    抵押数量
@@ -473,7 +468,7 @@ ul {
   grid-template-columns: repeat(auto-fit, minmax(320px, 2fr));
   grid-template-columns: 320px 320px 320px;
   grid-template-rows: 320px 320px 320px;
-  grid-template-rows:3;
+  grid-template-rows: 3;
   gap: 32px;
   // display: flex;
   // justify-content: space-between;
@@ -540,7 +535,7 @@ ul {
         font-size: 18px;
         font-family: roboto-mediumitalic;
         font-weight: normal;
-        color: #0F1730;
+        color: #0f1730;
         line-height: 21px;
       }
     }
@@ -553,48 +548,44 @@ ul {
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: normal;
-      color:#05C98E;
+      color: #05c98e;
       margin: 0 auto;
       cursor: pointer;
     }
   }
 }
 @media screen and (max-width: 750px) {
-  .glbale_pd{
+  .glbale_pd {
     padding: 0 0.5rem;
     padding-bottom: 74px;
   }
-  .stake{
-    ul{
+  .stake {
+    ul {
       margin-top: 0;
       padding-top: 0;
       grid-template-columns: repeat(auto-fit, minmax(8.26rem, 2fr));
-      li{
-            display: block;
-          margin: 0 auto;
-          text-align: center;
-          margin-bottom: 0.4rem;
-    .stake_addres{
+      li {
+        display: block;
+        margin: 0 auto;
+        text-align: center;
+        margin-bottom: 0.4rem;
+        .stake_addres {
           // margin: 0.4rem 0;
           padding-left: 0;
-          .mrg{
+          .mrg {
             text-align: center;
           }
         }
       }
     }
-    
   }
- 
 }
 @media screen and (max-width: 450px) {
-
-   ul{
-          li{
-            display: block;
-            margin: 0 auto;
-      }
+  ul {
+    li {
+      display: block;
+      margin: 0 auto;
     }
+  }
 }
-
 </style>

@@ -7,18 +7,15 @@
       </div>
 
       <div class="nav-header fl_lt" v-show="moble">
-        <div class="van_list"
-             ref="header">
-          <span v-for="(idx, index) in tag"
-                :key="idx.path"
-                @click="handelActive(idx.path, index)"
+        <div class="van_list" ref="header">
+          <span v-for="(idx, index) in tag" :key="idx.path" @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
         <div class="active-bar" :style="{ transform: `translateX(${key}px)` }"></div>
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <div class="login_wallet" v-if="!connectFlag"  @click="btnClick">
+          <div class="login_wallet" v-if="!connectFlag" @click="btnClick">
             <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
             <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
           </div>
@@ -70,8 +67,8 @@
             <li> <img src="@/assets/img/icon_reddit.svg" alt=""></li>
           </ul>
         </el-drawer>
-        
-        <div class="lang"  @click="hdel">{{this.$i18n.locale=='zh'?'简体中文':'English'}}<i></i></div>
+
+        <div class="lang" @click="hdel">{{this.$i18n.locale=='zh'?'简体中文':'English'}}<i></i></div>
         <i class="setting" @click="tolerPop=!tolerPop"></i>
         <div class="setPanel" v-show="tolerPop">
           <h2>Transaction Settings</h2>
@@ -94,8 +91,8 @@ import { IsPc } from '../../utils/index';
 export default {
   data() {
     return {
-      tolerPop:false,
-      num:0,
+      tolerPop: false,
+      num: 0,
       key: "31",
       navIndex: 0,
       drawer: false,
@@ -111,7 +108,7 @@ export default {
       tag: [
         {
           path: '/',
-          name:this.$t('nav.home1')
+          name: this.$t('nav.home1')
         },
         {
           path: "/exchange",
@@ -141,57 +138,57 @@ export default {
     this.moble = IsPc();
   },
   computed: {
-    ...mapState(['walletAddres','connectFlag'])
-    
+    ...mapState(['walletAddres', 'connectFlag'])
+
   },
-  watch :{
-    '$i18n.locale':{
-      handler:function(val) {
-       
+  watch: {
+    '$i18n.locale': {
+      handler: function(val) {
+
         // this.doc = false
         // setTimeout(()=>{
         //   this.doc = true;
         //   this.$forceUpdate();
         //   console.log(this.$t('nav.home1'))
         // })
-        var a =  [
-        {
-          path: '/',
-          name:this.$t('nav.home1')
-        },
-        {
-          path: "/exchange",
-          name: this.$t('nav.Exchange'),
-        },
-        {
-          path: "/pool",
-          name: this.$t('nav.Pool'),
-        },
-        {
-          path: "/foxdex",
-          name: this.$t('nav.FoxDex'),
-        },
-        {
-          path: "/wtrx",
-          name: this.$t('nav.WTRX'),
-        },
-        {
-          path: "/stake",
-          name: this.$t('nav.Stake'),
-        },
-      ];
-      console.log(a)
-      this.tag = a;
+        var a = [
+          {
+            path: '/',
+            name: this.$t('nav.home1')
+          },
+          {
+            path: "/exchange",
+            name: this.$t('nav.Exchange'),
+          },
+          {
+            path: "/pool",
+            name: this.$t('nav.Pool'),
+          },
+          {
+            path: "/foxdex",
+            name: this.$t('nav.FoxDex'),
+          },
+          {
+            path: "/wtrx",
+            name: this.$t('nav.WTRX'),
+          },
+          {
+            path: "/stake",
+            name: this.$t('nav.Stake'),
+          },
+        ];
+        console.log(a)
+        this.tag = a;
       }
 
     },
-    drawer(val){
-      if(!val){
+    drawer(val) {
+      if (!val) {
         this.tolerPop = false
       }
     }
   },
-  mounted () {
+  mounted() {
     try {
       // setTimeout(()=>{
       // this.$refs.header.children.forEach((element) => {
@@ -214,8 +211,8 @@ export default {
   },
 
   methods: {
-    changeToler(num){
-      this.$store.commit('changeTolerance',num)
+    changeToler(num) {
+      this.$store.commit('changeTolerance', num)
     },
     btnClick() {
       this.$popup({
@@ -227,31 +224,31 @@ export default {
         }
       })
     },
-    hdel(n){
-        let i18n =  this.$i18n.locale;
-    this.$i18n.locale = i18n == 'en' ? 'zh':'en';
-    this.childrenNode = [];
-    try {
-               setTimeout(()=>{
-        this.$refs.header.children.forEach((element) => {
+    hdel(n) {
+      let i18n = this.$i18n.locale;
+      this.$i18n.locale = i18n == 'en' ? 'zh' : 'en';
+      this.childrenNode = [];
+      try {
+        setTimeout(() => {
+          this.$refs.header.children.forEach((element) => {
             let str = element.getBoundingClientRect();
             // console.log(str);
-          this.childrenNode.push(element.offsetWidth);
-        });
-        let hash = location.hash;
-        let str = hash.split("#")[1];
-        if (str) {
-          this.handelActive(str);
-        } else {
-          this.handelActive("/");
-        }
-       })
-    } catch (error) {
-      
-    }
+            this.childrenNode.push(element.offsetWidth);
+          });
+          let hash = location.hash;
+          let str = hash.split("#")[1];
+          if (str) {
+            this.handelActive(str);
+          } else {
+            this.handelActive("/");
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
 
     },
-        
+
 
 
     handelActive(e, index) {
@@ -299,7 +296,6 @@ export default {
 };
 </script>
 <style >
-
 .nav .drawer_body {
   width: 69% !important;
   background: #070a0e;
@@ -310,86 +306,85 @@ export default {
 }
 </style>
 <style lang="scss" scoped>
-
-.setPanel{
-  background:#fff;
-  padding:24px 20px;
-  border-radius:20px;
+.setPanel {
+  background: #fff;
+  padding: 24px 20px;
+  border-radius: 20px;
   box-sizing: border-box;
-  width:364px;
-  position:fixed;
-  right:48px;
-  top:80px;
-  z-index:9999;
+  width: 364px;
+  position: fixed;
+  right: 48px;
+  top: 80px;
+  z-index: 9999;
 }
-.setPanel h2{
-  font-size:18px;
-  color:#070A0E;
-  line-height:100%;
-  padding-bottom:18px;
+.setPanel h2 {
+  font-size: 18px;
+  color: #070a0e;
+  line-height: 100%;
+  padding-bottom: 18px;
 }
-.setPanel .totletitle{
-  font-size:16px;
-  color:#878B97;
-  line-height:100%;
-  padding-bottom:11px;
+.setPanel .totletitle {
+  font-size: 16px;
+  color: #878b97;
+  line-height: 100%;
+  padding-bottom: 11px;
 }
-.setPanel .totletitle i{
-  display:inline-block;
+.setPanel .totletitle i {
+  display: inline-block;
   vertical-align: middle;
-  width:24px;
-  height:24px;
-  background:url(../../assets/img/icon_instructions.png) no-repeat center;
-  background-size:100% 100%;
-  margin-left:4px;
+  width: 24px;
+  height: 24px;
+  background: url(../../assets/img/icon_instructions.png) no-repeat center;
+  background-size: 100% 100%;
+  margin-left: 4px;
 }
-.setPanel .tolerTab{
+.setPanel .tolerTab {
   overflow: hidden;
 }
-.setPanel .tolerTab span{
-  float:left;
-  width:72px;
-  height:36px;
-  line-height:36px;
-  text-align:center;
-  border-radius:32px;
-  background: #F6F7FB;
-  font-size:16px;
-  color:#878B97;
-  margin-left:12px;
+.setPanel .tolerTab span {
+  float: left;
+  width: 72px;
+  height: 36px;
+  line-height: 36px;
+  text-align: center;
+  border-radius: 32px;
+  background: #f6f7fb;
+  font-size: 16px;
+  color: #878b97;
+  margin-left: 12px;
   cursor: pointer;
 }
-.setPanel .tolerTab span:first-child{
-  margin-left:0;
+.setPanel .tolerTab span:first-child {
+  margin-left: 0;
 }
-.setPanel .tolerTab span.active{
-  background:#02B27D;
-  color:#FFFFFF;
+.setPanel .tolerTab span.active {
+  background: #02b27d;
+  color: #ffffff;
 }
-.setting{
-  width:28px;
+.setting {
+  width: 28px;
   height: 28px;
   background: url(../../assets/img/setIco.png) no-repeat center;
-  background-size:100% 100%;
-  margin-left:16px;
-  margin-top:18px;
+  background-size: 100% 100%;
+  margin-left: 16px;
+  margin-top: 18px;
   cursor: pointer;
 }
-.lang{
-  color:#A6AEB7;
-  line-height:40px;
-  font-size:16px;
-  margin-top:18px;
-  margin-left:36px;
-  cursor:pointer;
+.lang {
+  color: #a6aeb7;
+  line-height: 40px;
+  font-size: 16px;
+  margin-top: 18px;
+  margin-left: 36px;
+  cursor: pointer;
 }
-.lang i{
-  display:inline-block;
+.lang i {
+  display: inline-block;
   vertical-align: middle;
-  width:32px;
-  height:32px;
+  width: 32px;
+  height: 32px;
   background: url(../../assets/img/langIco.png) no-repeat center;
-  background-size:100% 100%;
+  background-size: 100% 100%;
 }
 // .logop{
 //   float: left;
@@ -444,7 +439,7 @@ export default {
   }
 }
 .drawer_nav_active {
-  background-color: #02B27D;
+  background-color: #02b27d;
   color: #05c98e;
   font-family: roboto-mediumitalic;
 }
@@ -543,7 +538,6 @@ export default {
   color: #a6aeb7;
   position: relative;
   // margin-left: 22px;
-  
 }
 .active {
   font-family: roboto-mediumitalic;
@@ -555,7 +549,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #02B27D;
+  background: #02b27d;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -600,7 +594,7 @@ export default {
     padding: 0 16px;
     height: 24px;
     line-height: 24px;
-    background: #02B27D;
+    background: #02b27d;
     border-radius: 28px;
     font-size: 18px;
     font-family: roboto-mediumitalic;
@@ -668,46 +662,53 @@ export default {
     height: 4.58rem;
     background-size: 100% 4.58rem;
   }
-  .setPanel{
-    width:auto;
-    left:15px;
-    right:15px;
-    top:30%;
+  .setPanel {
+    width: auto;
+    left: 15px;
+    right: 15px;
+    top: 30%;
     padding: 24px 15px;
   }
-  .setPanel .tolerTab span{
-    margin-left:6px;
+  .setPanel .tolerTab span {
+    margin-left: 6px;
   }
-  .lang{display:none;}
-  .setting{display:none;}
-  .langAndSet{
-    position:absolute;
-    bottom:2rem;
-    width:100%;
-    text-align:center;
+  .lang {
+    display: none;
   }
-  .langAndSet .setbox{
-    float:left;
-    font-size:0.37rem;
-    line-height:44px;
-    padding-left:24px;
+  .setting {
+    display: none;
   }
-  .langAndSet .setbox.fr{float:right;padding-right:24px;}
-  .langAndSet .setbox .setico{
-    display:inline-block;
+  .langAndSet {
+    position: absolute;
+    bottom: 2rem;
+    width: 100%;
+    text-align: center;
+  }
+  .langAndSet .setbox {
+    float: left;
+    font-size: 0.37rem;
+    line-height: 44px;
+    padding-left: 24px;
+  }
+  .langAndSet .setbox.fr {
+    float: right;
+    padding-right: 24px;
+  }
+  .langAndSet .setbox .setico {
+    display: inline-block;
     vertical-align: middle;
-    width:0.8rem;
-    height:0.8rem;
-    background:url(../../assets/img/setIco.png) no-repeat center;
-    background-size:100% 100%;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url(../../assets/img/setIco.png) no-repeat center;
+    background-size: 100% 100%;
   }
-  .langAndSet .setbox .langico{
-    display:inline-block;
+  .langAndSet .setbox .langico {
+    display: inline-block;
     vertical-align: middle;
-    width:0.8rem;
-    height:0.8rem;
-    background:url(../../assets/img/langIco.png) no-repeat center;
-    background-size:100% 100%;
+    width: 0.8rem;
+    height: 0.8rem;
+    background: url(../../assets/img/langIco.png) no-repeat center;
+    background-size: 100% 100%;
   }
 }
 </style>
