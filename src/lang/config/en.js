@@ -168,7 +168,9 @@ module.exports = {
     pewe5:'Weight addition cannot be greater than 50',
     pewe6:'Successful, please wait for block confirmation',
     pewe7:'System error',
-    pewe8:'success'
+    pewe8:'success',
+    Tnos:'Transaction Settings',
+    Sete:'Slippage tolerance'
 
 
 
