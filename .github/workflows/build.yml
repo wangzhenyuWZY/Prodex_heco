@@ -3,7 +3,7 @@
 
 name: Build
 
-on: [push]
+on: workflow_dispatch
 
 env:
   DOCKER_ACCESS_TOKEN: ${{ secrets.DOCKER_ACCESS_TOKEN }}
