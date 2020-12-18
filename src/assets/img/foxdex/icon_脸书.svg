@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="32px" height="32px" viewBox="0 0 32 32" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 60 (88103) - https://sketch.com -->
+    <title>icon_脸书</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-2" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="关于" transform="translate(-744.000000, -949.000000)">
+            <g id="编组-7" transform="translate(600.000000, 192.000000)">
+                <g id="编组-20">
+                    <g id="形状结合">
+                        <g id="编组-3" transform="translate(144.000000, 757.000000)">
+                            <g id="icon_脸书">
+                                <g>
+                                    <rect id="矩形" x="0" y="0" width="32" height="32"></rect>
+                                    <g id="编组" transform="translate(10.000000, 4.000000)" fill="#878B97" fill-rule="nonzero">
+                                        <path d="M7.25311605,6.89900156 L7.25311605,5.0596805 C7.25311605,4.16368293 7.86579603,3.95441049 8.29471295,3.95441049 L10.9402463,3.95441049 L10.9402463,0.0159749957 L7.29793132,0 C3.2551438,0 2.337147,2.93899983 2.337147,4.82085431 L2.337147,6.89920125 L0,6.89920125 L0,11.5 L2.35740596,11.5 L2.35740596,23 L7.07099007,23 L7.07099007,11.5 L10.5696506,11.5 L11,6.89900156 L7.25311605,6.89900156 Z" id="路径"></path>
+                                    </g>
+                                </g>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

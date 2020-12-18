@@ -133,7 +133,7 @@
 <script>
 const Decimal = require('decimal.js');
 import { mapActions, mapState } from "vuex";
-import {TokenData} from '../../utils/index'
+import {TokenData,PairData} from '../../utils/index'
 import {getBalanceInPool,getMyBalanceInPool,getLpBalanceInPool} from "../../utils/tronwebFn"
 export default {
   data() {
@@ -145,15 +145,29 @@ export default {
       myBalanceInPool:0,
       lpTotal:0,
       share:0,
-      tokenData:TokenData()
+      tokenList:[]
     };
   },
+  watch: {
+    tokenData(list){
+      this.tokenList = JSON.parse(JSON.stringify(list)) 
+    },
+    pairData(list){
+      this.pairList = JSON.parse(JSON.stringify(list)) 
+      if(this.pairList && this.pairList.length>0){
+        this.init()
+      }
+    }
+  },
   computed: {
-    ...mapState(["connectFlag", "walletAddres"]),
-    
+    ...mapState(["connectFlag", "walletAddres",'tokenData','pairData']), 
   },
   created(){
-    this.init()
+    this.tokenList = JSON.parse(JSON.stringify(this.tokenData))
+    this.pairList = JSON.parse(JSON.stringify(this.pairData))
+    if(this.pairList && this.pairList.length>0){
+      this.init()
+    }
   },
   mounted(){
     
@@ -186,11 +200,11 @@ export default {
     },
     getpairList(){
       let that = this
-      this.tokenData.pairList.forEach((item)=>{
+      this.pairList.forEach((item,index)=>{
         item.show = false
         getMyBalanceInPool(item).then((res)=>{
           item.myBalanceInPool = Decimal(res).div(Math.pow(10,18)).toFixed(6).toString()
-          that.pairList.push(item)
+          that.$set(that.pairList, index, item)
         })
       })
     },

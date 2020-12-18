@@ -51,19 +51,19 @@ import ipConfig from '../../config/ipconfig.bak'
 import { approved, getMyBalanceInPool, allowance, getLpBalanceInPool, bPoolAllowance, getConfirmedTransaction } from '../../utils/tronwebFn'
 import selected from './Selected'
 // import tokenData from '../../utils/token';
-import { TokenData } from '../../utils/index'
+import { PairData } from '../../utils/index'
+import { mapState } from 'vuex'
 import { api } from '../../api/api'
 export default {
   data() {
     return {
-
       MasterChefContract: null,
       getContract: null,
       poolLength: 0,
       poolIndex: 0,
       login: false,
       showModel: false,
-      farmList: TokenData().pairList,
+      farmList: [],
       item: {},
       total: {
         farmTotal: 0, // 总数
@@ -82,10 +82,19 @@ export default {
       },
     }
   },
+  watch: {
+    pairData(list) {
+      this.farmList = JSON.parse(JSON.stringify(list))
+    }
+  },
   components: {
     selected
   },
+  computed: {
+    ...mapState(['pairData'])
+  },
   created() {
+    this.farmList = JSON.parse(JSON.stringify(this.pairData))
     this.init();
 
   },

@@ -10,6 +10,7 @@ import Vue from 'vue';
 import navBar from './components/common/Navbar'
 import {mapActions} from 'vuex'
 import initTronWeb from './utils/tronwebFn'
+import { TokenData,PairData } from './utils/index'
 export default {
   name: 'App',
   components:{
@@ -17,6 +18,12 @@ export default {
   },
   created() {
     this.init();
+    TokenData().then((res)=>{
+      this.$store.dispatch('setTokenData', res);
+    })
+    PairData().then((res)=>{
+      this.$store.dispatch('setPairData', res);
+    })
   },
   methods: {
   ...mapActions(['connectWallett']),

@@ -177,9 +177,9 @@
       </div>
       <div class="pagin">
         <el-pagination background
-                       v-if="pairList.length>=10"
+                       v-if="pairList && pairList.length>=10"
                        layout="prev, pager, next"
-                       :total="pairList.length">
+                       :total="pairList?pairList.length:0">
         </el-pagination>
       </div>
     </div>
@@ -187,28 +187,46 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import {api} from '../../api/api'
 import chart from './chart.vue'
 import chart2 from './chart2.vue'
 import circular from './circular'
-import {TokenData} from '../../utils/index'
+import {TokenData,PairData} from '../../utils/index'
 import { IsPc } from '../../utils/index'
 import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool,getTokenDenormalizedWeight } from "../../utils/tronwebFn"
 export default {
   components: { chart, chart2, circular },
+  computed: {
+    ...mapState(['pairData'])
+  },
+  watch:{
+    pairData(list){
+      let that = this
+      this.pairList = JSON.parse(JSON.stringify(list)) 
+      if(this.pairList.length>0){
+        this.$initTronWeb().then(function (tronWeb) {
+          that.init();
+          that.getVolPrice24()
+        })
+      }
+    }
+  },
   data () {
     return {
-      pairList:TokenData().pairList,
-      mobile: IsPc(),
-      tokenData:TokenData()
+      pairList:[],
+      mobile: IsPc()
     }
   },
   mounted () {
     let that = this
-    this.$initTronWeb().then(function (tronWeb) {
-      that.init();
-    })
-    that.getVolPrice24()
+    this.pairList = JSON.parse(JSON.stringify(this.pairData))
+    if(this.pairList && this.pairList.length>0){
+      this.$initTronWeb().then(function (tronWeb) {
+        that.init();
+        that.getVolPrice24()
+      })
+    }
   },
   methods: {
      requierImg (name,number) {
@@ -231,10 +249,9 @@ export default {
     },
     async init () {
       let that = this
-      // this.pairList = tokenData.pairList
       let pairList = []
-      for (let index = 0; index < this.tokenData.pairList.length; index++) {
-        const el = this.tokenData.pairList[index];
+      for (let index = 0; index < this.pairList.length; index++) {
+        const el = this.pairList[index];
         getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
           el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
         })  

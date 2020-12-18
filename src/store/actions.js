@@ -10,6 +10,12 @@ import * as types from './action-types';
         } catch (error) {
             console.log(error)
         }
+   },
+   setTokenData ({commit}, data) {
+    commit(types.SET_TOKEN_DATA,data);
+   },
+   setPairData ({commit}, data) {
+    commit(types.SET_PAIR_DATA,data);
    }
 }
 export default action
