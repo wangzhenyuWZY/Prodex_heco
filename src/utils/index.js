@@ -1,14 +1,29 @@
 import Vue from 'vue'
-import tokenDataDev from './token'
-import tokenProdData from './token.prod.js'
+import {getTokenList,getPairList} from '../api/api'
+// import tokenDataDev from './token'
+// import tokenProdData from './token.prod.js'
 /* eslint-disable */
 export const TokenData = function(){
-  console.log('process.env.NODE_ENV=============='+process.env.NODE_ENV)
-  if (process.env.NODE_ENV === 'development') {
-    return tokenDataDev
-  }else{
-    return tokenProdData
-  }
+  return new Promise(function (resolve, reject) {
+    getTokenList().then((res)=>{
+      if(res.data.code==0){
+        resolve(res.data.data)
+      }else{
+        resolve([])
+      }
+    })
+  })
+}
+export const PairData = function(){
+  return new Promise(function (resolve, reject) {
+    getPairList().then((res)=>{
+      if(res.data.code==0){
+        resolve(res.data.data)
+      }else{
+        resolve([])
+      }
+    })
+  })
 }
 
 

@@ -1,107 +1,70 @@
 <template>
   <div class="connect_pd">
-    <container top="32"
-               pdd>
-      <div class="title"
-           slot="title">
+    <container top="32" pdd>
+      <div class="title" slot="title">
         <div class="lt_box  ">
-          <router-link to="/pool"
-                       class="disa">
+          <router-link to="/pool" class="disa">
             <i class="el-icon-back back_icon"></i>
           </router-link>
           <span class="content_text fl_lt">{{$t('pool.al')}}</span>
           <div class="text_btn conct_btn fl_lt">
-               <el-button class="from_botton connect_btns"
-                      :class="iSingle?'green_btn':'fff_button'"
-                     @click="iSingle=true"
-                     type="small">{{$t('pool.assets1')}}</el-button>
+            <el-button class="from_botton connect_btns" :class="iSingle?'green_btn':'fff_button'" @click="iSingle=true" type="small">
+              {{$t('pool.assets1')}}</el-button>
           </div>
-         <div class="text_btn fl_lt">
-              <el-button class=" from_botton connect_btns"
-                    :class="!iSingle?'green_btn':'fff_button'"
-                     @click="iSingle=false"
-                     type="small">{{$t('pool.assets2')}}</el-button>
-         </div>
-        
+          <div class="text_btn fl_lt">
+            <el-button class=" from_botton connect_btns" :class="!iSingle?'green_btn':'fff_button'" @click="iSingle=false" type="small">
+              {{$t('pool.assets2')}}</el-button>
+          </div>
+
         </div>
         <div class="rg_box  fl_rg">
-           <el-tooltip placement="left"   >
-                      <div slot="content"
-                          >
-                       {{$t('pool.stkk1')}} <br>
-                       {{$t('pool.stkk2')}} <br>
-                       {{$t('pool.stkk3')}} <br>
-                       {{$t('pool.stkk4')}} <br>
-                       {{$t('pool.stkk5')}} <br>
-                      </div>
-                      <img src="@/assets/img/icon_instructions.svg"
-                           alt="">
-                    </el-tooltip>
+          <el-tooltip placement="left">
+            <div slot="content">
+              {{$t('pool.stkk1')}} <br>
+              {{$t('pool.stkk2')}} <br>
+              {{$t('pool.stkk3')}} <br>
+              {{$t('pool.stkk4')}} <br>
+              {{$t('pool.stkk5')}} <br>
+            </div>
+            <img src="@/assets/img/icon_instructions.svg" alt="">
+          </el-tooltip>
 
-          
         </div>
       </div>
 
-      <div slot="body"
-           class="posting">
-        <div class="xzk"
-             v-if="showFees(token1 )"
-             @click="validation">
+      <div slot="body" class="posting">
+        <div class="xzk" v-if="showFees(token1 )" @click="validation">
           <div class="fees">
             <span>
-              <img :src="requierImg(token1.name)"
-                   alt="">
-              <img v-show="showFees(token2)"
-                   :src="requierImg(token2.name)"
-                   alt="">
+              <img :src="requierImg(token1.name)" alt="">
+              <img v-show="showFees(token2)" :src="requierImg(token2.name)" alt="">
             </span>
             <span class="fees_zies">{{token1.name}}-{{token2.name}} </span>
-            <img src="@/assets/img/icon_down.svg"
-                 alt="">
+            <img src="@/assets/img/icon_down.svg" alt="">
           </div>
         </div>
         <div class="setInput clearfix">
           <div class="ctx_1 fl_lt">
-            <frominput :lable= "$t('pool.Input')"
-                       showmax
-                       :balance='token1.balance'
-                       v-model="token1Num"
-                       @input="calcShare"></frominput>
+            <frominput :lable="$t('pool.Input')" showmax :balance='token1.balance' v-model="token1Num" @input="calcShare"></frominput>
           </div>
           <div class="ctx_3s fl_lt">
-            <setselect lable="321321"
-                       :imgUrl="token1.img"
-                       item='1'
-                       :showSelect="JSON.stringify(token1)!='{}'"
-                       :balance="token1.balance"
-                       :text="token1.name"
-                       @click="showSelect(0)" />
+            <setselect lable="321321" :imgUrl="token1.img" item='1' :showSelect="JSON.stringify(token1)!='{}'" :balance="token1.balance"
+                       :text="token1.name" @click="showSelect(0)" />
           </div>
         </div>
 
-        <div class="from_contentIcon"
-             v-show="!iSingle">+</div>
-        <div class="setInput clearfix"
-             v-show="!iSingle">
+        <div class="from_contentIcon" v-show="!iSingle">+</div>
+        <div class="setInput clearfix" v-show="!iSingle">
           <div class="ctx_1 fl_lt">
-            <frominput :lable= "$t('pool.Input')"
-                       placeholder=""
-                       showmax
-                       :balance='token2.balance'
-                       @input="calcToken1Num"
-                       v-model="token2Num"></frominput>
+            <frominput :lable="$t('pool.Input')" placeholder="" showmax :balance='token2.balance' @input="calcToken1Num" v-model="token2Num">
+            </frominput>
           </div>
           <div class="ctx_3s fl_lt">
-            <setselect :imgUrl="token2.img"
-                       item='2'
-                       :balance="token2.balance"
-                       :showSelect="JSON.stringify(token2)!='{}'"
-                       :text="token2.name"
+            <setselect :imgUrl="token2.img" item='2' :balance="token2.balance" :showSelect="JSON.stringify(token2)!='{}'" :text="token2.name"
                        @click="showSelect(1)" />
           </div>
         </div>
-        <div class="box_sizes"
-             v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
+        <div class="box_sizes" v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
           <div class="provider connectbox">
             <div class="box_title">{{$t('pool.paps')}}</div>
             <ul class="pre_list clearfix">
@@ -121,24 +84,16 @@
           </div>
         </div>
         <div class="connect_btn clearfix">
-          <div class="whe fl_lt"
-               v-show="!isApproved">
-            <el-button class="from_botton"
-                        :loading="charm.btnLoading2"
-                       :disabled="charm.disabled2"
-                       @click="doApprove">{{$t('Stake.Approve')}}</el-button>
+          <div class="whe fl_lt" v-show="!isApproved">
+            <el-button class="from_botton" :loading="charm.btnLoading2" :disabled="charm.disabled2" @click="doApprove">{{$t('Stake.Approve')}}
+            </el-button>
           </div>
           <div class="whe fl_rg">
-            <el-button class="from_botton"
-                       :loading="charm.btnLoading1"
-                       :disabled="btndisable()"
-                       @click="confirmSupply">{{$t('Supply')}}</el-button>
+            <el-button class="from_botton" :loading="charm.btnLoading1" :disabled="btndisable()" @click="confirmSupply">{{$t('Supply')}}</el-button>
           </div>
         </div>
       </div>
-      <div slot="footer"
-           class="position "
-           v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
+      <div slot="footer" class="position " v-show="JSON.stringify(token1)!='{}'||JSON.stringify(token2)!='{}'">
         <div class="box_sizes connect_boxs">
           <div class="provider c_receove_Share ">
             <div class="">
@@ -148,13 +103,10 @@
                 </div>
                 <div class="rg connect_currency">
                   <div class="metits">
-                  <span>
-                    <img :src="requierImg(token1.name)"
-                        alt="">
-                    <img v-show="showFees(token2)"
-                        :src="requierImg(token2.name)"
-                        alt="">
-                  </span>
+                    <span>
+                      <img :src="requierImg(token1.name)" alt="">
+                      <img v-show="showFees(token2)" :src="requierImg(token2.name)" alt="">
+                    </span>
                     <span class="setsize">{{token1.name}}/{{token2.name}}</span>
                   </div>
                   <div class="currencyprices">{{(myBalanceInPool/Math.pow(10,18)).toFixed(6)}}</div>
@@ -185,30 +137,12 @@
       </div>
 
     </container>
-    <selctoken :showAlert='isSelect'
-               :item='item'
-               @closeAlert="isSelect=false"
-               @change="changeCoin" />
+    <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
     <!--单币种流动性弹窗 -->
-    <selctoken :showAlert="isSelect1"
-               :item='item'
-               :selectType="selectType"
-               @closeAlert="isSelect1=false"
-               @linkage="linkage" />
-    <recevive v-if="confirmPop"
-              :showAlert='confirmPop'
-              :popsData='popsData'
-              @change='supply(1)'
-              @close="confirmPop = false" />
-    <removealert :isShow="showAlert1"
-                 :alertType="alertType"
-                 :token1Num="token1Num"
-                 :token2Num="token2Num"
-                 :token1="token1"
-                 :token2="token2"
-                 :url="typeUrl"
-                 @close="closeAlert" 
-           />
+    <selctoken :showAlert="isSelect1" :item='item' :selectType="selectType" @closeAlert="isSelect1=false" @linkage="linkage" />
+    <recevive v-if="confirmPop" :showAlert='confirmPop' :popsData='popsData' @change='supply(1)' @close="confirmPop = false" />
+    <removealert :isShow="showAlert1" :alertType="alertType" :token1Num="token1Num" :token2Num="token2Num" :token1="token1" :token2="token2"
+                 :url="typeUrl" @close="closeAlert" />
   </div>
 </template>
 
@@ -219,14 +153,14 @@ import BigNumber from 'bignumber.js'
 import ipConfig from '../../config/ipconfig.bak'
 import { container, frominput, setselect } from '../../components/index'
 import selctoken from './selctToken';
-import {TokenData} from '../../utils/index'
+import { PairData } from '../../utils/index'
 import { decimals, allowance, approved, getLpBalanceInPool, getMyBalanceInPool, getTokenDenormalizedWeight } from '../../utils/tronwebFn'
 import { calcPoolOutGivenSingleIn, getTokenInGivenPoolOut } from '../../utils/calc_comparisons'
 import recevive from './recevive'
 import removealert from './valret';
-
+import { mapState } from 'vuex'
 export default {
-  data () {
+  data() {
     return {
       token1Num: '',
       token2Num: '',
@@ -250,7 +184,7 @@ export default {
       lpTotal: 0,
       denormalizedWeight: 0,
       totalDenormalizedWeight: 0,
-      typeUrl:'',
+      typeUrl: '',
       foxDex: 0,
       share: 0,
       charm: {
@@ -271,9 +205,9 @@ export default {
       popsData: {},
       showAlert1: false,
       alertType: 'success',
-      token1ApproveBalance:0,
-      token2ApproveBalance:0,
-      tokenData:TokenData()
+      token1ApproveBalance: 0,
+      token2ApproveBalance: 0,
+      pairList: []
     }
   },
   components: {
@@ -284,7 +218,10 @@ export default {
     recevive,
     removealert
   },
-  created () {
+  computed: {
+    ...mapState(['pairData'])
+  },
+  created() {
     if (this.$route.params.pair) {
       let pair = JSON.parse(this.$route.params.pair)
       this.token1 = pair.token1
@@ -294,34 +231,38 @@ export default {
       this.getBasicInfo(this.token1)
       this.getBasicInfo(this.token2)
     }
+    this.pairList = JSON.parse(JSON.stringify(this.pairData))
   },
   watch: {
-    token1Num () {
+    token1Num() {
       this.validity();
     },
-    token2Num () {
+    token2Num() {
       this.validity();
     },
-    iSingle () {
+    iSingle() {
       this.validity();
+    },
+    pairData(list) {
+      this.pairList = JSON.parse(JSON.stringify(list))
     }
   },
   methods: {
-      requierImg (name) {
-        if (name) {
-           try {
-               return require('@/assets/img/currency/'+name+'.png')
-           } catch (error) {
-              return require('@/assets/img/currency/avitve.png')
-           }
+    requierImg(name) {
+      if (name) {
+        try {
+          return require('@/assets/img/currency/' + name + '.png')
+        } catch (error) {
+          return require('@/assets/img/currency/avitve.png')
         }
+      }
     },
-    disableds () {
-      if (JSON.stringify(this.token1) != '{}'&&JSON.stringify(this.token2) != '{}' )  {
-        if (this.token1ApproveBalance==0) {
+    disableds() {
+      if (JSON.stringify(this.token1) != '{}' && JSON.stringify(this.token2) != '{}') {
+        if (this.token1ApproveBalance == 0) {
           return true
         } else {
-          if(this.token2ApproveBalance == 0) {
+          if (this.token2ApproveBalance == 0) {
             return true;
           } else {
             return false
@@ -330,29 +271,29 @@ export default {
       } else {
         return false
       }
-      
+
     },
-    btndisable () {
-        if (!this.charm.disabled1) { // 可以执行
-                 if (this.token1ApproveBalance==0) {
-                    return true
-                  } else {
-                    if(this.token2ApproveBalance == 0) {
-                      return true;
-                    } else {
-                      return false
-                    }
-                  } 
-         
+    btndisable() {
+      if (!this.charm.disabled1) { // 可以执行
+        if (this.token1ApproveBalance == 0) {
+          return true
         } else {
-            return true
+          if (this.token2ApproveBalance == 0) {
+            return true;
+          } else {
+            return false
+          }
         }
+
+      } else {
+        return true
+      }
     },
-    closeAlert () {
+    closeAlert() {
       this.showAlert1 = false
       window.location.reload()
     },
-    checkSupply () {
+    checkSupply() {
       if (!this.token1Num || this.token1Num == '' || this.token1Num == 0) {
         this.$message({
           message: this.$t('pewe1'),
@@ -365,7 +306,7 @@ export default {
         });
       }
     },
-    confirmSupply () {//输出的lptoken数量
+    confirmSupply() {//输出的lptoken数量
       if (this.token1Num > this.token1.balance || this.token2Num > this.token2.balance) {
         this.$message({
           message: this.$t('pewe2'),
@@ -373,13 +314,13 @@ export default {
         });
         return
       }
-    
-      if(this.iSingle){
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance,this.token1denormalizedWeight,this.lpTotal,this.totalDenormalizedWeight,this.token1Num,this.foxDex)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
-      }else{
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance,this.token1Num,this.token2Balance,this.token2Num,this.lpTotal)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10,18))).toFixed(6)
+
+      if (this.iSingle) {
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+      } else {
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, this.token1Num, this.token2Balance, this.token2Num, this.lpTotal)
+        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
       }
       this.popsData = {
         reciveLptoken: this.reciveLptoken,
@@ -393,7 +334,7 @@ export default {
       }
       this.confirmPop = true
     },
-    calcToken1Num () {
+    calcToken1Num() {
       if (this.token2Num <= 0) {
         return
       }
@@ -408,7 +349,7 @@ export default {
       }
 
     },
-    calcShare () {
+    calcShare() {
       if (this.token1Num <= 0) {
         this.share = 0
         return
@@ -426,7 +367,7 @@ export default {
         this.getShare()
       }
     },
-    getShare () {
+    getShare() {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
         if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
@@ -435,13 +376,13 @@ export default {
           let share = Decimal(poolOut).div(plus).mul(100)
           this.share = share.toFixed(2)
         } else {
-          getTokenDenormalizedWeight(this.token1.address,this.pair.address).then((response) => {
-            that.token1denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
-            console.log('token1denormalizedWeight========='+that.token1denormalizedWeight)
+          getTokenDenormalizedWeight(this.token1.address, this.pair.address).then((response) => {
+            that.token1denormalizedWeight = parseInt(response, 16) / Math.pow(10, that.pair.decimals)
+            console.log('token1denormalizedWeight=========' + that.token1denormalizedWeight)
           })
-          getTokenDenormalizedWeight(this.token2.address,this.pair.address).then((response) => {
-            that.token2denormalizedWeight = parseInt(response,16)/Math.pow(10,that.pair.decimals)
-            console.log('token2denormalizedWeight========='+that.token2denormalizedWeight)
+          getTokenDenormalizedWeight(this.token2.address, this.pair.address).then((response) => {
+            that.token2denormalizedWeight = parseInt(response, 16) / Math.pow(10, that.pair.decimals)
+            console.log('token2denormalizedWeight=========' + that.token2denormalizedWeight)
           })
           this.getTotalDenormalizedWeight()//获取lptoken总权重
           this.getSwapFeeForDex()//获取swapfee
@@ -474,7 +415,7 @@ export default {
     //     console.log("token1权重=======" + this.denormalizedWeight)
     //   }
     // },
-    async getTotalDenormalizedWeight () {
+    async getTotalDenormalizedWeight() {
       var functionSelector = 'getTotalDenormalizedWeight()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
@@ -482,27 +423,27 @@ export default {
         this.totalDenormalizedWeight = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
       }
     },
-    async getSwapFeeForDex () {
+    async getSwapFeeForDex() {
       var functionSelector = 'swapFeeForDex()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       this.foxDex = parseInt(transaction.constant_result[0], 16)
     },
-    async getCreateToken(item){
+    async getCreateToken(item) {
       let that = this
       var functionSelector = 'getCurrentTokens()';
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(item.address, functionSelector, { shouldPollResponse: true }, parameter);
-      if (!transaction.result || !transaction.result.result){
-           return console.error('Unknown error: ' + transaction, null, 2);
+      if (!transaction.result || !transaction.result.result) {
+        return console.error('Unknown error: ' + transaction, null, 2);
       }
       console.log(transaction)
     },
-    async getPairAddress () {
+    async getPairAddress() {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = this.tokenData.pairList.filter((item) => {
+      let pair = this.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
@@ -540,7 +481,7 @@ export default {
 
         allowance(this.token1.address, pair[0].address).then((res) => {
           if (res) {
-            that.token1ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16);
+            that.token1ApproveBalance = parseInt(res._hex ? res._hex : res.remaining._hex, 16);
             console.log(that.token1ApproveBalance)
             if (that.token1ApproveBalance == 0) {
               that.isApproved = false
@@ -551,7 +492,7 @@ export default {
         })
         allowance(this.token2.address, pair[0].address).then((res) => {
           if (res) {
-            that.token2ApproveBalance = parseInt(res._hex?res._hex:res.remaining._hex, 16)
+            that.token2ApproveBalance = parseInt(res._hex ? res._hex : res.remaining._hex, 16)
             if (that.token2ApproveBalance == 0) {
               that.isApproved = false
             } else {
@@ -561,7 +502,7 @@ export default {
         })
       }
     },
-    charm1 (n) {
+    charm1(n) {
       if (n) {
         this.charm.btnLoading1 = true;
         this.charm1.disabled1 = true;
@@ -571,7 +512,7 @@ export default {
       }
 
     },
-    validity () {
+    validity() {
       if (!this.charm.subimt) {
         if (this.iSingle) { //  单1流动性
           if (this.token1Num != '' && JSON.stringify(this.token1) != '{}' && JSON.stringify(this.token2) != '{}') {
@@ -590,25 +531,25 @@ export default {
       }
 
     },
-    charm2 (n) {
-        if (n) {
-          this.charm.btnLoading2 = true;
-          this.charm.disabled2 = true;
-        } else {
-            this.charm.btnLoading2 = false;
-          this.charm.disabled2 =false;
-        }
+    charm2(n) {
+      if (n) {
+        this.charm.btnLoading2 = true;
+        this.charm.disabled2 = true;
+      } else {
+        this.charm.btnLoading2 = false;
+        this.charm.disabled2 = false;
+      }
     },
-    supply () {
+    supply() {
       this.charm1(1);
-      if(this.token1ApproveBalance==0 || this.token2ApproveBalance==0){
+      if (this.token1ApproveBalance == 0 || this.token2ApproveBalance == 0) {
         this.$message({
           message: this.$t('pewe3'),
           type: 'error'
         });
         return
       }
-      
+
       if (this.iSingle) {
         this.joinswapExternAmountIn()
       } else {
@@ -616,18 +557,18 @@ export default {
       }
       this.confirmPop = false
     },
-    async joinPool () {
+    async joinPool() {
       let that = this
       var functionSelector = 'joinPool(uint256,uint256[])';
       let token1balance = new BigNumber(that.token1.balance)
-      token1balance = token1balance.times(Math.pow(10,that.token1.decimals)).toFixed()
+      token1balance = token1balance.times(Math.pow(10, that.token1.decimals)).toFixed()
       let token2balance = new BigNumber(that.token2.balance)
-      token2balance = token2balance.times(Math.pow(10,that.token2.decimals)).toFixed()
-      console.log('token1balance===='+token1balance)
-      console.log('token2balance===='+token2balance)
+      token2balance = token2balance.times(Math.pow(10, that.token2.decimals)).toFixed()
+      console.log('token1balance====' + token1balance)
+      console.log('token2balance====' + token2balance)
       const MAX = Web3Utils.utils.toTwosComplement(-1);
       var parameter = [
-        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10,that.pair.decimals)).toString() },
+        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10, that.pair.decimals)).toString() },
         { type: 'uint256[]', value: ['1000000000000000000000000000000', '1000000000000000000000000000000'] },
       ]
       console.log(parameter)
@@ -637,10 +578,10 @@ export default {
           that.charm1();
           return console.error('Unknown error: ' + transaction, null, 2);
         }
-        window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+        window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
             that.$message.success("SUCCESS!")
-             that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
+            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/' + signedTransaction.txID;
             that.charm1();
             that.charm2();
             that.showAlert1 = true
@@ -657,7 +598,7 @@ export default {
       }
 
     },
-    async joinswapExternAmountIn () {
+    async joinswapExternAmountIn() {
       let that = this
       var functionSelector = 'joinswapExternAmountIn(address,uint256,uint256)';
       var parameter = [
@@ -667,12 +608,12 @@ export default {
       ]
       try {
         let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
-        if (!transaction.result || !transaction.result.result){
+        if (!transaction.result || !transaction.result.result) {
           that.charm1();
           return console.error('Unknown error: ' + transaction, null, 2);
         }
-        window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
+        window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
             that.$message.success('success');
             that.charm1();
             that.showAlert1 = true
@@ -683,16 +624,16 @@ export default {
           });
         })
       } catch (error) {
-        console.log(111,error);
-          that.charm1();
+        console.log(111, error);
+        that.charm1();
       }
 
     },
-    changeCoin (token) {
+    changeCoin(token) {
       this.isSelect = false
       this.getBasicInfo(token)
     },
-    getBasicInfo (token) {
+    getBasicInfo(token) {
       let that = this;
 
       decimals(token.address).then((res) => {
@@ -709,30 +650,30 @@ export default {
       })
       this.validity();
     },
-    doApprove () {
+    doApprove() {
       this.charm2(1);
       if (this.pair) {
         debugger;
-        if(this.token1ApproveBalance==0){
-          approved(this.token1.address, this.pair.address).then((res)=>{
+        if (this.token1ApproveBalance == 0) {
+          approved(this.token1.address, this.pair.address).then((res) => {
             this.getPairAddress()
 
             this.charm2();
             // window.location.reload()
           })
         }
-        if(this.token2ApproveBalance==0){
-          approved(this.token2.address, this.pair.address).then((res)=>{
-              this.getPairAddress()
-             this.charm2();
+        if (this.token2ApproveBalance == 0) {
+          approved(this.token2.address, this.pair.address).then((res) => {
+            this.getPairAddress()
+            this.charm2();
             // window.location.reload()
           })
         }
       } else {
-        this.$layer.msg( this.$t('pewe4'))
+        this.$layer.msg(this.$t('pewe4'))
       }
     },
-    async getBalance (token) {//获取余额
+    async getBalance(token) {//获取余额
       let that = this
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
@@ -744,9 +685,9 @@ export default {
         }
       }
     },
-    getBalanceInPool (pair, coin) {//获取Pool中的余额
+    getBalanceInPool(pair, coin) {//获取Pool中的余额
       let that = this
-      return new Promise(function (resolve, reject) {
+      return new Promise(function(resolve, reject) {
         var functionSelector = 'getBalance(address)';
         var parameter = [
           { type: 'address', value: coin.address }
@@ -757,7 +698,7 @@ export default {
         })
       })
     },
-    async getSpotPrice (address1, address2, name) {
+    async getSpotPrice(address1, address2, name) {
       var functionSelector = 'getSpotPrice(address,address)';
       var parameter = [
         { type: 'address', value: address1 },
@@ -785,13 +726,13 @@ export default {
         // name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
       }
     },
-    async checkBind () {//检查是否绑定
+    async checkBind() {//检查是否绑定
       var functionSelector = 'isBound(address)';
       var parameter = [{ type: 'address', value: 'TNFjWx7h4X9LqGcfJumnTsKDdzN1ePvQ5C' }]
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract('TVQpB9Eh66hua8VKNoq3oGt6SacSbXzWk9', functionSelector, {}, parameter);
       console.log("检查==========" + window.tronWeb.toDecimal(transaction.constant_result[0]))
     },
-    validation (n) {
+    validation(n) {
 
       let str = JSON.stringify(this.token1);
       if (str != "{}") {
@@ -799,18 +740,18 @@ export default {
         this.selectType = this.token1.name
       } else {
         this.$message({
-          message:  this.$t('pewe4'),
+          message: this.$t('pewe4'),
           type: 'error'
         });
       }
     },
-    showFees (n) {  // 是否显示联动框
+    showFees(n) {  // 是否显示联动框
       if (JSON.stringify(n) == "{}") {
         return false
       }
       return true;
     },
-    linkage (token) { // 联动
+    linkage(token) { // 联动
       this.isSelect1 = false;
       if (token.token1.name == this.selectType) {
         this.token1 = token.token1
@@ -824,13 +765,13 @@ export default {
       this.getBasicInfo(this.token1)
       this.getBasicInfo(this.token2)
     },
-    showSelect (index) {
+    showSelect(index) {
       if (index == 1 && this.iSingle) return;
       this.isSelect = true
       this.selectType = ""
       this.item = index
     },
-    sbmitBtn () {
+    sbmitBtn() {
       if (this.showFees(this.token1) && this.showFees(this.token2)) {  // 是否为空    
         if (this.token1Num != '' && this.token2Num != "") {
 
@@ -843,7 +784,7 @@ export default {
 </script>
 
 <style scoped>
-    >>> .el-dialog__wrapper{
+>>> .el-dialog__wrapper {
   overflow: auto;
 }
 </style>
@@ -851,7 +792,6 @@ export default {
 .connect_pd {
   padding-top: 120px;
   padding-bottom: 100px;
-  
 }
 .xzk {
   height: 56px;
@@ -890,10 +830,10 @@ export default {
     }
   }
 }
-.wlt{
+.wlt {
   font-size: 16px;
-  
-color: #A6AEB7;
+
+  color: #a6aeb7;
 }
 
 .lt_box {
@@ -964,7 +904,6 @@ color: #A6AEB7;
   }
 }
 .position {
-  
   max-width: 480px;
   margin-top: -40px;
   position: relative;
@@ -1011,10 +950,9 @@ color: #A6AEB7;
 }
 .rex {
   font-size: 18px;
-font-family: roboto-mediumitalic;
-font-weight: 400;
-color: #A6AEB7;
-
+  font-family: roboto-mediumitalic;
+  font-weight: 400;
+  color: #a6aeb7;
 }
 .ctx_1 {
   // max-width: 268px;
@@ -1069,16 +1007,26 @@ color: #A6AEB7;
   text-align: right;
   width: 40%;
 }
+.received {
+  display: flex;
+  justify-content: space-between;
+}
 .metits {
   width: 60%;
   font-size: 16px;
   text-align: center;
-  img{
-     transform: translateX(17px);
+
+  span {
+    margin-right: 6px;
+    display: inline-block;
+  }
+  img {
+    transform: translateX(12px);
+    width: 28px;
   }
   img:nth-child(2) {
-      transform: translateX(1px);
-    }
+    transform: translateX(1px);
+  }
 }
 .typeBtn {
   width: 136px;
@@ -1086,15 +1034,15 @@ color: #A6AEB7;
   background: #fff;
   border-radius: 16px;
   margin-left: 23px;
-  
-font-size: 18px;
+
+  font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
 }
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background:#02B27D;
+  background: #02b27d;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;
@@ -1106,7 +1054,7 @@ font-size: 18px;
     margin: 0;
     padding: 0;
     padding-top: 10px;
-    .back_icon{
+    .back_icon {
       width: 0.8rem;
       height: 0.8rem;
       line-height: 0.8rem;
@@ -1126,7 +1074,7 @@ font-size: 18px;
   }
   .title {
     display: flex;
-    padding:  10px  0.2rem;
+    padding: 10px 0.2rem;
     .content_text {
       // width: 54px;
       font-size: 0.4rem;
@@ -1136,7 +1084,7 @@ font-size: 18px;
 @media screen and (max-width: 475px) {
   .conct_btn {
     // margin-left: 50px;
-    margin:0 0.2rem;
+    margin: 0 0.2rem;
   }
   .lt_box {
     flex-wrap: wrap;
@@ -1154,10 +1102,9 @@ font-size: 18px;
     font-size: 12px;
     height: 1rem;
     line-height: 1rem;
-     width: 2.1rem;
-     padding: 0;
+    width: 2.1rem;
+    padding: 0;
   }
-  
 }
 //  @media screen and (max-width:375px){
 // .conct_btn{

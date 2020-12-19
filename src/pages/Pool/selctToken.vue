@@ -64,7 +64,7 @@
       <div class="mag_list">
         <div class="currency_list">
           <ul class="list_scroll">
-            <li v-for="(items,index) in tokenList"
+            <li v-for="(items,index) in tokenListArr"
                 :key="index"
                 @click="selectClick(items,index)">
               <img class="currency_img"
@@ -93,8 +93,9 @@
 </template>
 
 <script>
-import {TokenData} from '../../utils/index'
+import {TokenData,PairData} from '../../utils/index'
 import {IsPc} from '../../utils/index'
+import { mapState } from 'vuex'
 export default {
   props: {
     showAlert: {
@@ -110,32 +111,44 @@ export default {
       default:''
     }
   },
-  data () {
-    return {
-      mobile: IsPc(),
-      filterName: '',
-      iSort:0,
-      tokenData:TokenData()
-      // tokenList: tokenData.tokenList,
-    }
-  },
   computed: {
-     tokenList(){
+    ...mapState(['tokenData','pairData']),
+    tokenListArr(){
          let filtername = this.filterName
          let iSort = this.iSort
          if (this.selectType == '') {
-           return this.tokenData.tokenList.filter((el) => {
+           return this.tokenList.filter((el) => {
              return el.name.includes(filtername.toUpperCase())
            })
          } else {
-           let arry = this.tokenData.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
+           let arry = this.pairList.filter(el=> this.selectType == el.token1.name|| this.selectType == el.token2.name)
            return arry.filter((el) => {
              return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
            })
          } 
      }
   },
+  watch: {
+    tokenData(list){
+      this.tokenList = JSON.parse(JSON.stringify(list)) 
+      this.tokenListArr
+    },
+    pairData(list){
+      this.pairList = JSON.parse(JSON.stringify(list)) 
+    }
+  },
+  data () {
+    return {
+      mobile: IsPc(),
+      filterName: '',
+      iSort:0,
+      tokenList: [],
+      pairList: []
+    }
+  },
   created () {
+    this.tokenList = JSON.parse(JSON.stringify(this.tokenData))
+    this.pairList = JSON.parse(JSON.stringify(this.pairData))
   },
   methods: {
         requierImg (name) {

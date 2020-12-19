@@ -182,7 +182,7 @@ const Decimal = require('decimal.js');
 import { container, frominput, setselect } from '../../components/index'
 import change from './change'
 import selctoken from '../Pool/selctToken';
-import tokenData from '../../utils/token'
+import {PairData} from '../../utils/index'
 import { approved, decimals, getConfirmedTransaction, allowance } from '../../utils/tronwebFn'
 import removealert from '../Pool/valret'
 import {
@@ -231,11 +231,12 @@ export default {
       typeUrl:'',
       minAmountOut:0,
       tolerance:0.1,
-      maxPrice:MAX
+      maxPrice:MAX,
+      pairList:[]
     }
   },
   computed: {
-    ...mapState(['connectFlag'])
+    ...mapState(['connectFlag','pairData'])
   },
   components: {
     container,
@@ -254,8 +255,11 @@ export default {
     },
     token2Num () {
       this.inputFlag();
+    },
+    pairData(list){
+      let that = this
+      this.pairList = JSON.parse(JSON.stringify(list)) 
     }
-
   },
   methods: {
     closeAlert(){
@@ -377,7 +381,7 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      let pair = tokenData.pairList.filter((item) => {
+      let pair = this.pairList.filter((item) => {
         return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
