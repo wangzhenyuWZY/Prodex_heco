@@ -131,7 +131,7 @@ export default {
                 margin-bottom: 32px;
                 .fox_p1{  
                     margin-left: 16px; 
-                    font-size: 18px;
+                    font-size: 20px;
                     font-family: Roboto-Medium, Roboto;
                     font-weight: 500;
                     color: #0F1730;
@@ -143,7 +143,7 @@ export default {
                             border-radius: 12px;
                       .fox_p2{
                            padding: 16px 16px;
-                            font-size: 16px;
+                            font-size: 17px;
                             font-family: Roboto-Regular, Roboto;
                             font-weight: 400;
                             color: #5D606A;
