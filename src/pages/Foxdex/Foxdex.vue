@@ -3,36 +3,67 @@
     <div class="fox_box"> 
       <div class="fox_box1"> 
          <div class="fox_p">
-            <p class="fox_p1">What is Harvest?</p>
+            <p class="fox_p1"> {{$t('fox.foxp1')}} </p>
             <div class="foxp">
-            <p class="fox_p2">Harvest automatically farms the highest yield available from the newest DeFi protocols, and optimizes the yields that are received using the latest farming techniques.</p>
+            <p class="fox_p2">{{$t('fox.foxp2')}}
+
+               <br> <br>{{$t('fox.foxp3')}}
+                <br>{{$t('fox.foxp4')}}
+                <br>{{$t('fox.foxp5')}}
+                <br>{{$t('fox.foxp6')}}
+                <br>{{$t('fox.foxp7')}}
+             
+            </p>
             </div>
           </div>
           <div class="fox_p">
-            <p class="fox_p1">What is FARM?</p>
+            <p class="fox_p1">{{$t('fox.fb1')}}</p>
             <div class="foxp">
-            <p class="fox_p2">FARM is a cashflow token for Harvest, one of the largest autonomous hedge funds.</p>
+            <p class="fox_p2">{{$t('fox.fb2')}}</p>
             </div>
           </div>
           <div class="fox_p">
-            <p class="fox_p1">What are the token economics for FARM?</p>
+            <p class="fox_p1">{{$t('fox.fc1')}}</p>
             <div class="foxp">
-            <p class="fox_p2">·Farm holders receive cashflows from revenues on AUM, ·currently set to 30% profit sharing
-                               <br> ·Circulating supply at launch: 0
-                               <br> ·FARM has a current circulating supply of 392,293.92
-                               <br> ·FARM has a total supply over 4 years of 690,420
-                               <br> ·14,850 FARM has been burned in week 3
-                               <br> ·5,846.9 FARM has been burned in week 4
-                               <br> ·Harvest was completely bootstrapped, with no VCs and no premine</p>
+            <p class="fox_p2">{{$t('fox.fc2')}}
+                    <br> {{$t('fox.fc3')}}
+                 </p>
             </div>
           </div>
           <div class="fox_p">
-            <p class="fox_p1">What is fDAI, fUSDC, fWBTC?</p>
+            <p class="fox_p1">{{$t('fox.fd1')}}</p>
             <div class="foxp">
-            <p class="fox_p2">fDAI, fUSDC, fWBTC are the yield-bearing versions of these assets, which are being automatically farmed by the harvest algorithm. <br>
-               These assets are automatically appreciating, and you can redeem them at any time for DAI, USDC, wBTC.</p>
+            <p class="fox_p2">{{$t('fox.fd2')}}
+               <br> {{$t('fox.fd3')}}
+               <br> {{$t('fox.fd4')}}
+               <br> {{$t('fox.fd5')}}
+               <br> {{$t('fox.fd6')}}
+            </p>
             </div>
           </div>
+           <div class="fox_p">
+            <p class="fox_p1">{{$t('fox.fe1')}}</p>
+            <div class="foxp">
+            <p class="fox_p2">{{$t('fox.fe2')}} </p>
+            </div>
+          </div>
+           <div class="fox_p">
+            <p class="fox_p1">{{$t('fox.fe3')}}</p>
+            <div class="foxp">
+            <p class="fox_p2">{{$t('fox.fe4')}}</p>
+            </div>
+          </div>
+           <div class="fox_p">
+            <p class="fox_p1">{{$t('fox.ff1')}}</p>
+            <div class="foxp">
+            <p class="fox_p2">{{$t('fox.ff2')}}
+                    <br>
+                    <br> {{$t('fox.ff3')}}
+                    <br> {{$t('fox.ff4')}}
+                 </p>
+            </div>
+          </div>
+         
           
           <div class="fox_box2">
               <ul class="foxul">
@@ -72,10 +103,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@function rem($size, $miall: 75) {
+  @return $size/ $miall + rem;
+}
+@function rem1($size, $miall: 75) {
+  @return $size + px;
+}
 .foxdex{
     width: 720px;
     margin: 0 auto;
     padding-top: 120px;
+    height: 100%;
+    padding-bottom: 100px;
+     overflow-y: scroll;
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+    
     .fox_box{
         border-radius: 20px;
         background-color: #fff;
@@ -87,7 +131,7 @@ export default {
                 margin-bottom: 32px;
                 .fox_p1{  
                     margin-left: 16px; 
-                    font-size: 18px;
+                    font-size: 20px;
                     font-family: Roboto-Medium, Roboto;
                     font-weight: 500;
                     color: #0F1730;
@@ -99,7 +143,7 @@ export default {
                             border-radius: 12px;
                       .fox_p2{
                            padding: 16px 16px;
-                            font-size: 16px;
+                            font-size: 17px;
                             font-family: Roboto-Regular, Roboto;
                             font-weight: 400;
                             color: #5D606A;
@@ -129,19 +173,19 @@ export default {
     .foxdex{
     width: 92%;
     margin: 0 auto;
-    padding-top: 0px;
+    padding-top: 10px;
     .fox_box{
-        border-radius: 20px;
+        border-radius: rem(38 );
         background-color: #fff;
         height: auto; 
         .fox_box1{
-            padding: 40px 0;
-            margin: 0 24px;
+            padding: rem(45 ) 0;
+            margin: 0 rem(38);
             .fox_p{
                 margin-bottom: 32px;
                 .fox_p1{  
                     margin-left: 16px; 
-                    font-size: 18px;
+                    font-size: rem(34 );
                     font-family: Roboto-Medium, Roboto;
                     font-weight: 500;
                     color: #0F1730;
@@ -153,7 +197,7 @@ export default {
                             border-radius: 12px;
                       .fox_p2{
                            padding: 16px 16px;
-                            font-size: 16px;
+                            font-size: rem(30 );
                             font-family: Roboto-Regular, Roboto;
                             font-weight: 400;
                             color: #5D606A;
@@ -164,7 +208,7 @@ export default {
                    }           
                   }
     .fox_box2{
-      margin: 0 88px;
+      margin: 0 rem(40 );
       .foxul{
         display: flex;
         justify-content: space-around;
