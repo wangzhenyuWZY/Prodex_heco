@@ -5,16 +5,16 @@ let ipConfig = {}
 if (process.env.NODE_ENV === 'development') {
   ipConfig = {
     wtrxAddress: 'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
-    BFactory:'TQauXF9CH2Kuemrt6vsr99YT43N2YEDfaK',
-    MasterChef:'TJkCa4EKXkdfc5QaX56z6smZ1AnmVF4ZzZ',
-    FactoryManager:'TQpCHS4BtCwwnYw9dfZHnk5ZMnBBXHd64v'
+    BFactory:'TYFMTMFQKnm23o5RxhYLMN94NSnb3cpgQx',
+    MasterChef:'TNHDUtroDsdPc5oVDo4QmrL3ueSnwQKiLb',
+    FactoryManager:'TMAJmEkLG8G4mw3LZ7xrCjYRmNksdBSi9B'
   }
 }else{
   ipConfig = {
     wtrxAddress: 'TNUC9Qb1rRpS5CbWLmNMxXBjyFoydXjWFR',
-    BFactory:'TEG4wm38LS96HSWybWDGXLsZ27BY8G7Xes',
-    MasterChef:'TEDKHvxU89jA61e7BhmXptUaaBkHZhziC8',
-    FactoryManager:'TJYT1XbS9bHTTFbhSDpgr3Kmk41csKxrRa'
+    BFactory:'TNAd68JeNC6LKZony8cheLNYvHRSR4s62w',
+    MasterChef:'THwvpZSsEuzPMRPpT3H12fgkSEYhmisym2',
+    FactoryManager:'TEXQNtvpusaQUGTn9p9Wt1segK3HcEu72U'
   }
 }
 export default ipConfig

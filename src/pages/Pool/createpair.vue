@@ -108,7 +108,8 @@
             <frominput 
             :lable="$t('FoxDex')"
             placeholder="Please Enter" 
-            v-model="foxDex">
+            v-model="foxDex"
+            :disabled="true">
             </frominput>
           </div>
           <div class="ctx_3 fl_lt ">
@@ -193,12 +194,12 @@ export default {
       item: 1,
       login: false,
       firstTokenNum: '',
-      firstTokenWeight: '',
+      firstTokenWeight: '10',
       secondTokenNum: '',
-      secondTokenWeight: '',
-      sponsors: 0,
+      secondTokenWeight: '10',
+      sponsors: 0.001,
       foxDex: 0,
-      lp: 0,
+      lp: 0.001,
       BFactoryContract: null,
       firstCoinContract: null,
       bPoolContract: null,

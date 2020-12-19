@@ -704,6 +704,7 @@ export default {
         { type: 'address', value: address1 },
         { type: 'address', value: address2 }
       ]
+      console.log('this.pair.address=========='+this.pair.address)
       let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
       if (transaction) {
         if (name == 'justPrice') {

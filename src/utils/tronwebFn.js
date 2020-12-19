@@ -63,11 +63,6 @@ const approved = (coinAddress,contractAddress) => {//授权
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
                 Contract["approve"](contractAddress,'1000000000000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
-                        Message({
-                            showClose: true,
-                            message: this.$t('ars'),
-                            type: 'success'
-                        })
                         resolve(res);
                     }
                 })
