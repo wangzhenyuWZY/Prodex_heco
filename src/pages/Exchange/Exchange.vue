@@ -382,7 +382,7 @@ export default {
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
       let pair = this.pairList.filter((item) => {
-        return item.pair == pairname.toUpperCase() || item.pair == pairname1.toUpperCase()
+        return item.pair.toUpperCase() == pairname.toUpperCase() || item.pair.toUpperCase() == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
         this.isPair = true
