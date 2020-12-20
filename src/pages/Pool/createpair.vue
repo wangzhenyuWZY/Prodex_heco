@@ -237,7 +237,7 @@ export default {
           type: 'error'
         });
         return
-      } else if ((this.firstTokenWeight + this.secondTokenWeight) > 50) {
+      } else if ((parseFloat(this.firstTokenWeight) + parseFloat(this.secondTokenWeight)) > 50) {
         this.$message({
           message: this.$t('pewe5'),
           type: 'error'
@@ -370,7 +370,7 @@ export default {
            that.showAlert1 = true;
            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
           that.loading1(1);
-          that.$message.success(this.$t('pewe8'));
+          that.$message.success(that.$t('pewe8'));
         });
       })
     },
@@ -396,13 +396,10 @@ export default {
       if (res) {
          
         getConfirmedTransaction(res.txid).then((result) => {
-          if (name == 'token1IsBind')
-            that.token1IsBind = true
-          if (name == 'token2IsBind')
-            that.token2IsBind = true
-          if (that.token1IsBind && that.token2IsBind) {
-            that.finalize(that.bPoolContract)
-          }
+          that.showAlert1 = true;
+          // that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+result.txID;
+          that.loading1(1);
+          that.$message.success(that.$t('pewe8'));
         })
       }
       // window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
