@@ -567,9 +567,13 @@ export default {
       console.log('token1balance====' + token1balance)
       console.log('token2balance====' + token2balance)
       const MAX = Web3Utils.utils.toTwosComplement(-1);
+      let num1 = new BigNumber(1000000000000000000000000000000)
+      num1 = num1.toFixed()
+      let lptokenNum = new BigNumber(that.reciveLptoken)
+      lptokenNum = lptokenNum.times(Math.pow(10, that.pair.decimals))
       var parameter = [
-        { type: 'uint256', value: Decimal(that.reciveLptoken).mul(Math.pow(10, that.pair.decimals)).toString() },
-        { type: 'uint256[]', value: ['1000000000000000000000000000000', '1000000000000000000000000000000'] },
+        { type: 'uint256', value: lptokenNum.toFixed() },
+        { type: 'uint256[]', value: [MAX, MAX] },
       ]
       console.log(parameter)
       try {
