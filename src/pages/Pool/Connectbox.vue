@@ -605,9 +605,11 @@ export default {
     async joinswapExternAmountIn() {
       let that = this
       var functionSelector = 'joinswapExternAmountIn(address,uint256,uint256)';
+      let token1num = new BigNumber(that.token1Num)
+      token1num = token1num.times(Math.pow(10, that.token1.decimals))
       var parameter = [
         { type: 'address', value: that.token1.address },
-        { type: 'uint256', value: that.token1Num * Math.pow(10, that.token1.decimals) },
+        { type: 'uint256', value: token1num.toFixed() },
         { type: 'uint256', value: 0 }
       ]
       try {
