@@ -46,7 +46,6 @@ function calcOutGivenInAfterPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut
     const tokenAmountOut = Decimal(tokenBalanceOut).times(bar);
     const newTokenBalanceIn = Decimal(tokenBalanceIn).add(Decimal(tokenAmountIn));
     const newTokenBalanceOut = Decimal(tokenBalanceOut).sub(tokenAmountOut);
-    debugger
     return calcSpotPrice(newTokenBalanceIn, tokenWeightIn,newTokenBalanceOut, tokenWeightOut, swapFee);
 
 }

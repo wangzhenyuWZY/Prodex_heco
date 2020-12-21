@@ -641,19 +641,13 @@ export default {
     },
     getBasicInfo(token) {
       let that = this;
-
-      decimals(token.address).then((res) => {
-        token.decimals = res
-        if (token.item == 0) {
-          that.token1 = token
-          that.selectType = token.name;
-        } else {
-          this.token2 = token
-        }
-        that.getBalance(token)
-      }).catch((err) => {
-        console.log(err);
-      })
+      if (token.item == 0) {
+        that.token1 = token
+        that.selectType = token.name;
+      } else {
+        this.token2 = token
+      }
+      that.getBalance(token)
       this.validity();
     },
     doApprove() {

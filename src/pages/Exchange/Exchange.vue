@@ -232,7 +232,8 @@ export default {
       minAmountOut:0,
       tolerance:0.1,
       maxPrice:MAX,
-      pairList:[]
+      pairList:[],
+      token1spotPrice:0
     }
   },
   computed: {
@@ -247,7 +248,7 @@ export default {
     removealert
   },
   created () {
-    console.log('tolerance============'+this.$store.state.tolerance)
+    this.pairList = JSON.parse(JSON.stringify(this.pairData)) 
   },
   watch: {
     token1Num () {
@@ -259,6 +260,7 @@ export default {
     pairData(list){
       let that = this
       this.pairList = JSON.parse(JSON.stringify(list)) 
+      console.log('监控到pairlist变化')
       if (this.token1.address && this.token2.address && this.spotPrice==0) {
         this.getPairAddress()
       }
@@ -384,7 +386,7 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      console.log(this.pairList)
+      console.log('pairlist有没有数据？======'+this.pairList.length)
       let pair = this.pairList.filter((item) => {
         return item.pair.toUpperCase() == pairname.toUpperCase() || item.pair.toUpperCase() == pairname1.toUpperCase()
       })
@@ -475,9 +477,10 @@ export default {
         this.token2Num = token2Num.toFixed(6)
         let afterPrice = calcOutGivenInAfterPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.token1Num, this.swapFee)
         console.log('spotPrice'+this.spotPrice.toString())
-        // console.log('afterPrice'+afterPrice.toString())
         let percentage = (Decimal(afterPrice).minus(this.spotPrice)).div(this.spotPrice).mul(Decimal(100))
-        this.maxPrice = Decimal(this.spotPrice).mul(1+this.tolerance).mul(Math.pow(10,18)).toFixed(0)
+        console.log('afterPrice======='+afterPrice.toString())
+        console.log('token1spotPrice======='+this.token1spotPrice.toString())
+        this.maxPrice = Decimal(this.token1spotPrice).mul(1+this.tolerance).mul(Math.pow(10,18)).toFixed(0)
         this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }
@@ -491,7 +494,8 @@ export default {
     },
     getSpotPrice () {//计算token1的价格
       if (this.token2Balance && this.token2Weight && this.token1Balance && this.token1Weight && this.swapFee) {
-        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight, this.swapFee)
+        this.spotPrice = calcSpotPrice(this.token1Balance, this.token1Weight,this.token2Balance, this.token2Weight,this.swapFee)
+        this.token1spotPrice = calcSpotPrice(this.token2Balance, this.token2Weight,this.token1Balance, this.token1Weight,this.swapFee)
       }
       if (this.token1Num) {
         this.cumpToken2()
@@ -585,23 +589,25 @@ export default {
         { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
         { type: 'uint256', value: 0 },
-        { type: 'uint256', value: that.maxPrice }
+        { type: 'uint256', value: MAX }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
         return console.error('Unknown error: ' + transaction, null, 2);
       window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-          console.log('sendRawTransaction=========>'+JSON.stringify(signedTransaction));
           that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+signedTransaction.txID;
           that.showAlert1 = true
           getConfirmedTransaction(res.txid).then((e) => {
-            that.$message.success(that.$t('aut'));
+            if(e.result=="FAILED"){
+              that.$message.error(window.tronWeb.toAscii(e.contractResult[0]))
+            }
+            // that.$message.success(that.$t('aut'));
             that.token1Num = 0;
             that.token2Num = 0;
             that.getBalance(that.token1)
             that.getBalance(that.token2)
-           that.submitInit()
+            that.submitInit()
           }).catch((err) => {
             console.log(err);
               that.submitInit()
