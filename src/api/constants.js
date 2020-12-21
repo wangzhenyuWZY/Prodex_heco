@@ -1,7 +1,7 @@
 import axios from 'axios'
 const qs = require('qs')
 const server = {
-  development: 'http://47.241.79.62:9802/',
+  development: 'http://47.241.79.62:9801/',
   production: 'http://47.241.79.62:9802/'
 }
 
