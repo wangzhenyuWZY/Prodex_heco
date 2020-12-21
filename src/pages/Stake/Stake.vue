@@ -28,7 +28,7 @@
             <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
             <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
           </div>
-          <div class="stake_btn" @click="showModels(idx)">{{getEcthapy(idx.pair)}}%APY</div>
+          <div class="stake_btn" @click="showModels(idx)">{{idx.APY}}%APY</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
@@ -80,7 +80,7 @@ export default {
         token2: '',
         showAlert1: false,
         defaultAddress: '',
-        apy: '--'
+        APY: '--'
       },
     }
   },
@@ -114,7 +114,7 @@ export default {
         btnFlag3: false,
         showAlert1: false,
         defaultAddress: '',
-        apy: '--'
+        APY: '--'
       }
     },
     async init() {//初始化tronweb
@@ -237,7 +237,7 @@ export default {
       this.total.item = item;
       this.total.token1 = item.token1.name
       this.total.token2 = item.token2.name
-      this.total.apy = this.getEcthapy(item.pair);
+      this.total.APY = item.APY;
       try {
         await this.getContracts(item);
         await this.tokenPerBlock(item);
@@ -388,7 +388,13 @@ export default {
         if (res.data.code == 0) {
           this.apyList = res.data.data;
           if (this.showModels) {
-            this.total.apy = this.getEcthapy(this.total.item.pair);
+            console.log(this.total)
+            this.farmList.forEach((item,index)=>{
+              let APY = this.getEcthapy(item.pair);
+              item.APY = APY*100
+              this.$set(this.farmList, index, item)
+            })
+            
           }
         }
       } catch (error) {
@@ -406,10 +412,10 @@ export default {
     getEcthapy(name) {
       if (this.apyList.length == 0) return '--';
       let a = this.apyList.filter((idx) => {
-        return idx.full_name == name;
+        return idx.full_name.toUpperCase() == name.toUpperCase();
       })
       if (a.length == 0) return '--';
-      return a[0].current_apy;
+      return a[0].pair_current_apy;
     }
   },
   // 1. 初始化tronweb

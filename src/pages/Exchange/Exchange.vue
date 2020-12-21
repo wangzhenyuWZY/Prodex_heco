@@ -589,7 +589,7 @@ export default {
         { type: 'uint256', value: token1num },
         { type: 'address', value: that.token2.address },
         { type: 'uint256', value: 0 },
-        { type: 'uint256', value: MAX }
+        { type: 'uint256', value: that.maxPrice }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter);
       if (!transaction.result || !transaction.result.result)
