@@ -8,6 +8,7 @@
     <span slot="title"
           class="select_size">
       <span>{{$t('ywr')}}</span>
+
     </span>
 
     <div class="box_sizes">
@@ -22,20 +23,17 @@
       <div class="provider receove_Share ">
         <div class="">
           <div class="received mrge12">
-            <div class="lt ">
-          
-              <img class="lt_icon"
-                   src="@/assets/img/btc.svg"
-                   alt="">
+            <div class="lt ltimg">
+                 <img :src="requierImg(popsData.token1.name,0)"
+                   alt="" /> 
               <span>{{popsData.token1.name}} {{$t('pool.Deoosited')}}</span>
             </div>
             <div class="rg"><span class="">{{popsData.token1Num}}</span></div> 
           </div>
           <div class="received mrge24" v-show="popsData.token2Num>0">
-            <div class="lt">
-           
-              <img src="@/assets/img/btc.svg"
-                   alt="">
+            <div class="lt ltimg">          
+              <img :src="requierImg(popsData.token2.name,0)"
+                   alt="" />
               <span>{{popsData.token2.name}} {{$t('pool.Deoosited')}}</span>
             </div>
             <div class="rg"><span class="">{{popsData.token2Num}}</span></div>
@@ -59,12 +57,15 @@
       </div>
     </div>
     <el-button class="from_botton recevive_btn" @click="clickHadel">{{$t('confirm')}} {{$t('Supply')}}</el-button>
+
+                   
   </el-dialog>
 </template>
 
 <script>
 import {IsPc} from '../../utils/index'
 export default {
+
   props:{
     showAlert: {
       type: Boolean,
@@ -91,6 +92,24 @@ export default {
 
   },
    methods: {
+     requierImg (name,number) {
+      let str;
+      // debugger
+      if (name) {
+        try {
+           if (number != undefined) {
+              str = name.split('/');
+              return require('@/assets/img/currency/'+str[number]+'.png')
+              
+           }
+            return require('@/assets/img/currency/'+name+'.png')
+        } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+        }
+      } else {
+           return require('@/assets/img/currency/avitve.png')
+      }
+    },
     handleClosea () {
         this.$emit('close')
     },
@@ -123,7 +142,10 @@ export default {
   top: 24px;
   right: 34px;
 }
-
+img{
+  width: 30px;
+  height: 30px;
+}
 .title__num {
   font-size: 40px;
   font-weight: normal;
