@@ -15,9 +15,8 @@
         <div class="changes_rece ">
           <span class="rg rg_ft ftblod">{{token1Num}}</span>
           <div class="lt change_img">
-            <img class="lt_icon"
-                 src="@/assets/img/btc.svg"
-                 alt="">
+             <img class="lt_icon" :src="requierImg(token1.name,0)"
+                   alt="" /> 
             <span>{{token1.name}}</span>
           </div>
 
@@ -28,9 +27,8 @@
         <div class="changes_rece ">
           <span class="rg  rg_ft ftblod">{{token2Num}}</span>
           <div class="lt change_img">
-            <img class="lt_icon"
-                 src="@/assets/img/btc.svg"
-                 alt="">
+            <img class="lt_icon" :src="requierImg(token2.name,0)"
+                   alt="" />
             <span>{{token2.name}}</span>
           </div>
         </div>
@@ -128,7 +126,28 @@ export default {
     // setselect
 
   }
-  , methods: {
+  , 
+  methods: {
+    requierImg (name,number) {
+      let str;
+      // debugger
+      if (name) {
+        try {
+           if (number != undefined) {
+              str = name.split('/');
+              return require('@/assets/img/currency/'+str[number]+'.png')
+              
+           }
+            return require('@/assets/img/currency/'+name+'.png')
+        } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+        }
+      } else {
+           return require('@/assets/img/currency/avitve.png')
+      }
+    },
+   
+
     handleClose () {
         this.$emit('handleClosea')
     },
