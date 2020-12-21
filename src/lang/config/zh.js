@@ -135,7 +135,7 @@ module.exports = {
   pop:{
     TSed:'交易已提交',
     Pname:'配对名称',
-    Ywr:'你会复活',
+    Ywr:'您将收到',
   }, 
   fox:{
     foxp1:' DEX是什么',
@@ -198,7 +198,8 @@ module.exports = {
   pewe7:'系统错误',
   pewe8:'成功',
   Tnos:'事务设置',
-  Sete:'滑移宽容'
+  Sete:'滑移宽容',
+  pt:'池的令牌'
  
 
 }

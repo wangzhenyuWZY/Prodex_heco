@@ -7,49 +7,53 @@
              :before-close="handleClosea">
     <span slot="title"
           class="select_size">
-      <span>You will recevive</span>
+      <span>{{$t('ywr')}}</span>
     </span>
 
     <div class="box_sizes">
       <div class="provider receive__Pool">
         <div class="title__num">{{popsData.reciveLptoken}}</div>
-        <div class="">{{popsData.token1.name}}{{popsData.token2.name}} Pool Tokens</div>
+        <div class="">{{popsData.token1.name}}{{popsData.token2.name}}{{$t('pt')}}</div>
       </div>
     </div>
     <div class="receive__size">{{$t('oiei')}}</div>
-    <div class="receive__size"></div>
+    
     <div class="box_sizes">
       <div class="provider receove_Share ">
         <div class="">
           <div class="received mrge12">
             <div class="lt ">
+          
               <img class="lt_icon"
                    src="@/assets/img/btc.svg"
                    alt="">
-              <span>{{popsData.token1.name}} Deoosited</span>
+              <span>{{popsData.token1.name}} {{$t('pool.Deoosited')}}</span>
             </div>
-            <span class="rg">{{popsData.token1Num}}</span>
+            <div class="rg"><span class="">{{popsData.token1Num}}</span></div> 
           </div>
           <div class="received mrge24" v-show="popsData.token2Num>0">
             <div class="lt">
+           
               <img src="@/assets/img/btc.svg"
                    alt="">
-              <span>{{popsData.token2.name}} Deoosited</span>
+              <span>{{popsData.token2.name}} {{$t('pool.Deoosited')}}</span>
             </div>
-            <span class="rg">{{popsData.token2Num}}</span>
+            <div class="rg"><span class="">{{popsData.token2Num}}</span></div>
           </div>
           <div class="received mrge12">
             <div class="lt">
               <span>Rates</span>
             </div>
-            <span class="">1{{popsData.token1.name}}={{popsData.t1Per.toFixed(6)}} {{popsData.token2.name}}</span>
+            <div class="rg"><span class="">1{{popsData.token1.name}}={{popsData.t1Per.toFixed(6)}} {{popsData.token2.name}}</span></div>
+            
           </div>
           <div class="conversion mrge24">1{{popsData.token2.name}}={{popsData.t2Per.toFixed(6)}} {{popsData.token1.name}}</div>
           <div class="received">
             <div class="lt">
-              <span>Share of pool</span>
+              <span>{{$t('sopl')}}</span>
             </div>
-            <span class="">{{popsData.share}}%</span>
+            <div class="rg"><span class="">{{popsData.share}}%</span></div>
+            
           </div>
         </div>
       </div>
@@ -85,8 +89,8 @@ export default {
     // vfromInput: fromInput,
     // setselect
 
-  }
-  , methods: {
+  },
+   methods: {
     handleClosea () {
         this.$emit('close')
     },
@@ -141,11 +145,17 @@ export default {
   margin-bottom: 24px;
   border-bottom: 1px solid #e5ebf2;
 }
+.received{
+  display: flex;
+  justify-content: space-between;
+ 
+}
 .received span {
   font-size: 16px;
 }
 .received .rg {
   padding-top: 5px;
+  float: right;
 }
 .conversion {
   color: #0f1730;

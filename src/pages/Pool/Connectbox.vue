@@ -848,6 +848,7 @@ export default {
 .from_contentIcon {
   margin-top: 16px;
   margin-bottom: 12px;
+  text-align: center;
 }
 .whe {
   width: 440px;
