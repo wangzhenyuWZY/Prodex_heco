@@ -369,7 +369,7 @@ export default {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
            that.showAlert1 = true;
            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
-          that.loading1(1);
+          that.loading1(0);
           that.$message.success(that.$t('pewe8'));
         });
       })
@@ -398,7 +398,7 @@ export default {
         getConfirmedTransaction(res.txid).then((result) => {
           that.showAlert1 = true;
           // that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+result.txID;
-          that.loading1(1);
+          that.loading1(0);
           that.$message.success(that.$t('pewe8'));
         })
       }
