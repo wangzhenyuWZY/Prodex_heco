@@ -592,7 +592,7 @@ export default {
       width: 40px;
       height: 40px;
       text-align: center;
-      // line-height: 40px;
+      line-height: 40px;
       border-radius: 50%;
       background: #f4f6fc;
       cursor: pointer;

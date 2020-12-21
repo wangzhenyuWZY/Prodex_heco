@@ -25,7 +25,8 @@
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token1.name:''}}</span>
-                <img class="lt_icon" src="@/assets/img/icon_jump_green.png" alt="">
+               <img class="lt_icon" :src="requierImg(farmtoal.item.token1.name,0)"
+                   alt="" /> 
               </div>
 
             </div>
@@ -36,7 +37,8 @@
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
-                <img class="lt_icon" src="@/assets/img/icon_jump_green.png" alt="">
+                <img class="lt_icon" :src="requierImg( farmtoal.item.token2.name,0)"
+                   alt="" /> 
               </div>
               <!-- <div class="rg"> 
                 <span class="text_color">APR:</span> <span class="ftblod">322.16%</span>
@@ -168,6 +170,23 @@ export default {
     valret
   },
   methods: {
+    requierImg(name, number) {
+      let str;
+      // debugger
+      if (name) {
+        try {
+          if (number != undefined) {
+            str = name.split('/');
+            return require('@/assets/img/currency/' + str[number] + '.png')
+          }
+          return require('@/assets/img/currency/' + name + '.png')
+        } catch (error) {
+          return require('@/assets/img/currency/avitve.png')
+        }
+      } else {
+        return require('@/assets/img/currency/avitve.png')
+      }
+    },
 
     hadelClick(e) {
       console.log('22222')
@@ -209,6 +228,7 @@ export default {
 }
 .rgh {
   float: right;
+  font-size: 15px;
 }
 .colorF {
   color: #05c98e;
