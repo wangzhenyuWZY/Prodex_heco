@@ -82,11 +82,11 @@
               </div>
             </template>
           </el-table-column>
-          <el-table-column prop="liquidity"
+          <el-table-column prop="pair_quantity"
                            :label= "$t('home.Liquidity')">
             <template slot-scope="scope">
               <div>
-                {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
+                {{scope.row.pair_quantity ? scope.row.pair_quantity  : "--"}}
               </div>
             </template>
             <span></span>
@@ -100,11 +100,11 @@
             </template>
             <span></span>
           </el-table-column>
-          <el-table-column prop="Volume"
+          <el-table-column prop="base_quantity_24"
                            :label= "$t('home.Volume')">
             <template slot-scope="scope">
               <div>
-                {{scope.row.base_quantity ? scope.row.base_quantity  : "--"}}
+                {{scope.row.base_quantity_24 ? scope.row.base_quantity_24  : "--"}}
               </div>
             </template>
             <span></span>
@@ -162,11 +162,11 @@
             </template>
           </el-table-column>
 
-          <el-table-column prop="liquidity"
+          <el-table-column prop="pair_quantity"
                            label="liquidity">
             <template slot-scope="scope">
               <div class="table_size">
-                {{scope.row.liquidity ? scope.row.liquidity  : "--"}}
+                {{scope.row.pair_quantity ? scope.row.pair_quantity  : "--"}}
               </div>
             </template>
             <span></span>
@@ -261,13 +261,13 @@ export default {
         let res = await getBalanceInPool(el, el.token1);
         let res1 = await getBalanceInPool(el, el.token2);
         let res2 = await getLpBalanceInPool(el);
-        if(el.token1.name=='USDT'){
-          let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
-          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
-        }else if(el.token2.name=='USDT'){
-          let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
-          el.liquidity = (bil*parseFloat(res1)).toFixed(4)
-        }
+        // if(el.token1.name=='USDT'){
+        //   let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
+        //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
+        // }else if(el.token2.name=='USDT'){
+        //   let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
+        //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
+        // }
         el.token1Balance = res.toFixed(4);
         el.token2Balance = res1.toFixed(4);
         pairList.push(el)
@@ -278,10 +278,12 @@ export default {
       let res = await api.get24HourTradingVolume()
       if(res.data.code==0){
         let data = res.data.data
+        debugger
         this.pairList.forEach((rsp)=>{
           data.forEach((rsp2)=>{
             if(rsp.pair.toUpperCase() == rsp2.full_name.toUpperCase()){
-              rsp.base_quantity = rsp2.base_quantity.toFixed(4)
+              rsp.pair_quantity = rsp2.pair_quantity
+              rsp.base_quantity_24 = rsp2.base_quantity_24.toFixed(4)
               rsp.trade_price = rsp2.trade_price.toFixed(4)
               rsp.price_change_24 = rsp2.price_change_24.toFixed(4)
             }

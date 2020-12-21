@@ -30,7 +30,7 @@
 
             </div>
             <div class="text_conent ftblod">FOXDEX_LP
-              <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">{{farmtoal.apy}}%</span></div>
+              <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">{{farmtoal.APY}}%</span></div>
             </div>
 
             <div class="received">
