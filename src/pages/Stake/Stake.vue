@@ -329,15 +329,12 @@ export default {
       try {
         num = await this.MasterChefContract['deposit'](item.index, n).send(data);
         console.log(num)
+        window.location.reload()
       } catch (error) {
         console.log(error);
         this.total.btnFlag1 = false;
       }
-      if (num) {
-        window.location.reload()
-        this.updata(item);
-
-      }
+      this.updata(item);
       this.total.btnFlag1 = false;
     },
     withdraw(x) { // 提现   //  （1）PoolInfo[]数组的序号  // （2）提现的数量
