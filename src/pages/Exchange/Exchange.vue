@@ -480,7 +480,7 @@ export default {
         let percentage = (Decimal(afterPrice).minus(this.spotPrice)).div(this.spotPrice).mul(Decimal(100))
         console.log('afterPrice======='+afterPrice.toString())
         // console.log('token1spotPrice======='+this.token1spotPrice.toString())
-        // this.maxPrice = Decimal(this.token1spotPrice).mul(1+this.tolerance).mul(Math.pow(10,18)).toFixed(0)
+        // this.maxPrice = Decimal(this.spotPrice).mul(1-this.tolerance).mul(this.token1Num).mul(Math.pow(10,this.token2.decimals)).toFixed(0)
         this.percentage = percentage.toFixed(2)
         this.thisswapFee = (this.token1Num*this.swapFee).toFixed(6)
       }

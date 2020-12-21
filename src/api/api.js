@@ -13,5 +13,8 @@ export function getTokenList(params) {
 export function getPairList(params) {
   return fet('api/token/getPair',params,'get')
 }
+export function getToken(params) {
+  return fet('api/token/addToken',params,'post')
+}
 
 export {api}
