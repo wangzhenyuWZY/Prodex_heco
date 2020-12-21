@@ -432,11 +432,8 @@ export default {
     changeCoin (token) {
       let that = this
       this.isSelect = false
-      decimals(token.address).then((res) => {
-        token.decimals = res
-        token.item == 0 ? this.token1 = token : this.token2 = token
-        that.getBalance(token)
-      })
+      token.item == 0 ? this.token1 = token : this.token2 = token
+      that.getBalance(token)
       if (this.token1.address && this.token2.address) {
         // this.getSpotPrice(this.token1.address,this.token2.address)
       }
