@@ -205,7 +205,8 @@ module.exports = {
     pewe7:'System error',
     pewe8:'success',
     Tnos:'Transaction Settings',
-    Sete:'Slippage tolerance'
+    Sete:'Slippage tolerance',
+    pt:'Pool Tokens'
 
 
 

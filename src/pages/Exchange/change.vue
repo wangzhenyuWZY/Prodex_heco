@@ -87,9 +87,9 @@
               <span>{{$t('Exc.lpf')}}</span>
                    <el-tooltip placement="right" effect="light">
                   <div slot="content" > 
-                        A protion of each trade <br> 
-                        goes to liquidity providers<br>
-                        as a protocal incentive.<br>             
+                       {{$t('Exc.lpf1')}}<br> 
+                        {{$t('Exc.lpf2')}}<br>
+                        {{$t('Exc.lpf3')}}<br>             
                       </div>
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>      
@@ -243,6 +243,7 @@ export default {
 }
 .from_contentIcon{
   margin: 16px 0;
+  text-align: center;
 }
 .changeicon{
   color: #878B97;
