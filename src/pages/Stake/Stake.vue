@@ -54,6 +54,7 @@ import selected from './Selected'
 import { PairData } from '../../utils/index'
 import { mapState } from 'vuex'
 import { api } from '../../api/api'
+import BigNumber from 'bignumber.js';
 export default {
   data() {
     return {
@@ -324,8 +325,9 @@ export default {
       this.total.defaultAddress = 'https://shasta.tronscan.org/#/address/' + window.tronWeb.defaultAddress.base58;
       this.total.showAlert1 = true
       let num;
-      n = n * Math.pow(10, this.total.decimals);
-      n = n + '';
+      n = new BigNumber(n)
+      n = n.times(Math.pow(10, this.total.decimals));
+      n = n.toFixed();
       try {
         num = await this.MasterChefContract['deposit'](item.index, n).send(data);
         console.log(num)
