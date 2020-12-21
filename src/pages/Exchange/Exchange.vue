@@ -259,7 +259,9 @@ export default {
     pairData(list){
       let that = this
       this.pairList = JSON.parse(JSON.stringify(list)) 
-      console.log(this.pairList)
+      if (this.token1.address && this.token2.address && this.spotPrice==0) {
+        this.getPairAddress()
+      }
     }
   },
   methods: {
@@ -347,7 +349,7 @@ export default {
         let balance = (parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)).toFixed(6)
         token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
         if (this.token1.address && this.token2.address) {
-          this.getPairAddress(token)
+          this.getPairAddress()
         }
       }
     },
@@ -393,15 +395,22 @@ export default {
         console.log('getPairAddress=========')
         allowance(that.token1.address, pair[0].address).then((res) => {
           if (res) {
-            let approveBalance = parseInt(res._hex?res._hex:res.constant_result[0], 16);
-            console.log('approveBalance ====='+approveBalance)
-            if (approveBalance == 0) {
-              that.isApproved = true
-            } else {
-              that.isApproved = false
-            }
+            let approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+            console.log('approveBalance1 ====='+approveBalance1)
+            allowance(that.token2.address, pair[0].address).then((res) => {
+              if (res) {
+                let approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+                console.log('approveBalance2 ====='+approveBalance2)
+                if (approveBalance1 == 0 || approveBalance2==0) {
+                  that.isApproved = true
+                } else {
+                  that.isApproved = false
+                }
+              }
+            })
           }
         })
+        
         this.getBalanceInPool(pair[0], this.token1).then((res) => {
           this.token1Balance = res
           this.getSpotPrice()
