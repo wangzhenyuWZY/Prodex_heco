@@ -316,11 +316,11 @@ export default {
       }
 
       if (this.iSingle) {
-        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+        let reciveLptoken = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, Decimal(this.lpTotal).div(Decimal(Math.pow(10, 18))), this.totalDenormalizedWeight, this.token1Num, Decimal(this.foxDex).div(Decimal(Math.pow(10, 18))))
+        this.reciveLptoken = Decimal(reciveLptoken).toFixed(6)
       } else {
-        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, this.token1Num, this.token2Balance, this.token2Num, this.lpTotal)
-        this.reciveLptoken = Decimal(reciveLptoken).div(Decimal(Math.pow(10, 18))).toFixed(6)
+        let reciveLptoken = getTokenInGivenPoolOut(this.token1Balance, Decimal(this.token1Num), this.token2Balance, Decimal(this.token2Num), Decimal(this.lpTotal).div(Decimal(Math.pow(10, 18))))
+        this.reciveLptoken = Decimal(reciveLptoken).toFixed(6)
       }
       this.popsData = {
         reciveLptoken: this.reciveLptoken,
@@ -371,8 +371,8 @@ export default {
       let that = this
       if (this.token1Num && this.token1Num !== 0) {
         if (this.token1Balance && this.token1denormalizedWeight && this.lpTotal && this.totalDenormalizedWeight) {
-          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, this.lpTotal, this.totalDenormalizedWeight, this.token1Num, this.foxDex)
-          let plus = Decimal(poolOut).plus(this.lpTotal)
+          let poolOut = calcPoolOutGivenSingleIn(this.token1Balance, this.token1denormalizedWeight, Decimal(this.lpTotal).div(Decimal(Math.pow(10, 18))), this.totalDenormalizedWeight, this.token1Num, Decimal(this.foxDex).div(Decimal(Math.pow(10, 18))))
+          let plus = Decimal(poolOut).plus(Decimal(this.lpTotal).div(Decimal(Math.pow(10, 18))))
           let share = Decimal(poolOut).div(plus).mul(100)
           this.share = share.toFixed(2)
         } else {
@@ -606,7 +606,13 @@ export default {
       let that = this
       var functionSelector = 'joinswapExternAmountIn(address,uint256,uint256)';
       let token1num = new BigNumber(that.token1Num)
-      token1num = token1num.times(Math.pow(10, that.token1.decimals))
+      console.log(token1num)
+      console.log(this.token1Balance)
+      if(token1num>this.token1Balance/2){
+        that.$message.error("添加数量不能大于流动池的50%!")
+        this.charm1();
+        return
+      }
       var parameter = [
         { type: 'address', value: that.token1.address },
         { type: 'uint256', value: token1num.toFixed() },

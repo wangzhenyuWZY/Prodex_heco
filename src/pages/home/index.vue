@@ -252,15 +252,16 @@ export default {
       let pairList = []
       for (let index = 0; index < this.pairList.length; index++) {
         const el = this.pairList[index];
-        getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
-          el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        })  
-        getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
-          el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        })    
+        // getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
+        //   el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+        // })  
+        // getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
+        //   el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
+        // })   
+        debugger 
         let res = await getBalanceInPool(el, el.token1);
         let res1 = await getBalanceInPool(el, el.token2);
-        let res2 = await getLpBalanceInPool(el);
+        // let res2 = await getLpBalanceInPool(el);
         // if(el.token1.name=='USDT'){
         //   let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
         //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
@@ -270,9 +271,11 @@ export default {
         // }
         el.token1Balance = res.toFixed(4);
         el.token2Balance = res1.toFixed(4);
-        pairList.push(el)
+        // pairList.push(el)
+        
+        this.$set(this.pairList,index,el)
       }
-      this.pairList = pairList
+      // this.pairList = pairList
     },
     async getVolPrice24 () {//获取24小时量和价格
       let res = await api.get24HourTradingVolume()

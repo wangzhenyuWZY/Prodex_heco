@@ -69,8 +69,8 @@
         <div class="lang" @click="hdel">{{this.$i18n.locale=='zh'?'简体中文':'English'}}<i></i></div>
         <i class="setting" @click="tolerPop=!tolerPop"></i>
         <div class="setPanel" v-show="tolerPop">
-          <h2>Transaction Settings</h2>
-          <p class="totletitle">Slippage tolerance<i></i></p>
+          <h2> {{$t('Tnos')}}</h2>
+          <p class="totletitle"> {{$t('Sete')}} <i></i></p>
           <div class="tolerTab">
             <span @click="changeToler(0.01);num=1" :class="num==1?'active':''">1%</span>
             <span @click="changeToler(0.05);num=2" :class="num==2?'active':''">5%</span>
