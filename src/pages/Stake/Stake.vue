@@ -83,6 +83,7 @@ export default {
         defaultAddress: '',
         APY: '--'
       },
+      stakeList:[]
     }
   },
   watch: {
@@ -278,38 +279,34 @@ export default {
       try {
         let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
         this.poolLength = await this.toDecimal(leng); // 16进制转10进制
-        let arry = [];
+        let lotokenArr = []
+        let flag = false
         console.log('poolLength======='+this.poolLength)
         for (let index = 0; index < this.poolLength; index++) {
-          let res = await that.MasterChefContract["poolInfo"](index).call();
-          debugger
-          // let res1 = await window.tronWeb.contract().at(res.lpToken);
-          //  let res2 = await res1.name().call();
-          //  let res3 =  await that.MasterChefContract.devFundDivRate().call(); // 利率
-          //  let res4 = await this.toDecimal(res3);
-          //  let res5 = await  that.MasterChefContract.goverFundDivRate().call();  // 利率
-          //  let res6 = await this.toDecimal(res5);
-          //  res.name = res2;
-          // console.log('利率======',res4)
-          // console.log('利率======',res6)
-          //  console.log(res1)
+          let res = await that.MasterChefContract["poolInfo"](index).call()
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
-          this.farmList.forEach((item,index) => {
-            if (item.address == lpToken) {
-              item.index = index;
-              item.show = true
-            }else{
-              item.show = false
-            }
-            this.$set(this.farmList,index,item)
-          })
+          lotokenArr.push(lpToken)
+          if(index==this.poolLength-1){
+            this.getStakeList(lotokenArr)
+          }
         }
+        
 
       } catch (error) {
         console.log(error);
       }
     },
-
+    getStakeList(lotokenArr){
+      this.farmList.forEach((item,idex) => {
+        lotokenArr.forEach((ktem,kdex)=>{
+          if (item.address == ktem) {
+            item.index = kdex;
+            item.show = true
+          }
+        })
+        this.$set(this.farmList,idex,item)
+      })
+    },
     async pendingTokens(index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       // let pre = await this.toDecimal(penaccount);
