@@ -38,9 +38,8 @@
           <div class="fox_p">
             <p class="fox_p1"></p>
             <div class="foxp">
-            <p class="fox_p2">
-                   
-               <br> {{$t('fox.fd4')}}
+            <p class="fox_p2">                  
+                    {{$t('fox.fd4')}}
                <br> {{$t('fox.fd5')}}
                <br> {{$t('fox.fd6')}}
             </p>
@@ -62,14 +61,11 @@
             <p class="fox_p1">{{$t('fox.ff1')}}</p>
             <div class="foxp">
             <p class="fox_p2">{{$t('fox.ff2')}}
-                    <br>
-                    <br> {{$t('fox.ff3')}}
-                    <br> {{$t('fox.ff4')}}
-                 </p>
+            <br> {{$t('fox.ff3')}}
+            <br> {{$t('fox.ff4')}}
+             </p>
             </div>
-          </div>
-         
-          
+          </div>  
           <div class="fox_box2">
               <ul class="foxul">
                   <li> <img src="../../assets/img/foxdex/icon_脸书.svg" alt="">  </li>                  
@@ -96,6 +92,7 @@ export default {
   
     data() {
         return {
+         
             
         }
     },
@@ -117,8 +114,10 @@ export default {
 @function rem1($size, $miall: 75) {
   @return $size + px;
 }
+
 .foxdex{
     width: 720px;
+    
     margin: 0 auto;
     padding-top: 120px;
     height: 100%;

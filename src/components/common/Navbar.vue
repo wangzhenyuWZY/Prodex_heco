@@ -1,13 +1,10 @@
 <template>
-  <div>
+  <div :class="dark?'dark':''">
     <div class="bimg"> </div>
     <div class="nav ">
-      <div class="logo"><img src="../../assets/img/logo_FoxDex.png" alt="" />
-        <!-- <span class="logop">FoxDex</span> -->
-      </div>
-
+      <div class="logo"> </div>
       <div class="nav-header fl_lt" v-show="moble">
-        <div class="van_list" ref="header">
+        <div class="van_list" id="van_list" ref="header">
           <span v-for="(idx, index) in tag" :key="idx.path" @click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
@@ -15,7 +12,7 @@
       </div>
       <div class="nav-right fl_rg">
         <div class="nav-butt">
-          <div class="login_wallet" v-if="!connectFlag" @click="btnClick">
+          <div class="login_wallet" v-if="!connectFlag&&moble" @click="btnClick">
             <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
             <span class="wallet_addrs">{{$t('nav.CWet')}}</span>
           </div>
@@ -23,7 +20,6 @@
           <div class="login_wallet" v-if="connectFlag&&moble">
             <img class="wallet_img" src="@/assets/img/icon_wallet_green.svg" alt="">
             <span class="wallet_addrs">{{walletAddres.address|address}}</span>
-            <span class="conversion" v-show="moble">{{walletAddres.balance}}TRX</span>
           </div>
         </div>
         <div class="nav_merge" v-show="!moble">
@@ -31,7 +27,9 @@
         </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
           <div class="drawer_logo">
-            <div class="lt_logo"> <img src="../../assets/img/logo_FoxDex.png" alt="" /></div>
+            <div class="lt_logo"> <img :src="dark?require('../../assets/img/dark/logo_FoxDex.png'):require('../../assets/img/logo_FoxDex.png')"
+                   alt="" />
+            </div>
             <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click.stop="drawer = false"> </div>
           </div>
           <div class="drawer_btn">
@@ -97,12 +95,14 @@ export default {
       navIndex: 0,
       drawer: false,
       childrenNode: [
-        102,
-        133,
+        86, 117, 71, 97, 87, 81],
+      childrenNode1: [
+        72,
+        72,
+        92,
+        72,
         87,
-        113,
-        103,
-        97
+        72
       ],
       moble: true,
       tag: [
@@ -138,7 +138,7 @@ export default {
     this.moble = IsPc();
   },
   computed: {
-    ...mapState(['walletAddres', 'connectFlag'])
+    ...mapState(['walletAddres', 'connectFlag', 'dark'])
 
   },
   watch: {
@@ -190,12 +190,10 @@ export default {
   },
   mounted() {
     try {
-      // setTimeout(()=>{
-      // this.$refs.header.children.forEach((element) => {
-      //     let str = element.getBoundingClientRect();
-      //     // console.log(str);
-      //   this.childrenNode.push(element.offsetWidth);
-      // });
+      let lang = this.$i18n.locale;
+      if (lang == 'zh') {
+        this.childrenNode = this.childrenNode1;
+      }
       let hash = location.hash;
       let str = hash.split("#")[1];
       if (str) {
@@ -203,7 +201,6 @@ export default {
       } else {
         this.handelActive("/");
       }
-      // },1000)
 
     } catch (error) {
       console.log(error);
@@ -227,6 +224,7 @@ export default {
     hdel(n) {
       let i18n = this.$i18n.locale;
       this.$i18n.locale = i18n == 'en' ? 'zh' : 'en';
+      localStorage.setItem('lang', this.$i18n.locale);
       this.childrenNode = [];
       try {
         setTimeout(() => {
@@ -386,17 +384,6 @@ export default {
   background: url(../../assets/img/langIco.png) no-repeat center;
   background-size: 100% 100%;
 }
-// .logop{
-//   float: left;
-//   // margin-top: 8px;
-//   height: 38px;
-//   font-size: 32px;
-//   font-family: roboto-mediumitalice;;
-//   color: #05C98E;
-//   line-height: 38px;
-//   // margin-left: 116px;
-//   margin-right: 22px;
-// }
 .drawer_logo {
   display: flex;
   justify-content: space-between;
@@ -520,19 +507,17 @@ export default {
   float: left;
   display: flex;
   align-items: center;
-
+  width: 180px;
+  height: 64px;
   margin-top: 2px;
   margin-left: 38px;
+  background: url(../../assets/img/logo_FoxDex.png) no-repeat;
+  background-size: 100% 100%;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
   //   margin-left: 10px;
 
   // }
-}
-.logo img {
-  width: 100%;
-  width: 180px;
-  height: 64px;
 }
 .nav-header {
   color: #a6aeb7;
@@ -555,7 +540,7 @@ export default {
 }
 .nav-header span {
   font-size: 20px;
-  padding: 0 24px;
+  padding: 0 16px;
   cursor: pointer;
   /* color: #B7BFC8; */
   /* text-align: center; */
@@ -570,7 +555,7 @@ export default {
   border-radius: 28px;
   background: #19242e;
   color: #05c98e;
-  padding: 0 32px;
+  padding: 0 24px;
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -585,7 +570,6 @@ export default {
     font-size: 18px;
     font-family: roboto-mediumitalic;
     margin-left: 4px;
-    margin-right: 16px;
   }
   span {
     vertical-align: sub;
@@ -614,7 +598,6 @@ export default {
     align-items: center;
     justify-content: space-between;
     line-height: inherit;
-    padding-top: 0.4rem;
 
     // padding-bottom: 1.2rem;
     .logop {
@@ -709,6 +692,23 @@ export default {
     height: 0.8rem;
     background: url(../../assets/img/langIco.png) no-repeat center;
     background-size: 100% 100%;
+  }
+}
+
+// 换色系
+.dark {
+  .logo {
+    background: url("../../assets/img/dark/logo_FoxDex.png") no-repeat;
+    background-size: 100% 100%;
+  }
+  .active {
+    color: #fc6446;
+  }
+  .login_wallet {
+    color: #fc6446;
+  }
+  .active-bar {
+    background: #fc6446;
   }
 }
 </style>
