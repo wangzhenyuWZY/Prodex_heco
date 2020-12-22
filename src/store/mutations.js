@@ -1,7 +1,8 @@
  import {
   CONNECT_WALLET,
   SET_TOKEN_DATA,
-  SET_PAIR_DATA
+  SET_PAIR_DATA,
+  SET_THEME_RED
  }  from './action-types';
 
 
@@ -14,6 +15,9 @@
   },
   changeTolerance(state,num){
     state.tolerance = num
+  },
+  [SET_THEME_RED] (state,payload) {
+      state.dark = payload;
   },
   [SET_TOKEN_DATA] (state,payload) {
     state.tokenData = payload;

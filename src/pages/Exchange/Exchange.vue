@@ -456,7 +456,7 @@ export default {
           });
           return
         }
-        this.token1Num = token1Num.toFixed(this.token1.decimals)
+        this.token1Num = token1Num.toFixed(6)
       }
     },
     cumpToken2 () {//计算兑换的token2

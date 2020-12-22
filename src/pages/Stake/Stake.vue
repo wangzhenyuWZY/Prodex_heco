@@ -14,7 +14,7 @@
         </div>
       </div>
       <ul class="stake_list">
-        <li v-for="(idx,index) in farmList" :key='index'>
+        <li v-for="(idx,index) in farmList" :key='index' v-show="idx.show">
           <div class="stake_top">
             <span class="lt_icon ">
               <img :src="requierImg(idx.pair,1)" alt="" />
@@ -279,8 +279,10 @@ export default {
         let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
         this.poolLength = await this.toDecimal(leng); // 16进制转10进制
         let arry = [];
+        console.log('poolLength======='+this.poolLength)
         for (let index = 0; index < this.poolLength; index++) {
           let res = await that.MasterChefContract["poolInfo"](index).call();
+          debugger
           // let res1 = await window.tronWeb.contract().at(res.lpToken);
           //  let res2 = await res1.name().call();
           //  let res3 =  await that.MasterChefContract.devFundDivRate().call(); // 利率
@@ -292,10 +294,14 @@ export default {
           // console.log('利率======',res6)
           //  console.log(res1)
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
-          this.farmList.forEach((item) => {
+          this.farmList.forEach((item,index) => {
             if (item.address == lpToken) {
               item.index = index;
+              item.show = true
+            }else{
+              item.show = false
             }
+            this.$set(this.farmList,index,item)
           })
         }
 

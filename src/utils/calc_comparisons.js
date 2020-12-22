@@ -52,6 +52,8 @@ function calcOutGivenInAfterPrice(tokenBalanceIn, tokenWeightIn, tokenBalanceOut
 
 ////单币种添加，用于计算输出的lp token是多少
 function calcPoolOutGivenSingleIn(tokenBalanceIn, tokenWeightIn, poolSupply, totalWeight, tokenAmountIn, swapFee) {
+    console.log('////////////////////////////////')
+    
     const normalizedWeight = Decimal(tokenWeightIn).div(Decimal(totalWeight));
     const zaz = Decimal(1).sub(Decimal(normalizedWeight)).mul(Decimal(swapFee));
     const tokenAmountInAfterFee = Decimal(tokenAmountIn).mul(Decimal(1).sub(zaz));
@@ -60,6 +62,7 @@ function calcPoolOutGivenSingleIn(tokenBalanceIn, tokenWeightIn, poolSupply, tot
     const poolRatio = tokenInRatio.pow(normalizedWeight);
     const newPoolSupply = poolRatio.mul(Decimal(poolSupply));
     const poolAmountOut = newPoolSupply.sub(Decimal(poolSupply));
+    console.log('poolAmountOut========'+poolAmountOut.toString())
     return poolAmountOut;
 }
 

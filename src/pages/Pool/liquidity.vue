@@ -1,5 +1,5 @@
 <template>
-  <div class="pool-box">
+  <div class="pool-box" :class="dark?'dark':''">
     <div class="pool_bg clearfix">
       <div class="pool-box1">
         <p>{{$t('pool.Lpr')}}</p>
@@ -143,7 +143,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["connectFlag", "walletAddres", 'tokenData', 'pairData']),
+    ...mapState(["connectFlag", "walletAddres", 'tokenData', 'pairData', 'dark']),
   },
   created() {
     this.tokenList = JSON.parse(JSON.stringify(this.tokenData))
@@ -394,6 +394,18 @@ export default {
   }
   .fees .accrued_btn .btn_lt {
     width: 48%;
+  }
+}
+.dark {
+  .pool-box1 {
+    background: url(../../assets/img/dark/bg_pool.png) no-repeat;
+    background-size: 100% 100%;
+  }
+  .pool-box2 .pool-p2 .pool-p3 {
+    color: #fa7447;
+  }
+  .fees .accrued_btn .btn_lt button {
+    background: linear-gradient(122deg, #fa7447 0%, #fe4943 100%);
   }
 }
 </style>
