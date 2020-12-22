@@ -16,6 +16,9 @@ import * as types from './action-types';
    },
    setPairData ({commit}, data) {
     commit(types.SET_PAIR_DATA,data);
+   },
+   settheme ({commit},data) {
+     commit(types.SET_THEME_RED,data);
    }
 }
 export default action

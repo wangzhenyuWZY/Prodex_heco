@@ -7,5 +7,6 @@
   tolerance:0,
   tokenData:null,    //币种信息
   pairData:null,    //交易对信息
+  dark:false
 }
 export default  state;
