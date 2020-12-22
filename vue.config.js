@@ -1,5 +1,5 @@
 const TerserPlugin = require('terser-webpack-plugin');
-//  const isProduction = process.env.VUE_APP_CURRENTMODE !== 'development';
+const isProduction = process.env.NODE_ENV !== 'development';
 console.log(process.env.NODE_ENV) 
 module.exports = {
   lintOnSave: false,
@@ -18,42 +18,42 @@ module.exports = {
       }
     }
   },
-  // configureWebpack: (config) => {
-  //   if (isProduction) {
-  //     config.optimization = {
-  //       splitChunks: {
-  //         cacheGroups: {
-  //           common: {
-  //             chunks: 'initial',
-  //             minSize: 0, 
-  //             minChunks: 2, 
-  //           },
-  //           vendor: {
-  //             priority: 1, 
-  //             test: /node_modules/,
-  //             chunks: 'initial',
-  //             minSize: 0, 
-  //             minChunks: 2, 
-  //           },
-  //         },
-  //       },
-  //       minimizer: [
-  //         new TerserPlugin({
-  //           terserOptions: {
-  //             ecma: undefined,
-  //             warnings: false,
-  //             parse: {},
-  //             compress: {
-  //               drop_console: true,
-  //               drop_debugger: false,
-  //               pure_funcs: ['console.log'],
-  //             },
-  //           },
-  //         }),
-  //       ]
+  configureWebpack: (config) => {
+    if (isProduction) {
+      config.optimization = {
+        splitChunks: {
+          cacheGroups: {
+            common: {
+              chunks: 'initial',
+              minSize: 0, 
+              minChunks: 2, 
+            },
+            vendor: {
+              priority: 1, 
+              test: /node_modules/,
+              chunks: 'initial',
+              minSize: 0, 
+              minChunks: 2, 
+            },
+          },
+        },
+        minimizer: [
+          new TerserPlugin({
+            terserOptions: {
+              ecma: undefined,
+              warnings: false,
+              parse: {},
+              compress: {
+                drop_console: true,
+                drop_debugger: false,
+                pure_funcs: ['console.log'],
+              },
+            },
+          }),
+        ]
          
         
-  //     }
-  //   }
-  // }
+      }
+    }
+  }
 };
