@@ -257,7 +257,8 @@ export default {
         // })  
         // getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
         //   el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        // })    
+        // })   
+        debugger 
         let res = await getBalanceInPool(el, el.token1);
         let res1 = await getBalanceInPool(el, el.token2);
         // let res2 = await getLpBalanceInPool(el);
@@ -271,6 +272,7 @@ export default {
         el.token1Balance = res.toFixed(4);
         el.token2Balance = res1.toFixed(4);
         // pairList.push(el)
+        
         this.$set(this.pairList,index,el)
       }
       // this.pairList = pairList
