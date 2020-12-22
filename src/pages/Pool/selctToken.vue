@@ -90,14 +90,18 @@ export default {
       let filtername = this.filterName
       let iSort = this.iSort
       if (this.selectType == '') {
-        return this.tokenList.filter((el) => {
-          return el.name.includes(filtername.toUpperCase())
-        })
+        if(this.tokenList && this.tokenList.length>0){
+          return this.tokenList.filter((el) => {
+            return el.name.includes(filtername.toUpperCase())
+          })
+        }
       } else {
-        let arry = this.pairList.filter(el => this.selectType == el.token1.name || this.selectType == el.token2.name)
-        return arry.filter((el) => {
-          return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
-        })
+        if(this.pairList && this.pairList.length>0){
+          let arry = this.pairList.filter(el => this.selectType == el.token1.name || this.selectType == el.token2.name)
+          return arry.filter((el) => {
+            return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
+          })
+        }
       }
     }
   },
@@ -165,7 +169,7 @@ export default {
     handleClosea() {
       this.$emit('closeAlert')
     },
-    filtera(n) {
+    filter(n) {
       if (this.selectType == '') {
         return n.name;
       } else {
