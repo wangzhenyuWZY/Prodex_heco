@@ -73,7 +73,7 @@
           </div>
         </div>
         <div class="mount_title" hidden>
-          Price
+         {{$t('Exc.Price')}} 
         </div>
         <div class="box_sizes box_Price" hidden>
           <div class="provider Receive">

@@ -142,7 +142,7 @@ module.exports = {
     pop:{
       TSed:'Transaction Submitted',
       Pname:'配对名称',
-      Ywr:'你会复活',  
+      Ywr:'You will recevive',  
     },
     fox:{
       foxp1:'What is DEX',

@@ -479,9 +479,10 @@ export default {
   padding-top: 120px;
 
   .whe {
-    padding-bottom: 16px;
+    padding-bottom: 40px;
     display: flex;
     justify-content: space-between;
+
   }
   .whe_img {
     vertical-align: sub;
