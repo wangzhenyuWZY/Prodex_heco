@@ -397,7 +397,7 @@ export default {
             console.log(this.total)
             this.farmList.forEach((item,index)=>{
               let APY = this.getEcthapy(item.pair);
-              item.APY = APY*100
+              item.APY = APY
               this.$set(this.farmList, index, item)
             })
             
