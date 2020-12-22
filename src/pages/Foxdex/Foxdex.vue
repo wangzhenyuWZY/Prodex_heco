@@ -29,6 +29,9 @@
             <div class="foxp">
             <p class="fox_p2">{{$t('fox.fc2')}}
                     <br> {{$t('fox.fc3')}}
+                    <br> {{$t('fox.fd1')}}
+                    <br> {{$t('fox.fd2')}}
+                    <br> {{$t('fox.fd3')}}
                  </p>
             </div>
           </div>
@@ -36,9 +39,7 @@
             <p class="fox_p1"></p>
             <div class="foxp">
             <p class="fox_p2">
-                    {{$t('fox.fd1')}}
-               <br> {{$t('fox.fd2')}}
-               <br> {{$t('fox.fd3')}}
+                   
                <br> {{$t('fox.fd4')}}
                <br> {{$t('fox.fd5')}}
                <br> {{$t('fox.fd6')}}
