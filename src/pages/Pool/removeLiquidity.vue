@@ -120,6 +120,7 @@ const Decimal = require('decimal.js');
 import { container ,frominput,setselect} from '../../components/index'
 import recevive from './willRecevive'
 import removealert from './valret';
+import BigNumber from 'bignumber.js';
 export default {
   data () {
     return {
@@ -201,9 +202,11 @@ export default {
       var functionSelector = 'exitPool(uint256,uint256[])'
       let slidenum = Decimal(that.slidenum).div(100)
       let maxBalance = Decimal(this.maxBalance)
-      let num = Decimal(slidenum).mul(Decimal(maxBalance)).toString()
+      // let num = Decimal(slidenum).mul(Decimal(maxBalance)).toString()
+      let num = new BigNumber(slidenum)
+      num = num.times(maxBalance)
       var parameter = [
-          {type: 'uint256', value: num},
+          {type: 'uint256', value: num.toFixed()},
           {type: 'uint256[]', value:[0,0] }
       ]
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);

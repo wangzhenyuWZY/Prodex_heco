@@ -20,9 +20,14 @@
     <div class="conter">
 
       <div class="search__box">
-        <!-- <el-input class="search__input"
-                  v-model="value"       
-                  placeholder="Search name or paste address"></el-input> -->
+        <el-input class="search__input"
+                  style="width:80%;padding-left:20px;"
+                  v-model="newTokenAddress"      
+                  placeholder="Search name or paste address"></el-input>
+        <i class="el-icon-plus tran_icon"
+             style="font-size: 30px;padding-left: 20px;position: relative;top: 3px;" 
+             @click="checkToken" 
+              ></i>          
       </div>
       <div class="select_size select__bases"
            hidden>
@@ -93,6 +98,7 @@
 </template>
 
 <script>
+import { getToken } from '../../api/api'
 import {TokenData,PairData} from '../../utils/index'
 import {IsPc} from '../../utils/index'
 import { mapState } from 'vuex'
@@ -143,7 +149,8 @@ export default {
       filterName: '',
       iSort:0,
       tokenList: [],
-      pairList: []
+      pairList: [],
+      newTokenAddress:''
     }
   },
   created () {
@@ -151,7 +158,22 @@ export default {
     this.pairList = JSON.parse(JSON.stringify(this.pairData))
   },
   methods: {
-        requierImg (name) {
+    checkToken(){
+      let that = this
+      let data = {address:this.newTokenAddress}
+      getToken(data).then((res)=>{
+        if(res.data.code==0){
+          alert('添加成功')
+          PairData().then((res)=>{
+            that.$store.dispatch('setPairData', res);
+          })
+        }else{
+          alert('添加失败')
+        }
+        console.log(res)
+      })
+    },
+    requierImg (name) {
         if (name) {
            try {
                return require('@/assets/img/currency/'+name+'.png')
@@ -222,6 +244,7 @@ export default {
 .conter {
   padding: 0 32px;
 }
+
 >>> .el-dialog__header {
   padding: 28px 32px 0px;
 }
@@ -235,7 +258,7 @@ export default {
   border-radius: 32px;
   border: 1px solid#05C98E;
   border-radius: 32px;
-  padding-left: 77px;
+  padding-left: 20px;
   font-size: 18px;
 }
 >>> .search__input .el-input__inner::placeholder {

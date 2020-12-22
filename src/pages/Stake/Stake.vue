@@ -348,9 +348,10 @@ export default {
       this.total.defaultAddress = 'https://shasta.tronscan.org/#/address/' + window.tronWeb.defaultAddress.base58;
       this.total.showAlert1 = true;
       let that = this
-      let arr = Decimal(this.total.shareToal).mul(Math.pow(10, this.total.decimals)).toString();
+      let arr = new BigNumber(this.total.shareToal)
+      arr = arr.times(Math.pow(10, this.total.decimals))
       let num = null
-      this.MasterChefContract.withdraw(that.total.item.index, x == 0 ? 0 : arr).send({
+      this.MasterChefContract.withdraw(that.total.item.index, x == 0 ? 0 : arr.toFixed()).send({
         shouldPollResponse: true
       }).then((res) => {
         if (res) {
