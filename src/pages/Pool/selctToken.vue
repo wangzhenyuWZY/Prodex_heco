@@ -23,7 +23,7 @@
         <el-input class="search__input"
                   style="width:80%;padding-left:20px;"
                   v-model="newTokenAddress"      
-                  placeholder="Search name or paste address"></el-input>
+                  :placeholder= "$t('snop')"></el-input>
         <i class="el-icon-plus tran_icon"
              style="font-size: 30px;padding-left: 20px;position: relative;top: 3px;" 
              @click="checkToken" 
@@ -253,17 +253,20 @@ export default {
   right: 34px;
 }
 >>> .search__input {
+  
 }
 >>> .search__input .el-input__inner {
   border-radius: 32px;
   border: 1px solid#05C98E;
   border-radius: 32px;
-  padding-left: 20px;
+  padding-left: 14px;
   font-size: 18px;
+
 }
 >>> .search__input .el-input__inner::placeholder {
-  color: #b7bfc8;
-  font-size: 18px;
+  color: #000;
+  opacity: 0.7;
+  font-size: 16px;
 }
 .search__box {
   margin-top: 25px;

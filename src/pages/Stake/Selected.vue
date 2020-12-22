@@ -76,7 +76,7 @@
             <div class="">
               <div class="received ">
                 <div class="lt">
-                  <frominput showmax :balance="farmtoal.balanceOf" :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
+                  <frominput showmax :balance="farmtoal.balanceOf"  :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
                 </div>
                 <div class="rg mobles_rg">FOXDEX_LP</div>
               </div>
@@ -171,12 +171,14 @@ export default {
   },
   methods: {
     requierImg(name, number) {
+      console.log( "----------------" + name);
       let str;
       // debugger
       if (name) {
         try {
           if (number != undefined) {
             str = name.split('/');
+            
             return require('@/assets/img/currency/' + str[number] + '.png')
           }
           return require('@/assets/img/currency/' + name + '.png')
