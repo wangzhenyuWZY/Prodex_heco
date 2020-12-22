@@ -608,7 +608,7 @@ export default {
       let token1num = new BigNumber(that.token1Num)
       token1num = token1num.times(Math.pow(10, that.token1.decimals))
       if(token1num>this.token1Balance/2){
-        alert('添加数量不能大于流动池的50%')
+        that.$message.error("添加数量不能大于流动池的50%!")
         this.charm1();
         return
       }
