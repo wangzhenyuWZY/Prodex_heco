@@ -13,9 +13,8 @@
           <div class="received ">
             <span class="rg ftblod">{{token1Num}}</span>
             <div class="lt ">
-              <img class="lt_icon"
-                   src="@/assets/img/btc.svg"
-                   alt="">
+                   <img :src="requierImg(token1.name,0)"
+                   alt="" />
               <span>{{token1.name}}</span>
             </div>
             
@@ -24,9 +23,8 @@
                   <div class="received ">
             <span class="rg ftblod">{{token2Num}}</span>
             <div class="lt ">
-              <img class="lt_icon"
-                   src="@/assets/img/btc.svg"
-                   alt="">
+                   <img :src="requierImg(token2.name,0)"
+                   alt="" />
               <span>{{token2.name}}</span>
             </div>
           </div>
@@ -47,7 +45,7 @@
           </div>
           <div class="received mobiles mrge12">
             <div class="lt">
-              <span class="ftblod">Price</span>
+              <span class="ftblod">{{$t('Exc.Price')}}</span>
             </div>
             <span class="ftblod">1{{token1.name}}={{justPrice.toFixed(6)}} {{token2.name}}</span>
           </div>
@@ -121,6 +119,24 @@ export default {
 
   }
   , methods: {
+      requierImg (name,number) {
+      let str;
+      // debugger
+      if (name) {
+        try {
+           if (number != undefined) {
+              str = name.split('/');
+              return require('@/assets/img/currency/'+str[number]+'.png')
+              
+           }
+            return require('@/assets/img/currency/'+name+'.png')
+        } catch (error) {
+            return require('@/assets/img/currency/avitve.png')
+        }
+      } else {
+           return require('@/assets/img/currency/avitve.png')
+      }
+    },
     handleClosea () {
       this.$emit('close')
     }
