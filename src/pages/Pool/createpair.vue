@@ -230,11 +230,13 @@ export default {
         let token = tokenList.filter((res)=>{
           return res.name.toUpperCase()=='USDT'
         })
-        this.token1 = token[0]
-        this.token1.item = 0
-        this.$initTronWeb().then(function (tronWeb) {
-          that.changeCoin(that.token1)
-        })
+        if(token && token.length>0){
+          this.token1 = token[0]
+          this.token1.item = 0
+          this.$initTronWeb().then(function (tronWeb) {
+            that.changeCoin(that.token1)
+          })
+        }
       }
     },
 
@@ -247,11 +249,12 @@ export default {
       let token = tokenList.filter((res)=>{
         return res.name.toUpperCase()=='USDT'
       })
-      this.token1.item = 0
-      this.$initTronWeb().then(function (tronWeb) {
-        that.changeCoin(that.token1)
-      })
-      
+      if(token && token.length>0){
+        this.token1.item = 0
+        this.$initTronWeb().then(function (tronWeb) {
+          that.changeCoin(that.token1)
+        })
+      }
     }
   },
   methods: {
@@ -472,6 +475,8 @@ export default {
     },
     async getBalance (token) {//获取余额
       let that = this
+      console.log('token.address======='+token.address)
+      console.log('window.tronWeb.defaultAddress.base58======='+window.tronWeb.defaultAddress.base58)
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (tokenBalance) {
