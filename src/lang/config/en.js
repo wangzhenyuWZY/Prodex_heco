@@ -225,7 +225,7 @@ module.exports = {
     WFCn:'Waiting For Confirmation',
     Enat:'Enter an amount',
     rly:'Remove Liquidity',
-    rly:'Receive',
+    rly1:'Receive',
     oiei: 'Output is estimated.If the price change by more than 0.5% your transaction will revert',
     ars:'Authorization success',
     sut:'Successful trade',
