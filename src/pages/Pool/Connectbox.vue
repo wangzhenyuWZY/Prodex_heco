@@ -222,6 +222,7 @@ export default {
     ...mapState(['pairData'])
   },
   created() {
+    let that = this
     if (this.$route.params.pair) {
       let pair = JSON.parse(this.$route.params.pair)
       this.token1 = pair.token1
@@ -232,6 +233,9 @@ export default {
       this.getBasicInfo(this.token2)
     }
     this.pairList = JSON.parse(JSON.stringify(this.pairData))
+    this.$initTronWeb().then(function (tronWeb) {
+      that.setPair()
+    })
   },
   watch: {
     token1Num() {
@@ -245,9 +249,29 @@ export default {
     },
     pairData(list) {
       this.pairList = JSON.parse(JSON.stringify(list))
+    },
+    pair(news){
+      this.changePair()
     }
   },
   methods: {
+    setPair(){
+      let pairAddress = this.$route.query.pairAddress
+      if(this.pairList && this.pairList.length>0){
+        this.pairList.forEach((item,index)=>{
+          if(item.address==pairAddress){
+            this.pair = item
+            this.token1 = item.token1
+            this.token2 = item.token2
+            this.token1.item = 0
+            this.token2.item = 1
+            this.getBasicInfo(this.token1)
+            this.getBasicInfo(this.token2)
+            this.changePair()
+          }
+        })
+      }
+    },
     requierImg(name) {
       if (name) {
         try {
@@ -448,13 +472,18 @@ export default {
       })
       if (pair && pair.length > 0) {
         this.pair = pair[0]
-        // this.getCreateToken(pair[0])
+        
+      }
+    },
+    changePair(){
+        let that = this
+        let pair = this.pair
         this.getSpotPrice(this.token1.address, this.token2.address, 'justPrice')
         this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
-        this.getBalanceInPool(pair[0], this.token1).then((res) => {//获取token1在pool中的总量
+        this.getBalanceInPool(pair, this.token1).then((res) => {//获取token1在pool中的总量
           console.log('this.token1Balance=====' + res)
           this.token1Balance = res
-          getMyBalanceInPool(pair[0]).then((res) => {
+          getMyBalanceInPool(pair).then((res) => {
             that.myBalanceInPool = Decimal(res)
             console.log('that.myBalanceInPool========' + that.myBalanceInPool)
             if (that.lpTotal) {
@@ -465,7 +494,7 @@ export default {
             }
           })
         })
-        this.getBalanceInPool(pair[0], this.token2).then((res) => {//获取token2在pool中的总量
+        this.getBalanceInPool(pair, this.token2).then((res) => {//获取token2在pool中的总量
           console.log('this.token2Balance=====' + res)
           this.token2Balance = res
           getLpBalanceInPool(this.pair).then((res) => {//获取lptoken总量
@@ -479,7 +508,7 @@ export default {
           })
         })
 
-        allowance(this.token1.address, pair[0].address).then((res) => {
+        allowance(this.token1.address, pair.address).then((res) => {
           if (res) {
             that.token1ApproveBalance = parseInt(res._hex ? res._hex : res.remaining._hex, 16);
             console.log(that.token1ApproveBalance)
@@ -490,7 +519,7 @@ export default {
             }
           }
         })
-        allowance(this.token2.address, pair[0].address).then((res) => {
+        allowance(this.token2.address, pair.address).then((res) => {
           if (res) {
             that.token2ApproveBalance = parseInt(res._hex ? res._hex : res.remaining._hex, 16)
             if (that.token2ApproveBalance == 0) {
@@ -500,7 +529,6 @@ export default {
             }
           }
         })
-      }
     },
     charm1(n) {
       if (n) {
@@ -659,20 +687,16 @@ export default {
     doApprove() {
       this.charm2(1);
       if (this.pair) {
-        debugger;
         if (this.token1ApproveBalance == 0) {
           approved(this.token1.address, this.pair.address).then((res) => {
             this.getPairAddress()
-
             this.charm2();
-            // window.location.reload()
           })
         }
         if (this.token2ApproveBalance == 0) {
           approved(this.token2.address, this.pair.address).then((res) => {
             this.getPairAddress()
             this.charm2();
-            // window.location.reload()
           })
         }
       } else {

@@ -248,7 +248,11 @@ export default {
     removealert
   },
   created () {
+    let that = this
     this.pairList = JSON.parse(JSON.stringify(this.pairData)) 
+    this.$initTronWeb().then(function (tronWeb) {
+      that.setPair()
+    })
   },
   watch: {
     token1Num () {
@@ -260,13 +264,29 @@ export default {
     pairData(list){
       let that = this
       this.pairList = JSON.parse(JSON.stringify(list)) 
-      console.log('监控到pairlist变化')
-      if (this.token1.address && this.token2.address && this.spotPrice==0) {
-        this.getPairAddress()
-      }
+    },
+    pair(news){
+      this.changePair()
     }
   },
   methods: {
+    setPair(){
+      let pairAddress = this.$route.query.pairAddress
+      if(this.pairList && this.pairList.length>0){
+        this.pairList.forEach((item,index)=>{
+          if(item.address==pairAddress){
+            this.pair = item
+            this.token1 = item.token1
+            this.token2 = item.token2
+            this.token1.item=0
+            this.token2.item=1
+            this.getBalance(this.token1)
+            this.getBalance(this.token2)
+            this.changePair()
+          }
+        })
+      }
+    },
     closeAlert(){
       this.showAlert1 = false;
       
@@ -330,15 +350,12 @@ export default {
     changeCoin (token) {
       let that = this
       this.isSelect = false
-
-
       if (token.item == 0) {
         this.token1 = token;
-        //  this.selectColor1 = true;
       } else {
         this.token2 = token;
-        // this.selectColor2 = true;
       }
+      this.getPairAddress()
       that.getBalance(token)
       this.inputFlag();
     },
@@ -347,12 +364,8 @@ export default {
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (token) {
-        console.log('tokenBalance._hex==============='+tokenBalance._hex,token.decimals,token.name)
         let balance = (parseInt(tokenBalance._hex, 16) / Math.pow(10, token.decimals)).toFixed(6)
         token.item == 0 ? that.token1.balance = balance : that.token2.balance = balance
-        if (this.token1.address && this.token2.address) {
-          this.getPairAddress()
-        }
       }
     },
     Approved () {
@@ -386,23 +399,26 @@ export default {
       let that = this
       let pairname = this.token1.name + '/' + this.token2.name
       let pairname1 = this.token2.name + '/' + this.token1.name
-      console.log('pairlist有没有数据？======'+this.pairList.length)
       let pair = this.pairList.filter((item) => {
-        return item.pair.toUpperCase() == pairname.toUpperCase() || item.pair.toUpperCase() == pairname1.toUpperCase()
+        return item.address==item.pairAddress || item.pair.toUpperCase() == pairname.toUpperCase() || item.pair.toUpperCase() == pairname1.toUpperCase()
       })
       if (pair && pair.length > 0) {
-        this.isPair = true
         this.pair = pair[0]
-        this.decimals = pair[0].decimals;
-        console.log('getPairAddress=========')
-        allowance(that.token1.address, pair[0].address).then((res) => {
+        
+      }else {
+        this.isPair = false
+      }
+    },
+    changePair(){
+        let that = this
+        let pair = this.pair
+        this.isPair = true
+        allowance(that.token1.address, pair.address).then((res) => {
           if (res) {
             let approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
-            console.log('approveBalance1 ====='+approveBalance1)
-            allowance(that.token2.address, pair[0].address).then((res) => {
+            allowance(that.token2.address, pair.address).then((res) => {
               if (res) {
                 let approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
-                console.log('approveBalance2 ====='+approveBalance2)
                 if (approveBalance1 == 0 || approveBalance2==0) {
                   that.isApproved = true
                 } else {
@@ -412,32 +428,28 @@ export default {
             })
           }
         })
-        
-        this.getBalanceInPool(pair[0], this.token1).then((res) => {
+        this.getBalanceInPool(pair, this.token1).then((res) => {
           this.token1Balance = res
           this.getSpotPrice()
         })
-        this.getBalanceInPool(pair[0], this.token2).then((res) => {
+        this.getBalanceInPool(pair, this.token2).then((res) => {
           this.token2Balance = res
           this.getSpotPrice()
         })
-        this.getWeight(pair[0], this.token1).then((res) => {
+        this.getWeight(pair, this.token1).then((res) => {
           this.token1Weight = res
           this.getSpotPrice()
         })
-        this.getWeight(pair[0], this.token2).then((res) => {
+        this.getWeight(pair, this.token2).then((res) => {
           this.token2Weight = res
           this.getSpotPrice()
         })
-        this.getSwapFee(pair[0]).then((res) => {
+        this.getSwapFee(pair).then((res) => {
           this.tips = "A protion of each trade ('+(res*1000).toFixed(4)+'%)goes to liquidity providers as a protocal incentive."
           this.swapFee = res
           this.thisswapFee = res
           this.getSpotPrice()
         })
-      }else {
-        this.isPair = false
-      }
     },
     cumpToken1 () {//计算兑换的token1
       if(!this.isPair){
