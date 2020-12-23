@@ -3,7 +3,7 @@ const isProduction = process.env.NODE_ENV !== 'development';
 console.log(process.env.NODE_ENV) 
 module.exports = {
   lintOnSave: false,
-  // productionSourceMap:false,
+  productionSourceMap:false,
   publicPath: './',
   css: {
     extract: true,
