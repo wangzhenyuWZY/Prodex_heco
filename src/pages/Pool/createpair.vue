@@ -33,7 +33,8 @@
               <div class=" pair_ved">
                 <p class="pair_title">{{$t('pool.yat')}}</p>
                 <p class="pair_size pair_mag">{{$t('pool.tro')}}</p>
-                <p>{{$t('pool.tro1')}}</p>
+                <p>{{$t('pool.tro1')}} </p>
+                <p>{{$t('pool.tro2')}}</p>
               </div>
             </div>
           </div>
