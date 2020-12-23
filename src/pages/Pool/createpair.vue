@@ -185,6 +185,7 @@ import selctoken from './selctToken';
 import ipConfig from '../../config/ipconfig.bak'
 import { approved, decimals, getConfirmedTransaction } from '../../utils/tronwebFn'
 import valert from './valret';
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
@@ -208,8 +209,8 @@ export default {
       showAlert1: false,
       typeUrl: '',
       btnLoading1: false,
-      disabled1: false
-
+      disabled1: false,
+      pairList:[]
     }
   },
   components: {
@@ -219,8 +220,17 @@ export default {
     selctoken,
     valert
   },
+  computed: {
+    ...mapState(['pairData'])
+  },
+  watch: {
+    pairData(list) {
+      this.pairList = JSON.parse(JSON.stringify(list))
+    }
+  },
   created () {
     this.init()
+    this.pairList = JSON.parse(JSON.stringify(this.pairData)) || []
   },
   methods: {
     handel () {
@@ -248,7 +258,6 @@ export default {
     },
     init () {//初始化tronweb
       let that = this
-      debugger
       this.$initTronWeb().then(function (tronWeb) {
         that.getBFactoryContract()
         that.getSwapFeeForDex()
@@ -278,8 +287,17 @@ export default {
     },
     async createBPool () {//newBPool
       let that = this;
+      let pairName = this.token1.name+'/'+this.token2.name
+      let pairName2 = this.token2.name+'/'+this.token1.name
+      if(this.pairList && this.pairList.length>0){
+        let hasPair = this.pairList.filter((res)=>{
+          return res.pair.toUpperCase()==pairName.toUpperCase() || res.pair.toUpperCase()==pairName2.toUpperCase()
+        })
+        if(hasPair&&hasPair.length>0){
+          return
+        }
+      }
       this.loading1(1);
-      
       this.$message({
         message:  this.$t('pewe6'),
         type: 'success'

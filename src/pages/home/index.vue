@@ -272,7 +272,7 @@ export default {
         el.token1Balance = res.toFixed(4);
         el.token2Balance = res1.toFixed(4);
         // pairList.push(el)
-        
+
         this.$set(this.pairList,index,el)
       }
       // this.pairList = pairList
@@ -281,7 +281,6 @@ export default {
       let res = await api.get24HourTradingVolume()
       if(res.data.code==0){
         let data = res.data.data
-        debugger
         this.pairList.forEach((rsp)=>{
           data.forEach((rsp2)=>{
             if(rsp.pair.toUpperCase() == rsp2.full_name.toUpperCase()){
