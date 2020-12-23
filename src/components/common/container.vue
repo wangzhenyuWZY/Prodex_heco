@@ -2,7 +2,7 @@
   <div class="totalModel" :class="`${pdd ? 'setpdd' : ''}${mobile ? ' setmobile' : ''}`">
     <div class="toal_bg">
       <slot name="title"></slot>
-    <div class="modelBg" :style="{'paddingTop':top+'px'}">
+    <div class="modelBg" :style="{'paddingTop':top-20 +'px'}">
         <slot name="body"></slot>
     </div>
   </div>

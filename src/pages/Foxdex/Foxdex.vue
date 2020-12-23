@@ -3,26 +3,26 @@
     <div class="fbox">
       <div class="fbox1">
         <div class="title title1">
-          代币销毁
+          {{$t('dex1')}}
         </div>
         <div class="left1">
           <div class="leff">
 
             <div class="le-box">
               <div class="le1">
-                <span>代币总量</span>
+                <span>{{$t('dex2')}}</span>
                 <span>{{fromTotal.lpTotal}}</span>
               </div>
               <div class="le1">
-                <span>流通数量</span>
+                <span>{{$t('dex3')}}</span>
                 <span>{{fromTotal.beenLocked}}</span>
               </div>
               <div class="le1">
-                <span>未流通数量</span>
+                <span>{{$t('dex4')}}</span>
                 <span>{{fromTotal.unlocked}}</span>
               </div>
               <div class="le_but">
-                <el-button class="from_botton item_button" :loading="disabled1" :disabled="disabled3" @click="clickFactory"> 销毁</el-button>
+                <el-button class="from_botton item_button" :loading="disabled1" :disabled="disabled3" @click="clickFactory"> {{$t('dex9')}}</el-button>
               </div>
             </div>
           </div>
@@ -30,21 +30,21 @@
       </div>
       <div class="fbox1">
         <div class="title ">
-          手续费添加流动性
+          {{$t('dex5')}}
         </div>
         <div class="left1">
           <div class="leff">
             <div class="le-box">
               <div class="le1">
-                <span>已添加Abelo数量</span>
+                <span>{{$t('dex6')}}</span>
                 <span>{{fromTotal.lpTotal1}}</span>
               </div>
               <div class="le1">
-                <span>已添加USDT数量</span>
+                <span>{{$t('dex7')}}</span>
                 <span>{{fromTotal.unlocked1}}</span>
               </div>
               <div class="le_but">
-                <el-button class="from_botton item_button" :loading="disabled2" :disabled="disabled4" @click="addReward">回购</el-button>
+                <el-button class="from_botton item_button" :loading="disabled2" :disabled="disabled4" @click="addReward">{{$t('dex8')}}</el-button>
               </div>
             </div>
           </div>

@@ -71,7 +71,7 @@ module.exports = {
       Remove:'Remove',
       to:'TO',
       Lpr:'Liquidity provider rewards',
-      Lpr2:'Liquidity providers can obtain fee income from the liquidity pools they participate in;The fee income is distributed according to the proportion of liquidity providers liquidity funds The allocated fees are added to the corresponding pool in real time, and the liquidity provider can withdraw as required',
+      Lpr2:'Liquidity providers can obtain fee income from the liquidity pools they participate in;The fee income is ’ distributed according to the proportion of liquidity providers liquidity funds The allocated fees are added to the corresponding pool in real time, and the liquidity provider can withdraw as required',
       Yly:'Your liquidity',
       cj1:'Create a pair',
       al:'Add Liquidity',
@@ -180,17 +180,17 @@ module.exports = {
     
       foxp1:'Liquidity provider rewards',
       foxp2:'Liquidity providers can obtain fee income from the liquidity pools they participate in;',
-      foxp3:'The fee income is distributed according to the proportion of liquidity providers liquidity funds',
+      foxp3:'The fee income is ’distributed according to the proportion of liquidity providers liquidity funds',
       foxp4:'The allocated fees are added to the corresponding pool in real time, and the liquidity provider can withdraw as required',
  
-      foxp5:'You ll be the first liquidity provider of this pool, and your added token proportion ',
-      foxp6:'will determine the initial price,',
+      foxp5:'You ll be the first liquidity provider of this pool,',
+      foxp6:'and your added token proportion will determine the initial price,',
       foxp7:'You can also customize the distribution ratio of the pool fee income',
       foxp8:'please click "Confirm" when you have confirmedthe above proportion.',
       
 
-      fb1:'What is Abelo Dex?',
-      fb2:'Abelo DEX is a protocol to exchange TRC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
+      fb1:'What is Abelo.Finance?',
+      fb2:'Abelo.finance is a DEX protocol to exchange TRC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
       
       fc1:'Features',
       fc2:'● Users can add liquidity for a single token, which lowers the threshold of experiencing DEX while minimizes the impermanent loss.',
@@ -200,11 +200,11 @@ module.exports = {
       fd2:'● Protocol fee will be used in full to repurchase and burn, as well as add liquidity for the platform token.',
       fd3:'● All trading pairs that meet certain conditions will be incentivized.',
       fdd:'What is Abelo？',
-      fd4:'Bee is the protocol token that empowers the token economy for the DEX platform. In addition, it is also the governance token for voting on proposals.Protocol fee will be used in full to repurchase and burn, as well as add liquidity for Bee. This will be open to users who meet certain conditions, enabling a transparent system.',
-      fd5:'● The total supply of Bee is 31 million. A new block is generated about every 3 seconds and 3 Bees are registered in one block. Thus 86,400 Bees are issued per day and will be reduced by 2% every week.',
-      fd6:'● Bee will be used to incentivize trading pairs that meet certain conditions on the DEX.',
+      fd4:'Abelo is the protocol token that empowers the token economy for the DEX platform. In addition, it is also the governance token for voting on proposals.Protocol fee will be used in full to repurchase and burn, as well as add liquidity for Abelo. This will be open to users who meet certain conditions, enabling a transparent system.',
+      fd5:'● The total supply of Abelo is 31 million. A new block is generated about every 3 seconds and 3 Bees are registered in one block. Thus 86,400 Bees are issued per day and will be reduced by 2% every week.',
+      fd6:'● Abelo will be used to incentivize trading pairs that meet certain conditions on the DEX.',
 
-      fe1:'2.1 Bee Security',
+      fe1:'2.1 Abelo Security',
       fe2:'Security lies in two aspects. The first is the smart contract security of the DEX and the other is to ensure that the team will always do the right thing.',
       fe3:'2.1.1 The security of the smart contract',
       fe4:'It has been audited by KnownSec. ',
@@ -212,7 +212,7 @@ module.exports = {
       ff1:'2.1.2 How to prevent the team from being evil',
       ff2:'The great significance of smart contracts is to ensure that no one will be evil during the cooperation of two or more parties. And never test humanity by money. ',
       ff3:'● In the DEX contract, users will be responsible for their own assets. The contract only provides functions such as trading, liquidity creation, liquidity addition and withdrawal, and the contract does not have the right to use or manage users’ assets.',
-      ff4:'● No one has the right to withdraw assets from the fee address, and it only provides the operation interface to repurchase and burn,as well as add liquidity for Bee. Users who meet certain conditions can execute it. ',
+      ff4:'● No one has the right to withdraw assets from the fee address, and it only provides the operation interface to repurchase and burn,as well as add liquidity for Abelo. Users who meet certain conditions can execute it. ',
       
   
     }, 
@@ -245,7 +245,17 @@ module.exports = {
     Sete:'Slippage tolerance',
     pt:'Pool Tokens',
     snop:'Search paste address(do not search name)',
-    Toke:'Tokens to destroy',
+    dex1:'Token burn',
+    dex2:'total supply',
+    dex3:'circulationg supply',
+    dex4:'Uncirculated supply',
+    dex5:'repurchase for liquidity',
+    dex6:'Abelo added',
+    dex7:'USDT added',
+    dex8:'burn',
+    dex9:'repurchase',
+
+
 
 
 
