@@ -59,30 +59,15 @@
     <div class="fox_box"> 
     
       <div class="fox_box1"> 
-         <div class="fox_p">
-            <p class="fox_p1"> </p>
-            <div class="foxp">
-            <p class="fox_p2">
-                    {{$t('fox.foxp1')}}
-                <br>{{$t('fox.foxp2')}}
-                <br>{{$t('fox.foxp3')}}
-                <br>{{$t('fox.foxp4')}}
-                <br>{{$t('fox.foxp5')}}
-                <br>{{$t('fox.foxp6')}}
-                <br>{{$t('fox.foxp7')}}
-                <br>{{$t('fox.foxp8')}}
-             
-            </p>
-            </div>
-          </div>
+        
           <div class="fox_p">
-            <!-- <p class="fox_p1">{{$t('fox.fb1')}}</p> -->
+            <p class="fox_p1">{{$t('fox.fb1')}}</p>
             <div class="foxp">
             <p class="fox_p2">{{$t('fox.fb2')}}</p>
             </div>
           </div>
           <div class="fox_p">
-            <!-- <p class="fox_p1">{{$t('fox.fc1')}}</p> -->
+            <p class="fox_p1">{{$t('fox.fc1')}}</p>
             <div class="foxp">
             <p class="fox_p2">{{$t('fox.fc2')}}
                     <br> {{$t('fox.fc3')}}
@@ -93,7 +78,7 @@
             </div>
           </div>
           <div class="fox_p">
-            <p class="fox_p1"></p>
+            <p class="fox_p1">{{$t('fox.fdd')}}</p>
             <div class="foxp">
             <p class="fox_p2">                  
                     {{$t('fox.fd4')}}

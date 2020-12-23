@@ -71,16 +71,17 @@ module.exports = {
       Remove:'Remove',
       to:'TO',
       Lpr:'Liquidity provider rewards',
-      Lpr2:'Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed withdrawing your liquidity.',
+      Lpr2:'Liquidity providers can obtain fee income from the liquidity pools they participate in;The fee income is distributed according to the proportion of liquidity providers liquidity funds The allocated fees are added to the corresponding pool in real time, and the liquidity provider can withdraw as required',
       Yly:'Your liquidity',
       cj1:'Create a pair',
       al:'Add Liquidity',
       cta:'Connect to a wallet to view your liquidity.',
       dts:' Don t see a pool you joined?',
       imp:'Import it.',
-      yat:'You are the first liquidity provider.',
-      tro:'The ratio of tokens you add will set the price of this pool.',
-      tro1:'Once you are happy with the rate click supply to review.',
+      yat:'You ll be the first liquidity provider of this pool, ',
+      tro:'and your added token proportion will determine the initial price,',
+      tro1:'You can also customize the distribution ratio of the pool fee income',
+      tro2:'please click "Confirm" when you have confirmedthe above proportion.',
       assets1:'Single assets',
       assets2:'Double assets',
       paps:'Prices and pool share',
@@ -188,16 +189,17 @@ module.exports = {
       foxp8:'please click "Confirm" when you have confirmedthe above proportion.',
       
 
-      // fb1:'What is Bee',
-      fb2:'DEX is a protocol to exchange TRC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
+      fb1:'What is Abelo Dex?',
+      fb2:'Abelo DEX is a protocol to exchange TRC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
       
-      // fc1:'Bee Issue System',
+      fc1:'Features',
       fc2:'● Users can add liquidity for a single token, which lowers the threshold of experiencing DEX while minimizes the impermanent loss.',
       fc3:'● Liquidity creator can define the fee distribution method. (Example: User A creates the USDT/TRX trading pair, and the fee is 0.3%. 0.2% is used to encourage liquidity providers, and the additional 0.1% is used to reward user A who created this trading pair.) ',
   
       fd1:'● USDT trading pairs can be created',
       fd2:'● Protocol fee will be used in full to repurchase and burn, as well as add liquidity for the platform token.',
       fd3:'● All trading pairs that meet certain conditions will be incentivized.',
+      fdd:'What is Abelo？',
       fd4:'Bee is the protocol token that empowers the token economy for the DEX platform. In addition, it is also the governance token for voting on proposals.Protocol fee will be used in full to repurchase and burn, as well as add liquidity for Bee. This will be open to users who meet certain conditions, enabling a transparent system.',
       fd5:'● The total supply of Bee is 31 million. A new block is generated about every 3 seconds and 3 Bees are registered in one block. Thus 86,400 Bees are issued per day and will be reduced by 2% every week.',
       fd6:'● Bee will be used to incentivize trading pairs that meet certain conditions on the DEX.',
@@ -242,7 +244,8 @@ module.exports = {
     Tnos:'Transaction Settings',
     Sete:'Slippage tolerance',
     pt:'Pool Tokens',
-    snop:'Search paste address(do not search name)'
+    snop:'Search paste address(do not search name)',
+    Toke:'Tokens to destroy',
 
 
 

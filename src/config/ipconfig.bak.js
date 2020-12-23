@@ -7,7 +7,8 @@ if (process.env.NODE_ENV === 'development') {
     wtrxAddress: 'TGky6zKfhrisXh92emTvPAbkenhXHTU8m6',
     BFactory:'TYFMTMFQKnm23o5RxhYLMN94NSnb3cpgQx',
     MasterChef:'TNHDUtroDsdPc5oVDo4QmrL3ueSnwQKiLb',
-    FactoryManager:'TMAJmEkLG8G4mw3LZ7xrCjYRmNksdBSi9B'
+    FactoryManager:'TMAJmEkLG8G4mw3LZ7xrCjYRmNksdBSi9B',
+    RewardToken:'TSgdjJHEr18FAF6Wyk8hFmgoQwCyqe5gYU '
   }
 }else{
   ipConfig = {
