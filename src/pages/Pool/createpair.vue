@@ -223,6 +223,7 @@ export default {
   },
   watch: {
     tokenData(list) {
+      let that = this
       let tokenList = JSON.parse(JSON.stringify(list))
       if(tokenList&&tokenList.length>0){
         let token = tokenList.filter((res)=>{
@@ -230,12 +231,15 @@ export default {
         })
         this.token1 = token[0]
         this.token1.item = 0
-        this.changeCoin(this.token1)
+        this.$initTronWeb().then(function (tronWeb) {
+          that.changeCoin(that.token1)
+        })
       }
     },
 
   },
   created () {
+    let that = this
     this.init()
     let tokenList = JSON.parse(JSON.stringify(this.tokenData))
     if(tokenList&&tokenList.length>0){
@@ -243,7 +247,10 @@ export default {
         return res.name.toUpperCase()=='USDT'
       })
       this.token1.item = 0
-      this.changeCoin(this.token1)
+      this.$initTronWeb().then(function (tronWeb) {
+        that.changeCoin(that.token1)
+      })
+      
     }
   },
   methods: {
