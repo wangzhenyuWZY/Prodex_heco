@@ -31,10 +31,14 @@
           <div class="provider ">
             <div class="">
               <div class=" pair_ved">
-                <p class="pair_title">{{$t('pool.yat')}}</p>
-                <p class="pair_size pair_mag">{{$t('pool.tro')}}</p>
-                <p>{{$t('pool.tro1')}} </p>
+                
+                <p class="pair_size pair_mag "> {{$t('pool.yat')}} </p>
+                <p>{{$t('pool.tro')}}</p>
+                <p>{{$t('pool.tro1')}}</p>
+         
                 <p>{{$t('pool.tro2')}}</p>
+
+               
               </div>
             </div>
           </div>
@@ -553,17 +557,17 @@ export default {
     text-align: center;
     padding: 24px 0;
     p {
-      font-size: 16px;
+      height: 20px;
+      font-size: 14px;
       color: #878b97;
     }
     .pair_title {
       font-size: 20px;
-      font-weight: bold;
-      color: #0f1730;
     }
-    .pair_mag {
-      margin-top: 12px;
-      margin-bottom: 4px;
+    .pair_mag p{
+     
+
+     
     }
   }
   .pair_mandate {
@@ -930,9 +934,10 @@ export default {
     }
     .pair_ved {
       .pair_title {
-        font-size: 0.4rem;
+        font-size: 0.35rem;
       }
       p {
+        height: 0.4rem;
         font-size: 0.35rem;
       }
     }
