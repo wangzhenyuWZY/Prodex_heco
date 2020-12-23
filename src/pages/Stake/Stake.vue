@@ -401,6 +401,7 @@ export default {
             this.farmList.forEach((item, index) => {
               let APY = this.getEcthapy(item.pair);
               item.APY = APY * 100;
+              item.APY = isNaN(item.APY) ? 0 : item.APY.toFixed(2);
               this.$set(this.farmList, index, item)
             })
 
