@@ -83,7 +83,7 @@ export default {
         defaultAddress: '',
         APY: '--'
       },
-      stakeList:[]
+      stakeList: []
     }
   },
   watch: {
@@ -281,16 +281,16 @@ export default {
         this.poolLength = await this.toDecimal(leng); // 16进制转10进制
         let lotokenArr = []
         let flag = false
-        console.log('poolLength======='+this.poolLength)
+        console.log('poolLength=======' + this.poolLength)
         for (let index = 0; index < this.poolLength; index++) {
           let res = await that.MasterChefContract["poolInfo"](index).call()
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
           let allocPoint = res.allocPoint
           lotokenArr.push({
-            lpToken:lpToken,
-            allocPoint:allocPoint
+            lpToken: lpToken,
+            allocPoint: allocPoint
           })
-          if(index==this.poolLength-1){
+          if (index == this.poolLength - 1) {
             this.getStakeList(lotokenArr)
           }
         }
@@ -298,16 +298,16 @@ export default {
         console.log(error);
       }
     },
-    getStakeList(lotokenArr){
-      this.farmList.forEach((item,idex) => {
-        lotokenArr.forEach((ktem,kdex)=>{
-          if (item.address == ktem.lpToken && parseInt(ktem.allocPoint,16)!==0) {
+    getStakeList(lotokenArr) {
+      this.farmList.forEach((item, idex) => {
+        lotokenArr.forEach((ktem, kdex) => {
+          if (item.address == ktem.lpToken && parseInt(ktem.allocPoint, 16) !== 0) {
             item.index = kdex;
             item.show = true
             item.allocPoint = ktem.allocPoint
           }
         })
-        this.$set(this.farmList,idex,item)
+        this.$set(this.farmList, idex, item)
       })
     },
     async pendingTokens(index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
@@ -398,12 +398,13 @@ export default {
           this.apyList = res.data.data;
           if (this.showModels) {
             console.log(this.total)
-            this.farmList.forEach((item,index)=>{
+            this.farmList.forEach((item, index) => {
               let APY = this.getEcthapy(item.pair);
-              item.APY = APY
+              item.APY = APY * 100;
+              item.APY = isNaN(item.APY) ? 0 : item.APY.toFixed(2);
               this.$set(this.farmList, index, item)
             })
-            
+
           }
         }
       } catch (error) {
