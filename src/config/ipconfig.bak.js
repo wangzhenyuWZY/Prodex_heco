@@ -16,7 +16,7 @@ if (process.env.NODE_ENV === 'development') {
     BFactory:'TXU7bsdPKp8KdgPDTtf2VdAvZmGjFs5Wt8',
     MasterChef:'TPfeyfwWHeVyFmDPbHSfKw7cbXXABL5vzP',
     FactoryManager:'TF8f1TFd72WWysLchSHSR2L1DTc5gAXuXZ',
-    RewardToken:'TE7T2KT2jK8CWkhSA9YWeFa2TBJZMrPKPv'
+    RewardToken:'TUMZX3VRgN651CY4f4CNsi5SvTkTSqVuu5'
   }
 }
 export default ipConfig
