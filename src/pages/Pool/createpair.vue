@@ -33,7 +33,8 @@
               <div class=" pair_ved">
                 <p class="pair_title">{{$t('pool.yat')}}</p>
                 <p class="pair_size pair_mag">{{$t('pool.tro')}}</p>
-                <p>{{$t('pool.tro1')}}</p>
+                <p>{{$t('pool.tro1')}} </p>
+                <p>{{$t('pool.tro2')}}</p>
               </div>
             </div>
           </div>
@@ -223,28 +224,39 @@ export default {
   },
   watch: {
     tokenData(list) {
+      let that = this
       let tokenList = JSON.parse(JSON.stringify(list))
       if(tokenList&&tokenList.length>0){
         let token = tokenList.filter((res)=>{
           return res.name.toUpperCase()=='USDT'
         })
-        this.token1 = token[0]
-        this.token1.item = 0
-        this.changeCoin(this.token1)
+        if(token && token.length>0){
+          this.token1 = token[0]
+          this.token1.item = 0
+          this.$initTronWeb().then(function (tronWeb) {
+            that.changeCoin(that.token1)
+          })
+        }
       }
     },
 
   },
   created () {
-    this.init()
+    let that = this
     let tokenList = JSON.parse(JSON.stringify(this.tokenData))
     if(tokenList&&tokenList.length>0){
       let token = tokenList.filter((res)=>{
         return res.name.toUpperCase()=='USDT'
       })
-      this.token1.item = 0
-      this.changeCoin(this.token1)
+      if(token && token.length>0){
+        this.token1 = token[0]
+        this.token1.item = 0
+        this.$initTronWeb().then(function (tronWeb) {
+          that.changeCoin(that.token1)
+        })
+      }
     }
+    that.init()
   },
   methods: {
     handel () {
@@ -464,6 +476,8 @@ export default {
     },
     async getBalance (token) {//获取余额
       let that = this
+      console.log('token.address======='+token.address)
+      console.log('window.tronWeb.defaultAddress.base58======='+window.tronWeb.defaultAddress.base58)
       let tokenContract = await window.tronWeb.contract().at(token.address)
       let tokenBalance = await tokenContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
       if (tokenBalance) {
