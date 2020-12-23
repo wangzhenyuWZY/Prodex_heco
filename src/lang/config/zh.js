@@ -4,7 +4,7 @@ module.exports = {
     home1:'首页',
     Exchange:'兑换',
     Pool:'流动池',
-    FoxDex:'狐狸',
+    FoxDex:'关于',
     WTRX:'WTRX',
     Stake:'抵押',
     CWet:'连接到钱包',
