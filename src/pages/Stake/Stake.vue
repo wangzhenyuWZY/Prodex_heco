@@ -28,7 +28,7 @@
             <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
             <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
           </div>
-          <div class="stake_btn" @click="showModels(idx)">{{idx.APY}}%APY</div>
+          <div class="stake_btn" @click="showModels(idx)">{{idx.APY}}%APY{{idx.allocPoint}}</div>
           <div class="stake_apy clearfix">
             <!-- <div class="apy_lt"> <span class="apy_size">APY:</span> <span class="apy_number">322.16%</span> </div>
                <div class="apy_rg"> <span class="apy_size">APR:</span> <span class="apy_number">146.03%</span>  </div> -->
@@ -83,6 +83,7 @@ export default {
         defaultAddress: '',
         APY: '--'
       },
+      stakeList:[]
     }
   },
   watch: {
@@ -278,38 +279,37 @@ export default {
       try {
         let leng = await that.MasterChefContract.poolLength().call();  // 返回从1开始;
         this.poolLength = await this.toDecimal(leng); // 16进制转10进制
-        let arry = [];
+        let lotokenArr = []
+        let flag = false
         console.log('poolLength======='+this.poolLength)
         for (let index = 0; index < this.poolLength; index++) {
-          let res = await that.MasterChefContract["poolInfo"](index).call();
-          debugger
-          // let res1 = await window.tronWeb.contract().at(res.lpToken);
-          //  let res2 = await res1.name().call();
-          //  let res3 =  await that.MasterChefContract.devFundDivRate().call(); // 利率
-          //  let res4 = await this.toDecimal(res3);
-          //  let res5 = await  that.MasterChefContract.goverFundDivRate().call();  // 利率
-          //  let res6 = await this.toDecimal(res5);
-          //  res.name = res2;
-          // console.log('利率======',res4)
-          // console.log('利率======',res6)
-          //  console.log(res1)
+          let res = await that.MasterChefContract["poolInfo"](index).call()
           let lpToken = window.tronWeb.address.fromHex(res.lpToken)
-          this.farmList.forEach((item,index) => {
-            if (item.address == lpToken) {
-              item.index = index;
-              item.show = true
-            }else{
-              item.show = false
-            }
-            this.$set(this.farmList,index,item)
+          let allocPoint = res.allocPoint
+          lotokenArr.push({
+            lpToken:lpToken,
+            allocPoint:allocPoint
           })
+          if(index==this.poolLength-1){
+            this.getStakeList(lotokenArr)
+          }
         }
-
       } catch (error) {
         console.log(error);
       }
     },
-
+    getStakeList(lotokenArr){
+      this.farmList.forEach((item,idex) => {
+        lotokenArr.forEach((ktem,kdex)=>{
+          if (item.address == ktem.lpToken && parseInt(ktem.allocPoint,16)!==0) {
+            item.index = kdex;
+            item.show = true
+            item.allocPoint = ktem.allocPoint
+          }
+        })
+        this.$set(this.farmList,idex,item)
+      })
+    },
     async pendingTokens(index) {  // 计算用户收益有多少   PoolInfo[]数组的序号, 用户地址
       let penaccount = await this.MasterChefContract.pendingToken(index, window.tronWeb.defaultAddress.base58).call();
       // let pre = await this.toDecimal(penaccount);
@@ -400,7 +400,7 @@ export default {
             console.log(this.total)
             this.farmList.forEach((item,index)=>{
               let APY = this.getEcthapy(item.pair);
-              item.APY = APY*100
+              item.APY = APY
               this.$set(this.farmList, index, item)
             })
             
