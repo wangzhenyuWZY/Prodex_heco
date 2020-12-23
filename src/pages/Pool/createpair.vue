@@ -243,19 +243,20 @@ export default {
   },
   created () {
     let that = this
-    this.init()
     let tokenList = JSON.parse(JSON.stringify(this.tokenData))
     if(tokenList&&tokenList.length>0){
       let token = tokenList.filter((res)=>{
         return res.name.toUpperCase()=='USDT'
       })
       if(token && token.length>0){
+        this.token1 = token[0]
         this.token1.item = 0
         this.$initTronWeb().then(function (tronWeb) {
           that.changeCoin(that.token1)
         })
       }
     }
+    that.init()
   },
   methods: {
     handel () {
