@@ -52,7 +52,6 @@
           </div>
           <div class="ctx_3 fl_lt">
             <setselect :balance="token1.balance"
-                       @click="showSelect(0)"
                        :imgUrl="token1.img"
                        :showSelect="JSON.stringify(token1)!='{}'"
                        :text="token1.name" />
@@ -209,8 +208,7 @@ export default {
       showAlert1: false,
       typeUrl: '',
       btnLoading1: false,
-      disabled1: false,
-      pairList:[]
+      disabled1: false
     }
   },
   components: {
@@ -221,16 +219,32 @@ export default {
     valert
   },
   computed: {
-    ...mapState(['pairData'])
+    ...mapState(['tokenData'])
   },
   watch: {
-    pairData(list) {
-      this.pairList = JSON.parse(JSON.stringify(list))
-    }
+    tokenData(list) {
+      let tokenList = JSON.parse(JSON.stringify(list))
+      if(tokenList&&tokenList.length>0){
+        let token = tokenList.filter((res)=>{
+          return res.name.toUpperCase()=='USDT'
+        })
+        this.token1 = token[0]
+        this.token1.item = 0
+        this.changeCoin(this.token1)
+      }
+    },
+
   },
   created () {
     this.init()
-    this.pairList = JSON.parse(JSON.stringify(this.pairData)) || []
+    let tokenList = JSON.parse(JSON.stringify(this.tokenData))
+    if(tokenList&&tokenList.length>0){
+      let token = tokenList.filter((res)=>{
+        return res.name.toUpperCase()=='USDT'
+      })
+      this.token1.item = 0
+      this.changeCoin(this.token1)
+    }
   },
   methods: {
     handel () {
@@ -289,14 +303,6 @@ export default {
       let that = this;
       let pairName = this.token1.name+'/'+this.token2.name
       let pairName2 = this.token2.name+'/'+this.token1.name
-      if(this.pairList && this.pairList.length>0){
-        let hasPair = this.pairList.filter((res)=>{
-          return res.pair.toUpperCase()==pairName.toUpperCase() || res.pair.toUpperCase()==pairName2.toUpperCase()
-        })
-        if(hasPair&&hasPair.length>0){
-          return
-        }
-      }
       this.loading1(1);
       this.$message({
         message:  this.$t('pewe6'),
