@@ -189,7 +189,7 @@ module.exports = {
       
 
       // fb1:'What is Bee',
-      fb2:'DEX is a protocol to exchange ERC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
+      fb2:'DEX is a protocol to exchange TRC-20 tokens on TRON. It requires no trusted intermediaries or unnecessary forms of commission, thus enabling fast and efficient transactions. Advantages include decentralization, censorship resistance and safety. DEX is anopen source software under GPL.',
       
       // fc1:'Bee Issue System',
       fc2:'● Users can add liquidity for a single token, which lowers the threshold of experiencing DEX while minimizes the impermanent loss.',
