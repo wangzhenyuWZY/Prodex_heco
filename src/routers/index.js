@@ -3,22 +3,22 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-const Home = ()=>import('../pages/home')
-const Exchange = ()=>import('../pages/Exchange/Exchange.vue')
-const Pool = ()=>import('../pages/Pool/Pool.vue')
-const Foxdex = ()=>import('../pages/Foxdex/Foxdex.vue')
-const Wtrx = ()=>import('../pages/Wtrx/Wtrx.vue')
-const Stake = ()=>import('../pages/Stake/Stake.vue')
-const Stakes = ()=>import('../pages/Stake/Selected.vue')
-const removeLiquidity =()=>import('../pages/Pool/removeLiquidity')
-const liquidity =()=>import('../pages/Pool/liquidity')
-const addfrombox =()=>import('../pages/Pool/addfrombox')
-const Connectbox =()=>import('../pages/Pool/Connectbox')
-const selctoken =()=>import('../pages/Pool/selctToken')
-const recevive =()=>import('../pages/Pool/recevive')
-const willRecevive =()=>import('../pages/Pool/willRecevive')
-const createpair =()=>import('../pages/Pool/createpair')
-const importpool =()=>import('../pages/Pool/importpool')
+import Home from '../pages/home'
+import Exchange from '../pages/Exchange/Exchange.vue'
+import Pool from '../pages/Pool/Pool.vue'
+import Foxdex from '../pages/Foxdex/Foxdex.vue'
+import Wtrx from '../pages/Wtrx/Wtrx.vue'
+import Stake from '../pages/Stake/Stake.vue'
+import Stakes from '../pages/Stake/Selected.vue'
+import removeLiquidity from '../pages/Pool/removeLiquidity'
+import liquidity from '../pages/Pool/liquidity'
+import addfrombox from '../pages/Pool/addfrombox'
+import Connectbox from '../pages/Pool/Connectbox'
+import selctoken from '../pages/Pool/selctToken'
+import recevive from '../pages/Pool/recevive'
+import willRecevive from '../pages/Pool/willRecevive'
+import createpair from '../pages/Pool/createpair'
+import importpool from '../pages/Pool/importpool'
 
 export default new VueRouter({
   mode: 'hash',

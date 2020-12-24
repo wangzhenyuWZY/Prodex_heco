@@ -26,7 +26,7 @@
           </div>
           <div class="stake_addres">
             <div> <span class="lt_addres">{{$t('Stake.Deposit')}}:</span> <span class="rg_addres">{{idx.pair}}</span></div>
-            <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">FOX</span></div>
+            <div class="mrg"> <span class="lt_addres">{{$t('Stake.Earn')}}:</span> <span class="rg_addres">ABELO</span></div>
           </div>
           <div class="stake_btn" @click="showModels(idx)">{{idx.APY}}%APY{{idx.allocPoint}}</div>
           <div class="stake_apy clearfix">
