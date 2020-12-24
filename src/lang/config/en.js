@@ -4,7 +4,7 @@ module.exports = {
       home1:'Home',
       Exchange:'Exchange',
       Pool:'Pool',
-      FoxDex:'FoxDex',
+      FoxDex:'Abelo',
       WTRX:'WTRX',
       Stake:'Stake',
       CWet:'Connect to a wallet',
@@ -110,7 +110,7 @@ module.exports = {
       titn:'TRX is the native asset of TRON, and WTRX is a TRC20 Token with the equivalent value to TRX.',
       titn1:'Deposit TRX to mint an equivalent amount of WTRX, and burn WTRX to get an equivalent amount of TRX.',
       CWetTRC20:'Can WTRX exchange to other TRC20 Tokens?',
-      wtitn:'WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on FoxDex.',
+      wtitn:'WTRX is a TRC20 Token, you can swap to any other TRC20 Tokens on Abelo.',
       petao:'Please enter the amout of WTRX',
       petao1:'Please enter the amout of TRX',
      
@@ -216,7 +216,7 @@ module.exports = {
       
   
     }, 
-    FoxDex:'FoxDex',
+    FoxDex:'Abelo',
     Creatorfee:'Creator fee',
     Supply:'Supply',
     confirm:'Confirm',
