@@ -635,7 +635,11 @@ export default {
       var functionSelector = 'joinswapExternAmountIn(address,uint256,uint256)';
       let token1num = new BigNumber(that.token1Num)
       token1num = token1num.times(Math.pow(10,that.token1.decimals))
-      if(token1num>this.token1Balance/2){
+      let token1balance = new BigNumber(this.token1Balance)
+      token1balance = token1balance.times(Math.pow(10,18))
+      console.log('this.token1Balance====='+token1balance)
+      console.log('token1num====='+token1num)
+      if(token1num>token1balance/2){
         that.$message.error("添加数量不能大于流动池的50%!")
         this.charm1();
         return
