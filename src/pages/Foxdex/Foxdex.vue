@@ -104,14 +104,14 @@
             </p>
           </div>
         </div>
-        <div class="fox_box2">
-          <ul class="foxul">
-            <li> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li>
-            <li> <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
-            <li> <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
-            <li> <img src="../../assets/img/foxdex/icon_discord.svg" alt=""> </li>
-            <li> <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
-            <li> <img src="../../assets/img/foxdex/icon_reddit.svg" alt=""> </li>
+        <div class="fox_box2"> 
+          <ul class="foxul" @command="handleCommand">
+            <!-- <li @click="open1 "> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li> -->
+            <li  @click="open2 " > <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
+            <li @click="open3" > <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
+            <li @click="open4 "> <img src="../../assets/img/foxdex/icon_discord.svg" alt=""> </li>
+            <li @click="open5 " > <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
+            <!-- <li @click="open6"> <img src="../../assets/img/foxdex/icon_reddit.svg" alt=""> </li> -->
           </ul>
         </div>
       </div>
@@ -172,6 +172,7 @@ export default {
     }
   },
   methods: {
+
     async init() {
       try {
         this.rewardToken = await window.tronWeb.contract().at(ipConfig.RewardToken);
@@ -269,7 +270,26 @@ export default {
           resolve(myBalanceInPool);
         })
       })
-    }
+    },
+    // open1(){
+    //    window.open('https://twitter.com/AbeloFinance')
+    // },
+    open2(){
+       window.open('https://twitter.com/AbeloFinance')
+    },
+    open3(){
+       window.open('https://t.me/AbeloFinance')
+    },
+    open4(){
+       window.open('https://discord.gg/tSD6cjXJqw')
+    },
+    open5(){
+       window.open('https://medium.com/@AbeloFinance')
+    },
+    // open6(){
+    //    window.open('https://twitter.com/AbeloFinance')
+    // },
+   
   },
 
 }

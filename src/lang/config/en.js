@@ -254,5 +254,7 @@ module.exports = {
     dex7:'USDT added',
     dex8:'Repurchase',
     dex9:'Burn',
+    unstb1:'UNSTAKE&CLAIM',
+    unstb2:'CLAIM REWARDS',
 
 }
