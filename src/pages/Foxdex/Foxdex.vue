@@ -194,7 +194,7 @@ export default {
     async getTotalSupply() {
       let data = await this.rewardToken.totalSupply().call();
       console.log('getTotalSupply====>' + data);
-      let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
+      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.lpTotal = arr1;
       this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal));
       console.log(new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal)));
@@ -202,8 +202,8 @@ export default {
     },
     async getBalanceOf() {
       let data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call();
-      console.log('getBalanceOf====>' + parseInt(data._hex, 16) + this.fromTotal.decimals);
-      let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
+      console.log('getBalanceOf====>' + parseInt(data._hex ? data._hex : data.constant_result[0], 16) + this.fromTotal.decimals);
+      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.unlocked = this.fromTotal.lpTotal - arr1;
     },
     async clickFactory() {
