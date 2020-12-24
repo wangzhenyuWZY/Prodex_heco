@@ -61,7 +61,7 @@ const approved = (coinAddress,contractAddress) => {//授权
         try {
             // console.log('MAX================'+MAX)
             window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["approve"](contractAddress,'1000000000000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
+                Contract["approve"](contractAddress,'100000000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
                     if(res){
                         resolve(res);
                     }

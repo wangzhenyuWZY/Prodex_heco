@@ -18,42 +18,42 @@ module.exports = {
       }
     }
   },
-  configureWebpack: (config) => {
-    if (isProduction) {
-      config.optimization = {
-        splitChunks: {
-          cacheGroups: {
-            common: {
-              chunks: 'initial',
-              minSize: 0, 
-              minChunks: 2, 
-            },
-            vendor: {
-              priority: 1, 
-              test: /node_modules/,
-              chunks: 'initial',
-              minSize: 0, 
-              minChunks: 2, 
-            },
-          },
-        },
-        minimizer: [
-          new TerserPlugin({
-            terserOptions: {
-              ecma: undefined,
-              warnings: false,
-              parse: {},
-              compress: {
-                drop_console: true,
-                drop_debugger: false,
-                pure_funcs: ['console.log'],
-              },
-            },
-          }),
-        ]
+  // configureWebpack: (config) => {
+  //   if (isProduction) {
+  //     config.optimization = {
+  //       splitChunks: {
+  //         cacheGroups: {
+  //           common: {
+  //             chunks: 'initial',
+  //             minSize: 0, 
+  //             minChunks: 2, 
+  //           },
+  //           vendor: {
+  //             priority: 1, 
+  //             test: /node_modules/,
+  //             chunks: 'initial',
+  //             minSize: 0, 
+  //             minChunks: 2, 
+  //           },
+  //         },
+  //       },
+  //       minimizer: [
+  //         new TerserPlugin({
+  //           terserOptions: {
+  //             ecma: undefined,
+  //             warnings: false,
+  //             parse: {},
+  //             compress: {
+  //               drop_console: true,
+  //               drop_debugger: false,
+  //               pure_funcs: ['console.log'],
+  //             },
+  //           },
+  //         }),
+  //       ]
          
         
-      }
-    }
-  }
+  //     }
+  //   }
+  // }
 };
