@@ -758,7 +758,7 @@ export default {
     }
     .el-slider__button::before {
       content: "";
-      background: #02B27D;
+      background: #FC6446;
       width: 20px;
       height: 20px;
       line-height: 32px;
@@ -937,7 +937,7 @@ export default {
         font-size: 0.35rem;
       }
       p {
-        height: 0.4rem;
+        height: 0.7rem;
         font-size: 0.35rem;
       }
     }

@@ -958,7 +958,7 @@ export default {
 .c_receove_Share {
   padding: 0 20px;
   padding-top: 50px;
-  padding-bottom: 1px;
+  padding-bottom: 24px;
 }
 .currencyprices {
   width: 190px;

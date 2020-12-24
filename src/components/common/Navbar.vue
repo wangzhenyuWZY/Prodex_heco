@@ -27,7 +27,7 @@
         </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
           <div class="drawer_logo">
-            <div class="lt_logo"> <img :src="dark?require('../../assets/img/dark/logo_FoxDex.png'):require('../../assets/img/logo_FoxDex.png')"
+            <div class="lt_logo"> <img :src="dark?require('../../assets/img/dark/logo.svg'):require('../../assets/img/dark/logo.svg')"
                    alt="" />
             </div>
             <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click.stop="drawer = false"> </div>
@@ -426,7 +426,7 @@ export default {
   }
 }
 .drawer_nav_active {
-  background-color: #FC6446;
+  
   color: #FC6446;
   font-family: roboto-mediumitalic;
 }
@@ -511,7 +511,7 @@ export default {
   height: 64px;
   margin-top: 2px;
   margin-left: 38px;
-  background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
+  background: url("../../assets/img/dark/logo.svg") no-repeat;
   background-size: 100% 100%;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
@@ -698,7 +698,7 @@ export default {
 // 换色系
 .dark {
   .logo {
-    background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
+    background: url("../../assets/img/dark/logo.svg") no-repeat;
     background-size: 100% 100%;
   }
   .active {
