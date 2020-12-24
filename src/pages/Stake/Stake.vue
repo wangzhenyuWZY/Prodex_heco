@@ -221,6 +221,7 @@ export default {
       })
     },
     async grtMasterChef() {//连接MasterChef合约需要对应的合约base58信息
+      console.log('ipConfig.MasterChef========='+ipConfig.MasterChef)
       this.MasterChefContract = await window.tronWeb.contract().at(ipConfig.MasterChef);
       if (this.MasterChefContract) {
         await this.getLpComputeApy();

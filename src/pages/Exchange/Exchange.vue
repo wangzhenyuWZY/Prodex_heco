@@ -417,10 +417,11 @@ export default {
         this.isPair = true
         allowance(that.token1.address, pair.address).then((res) => {
           if (res) {
-            that.approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+            console.log(res)
+            that.approveBalance1 = parseInt(res.remaining._hex?res.remaining._hex:res.constant_result[0], 16);
             allowance(that.token2.address, pair.address).then((res) => {
               if (res) {
-                that.approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+                that.approveBalance2 = parseInt(res.remaining._hex?res.remaining._hex:res.constant_result[0], 16);
                 if (that.approveBalance1 == 0 || that.approveBalance2==0) {
                   that.isApproved = true
                 } else {
