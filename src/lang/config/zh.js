@@ -245,7 +245,7 @@ module.exports = {
   dex5:'手续费添加流动性',
   dex6:'已添加Abelo数量',
   dex7:'已添加USDT数量',
-  dex8:'销毁',
-  dex9:'回购',
+  dex8:'回购',
+  dex9:'销毁',
  
 }

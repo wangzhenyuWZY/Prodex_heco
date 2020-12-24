@@ -246,13 +246,13 @@ module.exports = {
     pt:'Pool Tokens',
     snop:'Search paste address(do not search name)',
     dex1:'Token burn',
-    dex2:'total supply',
-    dex3:'circulationg supply',
+    dex2:'Total supply',
+    dex3:'Circulationg supply',
     dex4:'Uncirculated supply',
-    dex5:'repurchase for liquidity',
+    dex5:'Repurchase for liquidity',
     dex6:'Abelo added',
     dex7:'USDT added',
-    dex8:'burn',
-    dex9:'repurchase',
+    dex8:'Repurchase',
+    dex9:'Burn',
 
 }
