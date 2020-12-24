@@ -2,7 +2,7 @@
   <div class="foxdex">
     <div class="fbox">
       <div class="fbox1">
-        <div class="title title1">
+        <div class="title ">
           {{$t('dex1')}}
         </div>
         <div class="left1">
@@ -272,7 +272,6 @@ export default {
 }
 .foxdex {
   width: 720px;
-
   margin: 0 auto;
   padding-top: 120px;
   height: 100%;
@@ -292,16 +291,18 @@ export default {
       border-radius: 20px;
       .title {
         text-align: center;
-        padding-top: 20px;
+        padding-top: 18px;
         font-size: 18px;
         font-family: Roboto-Medium, Roboto;
         font-weight: 500;
+        border: none;
       }
       .left1 {
         background: #ffffff;
         border-radius: 15px;
         .leff {
-          padding: 20px 15px;
+          padding: 0px 15px;
+          padding-bottom: 20px;
 
           .le-box {
             background: #f9faff;

@@ -1,8 +1,5 @@
 import Vue from 'vue'
 import App from './App.vue'
-import 'element-ui/lib/theme-chalk/index.css'
-import './styles/index.scss'
-import Element from 'element-ui';
 import FastClick from 'fastclick'
 import router from './routers'
 import {IsPc,requierImg} from './utils/index';
@@ -12,11 +9,13 @@ import initTronWeb from './utils/tronwebFn'
 import store from './store/index';
 import  Popup from './popup/popup';
 import i18n from './lang'
+import './plugins/element-ui';
+import 'element-ui/lib/theme-chalk/index.css'
+import './styles/index.scss'
 // Vue.prototype.$layer = layer(Vue);
 Vue.prototype.$initTronWeb =initTronWeb;
 Vue.prototype.$requierImg = requierImg;
 Vue.prototype.$popup = Popup.install;
-Vue.use(Element);
 Vue.config.productionTip = false
 // 引入echarts
 // import echarts from 'echarts'

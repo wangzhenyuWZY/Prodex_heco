@@ -555,7 +555,7 @@ export default {
   }
   .pair_ved {
     text-align: center;
-    padding: 24px 0;
+    padding: 18px 0;
     p {
       height: 20px;
       font-size: 14px;

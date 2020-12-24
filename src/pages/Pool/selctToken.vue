@@ -337,5 +337,8 @@ export default {
     left: 0;
     overflow: hidden;
   }
+  .conter {
+  padding: 0 20px;
+}
 }
 </style>

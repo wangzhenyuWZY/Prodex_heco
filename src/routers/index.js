@@ -2,12 +2,12 @@ import Vue from 'vue'
 
 import VueRouter from 'vue-router'
 
-Vue.use(VueRouter)
-const originalPush = VueRouter.prototype.push
+ //Vue.use(VueRouter)
+// const originalPush = VueRouter.prototype.push
 //修改原型对象中的push方法
-VueRouter.prototype.push = function push(location) {
-  return originalPush.call(this, location).catch(err => err)
-}
+// VueRouter.prototype.push = function push(location) {
+//   return originalPush.call(this, location).catch(err => err)
+// }
 import Home from '../pages/home'
 import Exchange from '../pages/Exchange/Exchange.vue'
 import Pool from '../pages/Pool/Pool.vue'
@@ -25,6 +25,10 @@ import willRecevive from '../pages/Pool/willRecevive'
 import createpair from '../pages/Pool/createpair'
 import importpool from '../pages/Pool/importpool'
 
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 export default new VueRouter({
   mode: 'hash',
   routes: [
