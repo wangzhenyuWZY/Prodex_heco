@@ -370,10 +370,26 @@ export default {
       this.isPair = true
       allowance(that.token1.address, pair.address).then((res) => {
         if (res) {
-          that.approveBalance1 = parseInt(res.remaining._hex ? res.remaining._hex : res.constant_result[0], 16);
+          let hex = ''
+          if(res._hex){
+            hex = parseInt(res._hex,16)
+          }else if(res.remaining._hex){
+            hex = parseInt(res.remaining._hex,16)
+          }else{
+            hex = parseInt(res.constant_result[0],16)
+          }
+          that.approveBalance1 = hex
           allowance(that.token2.address, pair.address).then((res) => {
             if (res) {
-              that.approveBalance2 = parseInt(res.remaining._hex ? res.remaining._hex : res.constant_result[0], 16);
+              let hex1 = ''
+              if(res._hex){
+                hex1 = parseInt(res._hex,16)
+              }else if(res.remaining._hex){
+                hex1 = parseInt(res.remaining._hex,16)
+              }else{
+                hex1 = parseInt(res.constant_result[0],16)
+              }
+              that.approveBalance2 = hex1
               if (that.approveBalance1 == 0 || that.approveBalance2 == 0) {
                 that.isApproved = true
               } else {

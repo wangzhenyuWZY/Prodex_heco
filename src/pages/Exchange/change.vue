@@ -10,7 +10,7 @@
           <div class="changes_rece ">
             <span class="rg rg_ft ftblod">{{token1Num}}</span>
             <div class="lt change_img">
-              <img class="lt_icon" :src="requierImg(token1.name,0)" alt="" />
+              <img class="lt_icon" :src="$requierImg(token1.name,0)" alt="" />
               <span>{{token1.name}}</span>
             </div>
 
@@ -21,7 +21,7 @@
           <div class="changes_rece ">
             <span class="rg  rg_ft ftblod">{{token2Num}}</span>
             <div class="lt change_img">
-              <img class="lt_icon" :src="requierImg(token2.name,0)" alt="" />
+              <img class="lt_icon" :src="$requierImg(token2.name,0)" alt="" />
               <span>{{token2.name}}</span>
             </div>
           </div>
@@ -109,6 +109,9 @@ export default {
   },
   watch: {
 
+  },
+  created(){
+    console.log('token1.name======'+this.token1.name)
   },
   components: {
     // vButton: vbutton,
