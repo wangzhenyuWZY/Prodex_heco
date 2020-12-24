@@ -284,7 +284,7 @@ color: #0F1730;
   }
   span:nth-child(2) {
     float: right;
-    color:#05C98E;
+    color:#FC6446;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -294,7 +294,7 @@ color: #0F1730;
   .between {
     font-size: 56px;
     font-weight: normal;
-    color:#05C98E;
+    color:#FC6446;
     width: 144px;
   }
   .demonstration {
@@ -347,7 +347,7 @@ color: #0F1730;
   .rg {
   }
   .setColr {
-    color:#05C98E;
+    color:#FC6446;
   }
 }
 .setSlider {
@@ -388,9 +388,9 @@ color: #0F1730;
   .weth_btn {
     background: none;
     border-radius: 28px;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
     font-size: 20px;
-    color:#05C98E;
+    color:#FC6446;
     padding: 0 32px;
     height: 32px;
   }

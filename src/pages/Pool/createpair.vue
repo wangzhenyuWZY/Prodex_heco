@@ -599,7 +599,7 @@ export default {
     }
     span:nth-child(2) {
       float: right;
-      color: #05c98e;
+      color:  #FC6446;
       text-decoration: underline;
       cursor: pointer;
     }
@@ -612,7 +612,7 @@ export default {
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #05c98e;
+      color:  #FC6446;
       width: 144px;
     }
     .demonstration {
@@ -672,7 +672,7 @@ export default {
     }
 
     .setColr {
-      color: #05c98e;
+      color:  #FC6446;
     }
   }
   .setSlider {
@@ -713,9 +713,9 @@ export default {
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid#05C98E;
+      border: 1px solid#FC6446;
       font-size: 20px;
-      color: #05c98e;
+      color:  #FC6446;
       padding: 0;
       width: 200px;
       height: 32px;
@@ -879,7 +879,7 @@ export default {
     }
   }
   .rec_red {
-    color: #05c98e;
+    color:  #FC6446;
   }
   .outlogin {
     margin-top: 48px;

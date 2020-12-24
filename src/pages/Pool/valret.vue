@@ -138,7 +138,7 @@ export default {
 }
 .alert_success {
   font-size: 18px;
-  color:#05C98E;
+  color:#FC6446;
   margin-top: 12px;
   margin-bottom: 48px;
   cursor: pointer;

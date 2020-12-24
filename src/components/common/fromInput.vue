@@ -133,7 +133,7 @@
           background: #ffffff;
         border-radius: 18px;
         font-size: 14px;
-        color: #05C98E;
+        color: #fc6446;
       }
     }
     .input_rg {
@@ -193,7 +193,7 @@
     }
     .show_size {
       font-family: roboto-mediumitalic;
-      color: #ed4d21;
+      color: #FC6446;
     }
   }
   .from_icon {

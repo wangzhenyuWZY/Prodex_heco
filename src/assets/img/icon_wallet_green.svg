@@ -15,10 +15,10 @@
                                         <g>
                                             <rect id="Rectangle" x="0" y="0" width="23.6307692" height="23.6307692"></rect>
                                             <g id="分组" transform="translate(2.672527, 1.687912)">
-                                                <path d="M18.4904723,8.55788271 L13.486629,8.55788271 C11.9109371,8.55788271 10.6335864,9.8352334 10.6335864,11.4109253 C10.6335864,12.9866173 11.9109371,14.2639679 13.486629,14.2639679 L18.4904723,14.2639679 L18.4904723,14.2639679" id="Path-29" stroke="#05C98E" stroke-width="1.5003663" stroke-linejoin="round"></path>
-                                                <circle id="椭圆形" fill="#05C98E" cx="13.5948284" cy="11.4109253" r="1.03643725"></circle>
-                                                <rect id="Rectangle" stroke="#05C98E" stroke-width="1.5003663" stroke-linecap="round" stroke-linejoin="round" x="0.211996337" y="4.46745505" width="18.278476" height="13.8869406" rx="1.03643725"></rect>
-                                                <polyline id="路径" stroke="#05C98E" stroke-width="1.5003663" stroke-linecap="round" stroke-linejoin="round" transform="translate(10.604378, 4.245609) rotate(-32.000000) translate(-10.604378, -4.245609) " points="6.67593474 1.73841328 14.5328206 1.73841328 14.5328206 6.75280546"></polyline>
+                                                <path d="M18.4904723,8.55788271 L13.486629,8.55788271 C11.9109371,8.55788271 10.6335864,9.8352334 10.6335864,11.4109253 C10.6335864,12.9866173 11.9109371,14.2639679 13.486629,14.2639679 L18.4904723,14.2639679 L18.4904723,14.2639679" id="Path-29" stroke="#FC6446" stroke-width="1.5003663" stroke-linejoin="round"></path>
+                                                <circle id="椭圆形" fill="#FC6446" cx="13.5948284" cy="11.4109253" r="1.03643725"></circle>
+                                                <rect id="Rectangle" stroke="#FC6446" stroke-width="1.5003663" stroke-linecap="round" stroke-linejoin="round" x="0.211996337" y="4.46745505" width="18.278476" height="13.8869406" rx="1.03643725"></rect>
+                                                <polyline id="路径" stroke="#FC6446" stroke-width="1.5003663" stroke-linecap="round" stroke-linejoin="round" transform="translate(10.604378, 4.245609) rotate(-32.000000) translate(-10.604378, -4.245609) " points="6.67593474 1.73841328 14.5328206 1.73841328 14.5328206 6.75280546"></polyline>
                                             </g>
                                         </g>
                                     </g>

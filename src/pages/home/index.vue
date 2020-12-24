@@ -152,11 +152,11 @@
             <template slot-scope="scope">
                 <div class="table_size">
                 <p>
-                  <span style="color:#05C98E">{{scope.row.trade_token_liquidity ? scope.row.trade_token_liquidity : '--'}}</span>
+                  <span style="color:#FC6446">{{scope.row.trade_token_liquidity ? scope.row.trade_token_liquidity : '--'}}</span>
                    {{scope.row.trade_token_name}}
                 </p>
                 <p>
-                   <span style="color:#05C98E">{{scope.row.base_token_liquidity ? scope.row.base_token_liquidity: '--'}}</span>
+                   <span style="color:#FC6446">{{scope.row.base_token_liquidity ? scope.row.base_token_liquidity: '--'}}</span>
                        {{scope.row.base_token_name}}
                 </p>
                

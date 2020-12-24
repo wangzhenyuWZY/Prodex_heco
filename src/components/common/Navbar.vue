@@ -356,7 +356,7 @@ export default {
   margin-left: 0;
 }
 .setPanel .tolerTab span.active {
-  background: #02b27d;
+  background: #FC6446;
   color: #ffffff;
 }
 .setting {
@@ -426,8 +426,8 @@ export default {
   }
 }
 .drawer_nav_active {
-  background-color: #02b27d;
-  color: #05c98e;
+  background-color: #FC6446;
+  color: #FC6446;
   font-family: roboto-mediumitalic;
 }
 
@@ -443,7 +443,7 @@ export default {
 }
 .icons {
   font-size: 34px;
-  color: #05c98e;
+  color: #FC6446;
   vertical-align: sub;
 }
 .bimg {
@@ -500,7 +500,7 @@ export default {
 .nav-ion2 {
   width: 50px;
   height: 40px;
-  background: green;
+  background: #FC6446;
 }
 
 .logo {
@@ -511,7 +511,7 @@ export default {
   height: 64px;
   margin-top: 2px;
   margin-left: 38px;
-  background: url(../../assets/img/logo_FoxDex.png) no-repeat;
+  background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
   background-size: 100% 100%;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
@@ -526,7 +526,7 @@ export default {
 }
 .active {
   font-family: roboto-mediumitalic;
-  color: #05c98e;
+  color: #FC6446;
 }
 .active-bar {
   position: absolute;
@@ -534,7 +534,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #02b27d;
+  background: #FC6446;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -554,7 +554,7 @@ export default {
   line-height: 40px;
   border-radius: 28px;
   background: #19242e;
-  color: #05c98e;
+  color: #FC6446;
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -578,7 +578,7 @@ export default {
     padding: 0 16px;
     height: 24px;
     line-height: 24px;
-    background: #02b27d;
+    background: #FC6446;
     border-radius: 28px;
     font-size: 18px;
     font-family: roboto-mediumitalic;
@@ -698,7 +698,7 @@ export default {
 // 换色系
 .dark {
   .logo {
-    background: url("../../assets/img/dark/logo_FoxDex.png") no-repeat;
+    background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
     background-size: 100% 100%;
   }
   .active {
