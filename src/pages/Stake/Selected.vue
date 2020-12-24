@@ -226,14 +226,14 @@ export default {
 
 <style lang="scss"   scoped>
 .fbbb {
-  color: #05c98e;
+  color:  #FC6446;
 }
 .rgh {
   float: right;
   font-size: 15px;
 }
 .colorF {
-  color: #05c98e;
+  color:  #FC6446;
 }
 .stake_slect {
   color: #0f1730;
@@ -286,7 +286,7 @@ export default {
     .between {
       font-size: 56px;
       font-weight: normal;
-      color: #05c98e;
+      color:  #FC6446;
       width: 144px;
     }
     .demonstration {
@@ -416,7 +416,7 @@ export default {
     .rg {
     }
     .setColr {
-      color: #05c98e;
+      color:  #FC6446;
     }
   }
   .setSlider {
@@ -460,7 +460,7 @@ export default {
       border-radius: 28px;
       border: 1px solid#FC6446;
       font-size: 20px;
-      color: #05c98e;
+      color:  #FC6446;
       padding: 0;
       width: 200px;
       height: 32px;

@@ -595,7 +595,7 @@ ul {
       font-size: 18px;
       font-family: roboto-mediumitalic;
       font-weight: normal;
-      color: #05c98e;
+      color:  #FC6446;
       margin: 0 auto;
       cursor: pointer;
     }

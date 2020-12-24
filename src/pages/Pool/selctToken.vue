@@ -324,7 +324,7 @@ export default {
 }
 .Change_rg {
   font-size: 18px;
-  color: #05c98e;
+  color:  #FC6446;
 }
 .currency_list::-webkit-scrollbar {
   width: 8px;
