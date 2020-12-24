@@ -590,7 +590,7 @@ ul {
       height: 48px;
       line-height: 48px;
       border-radius: 32px;
-      border: 1px solid#05C98E;
+      border: 1px solid#FC6446;
       text-align: center;
       font-size: 18px;
       font-family: roboto-mediumitalic;

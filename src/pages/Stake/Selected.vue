@@ -458,7 +458,7 @@ export default {
     .weth_btn {
       background: none;
       border-radius: 28px;
-      border: 1px solid#05C98E;
+      border: 1px solid#FC6446;
       font-size: 20px;
       color: #05c98e;
       padding: 0;

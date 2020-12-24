@@ -1,5 +1,6 @@
 <template>
-  <div class="container exchange">
+<div :class="dark?'dark':''">
+  <div class="container exchange ">
     <container top="40" :mobile="isPc">
       <div slot="body">
         <div class="setInput clearfix">
@@ -171,6 +172,7 @@
       @close="closeAlert"
     />  
   </div>
+</div>
 
 </template>
 
@@ -705,7 +707,7 @@ export default {
   }
   span:nth-child(2) {
     float: right;
-    color:#05C98E;
+    color:#FC6446;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -715,7 +717,7 @@ export default {
   .between {
     font-size: 56px;
     font-weight: normal;
-    color:#05C98E;
+    color:#FC6446;
     width: 144px;
   }
   .demonstration {
@@ -769,7 +771,7 @@ export default {
     
   }
   .setColr {
-    color:#05C98E;
+    color:#FC6446;
   }
 }
 .setSlider {
@@ -811,9 +813,9 @@ export default {
   .weth_btn {
     background: none;
     border-radius: 28px;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
     font-size: 20px;
-    color:#05C98E;
+    color:#FC6446;
     padding: 0;
     width: 200px;
     height: 32px;
@@ -980,7 +982,7 @@ export default {
 }
 .rec_red {
   line-height: 24px;
-  color:#05C98E;
+  color:#FC6446;
   // margin-top: 30px;
 
 }
@@ -1047,5 +1049,17 @@ export default {
       }
      
     }
+}
+.dark {
+ 
+  .input_max {
+    color: #fc6446;
+  }
+  .login_wallet {
+    color: #fc6446;
+  }
+  .active-bar {
+    background: #fc6446;
+  }
 }
 </style>

@@ -173,7 +173,7 @@
     }
     .show_size {
       font-family: roboto;
-      color: #05C98E;
+      color: #FC6446;
     }
   }
   .from_icon {
