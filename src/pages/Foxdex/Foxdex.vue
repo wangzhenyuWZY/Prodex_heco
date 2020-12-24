@@ -164,8 +164,10 @@ export default {
   },
   watch: {
     pairData() {
-      this.add();
-
+      let that = this
+      this.$initTronWeb().then(function (tronWeb) {
+        that.add()
+      })
     }
   },
   methods: {
@@ -202,12 +204,19 @@ export default {
     },
     async clickFactory() {
       this.disabled1 = true;
-      this.factory.baseToken().call().then(res => {
-        window.location.reload();
-      }).catch(err => {
-        console.log(err);
-        this.disabled1 = false;
-      })
+      var functionSelector = 'burnToken()';
+      var parameter = []
+      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
+      window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+            getConfirmedTransaction(res.txid).then((result) => {
+              window.location.reload();
+            })
+          }).catch(err => {
+            console.log(err);
+            this.disabled1 = false;
+          });
+        })
     },
     async addReward() {
       this.disabled2 = true;
