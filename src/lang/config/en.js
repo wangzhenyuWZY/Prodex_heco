@@ -123,10 +123,10 @@ module.exports = {
 
       Total:'获得的总',
 
-      sfox: 'To stake FOXDEX_LP tokens, acquire',
+      sfox: 'To stake Abelo_LP tokens, acquire',
       stfe:'Total FOX Earned',
-      syuf:'Your Unstaked FOXDEX_LP',
-      sysfl:'Your Staked FOXDEX_LP',
+      syuf:'Your Unstaked Abelo_LP',
+      sysfl:'Your Staked Abelo_LP',
 
       RLty:'消除流动性页面',
       Account:'Account',

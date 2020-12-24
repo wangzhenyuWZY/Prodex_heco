@@ -30,7 +30,7 @@
               </div>
 
             </div>
-            <div class="text_conent ftblod">FOXDEX_LP
+            <div class="text_conent ftblod">Abelo_LP
               <div class="rgh"> <span class="text_color">APY:</span> <span class="ftblod fbbb">{{farmtoal.APY}}%</span></div>
             </div>
 
@@ -78,7 +78,7 @@
                 <div class="lt">
                   <frominput showmax :balance="farmtoal.balanceOf"  :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
                 </div>
-                <div class="rg mobles_rg">FOXDEX_LP</div>
+                <div class="rg mobles_rg">Abelo_LP</div>
               </div>
             </div>
           </div>
