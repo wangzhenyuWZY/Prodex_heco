@@ -104,13 +104,13 @@
             </p>
           </div>
         </div>
-        <div class="fox_box2"> 
-          <ul class="foxul" @command="handleCommand">
+        <div class="fox_box2">
+          <ul class="foxul">
             <!-- <li @click="open1 "> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li> -->
-            <li  @click="open2 " > <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
-            <li @click="open3" > <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
+            <li @click="open2 "> <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
+            <li @click="open3"> <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
             <li @click="open4 "> <img src="../../assets/img/foxdex/icon_discord.svg" alt=""> </li>
-            <li @click="open5 " > <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
+            <li @click="open5 "> <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
             <!-- <li @click="open6"> <img src="../../assets/img/foxdex/icon_reddit.svg" alt=""> </li> -->
           </ul>
         </div>
@@ -274,22 +274,22 @@ export default {
     // open1(){
     //    window.open('https://twitter.com/AbeloFinance')
     // },
-    open2(){
-       window.open('https://twitter.com/AbeloFinance')
+    open2() {
+      window.open('https://twitter.com/AbeloFinance')
     },
-    open3(){
-       window.open('https://t.me/AbeloFinance')
+    open3() {
+      window.open('https://t.me/AbeloFinance')
     },
-    open4(){
-       window.open('https://discord.gg/tSD6cjXJqw')
+    open4() {
+      window.open('https://discord.gg/tSD6cjXJqw')
     },
-    open5(){
-       window.open('https://medium.com/@AbeloFinance')
+    open5() {
+      window.open('https://medium.com/@AbeloFinance')
     },
     // open6(){
     //    window.open('https://twitter.com/AbeloFinance')
     // },
-   
+
   },
 
 }
