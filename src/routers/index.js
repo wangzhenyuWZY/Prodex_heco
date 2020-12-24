@@ -26,7 +26,7 @@ VueRouter.prototype.push = function push(location) {
 }
 const isProduction = process.env.NODE_ENV !== 'development';
 export default new VueRouter({
-  mode: isProduction? 'history':'hash',
+  mode: 'hash',
   routes: [
     { path: '/', component: Home,},
     { path: '/exchange', component: Exchange,},
