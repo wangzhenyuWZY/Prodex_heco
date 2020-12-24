@@ -166,7 +166,7 @@ export default {
   watch: {
     pairData() {
       let that = this
-      this.$initTronWeb().then(function (tronWeb) {
+      this.$initTronWeb().then(function(tronWeb) {
         that.add()
       })
     }
@@ -196,6 +196,8 @@ export default {
       let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.lpTotal = arr1;
       this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal));
+      console.log(new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal)));
+      console.log(this.fromTotal.beenLocked)
     },
     async getBalanceOf() {
       let data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call();
@@ -209,15 +211,15 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
-            getConfirmedTransaction(res.txid).then((result) => {
-              window.location.reload();
-            })
-          }).catch(err => {
-            console.log(err);
-            this.disabled1 = false;
-          });
-        })
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+          getConfirmedTransaction(res.txid).then((result) => {
+            window.location.reload();
+          })
+        }).catch(err => {
+          console.log(err);
+          this.disabled1 = false;
+        });
+      })
     },
     async addReward() {
       this.disabled2 = true;
