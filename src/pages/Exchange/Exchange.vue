@@ -415,11 +415,11 @@ export default {
         this.isPair = true
         allowance(that.token1.address, pair.address).then((res) => {
           if (res) {
-            let approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+            that.approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
             allowance(that.token2.address, pair.address).then((res) => {
               if (res) {
-                let approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
-                if (approveBalance1 == 0 || approveBalance2==0) {
+                that.approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+                if (that.approveBalance1 == 0 || that.approveBalance2==0) {
                   that.isApproved = true
                 } else {
                   that.isApproved = false
@@ -585,6 +585,11 @@ export default {
     },
     async doswap () {
       let that = this;
+      let token1num = new BigNumber(that.token1Num)
+      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      if(token1num>that.approveBalance1){
+        that.doApprove()
+      }
       this.isConfirm = false;
       this.btnDisabled1 = true;
       this.btnLoading1 = true;
@@ -596,8 +601,7 @@ export default {
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
-      let token1num = new BigNumber(that.token1Num)
-      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      
       this.getMinAmountOut()
       console.log('that.maxPrice======'+that.maxPrice)
       var parameter = [
