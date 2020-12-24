@@ -156,4 +156,25 @@ export const IsPc = () => {
   }
   return flag
 }
+/************
+ * @param name USDT
+ * @param number  如果是单币种 如USDT 就不需要传，多币种 USDT/USDT 就需要0 或1
+ */
+export const requierImg =(name,number)=> {
+    if (name) {
+    try {
+      name=name.toLocaleUpperCase();
+       if (number != undefined) {
+          str = name.split('/');
+          return require('@/assets/img/currency/'+str[number]+'.png')
+          
+       }
+        return require('@/assets/img/currency/'+name+'.png')
+    } catch (error) {
+        return require('@/assets/img/currency/avitve.png')
+    }
+  } else {
+       return require('@/assets/img/currency/avitve.png')
+  }
+}
 /* eslint-disable */

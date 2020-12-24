@@ -43,7 +43,7 @@
         <div class="currency_list">
           <ul class="list_scroll">
             <li v-for="(items,index) in tokenListArr" :key="index" @click="selectClick(items,index)">
-              <img class="currency_img" :src="requierImg(items.name)" alt="">
+              <img class="currency_img" :src="$requierImg(items.name)" alt="">
               <span class="bases_currency"> <span v-show="selectType != ''">{{selectType}}/</span> {{filter(items)}}</span>
             </li>
           </ul>
@@ -86,19 +86,23 @@ export default {
   },
   computed: {
     ...mapState(['tokenData', 'pairData']),
+    // eslint-disable-next-line vue/return-in-computed-property
     tokenListArr() {
       let filtername = this.filterName
       let iSort = this.iSort
       if (this.selectType == '') {
-        if(this.tokenList && this.tokenList.length>0){
+        if (this.tokenList && this.tokenList.length > 0) {
           return this.tokenList.filter((el) => {
+            el.name = el.name.toUpperCase();
             return el.name.includes(filtername.toUpperCase())
           })
         }
       } else {
-        if(this.pairList && this.pairList.length>0){
+        if (this.pairList && this.pairList.length > 0) {
           let arry = this.pairList.filter(el => this.selectType == el.token1.name || this.selectType == el.token2.name)
           return arry.filter((el) => {
+            el.token1.name = el.token1.name.toUpperCase();
+            el.token2.name = el.token2.name.toUpperCase();
             return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
           })
         }
@@ -143,15 +147,6 @@ export default {
         }
         console.log(res)
       })
-    },
-    requierImg(name) {
-      if (name) {
-        try {
-          return require('@/assets/img/currency/' + name + '.png')
-        } catch (error) {
-          return require('@/assets/img/currency/avitve.png')
-        }
-      }
     },
     changeSort() {
       switch (this.iSort) {

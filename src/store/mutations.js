@@ -20,10 +20,22 @@
       state.dark = payload;
   },
   [SET_TOKEN_DATA] (state,payload) {
-    state.tokenData = payload;
+    let arr= payload.map(el=>{
+      el.name = el.name.toLocaleUpperCase();
+      return el;
+ })
+ state.tokenData = arr;
+
   },
   [SET_PAIR_DATA] (state,payload) {
-    state.pairData = payload;
+      
+  let arr= payload.map(el=>{
+          el.pair = el.pair.toLocaleUpperCase();
+          el.token1.name = el.token1.name.toLocaleUpperCase();
+          el.token2.name = el.token2.name.toLocaleUpperCase();
+          return el;
+     })
+    state.pairData = arr;
   }
    
 }
