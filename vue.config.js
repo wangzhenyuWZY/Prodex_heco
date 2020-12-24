@@ -1,11 +1,10 @@
 const TerserPlugin = require('terser-webpack-plugin');
 const isProduction = process.env.NODE_ENV !== 'development';
 const CompressionWebpackPlugin = require('compression-webpack-plugin')
-console.log(process.env.NODE_ENV);
 module.exports = {
   lintOnSave: false,
   productionSourceMap:false,
-  publicPath: './',
+   publicPath: './',
   css: {
     extract: true,
     sourceMap: false,
@@ -91,14 +90,4 @@ module.exports = {
         .use(require('webpack-bundle-analyzer').BundleAnalyzerPlugin)
     }
   },
-  pages: {
-    index: {
-      entry: 'src/main.js',
-      template: 'public/index.html',
-      filename: 'index.html',
-      title: 'Abelo',
-      chunks: ['vendor', 'common', 'styles', 'index']
-    }
-  }
-
 };

@@ -2,12 +2,7 @@ import Vue from 'vue'
 
 import VueRouter from 'vue-router'
 
- //Vue.use(VueRouter)
-// const originalPush = VueRouter.prototype.push
-//修改原型对象中的push方法
-// VueRouter.prototype.push = function push(location) {
-//   return originalPush.call(this, location).catch(err => err)
-// }
+Vue.use(VueRouter)
 import Home from '../pages/home'
 import Exchange from '../pages/Exchange/Exchange.vue'
 import Pool from '../pages/Pool/Pool.vue'
@@ -29,8 +24,9 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
+const isProduction = process.env.NODE_ENV !== 'development';
 export default new VueRouter({
-  mode: 'hash',
+  mode: isProduction? 'history':'hash',
   routes: [
     { path: '/', component: Home,},
     { path: '/exchange', component: Exchange,},
