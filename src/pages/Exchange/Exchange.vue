@@ -798,8 +798,8 @@ export default {
   padding: 50px 38px 32px 39px;
 }
 .from_contentIcon {
-  margin-top:16px;
-  margin-bottom:12px;
+  margin-top:10px;
+  margin-bottom:10px;
   .tran_icon {
     transform: rotate(-90deg);
     color: #0f1730;
@@ -906,7 +906,7 @@ export default {
 .Price_text {
   font-size: 20px;
   color: #0f1730;
-  margin-top: 41px;
+  margin-top: 30px;
   margin-bottom: 16px;
   text-align: center;
   > img {

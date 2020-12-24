@@ -509,7 +509,7 @@ export default {
   align-items: center;
   width: 180px;
   height: 64px;
-  margin-top: 2px;
+  margin-top: 6px;
   margin-left: 38px;
   background: url("../../assets/img/dark/logo.svg") no-repeat;
   background-size: 100% 100%;

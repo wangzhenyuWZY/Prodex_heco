@@ -256,6 +256,9 @@ export default {
   .con-p{
     margin-left: 0;
   }
+  .conter {
+  padding: 0 20px;
+}
 
 }
 </style>

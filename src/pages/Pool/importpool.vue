@@ -123,8 +123,8 @@ export default {
     border: 1px solid #E5EBF2;
 }
 .from_contentIcon{
-    margin-top: 16px;
-    margin-bottom: 16px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 .but3p{    
     font-size: 16px;
