@@ -511,7 +511,7 @@ export default {
   height: 64px;
   margin-top: 2px;
   margin-left: 38px;
-  background: url(../../assets/img/logo_FoxDex.png) no-repeat;
+  background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
   background-size: 100% 100%;
   // .logop{
   //   font-family: 'roboto-mediumitalice';
@@ -698,7 +698,7 @@ export default {
 // 换色系
 .dark {
   .logo {
-    background: url("../../assets/img/dark/logo_FoxDex.png") no-repeat;
+    background: url("../../assets/img/logo_FoxDexs.svg") no-repeat;
     background-size: 100% 100%;
   }
   .active {
