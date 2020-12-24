@@ -162,7 +162,7 @@ export default {
 .title__num {
   font-size: 40px;
   font-weight: normal;
-  color: #05c98e;
+  color: #fc6446;
   margin-bottom: 8px;
 }
 .receive__Pool {

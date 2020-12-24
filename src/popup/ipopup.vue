@@ -146,7 +146,7 @@ export default {
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
-  color: #05C98E;
+  color: #FC6446;
   line-height: 21px;
 }
 .conter {
@@ -183,7 +183,7 @@ export default {
 }
 >>> .search__input .el-input__inner {
   border-radius: 32px;
-  border: 1px solid#05C98E;
+  border: 1px solid#FC6446;
   border-radius: 32px;
   padding-left: 77px;
   font-size: 18px;

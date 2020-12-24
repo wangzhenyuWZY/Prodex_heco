@@ -351,10 +351,10 @@ export default {
                 font-size: 18px;
                 font-family: Roboto-Medium, Roboto;
                 font-weight: 500;
-                color: #05c98e;
+                color: #FC6446;
                 background: #ffffff;
                 border-radius: 15px;
-                border: 1px solid #05c98e;
+                border: 1px solid #FC6446;
               }
             }
           }

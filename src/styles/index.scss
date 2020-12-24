@@ -74,7 +74,7 @@ img{
     border-radius: 32px;
     height: 56px;
     text-align: center;
-    background: #02B27D;
+    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
     margin:0 auto;
     padding: 0;
     font-size: 18px;
@@ -84,13 +84,13 @@ img{
     cursor: pointer;
     user-select:none;
     border: none;
-    // background: #05C98E;
+    // background: #FC6446;
     vertical-align: middle;
 }
 .from_botton:hover ,.from_botton:focus{
     color: #fff ;
-    border-color:#05C98E;
-    background: #02B27D;
+    border-color:#FC6446;
+    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
 }.from_botton.is-disabled:focus{
     background: #F4F5FA;
 
@@ -102,7 +102,7 @@ img{
     color: #B7BFC8;
 }
 .green_btns:hover{
-    color: #05C98E ;
+    color: #FC6446 ;
 }
 
 .black_botton{
@@ -114,43 +114,43 @@ img{
     border: 1px solid #0F1730;
     background: none;
     // color:#FF5D37;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
 
 }
 .nav_btn{
     width: 240px;
   height: 40px;
   border-radius: 28px;
-  border: 1px solid#05C98E;
+  border: 1px solid#FC6446;
   background: none;
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: normal;
-  color:#05C98E;
+  color:#FC6446;
   padding: 0;
 }
 
 
 .nav_btn:focus{
-    color:#05C98E;
+    color:#FC6446;
     background: none;
 }
 
 .nav_btn:hover{
-    color:#05C98E;
+    color:#FC6446;
     background: none;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
 }
 
 .red_button:hover{
     background: none;
-    border: 1px solid#05C98E;
-    color:#05C98E;
+    border: 1px solid#FC6446;
+    color:#FC6446;
 }
 .nav_btn:active {
-    color:#05C98E;
+    color:#FC6446;
     background: none;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
 }
 .black_botton:active{
     color: #0F1730;
@@ -163,13 +163,13 @@ img{
     color: #0F1730;
 }
 .green_btn{
-    background: #02B27D ;
+    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
     padding: 0 12px;
     
 }　
 .green_btn:active,.green_btn:focus,.green_btn:hover{
     color: #FFFFFF;
-    background: #02B27D;
+    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
     border: none;
 }
 .fff_button{
@@ -229,7 +229,7 @@ img{
     width: 0;
 }
 .colorFE613C {
-    color:#05C98E;
+    color:#FC6446;
 }
 .globle_title{
     height: 27px;
@@ -251,7 +251,7 @@ img{
       font-family: Roboto-Regular, Roboto;
   }
   .change_red{
-      color:#05C98E;
+      color:#FC6446;
   }
 // element
 .el-dialog__wrapper{

@@ -1,5 +1,6 @@
 <template>
-  <div class="container exchange">
+<div :class="dark?'dark':''">
+  <div class="container exchange ">
     <container top="40" :mobile="isPc">
       <div slot="body">
         <div class="setInput clearfix">
@@ -171,6 +172,7 @@
       @close="closeAlert"
     />  
   </div>
+</div>
 
 </template>
 
@@ -415,11 +417,11 @@ export default {
         this.isPair = true
         allowance(that.token1.address, pair.address).then((res) => {
           if (res) {
-            let approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+            that.approveBalance1 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
             allowance(that.token2.address, pair.address).then((res) => {
               if (res) {
-                let approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
-                if (approveBalance1 == 0 || approveBalance2==0) {
+                that.approveBalance2 = parseInt(res._hex?res._hex:res.constant_result[0], 16);
+                if (that.approveBalance1 == 0 || that.approveBalance2==0) {
                   that.isApproved = true
                 } else {
                   that.isApproved = false
@@ -585,6 +587,11 @@ export default {
     },
     async doswap () {
       let that = this;
+      let token1num = new BigNumber(that.token1Num)
+      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      if(token1num>that.approveBalance1){
+        that.doApprove()
+      }
       this.isConfirm = false;
       this.btnDisabled1 = true;
       this.btnLoading1 = true;
@@ -596,8 +603,7 @@ export default {
         return
       }
       var functionSelector = 'swapExactAmountIn(address,uint256,address,uint256,uint256)';
-      let token1num = new BigNumber(that.token1Num)
-      token1num = token1num.times(Math.pow(10, that.token1.decimals)).toFixed()
+      
       this.getMinAmountOut()
       console.log('that.maxPrice======'+that.maxPrice)
       var parameter = [
@@ -705,7 +711,7 @@ export default {
   }
   span:nth-child(2) {
     float: right;
-    color:#05C98E;
+    color:#FC6446;
     text-decoration: underline;
     cursor: pointer;
   }
@@ -715,7 +721,7 @@ export default {
   .between {
     font-size: 56px;
     font-weight: normal;
-    color:#05C98E;
+    color:#FC6446;
     width: 144px;
   }
   .demonstration {
@@ -769,7 +775,7 @@ export default {
     
   }
   .setColr {
-    color:#05C98E;
+    color:#FC6446;
   }
 }
 .setSlider {
@@ -811,9 +817,9 @@ export default {
   .weth_btn {
     background: none;
     border-radius: 28px;
-    border: 1px solid#05C98E;
+    border: 1px solid#FC6446;
     font-size: 20px;
-    color:#05C98E;
+    color:#FC6446;
     padding: 0;
     width: 200px;
     height: 32px;
@@ -980,7 +986,7 @@ export default {
 }
 .rec_red {
   line-height: 24px;
-  color:#05C98E;
+  color:#FC6446;
   // margin-top: 30px;
 
 }
@@ -1047,5 +1053,17 @@ export default {
       }
      
     }
+}
+.dark {
+ 
+  .input_max {
+    color: #fc6446;
+  }
+  .login_wallet {
+    color: #fc6446;
+  }
+  .active-bar {
+    background: #fc6446;
+  }
 }
 </style>

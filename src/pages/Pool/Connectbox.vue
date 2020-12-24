@@ -1073,7 +1073,7 @@ export default {
 .typeBtn1 {
   width: 136px;
   height: 48px;
-  background: #02b27d;
+  background: #FC6446;
   border-radius: 16px;
   margin-left: 8px;
   font-size: 18px;
