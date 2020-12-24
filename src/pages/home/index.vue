@@ -198,11 +198,7 @@ export default {
     }
   },
   mounted() {
-    let that = this
-    this.$initTronWeb().then(function(tronWeb) {
-      // that.init();
-      that.getVolPrice24()
-    })
+    this.getVolPrice24()
   },
   methods: {
     async init() {
