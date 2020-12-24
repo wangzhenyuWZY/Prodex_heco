@@ -22,7 +22,8 @@
                 <span>{{fromTotal.unlocked}}</span>
               </div>
               <div class="le_but">
-                <el-button class="from_botton item_button" :loading="disabled1" :disabled="disabled3" @click="clickFactory"> {{$t('dex9')}}</el-button>
+                <el-button class="from_botton item_button" :loading="disabled1" :disabled="disabled3" @click="clickFactory"> {{$t('dex9')}}
+                </el-button>
               </div>
             </div>
           </div>
@@ -51,19 +52,19 @@
         </div>
       </div>
     </div>
-    <div class="fox_box"> 
-    
-      <div class="fox_box1"> 
-        
-          <div class="fox_p">
-            <p class="fox_p1">{{$t('fox.fb1')}}</p>
-            <div class="foxp">
+    <div class="fox_box">
+
+      <div class="fox_box1">
+
+        <div class="fox_p">
+          <p class="fox_p1">{{$t('fox.fb1')}}</p>
+          <div class="foxp">
             <p class="fox_p2">{{$t('fox.fb2')}}</p>
           </div>
-          </div>
-          <div class="fox_p">
-            <p class="fox_p1">{{$t('fox.fc1')}}</p>
-            <div class="foxp">
+        </div>
+        <div class="fox_p">
+          <p class="fox_p1">{{$t('fox.fc1')}}</p>
+          <div class="foxp">
             <p class="fox_p2">{{$t('fox.fc2')}}
               <br> {{$t('fox.fc3')}}
               <br> {{$t('fox.fd1')}}
@@ -71,14 +72,14 @@
               <br> {{$t('fox.fd3')}}
             </p>
           </div>
-          </div>
-          <div class="fox_p">
-            <p class="fox_p1">{{$t('fox.fdd')}}</p>
-            <div class="foxp">
-            <p class="fox_p2">                  
-                    {{$t('fox.fd4')}}
-               <br> {{$t('fox.fd5')}}
-               <br> {{$t('fox.fd6')}}
+        </div>
+        <div class="fox_p">
+          <p class="fox_p1">{{$t('fox.fdd')}}</p>
+          <div class="foxp">
+            <p class="fox_p2">
+              {{$t('fox.fd4')}}
+              <br> {{$t('fox.fd5')}}
+              <br> {{$t('fox.fd6')}}
             </p>
           </div>
         </div>
@@ -192,13 +193,13 @@ export default {
       console.log('getTotalSupply====>' + data);
       let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.lpTotal = arr1;
-      this.fromTotal.beenLocked = Decimal(this.fromTotal.totalpy).sub(Decimal(this.fromTotal.lpTotal));
+      this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal));
     },
     async getBalanceOf() {
       let data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call();
       console.log('getBalanceOf====>' + parseInt(data._hex, 16) + this.fromTotal.decimals);
       let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
-      this.unlocked = this.fromTotal.lpTotal - arr1;
+      this.fromTotal.unlocked = this.fromTotal.lpTotal - arr1;
     },
     async clickFactory() {
       this.disabled1 = true;
@@ -352,10 +353,10 @@ export default {
                 font-size: 18px;
                 font-family: Roboto-Medium, Roboto;
                 font-weight: 500;
-                color: #FC6446;
+                color: #fc6446;
                 background: #ffffff;
                 border-radius: 15px;
-                border: 1px solid #FC6446;
+                border: 1px solid #fc6446;
               }
             }
           }
