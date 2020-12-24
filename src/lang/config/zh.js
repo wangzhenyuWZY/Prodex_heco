@@ -112,7 +112,7 @@ module.exports = {
     titn:'TRX是TRON的本机资产，而WTRX是TRC20代币，其价值与TRX同等。',
     titn1:'存款TRX以铸造等量的WTRX，然后燃烧WTRX以得到等量的TRX。',
     CWetTRC20:'WTRX可以交换其他TRC20令牌吗？',
-    wtitn:'WTRX是TRC20令牌，您可以交换到FoxDex上的任何其他TRC20令牌。',
+    wtitn:'WTRX是TRC20令牌，您可以交换到Abelo上的任何其他TRC20令牌。',
     petao:'请输入WTRX的金额',
     petao1:'请输入TRX的金额'
   },

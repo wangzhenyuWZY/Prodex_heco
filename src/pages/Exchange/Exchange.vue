@@ -784,8 +784,8 @@ export default {
 }
 .setspan{
   line-height: 24px;
-  color:#ffffff;
-  // padding-bottom: 20px;
+  color:#FC6446;
+  padding-bottom: 20px;
 }
 .Price_text {
   font-size: 20px;
@@ -944,7 +944,7 @@ export default {
   .c_receove_Share {
     padding: 0 20px;
     padding-top: 50px;
-    padding-bottom: 1px;
+    padding-bottom: 20px;
   }
   .currencyprices {
     width: 190px;
