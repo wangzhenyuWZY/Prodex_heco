@@ -180,8 +180,8 @@ export default {
       that.loading2(1);
       allowance(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then((res) => {
         if (res) {
-          let approveBalance = window.tronWeb.toSun(res._hex);
-          if (approveBalance == 0) {
+          that.approveBalance = parseInt(res._hex?res._hex:res.constant_result[0], 16)
+          if (that.approveBalance == 0 || window.tronWeb.toSun(this.wtrxNum)>that.approveBalance) {
             // alert('    ');
             if (that.proNmae=='approved') {
                   that.loading2(1);
