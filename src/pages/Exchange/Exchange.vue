@@ -12,11 +12,11 @@
             </div>
             <div class="ctx_3 fl_lt">
               <setselect
-:showSelect="JSON.stringify(token1)!='{}'"
-:imgUrl="token1.img"
-item='0'
-:balance="token1.balance"
-:text="token1.name"
+                  :showSelect="JSON.stringify(token1)!='{}'"
+                  :imgUrl="token1.img"
+                  item='0'
+                  :balance="token1.balance"
+                  :text="token1.name"
                          @click="showSelect(0)" />
             </div>
           </div>
@@ -33,11 +33,11 @@ item='0'
             </div>
             <div class="ctx_3 fl_lt">
               <setselect
-:showSelect="JSON.stringify(token2)!='{}'"
-:imgUrl="token2.img"
-item='1'
-:balance="token2.balance"
-:text="token2.name"
+                :showSelect="JSON.stringify(token2)!='{}'"
+                :imgUrl="token2.img"
+                item='1'
+                :balance="token2.balance"
+                :text="token2.name"
                          @click="showSelect(1)" />
             </div>
           </div>
@@ -58,8 +58,8 @@ item='1'
               <div class="whe fl_rg" v-show="!Approved()">
                 <span>
                   <el-button class="from_botton" v-show="!connectFlag" @click="btnClick"> <img
-class="whe_img"
-src="@/assets/img/icon_my_wallet.svg"
+                            class="whe_img"
+                            src="@/assets/img/icon_my_wallet.svg"
                          alt=""> {{connectFlag?$t('Exc.Swap'): $t('nav.CWet')}}
                   </el-button>
                 </span>
@@ -73,12 +73,13 @@ src="@/assets/img/icon_my_wallet.svg"
           </div>
 
         </div>
+       
         <div slot="footer" v-show="connectFlag&&JSON.stringify(token1)!='{}'&&JSON.stringify(token2)!='{}'" class="position">
           <div class="box_sizes connect_boxs">
             <div class="provider c_receove_Share ">
-              <div class="">
+              <div class="provider1">
                 <div class="received">
-                  <div class="lt1">
+                  <div class="lt">
                     <span>{{$t('Exc.mrd')}}
                       <el-tooltip placement="right" effect="light">
                         <div slot="content">
@@ -93,8 +94,7 @@ src="@/assets/img/icon_my_wallet.svg"
                   </div>
                   <span class="rg">{{token2Num}} {{token2.name}}</span>
                 </div>
-
-              </div>
+              
               <div class="received setmage">
                 <div class="lt">
                   <span>{{$t('Exc.cpe')}}
@@ -125,24 +125,26 @@ src="@/assets/img/icon_my_wallet.svg"
                 </div>
                 <span class="setspan">{{thisswapFee}} {{token1.name}}</span>
               </div>
+
+              </div>
               <!-- <div class="fees_account">View pair analytics <img src="@/assets/img/icon_jump_green.png"
                      alt=""></div> -->
+             </div>
             </div>
-          </div>
         </div>
 
       </container>
       <change
-v-if="isConfirm"
-@doConfirm="doswap"
-:token1='token1'
-:token2='token2'
-:token1Num='token1Num'
-:token2Num='token2Num'
-              :spotPrice='spotPrice'
-:swapFee='thisswapFee'
-:percentage='percentage'
-@handleClosea="isConfirm = false" />
+          v-if="isConfirm"
+          @doConfirm="doswap"
+          :token1='token1'
+          :token2='token2'
+          :token1Num='token1Num'
+          :token2Num='token2Num'
+                        :spotPrice='spotPrice'
+          :swapFee='thisswapFee'
+          :percentage='percentage'
+          @handleClosea="isConfirm = false" />
       <selctoken :showAlert='isSelect' :item='item' @closeAlert="isSelect=false" @change="changeCoin" />
       <removealert :isShow="showAlert1" :alertType="alertType" :url="typeUrl" @close="closeAlert" />
     </div>
@@ -627,6 +629,30 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../styles/color.scss";
+
+.provider1{
+  // margin-top: -50px;
+  background: #070A0E;
+  border-radius: 0 0 20px 20px;
+  .received{
+    
+    margin: 20px 10px;
+    font-size: 16px;
+    .lt{
+      font-size: 16px;
+      color: #a6aeb7;
+    }
+    .rg{
+      font-size: 16px;
+      color: #a6aeb7;
+    }
+    .rec_red{
+       font-size: 16px;
+       color: #a6aeb7;
+    }
+  }
+}
+
 .exchange {
   padding-top: 120px;
 
@@ -742,8 +768,7 @@ export default {
   .received {
     display: flex;
     justify-content: space-between;
-    color: #a6aeb7;
-
+    color: #000;
     span {
       display: inline-block;
     }
@@ -953,6 +978,7 @@ export default {
     padding: 0 20px;
     padding-top: 50px;
     padding-bottom: 20px;
+
   }
   .currencyprices {
     width: 190px;
@@ -1035,9 +1061,9 @@ export default {
         font-size: 0.37rem;
       }
     }
-    .setmage {
-      margin: 8px 0;
-    }
+    // .setmage {
+    //   margin: 8px 0;
+    // }
     .fees_account {
       margin: 0;
       margin-top: 24px;

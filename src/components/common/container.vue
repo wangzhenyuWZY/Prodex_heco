@@ -6,7 +6,8 @@
         <slot name="body"></slot>
     </div>
   </div>
-      <slot name="footer" ></slot>
+  <div class="footer1">
+      <slot name="footer" ></slot></div>
   </div>
 </template>
 
@@ -49,6 +50,9 @@ export default {
   .modelBg {
     padding: 0 20px;
   }
+}
+.footer1{
+  margin-top: -35px;
 }
 
 @media screen and (max-width: 750px)  {
