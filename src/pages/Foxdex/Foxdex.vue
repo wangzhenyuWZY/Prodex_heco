@@ -104,13 +104,13 @@
             </p>
           </div>
         </div>
-        <div class="fox_box2"> 
-          <ul class="foxul" >
+        <div class="fox_box2">
+          <ul class="foxul">
             <!-- <li @click="open1 "> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li> -->
-            <li  @click="open2 " > <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
-            <li @click="open3" > <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
+            <li @click="open2 "> <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
+            <li @click="open3"> <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
             <li @click="open4 "> <img src="../../assets/img/foxdex/icon_discord.svg" alt=""> </li>
-            <li @click="open5 " > <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
+            <li @click="open5 "> <img src="../../assets/img/foxdex/icon_medium.svg" alt=""> </li>
             <!-- <li @click="open6"> <img src="../../assets/img/foxdex/icon_reddit.svg" alt=""> </li> -->
           </ul>
         </div>
@@ -166,7 +166,7 @@ export default {
   watch: {
     pairData() {
       let that = this
-      this.$initTronWeb().then(function (tronWeb) {
+      this.$initTronWeb().then(function(tronWeb) {
         that.add()
       })
     }
@@ -194,14 +194,16 @@ export default {
     async getTotalSupply() {
       let data = await this.rewardToken.totalSupply().call();
       console.log('getTotalSupply====>' + data);
-      let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
+      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.lpTotal = arr1;
       this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal));
+      console.log(new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal)));
+      console.log(this.fromTotal.beenLocked)
     },
     async getBalanceOf() {
       let data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call();
-      console.log('getBalanceOf====>' + parseInt(data._hex, 16) + this.fromTotal.decimals);
-      let arr1 = Decimal(parseInt(data._hex, 16)).div(Math.pow(10, this.fromTotal.decimals))
+      console.log('getBalanceOf====>' + parseInt(data._hex ? data._hex : data.constant_result[0], 16) + this.fromTotal.decimals);
+      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
       this.fromTotal.unlocked = this.fromTotal.lpTotal - arr1;
     },
     async clickFactory() {
@@ -210,15 +212,15 @@ export default {
       var parameter = []
       let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
       window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
-            getConfirmedTransaction(res.txid).then((result) => {
-              window.location.reload();
-            })
-          }).catch(err => {
-            console.log(err);
-            this.disabled1 = false;
-          });
-        })
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+          getConfirmedTransaction(res.txid).then((result) => {
+            window.location.reload();
+          })
+        }).catch(err => {
+          console.log(err);
+          this.disabled1 = false;
+        });
+      })
     },
     async addReward() {
       this.disabled2 = true;
@@ -272,22 +274,22 @@ export default {
     // open1(){
     //    window.open('https://twitter.com/AbeloFinance')
     // },
-    open2(){
-       window.open('https://twitter.com/AbeloFinance')
+    open2() {
+      window.open('https://twitter.com/AbeloFinance')
     },
-    open3(){
-       window.open('https://t.me/AbeloFinance')
+    open3() {
+      window.open('https://t.me/AbeloFinance')
     },
-    open4(){
-       window.open('https://discord.gg/tSD6cjXJqw')
+    open4() {
+      window.open('https://discord.gg/tSD6cjXJqw')
     },
-    open5(){
-       window.open('https://medium.com/@AbeloFinance')
+    open5() {
+      window.open('https://medium.com/@AbeloFinance')
     },
     // open6(){
     //    window.open('https://twitter.com/AbeloFinance')
     // },
-   
+
   },
 
 }
