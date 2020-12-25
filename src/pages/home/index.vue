@@ -41,8 +41,14 @@
       </div>
 
       <div class="table">
-        <el-table v-if="mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
+        <el-table
+v-if="mobile"
+:data="pairList"
+header-cell-class-name="adddd"
+header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+cell-class-name="dddsadsa"
+style="width: 100%">
           <el-table-column prop="full_name" :label="$t('home.Name')">
             <template slot-scope="scope">
               <div class="reqimg">
@@ -118,8 +124,14 @@
             <span></span>
           </el-table-column>
         </el-table>
-        <el-table v-if="!mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
+        <el-table
+v-if="!mobile"
+:data="pairList"
+header-cell-class-name="adddd"
+header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+cell-class-name="dddsadsa"
+style="width: 100%">
           <el-table-column prop="full_name" width="110px" label="name">
             <template slot-scope="scope">
               <div class="table_size">
