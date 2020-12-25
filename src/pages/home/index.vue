@@ -109,6 +109,7 @@
                 
                 <el-button size="mini" round>{{$t('homeb1')}}</el-button>
               </router-link>
+              <br>
               <router-link :to="{ path: '/pool/connectpool', query: { pairAddress:scope.row.contract_address }}">
                
                 <el-button size="mini" round>{{$t('homeb2')}}</el-button>
@@ -317,9 +318,13 @@ export default {
   border: 0;
   border-bottom: 2px solid  #fc6446;
   color: #fc6446;
+  background: 0;
+  margin-bottom: 4px;
 }
 .el-button--mini.is-round{
-      padding: 7px 4px;
+      
+
+      padding: 2px 0px;
 
 }
 // .c-top {
