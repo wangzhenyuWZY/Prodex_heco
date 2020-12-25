@@ -89,6 +89,9 @@ export default {
   watch: {
     pairData(list) {
       this.farmList = JSON.parse(JSON.stringify(list));
+      if(this.farmList && this.farmList.length>0){
+        this.init();
+      }
     }
   },
   components: {
@@ -99,8 +102,9 @@ export default {
   },
   created() {
     this.farmList = JSON.parse(JSON.stringify(this.pairData))
-    this.init();
-
+    if(this.farmList && this.farmList.length>0){
+      this.init();
+    }
   },
   methods: {
     initColse() {
@@ -123,7 +127,6 @@ export default {
       let that = this
       this.$initTronWeb().then(function(tronWeb) {
         that.grtMasterChef()
-
       })
     },
     requierImg(name, number) {

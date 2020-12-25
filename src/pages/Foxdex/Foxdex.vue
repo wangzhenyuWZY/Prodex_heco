@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="fox_box2"> 
-          <ul class="foxul" @command="handleCommand">
+          <ul class="foxul">
             <!-- <li @click="open1 "> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li> -->
             <li  @click="open2 " > <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
             <li @click="open3" > <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
