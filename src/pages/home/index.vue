@@ -103,7 +103,7 @@
             </template>
             <span></span>
           </el-table-column>
-          <el-table-column label="operation">
+          <el-table-column :label="$t('operation')" >
             <template slot-scope="scope">
               <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
                 <el-button size="mini" round width="100px"> {{$t('homeb1')}} </el-button>
