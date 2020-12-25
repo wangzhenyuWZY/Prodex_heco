@@ -122,7 +122,7 @@ module.exports = {
     Yol:'您选择的',
     Total:'获得的总',
     sfox:'要存放Abelo_LP代币，请在此处获取',
-    stfe:'获得的总FOX',
+    stfe:'获得的总Abelo',
     syuf:'您无抵押的Abelo_LP',
     sysfl:'您的权益Abelo_LP',
     RLty:'消除流动性页面',

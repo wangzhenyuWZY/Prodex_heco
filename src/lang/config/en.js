@@ -124,7 +124,7 @@ module.exports = {
       Total:'To obtain the total',
 
       sfox: 'To stake Abelo_LP tokens, acquire',
-      stfe:'Total FOX Earned',
+      stfe:'Total Abelo Earned',
       syuf:'Your Unstaked Abelo_LP',
       sysfl:'Your Staked Abelo_LP',
 
@@ -258,7 +258,7 @@ module.exports = {
     unstb2:'CLAIM REWARDS',
     homeb1:'Exchange',
     homeb2:'AddLiquidity',
-    operation:'operation',
+    operation:'Operation',
 
 
 }
