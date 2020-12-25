@@ -2,7 +2,7 @@ module.exports = {
    nav:{
     message:'张三',
     home1:'首页',
-    Exchange:'兑换',
+    Exchange:'交易',
     Pool:'流动池',
     FoxDex:'关于',
     WTRX:'WTRX',
@@ -249,5 +249,9 @@ module.exports = {
   dex9:'销毁',
   unstb1:'取消抵押',
   unstb2:'提取收益',
+  homeb1:'交易',
+  homeb2:'增加流动性',
+  operation:'操作',
+  
  
 }

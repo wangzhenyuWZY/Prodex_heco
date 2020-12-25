@@ -106,10 +106,10 @@
           <el-table-column label="operation">
             <template slot-scope="scope">
               <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
-                <el-button size="mini" round width="100px">Exchange</el-button>
+                <el-button size="mini" round width="100px"> {{$t('homeb1')}} </el-button>
               </router-link>
               <router-link :to="{ path: '/pool/connectpool', query: { pairAddress:scope.row.contract_address }}">
-                <el-button size="mini" round>AddLiquidity</el-button>
+                <el-button size="mini" round>{{$t('homeb2')}}</el-button>
               </router-link>
             </template>
             <span></span>

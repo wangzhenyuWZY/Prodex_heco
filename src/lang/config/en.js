@@ -121,14 +121,14 @@ module.exports = {
       Earn:'Earn',
       Yol:'Your Selected Pool',
 
-      Total:'获得的总',
+      Total:'To obtain the total',
 
       sfox: 'To stake Abelo_LP tokens, acquire',
       stfe:'Total FOX Earned',
       syuf:'Your Unstaked Abelo_LP',
       sysfl:'Your Staked Abelo_LP',
 
-      RLty:'消除流动性页面',
+      RLty:'Eliminate liquidity page',
       Account:'Account',
       Detailed:'Detailed',
       Price:'Price',
@@ -142,7 +142,7 @@ module.exports = {
     },
     pop:{
       TSed:'Transaction Submitted',
-      Pname:'配对名称',
+      Pname:'Matching name',
       Ywr:'You will recevive',  
     },
     fox:{
@@ -256,5 +256,9 @@ module.exports = {
     dex9:'Burn',
     unstb1:'UNSTAKE&CLAIM',
     unstb2:'CLAIM REWARDS',
+    homeb1:'Exchange',
+    homeb2:'AddLiquidity',
+    operation:'operation',
+
 
 }
