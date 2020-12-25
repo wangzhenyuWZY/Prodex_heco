@@ -1,7 +1,8 @@
 <template>
   <div class="import1">
       <div class="imp-top">
-          <div class="title"
+          <div
+class="title"
            slot="title">
         <div class="lt_box">
          <router-link  to="/pool">
@@ -12,22 +13,23 @@
           <span class="content_text">Import Pool</span>
         </div>
         <div class="rg_box">
-          <el-tooltip class="item" 
-                  effect="dark" 
-                  content="Right Center 提示文字" 
+          <el-tooltip
+class="item"
+                  effect="dark"
+                  content="Right Center 提示文字"
                   placement="left">
                   <img src="@/assets/img/icon_instructions.svg" alt="">
                 </el-tooltip>
         </div>
       </div>
-          
+
       </div>
       <div class="but1">
           <setselect
-          lable="false" 
+          lable="false"
 
           />
-           
+
       </div>
         <div class="from_contentIcon">
           <i class="el-icon-plus tran_icon"></i>
@@ -45,24 +47,24 @@
 </template>
 
 <script>
-import {setselect } from '../../components/index'
+import { setselect } from '../../components/index'
 export default {
-    data() {
-        return {
-             gradeArr: [
-            { id: 1, label:'1' },
-            { id: 2, label:'2' },
-            { id: 3, label:'3' },
-            { id: 4, label:'4' },
-            { id: 5, label:'5' }
-          ],
-          Connect:"Select to a wallet to find pools",
-          eth:'ETH'    
-        }
-    },
-    components:{
-        setselect,
+  data() {
+    return {
+      gradeArr: [
+        { id: 1, label: '1' },
+        { id: 2, label: '2' },
+        { id: 3, label: '3' },
+        { id: 4, label: '4' },
+        { id: 5, label: '5' }
+      ],
+      Connect: 'Select to a wallet to find pools',
+      eth: 'ETH'
     }
+  },
+  components: {
+    setselect
+  }
 }
 </script>
 
@@ -79,7 +81,7 @@ export default {
 .but1-left{
     float: left;
     margin-top: 22px;
-    margin-left: 56px; 
+    margin-left: 56px;
     height: 21px;
     font-size: 18px;
     font-family: roboto;
@@ -87,7 +89,7 @@ export default {
     color: #0F1730;
     line-height: 21px;
 }
-.import1{  
+.import1{
     margin: 0 auto;
     width: 480px;
     height: 523px;
@@ -126,14 +128,14 @@ export default {
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.but3p{    
+.but3p{
     font-size: 16px;
     font-family: roboto;
     color: #878B97;
     height: 19px;
     // text-align: center;
     line-height: 137px;
-    margin-left: 115px;  
+    margin-left: 115px;
 }
 
 </style>

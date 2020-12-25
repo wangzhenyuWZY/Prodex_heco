@@ -1,12 +1,13 @@
 <template>
-  <el-dialog 
+  <el-dialog
     title=""
     :visible.sync="isShow"
     :width="!mobile?'80%':'480px'"
     custom-class="dialog_meeage"
     :before-close="handleClosea">
       <div class="alert_type">
-        <img class="success"
+        <img
+class="success"
             :class="alertType == 'failure'?'failure':''"
             :src="dataTypes[alertType]"
             alt="">
@@ -21,11 +22,12 @@
 
       <!-- end waiting -->
       <!-- success -->
-      <div 
+      <div
           v-if="alertType == 'success'">
         <div class="alert_size">{{$t('pop.TSed')}}</div>
         <div class="alert_success" @click="openUrl">{{$t('vot')}}</div>
-        <div class="alert_button"
+        <div
+class="alert_button"
             v-show="alertType == 'success'">
           <el-button class="from_botton" @click="handleClosea">{{$t('Close')}}</el-button>
         </div>
@@ -34,44 +36,44 @@
 </template>
 
 <script>
-import success from '@/assets/img/icon_submitted.svg';
-import waiting from '@/assets/img/icon_waiting.svg';
-import failure from '@/assets/img/icon_faile.svg';
-import {IsPc} from '../../utils/index'
+import success from '@/assets/img/icon_submitted.svg'
+import waiting from '@/assets/img/icon_waiting.svg'
+import failure from '@/assets/img/icon_faile.svg'
+import { IsPc } from '../../utils/index'
 export default {
-  props:{
-      isShow:{
-        type:Boolean,
-        default:false
-      },
-      alertType:{
-        type:String,
-        default:'success'
-      },
-      token1Num:{
-        type:[String,Number],
-        default:0
-      },
-      token2Num:{
-        type:[String,Number],
-        default:0
-      },
-      url:{
-        default:''
-      }
-      // token1:{
-      //   type:Object,
-      //   default:{}
-      // },
-      // token2:{
-      //   type:Object,
-      //   default:{}
-      // }
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false
+    },
+    alertType: {
+      type: String,
+      default: 'success'
+    },
+    token1Num: {
+      type: [String, Number],
+      default: 0
+    },
+    token2Num: {
+      type: [String, Number],
+      default: 0
+    },
+    url: {
+      default: ''
+    }
+    // token1:{
+    //   type:Object,
+    //   default:{}
+    // },
+    // token2:{
+    //   type:Object,
+    //   default:{}
+    // }
   },
-  data () {
+  data() {
     return {
       test: '12',
-      addUrl:'https://shasta.tronscan.org/#/address/',
+      addUrl: 'https://shasta.tronscan.org/#/address/',
       ppd: {
         a: 1,
         b: 2,
@@ -82,19 +84,19 @@ export default {
       dataTypes: {
         success,
         waiting,
-        failure,
+        failure
       },
-      mobile:IsPc()
+      mobile: IsPc()
     }
   },
   methods: {
-    openUrl () {
-        window.open(this.url)
-    },  
-    handleClosea () {
-         this.$emit('close')
+    openUrl() {
+      window.open(this.url)
+    },
+    handleClosea() {
+      this.$emit('close')
     }
-  },
+  }
 }
 </script>
 

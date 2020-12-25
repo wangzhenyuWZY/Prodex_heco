@@ -96,7 +96,7 @@
 </template>
 
 <script>
-import { IsPc, requierImg } from '../../utils/index'
+import { IsPc } from '../../utils/index'
 console.log(IsPc())
 export default {
   props: ['token1', 'token2', 'token1Num', 'token2Num', 'spotPrice', 'swapFee', 'percentage'],
@@ -110,8 +110,8 @@ export default {
   watch: {
 
   },
-  created(){
-    console.log('token1.name======'+this.token1.name)
+  created() {
+    console.log('token1.name======' + this.token1.name)
   },
   components: {
     // vButton: vbutton,
@@ -119,11 +119,8 @@ export default {
     // vfromInput: fromInput,
     // setselect
 
-  }
-  ,
+  },
   methods: {
-
-
 
     handleClose() {
       this.$emit('handleClosea')
@@ -131,7 +128,7 @@ export default {
     doConfirm() {
       this.$emit('doConfirm')
     }
-  },
+  }
 }
 </script>
 

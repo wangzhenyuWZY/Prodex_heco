@@ -1,5 +1,5 @@
 <template>
-  <div > 
+  <div >
    1232132
   </div>
 </template>
@@ -9,54 +9,54 @@
 export default {
   data() {
     return {
-      activeName:'first',
+      activeName: 'first',
       formLabelAlign: {
-        name: "",
-        region: "",
-        type: "",
+        name: '',
+        region: '',
+        type: ''
       },
-      test: "0.0",
-      test1: "0.1",
-      labelPosition: "top",
+      test: '0.0',
+      test1: '0.1',
+      labelPosition: 'top',
       options: [
         {
-          value: "Chengdu",
-          label: "成都",
+          value: 'Chengdu',
+          label: '成都'
         },
         {
-          value: "Shenzhen",
-          label: "深圳",
+          value: 'Shenzhen',
+          label: '深圳'
         },
         {
-          value: "Guangzhou",
-          label: "广州",
+          value: 'Guangzhou',
+          label: '广州'
         },
         {
-          value: "Dalian",
-          label: "大连",
-        },
+          value: 'Dalian',
+          label: '大连'
+        }
       ],
-      value7: "",
-    };
+      value7: ''
+    }
   },
 
   watch: {
     test(old) {
-      console.log(old);
+      console.log(old)
     },
     test1(old) {
-      console.log(old);
-    },
+      console.log(old)
+    }
   },
   methods: {
-    handleClick(){
+    handleClick() {
 
     },
     ddd() {
-      console.log("1231");
-    },
-  },
-};
+      console.log('1231')
+    }
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -96,7 +96,7 @@ export default {
     text-align: right;
     .from_size {
       font-size: 20px;
-      
+
       font-family: roboto-mediumitalic;
       font-weight: 400;
       color: #b7bfc8;

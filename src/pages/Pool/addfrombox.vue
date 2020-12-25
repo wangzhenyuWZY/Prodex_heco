@@ -1,6 +1,7 @@
 <template>
   <container top="32">
-    <div class="title"
+    <div
+class="title"
          slot="title">
       <div class="lt_box">
         <span class="icon_box">
@@ -10,14 +11,16 @@
         <span class="content_text">{{$t('pool.al')}}</span>
       </div>
       <div class="rg_box">
-        <img src="@/assets/img/icon_instructions.svg"
+        <img
+src="@/assets/img/icon_instructions.svg"
              alt="" />
       </div>
     </div>
     <div slot="body">
       <div class="setInput clearfix">
         <div class="ctx_1 fl_lt">
-          <frominput lable="input"
+          <frominput
+lable="input"
                      v-model="value1"></frominput>
         </div>
         <div class="ctx_3 fl_lt">
@@ -28,16 +31,19 @@
       <div class="from_contentIcon">+</div>
       <div class="setInput clearfix">
         <div class="ctx_1 fl_lt">
-          <frominput lable="input"
+          <frominput
+lable="input"
                      v-model="value3"></frominput>
         </div>
         <div class="ctx_3 fl_lt">
-          <setselect :showSelect="false"
+          <setselect
+:showSelect="false"
                      text="深2圳" />
         </div>
       </div>
       <div class="whe">
-        <el-button class="from_botton"> <img class="whe_img"
+        <el-button class="from_botton"> <img
+class="whe_img"
                src="@/assets/img/icon_my_wallet.svg"
                alt="">{{$t('nav.CWet')}}</el-button>
       </div>
@@ -48,16 +54,16 @@
 </template>
 
 <script>
-import { container,frominput ,setselect} from '../../components/index'
+import { container, frominput, setselect } from '../../components/index'
 
 export default {
-  data () {
+  data() {
     return {
       test1: '',
       value1: '',
       value2: '',
       value3: '',
-      value4: 0,
+      value4: 0
     }
   },
   components: {

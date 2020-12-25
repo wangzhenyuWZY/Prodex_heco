@@ -5,7 +5,10 @@
       <div class="logo"> </div>
       <div class="nav-header fl_lt" v-show="moble">
         <div class="van_list" id="van_list" ref="header">
-          <span v-for="(idx, index) in tag" :key="idx.path" @click="handelActive(idx.path, index)"
+          <span
+v-for="(idx, index) in tag"
+:key="idx.path"
+@click="handelActive(idx.path, index)"
                 :class="navIndex == index ?'active':''">{{ idx.name }}</span>
         </div>
         <div class="active-bar" :style="{ transform: `translateX(${key}px)` }"></div>
@@ -27,8 +30,7 @@
         </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
           <div class="drawer_logo">
-            <div class="lt_logo"> <img :src="dark?require('../../assets/img/dark/logo.svg'):require('../../assets/img/dark/logo.svg')"
-                   alt="" />
+            <div class="lt_logo"> <img :src="dark?require('../../assets/img/dark/logo.svg'):require('../../assets/img/dark/logo.svg')" alt="" />
             </div>
             <div class="rg_colse"> <img src="../../assets/img/icon_colse_nor.svg" alt="" @click.stop="drawer = false"> </div>
           </div>
@@ -49,7 +51,10 @@
             </div>
           </div>
           <ul class="drawer_nav">
-            <li v-for="(idx, index) in tag" :key="idx.path+'drawer'+index" @click.stop="handelActive(idx.path, index)"
+            <li
+v-for="(idx, index) in tag"
+:key="idx.path+'drawer'+index"
+@click.stop="handelActive(idx.path, index)"
                 :class="navIndex == index ?'drawer_nav_active':''">{{idx.name }}</li>
           </ul>
           <div class="langAndSet">
@@ -82,14 +87,14 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
-import { IsPc } from '../../utils/index';
+import { mapState } from 'vuex'
+import { IsPc } from '../../utils/index'
 export default {
   data() {
     return {
       tolerPop: false,
       num: 0,
-      key: "31",
+      key: '31',
       navIndex: 0,
       drawer: false,
       childrenNode: [
@@ -109,31 +114,31 @@ export default {
           name: this.$t('nav.home1')
         },
         {
-          path: "/exchange",
-          name: this.$t('nav.Exchange'),
+          path: '/exchange',
+          name: this.$t('nav.Exchange')
         },
         {
-          path: "/pool",
-          name: this.$t('nav.Pool'),
+          path: '/pool',
+          name: this.$t('nav.Pool')
         },
         {
-          path: "/foxdex",
-          name: this.$t('nav.FoxDex'),
+          path: '/foxdex',
+          name: this.$t('nav.FoxDex')
         },
         {
-          path: "/wtrx",
-          name: this.$t('nav.WTRX'),
+          path: '/wtrx',
+          name: this.$t('nav.WTRX')
         },
         {
-          path: "/stake",
-          name: this.$t('nav.Stake'),
-        },
-      ],
-    };
+          path: '/stake',
+          name: this.$t('nav.Stake')
+        }
+      ]
+    }
   },
 
   created() {
-    this.moble = IsPc();
+    this.moble = IsPc()
   },
   computed: {
     ...mapState(['walletAddres', 'connectFlag', 'dark'])
@@ -142,7 +147,6 @@ export default {
   watch: {
     '$i18n.locale': {
       handler: function(val) {
-
         // this.doc = false
         // setTimeout(()=>{
         //   this.doc = true;
@@ -155,28 +159,28 @@ export default {
             name: this.$t('nav.home1')
           },
           {
-            path: "/exchange",
-            name: this.$t('nav.Exchange'),
+            path: '/exchange',
+            name: this.$t('nav.Exchange')
           },
           {
-            path: "/pool",
-            name: this.$t('nav.Pool'),
+            path: '/pool',
+            name: this.$t('nav.Pool')
           },
           {
-            path: "/foxdex",
-            name: this.$t('nav.FoxDex'),
+            path: '/foxdex',
+            name: this.$t('nav.FoxDex')
           },
           {
-            path: "/wtrx",
-            name: this.$t('nav.WTRX'),
+            path: '/wtrx',
+            name: this.$t('nav.WTRX')
           },
           {
-            path: "/stake",
-            name: this.$t('nav.Stake'),
-          },
-        ];
+            path: '/stake',
+            name: this.$t('nav.Stake')
+          }
+        ]
         console.log(a)
-        this.tag = a;
+        this.tag = a
       }
 
     },
@@ -188,25 +192,24 @@ export default {
   },
   mounted() {
     try {
-      let lang = this.$i18n.locale;
+      const lang = this.$i18n.locale
       if (lang == 'zh') {
-        this.childrenNode = this.childrenNode1;
+        this.childrenNode = this.childrenNode1
       }
-      let hash = location.hash;
-      let str = hash.split("#")[1];
+      const hash = location.hash
+      const str = hash.split('#')[1]
       if (str) {
-        this.handelActive(str);
+        this.handelActive(str)
       } else {
-        this.handelActive("/");
+        this.handelActive('/')
       }
-
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   },
 
   methods: {
-     open2() {
+    open2() {
       window.open('https://twitter.com/AbeloFinance')
     },
     open3() {
@@ -219,7 +222,6 @@ export default {
       window.open('https://medium.com/@AbeloFinance')
     },
 
-
     changeToler(num) {
       this.$store.commit('changeTolerance', num)
     },
@@ -227,84 +229,78 @@ export default {
       this.$popup({
         // showAlert:true,
         click: () => {
-          // 点击按钮事件 
+          // 点击按钮事件
           this.$router.push('../../popup/popup')
-
         }
       })
     },
     hdel(n) {
-      let i18n = this.$i18n.locale;
-      this.$i18n.locale = i18n == 'en' ? 'zh' : 'en';
-      localStorage.setItem('lang', this.$i18n.locale);
-      this.childrenNode = [];
+      const i18n = this.$i18n.locale
+      this.$i18n.locale = i18n == 'en' ? 'zh' : 'en'
+      localStorage.setItem('lang', this.$i18n.locale)
+      this.childrenNode = []
       try {
         setTimeout(() => {
           this.$refs.header.children.forEach((element) => {
-            let str = element.getBoundingClientRect();
+            // const str = element.getBoundingClientRect()
             // console.log(str);
-            this.childrenNode.push(element.offsetWidth);
-          });
-          let hash = location.hash;
-          let str = hash.split("#")[1];
+            this.childrenNode.push(element.offsetWidth)
+          })
+          const hash = location.hash
+          const str = hash.split('#')[1]
           if (str) {
-            this.handelActive(str);
+            this.handelActive(str)
           } else {
-            this.handelActive("/");
+            this.handelActive('/')
           }
         })
       } catch (error) {
         console.log(error)
       }
-
     },
 
-
-
     handelActive(e, index) {
-      this.drawer = false;
+      this.drawer = false
 
       if (e == '/') {
-        this.navIndex = 0;
+        this.navIndex = 0
       } else {
         for (let i = 0; i < this.tag.length; i++) {
-          let el = this.tag[i].path + '';
+          const el = this.tag[i].path + ''
           if (e.match(el) && el != '/') {
-            this.navIndex = i;
-            break;
+            this.navIndex = i
+            break
           }
-
         }
       }
       console.log(e)
-      this.key = this.setActive(this.navIndex);
-      this.$router.push(e);
-
+      this.key = this.setActive(this.navIndex)
+      this.$router.push(e)
     },
     handleCommand(res) {
-      this.$router.push(res);
-      console.log(res);
+      this.$router.push(res)
+      console.log(res)
     },
     setActive(n) {
-      let num = 0;
+      let num = 0
       for (let index = 0; index <= n; index++) {
-        num = (this.childrenNode[index] + num) * 1;
+        num = (this.childrenNode[index] + num) * 1
       }
-      let num1 = parseInt((num - 20) - this.childrenNode[n] / 2);
-      return num1;
-    },
+      const num1 = parseInt((num - 20) - this.childrenNode[n] / 2)
+      return num1
+    }
   },
   filters: {
     address(n) {
-      if (!n) return '';
-      let pop = n.slice(0, 6);
-      let len = n.substring(n.length - 4);
-      let str = pop + '....' + len;
-      return str;
+      if (!n) return ''
+      const pop = n.slice(0, 6)
+      const len = n.substring(n.length - 4)
+      const str = pop + '....' + len
+      return str
     }
-  },
-   
-};
+  }
+
+}
 </script>
 <style >
 .nav .drawer_body {
@@ -369,7 +365,7 @@ export default {
   margin-left: 0;
 }
 .setPanel .tolerTab span.active {
-  background: #FC6446;
+  background: #fc6446;
   color: #ffffff;
 }
 .setting {
@@ -439,8 +435,7 @@ export default {
   }
 }
 .drawer_nav_active {
-  
-  color: #FC6446;
+  color: #fc6446;
   font-family: roboto-mediumitalic;
 }
 
@@ -456,7 +451,7 @@ export default {
 }
 .icons {
   font-size: 34px;
-  color: #FC6446;
+  color: #fc6446;
   vertical-align: sub;
 }
 .bimg {
@@ -513,7 +508,7 @@ export default {
 .nav-ion2 {
   width: 50px;
   height: 40px;
-  background: #FC6446;
+  background: #fc6446;
 }
 
 .logo {
@@ -539,7 +534,7 @@ export default {
 }
 .active {
   font-family: roboto-mediumitalic;
-  color: #FC6446;
+  color: #fc6446;
 }
 .active-bar {
   position: absolute;
@@ -547,7 +542,7 @@ export default {
   bottom: 15px;
   width: 40px;
   height: 3px;
-  background: #FC6446;
+  background: #fc6446;
   border-radius: 3px;
   transition: transform 0.6s;
 }
@@ -567,7 +562,7 @@ export default {
   line-height: 40px;
   border-radius: 28px;
   background: #19242e;
-  color: #FC6446;
+  color: #fc6446;
   padding: 0 24px;
   display: flex;
   align-items: center;
@@ -591,7 +586,7 @@ export default {
     padding: 0 16px;
     height: 24px;
     line-height: 24px;
-    background: #FC6446;
+    background: #fc6446;
     border-radius: 28px;
     font-size: 18px;
     font-family: roboto-mediumitalic;

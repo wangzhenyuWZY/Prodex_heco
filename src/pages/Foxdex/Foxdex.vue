@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="fox_box2">
-          <ul class="foxul"  >
+          <ul class="foxul">
             <!-- <li @click="open1 "> <img src="../../assets/img/foxdex/icon_脸书.svg" alt=""> </li> -->
             <li @click="open2 "> <img src="../../assets/img/foxdex/icon_推特.svg" alt=""> </li>
             <li @click="open3"> <img src="../../assets/img/foxdex/icon_telegram.svg" alt=""> </li>
@@ -119,12 +119,12 @@
     </div>
   </div>
 
-</template> 
+</template>
 
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-const Decimal = require('decimal.js');
-import { approved, allowance, getConfirmedTransaction, getLpBalanceInPool } from '../../utils/tronwebFn'
+const Decimal = require('decimal.js')
+import { getConfirmedTransaction } from '../../utils/tronwebFn'
 import { mapState } from 'vuex'
 export default {
 
@@ -153,12 +153,11 @@ export default {
       disabled3: true,
       disabled4: true
 
-
     }
   },
   created() {
     this.$initTronWeb().then((tronWeb) => {
-      this.init();
+      this.init()
     })
   },
   computed: {
@@ -166,7 +165,7 @@ export default {
   },
   watch: {
     pairData() {
-      let that = this
+      const that = this
       this.$initTronWeb().then(function(tronWeb) {
         that.add()
       })
@@ -176,99 +175,98 @@ export default {
 
     async init() {
       try {
-        this.rewardToken = await window.tronWeb.contract().at(ipConfig.RewardToken);
-        this.factory = await window.tronWeb.contract().at(ipConfig.FactoryManager);
-        await this.getDecimals();
+        this.rewardToken = await window.tronWeb.contract().at(ipConfig.RewardToken)
+        this.factory = await window.tronWeb.contract().at(ipConfig.FactoryManager)
+        await this.getDecimals()
         await this.getTotalSupply()
         await this.getBalanceOf()
-        this.disabled3 = false;
-        this.disabled4 = false;
+        this.disabled3 = false
+        this.disabled4 = false
       } catch (error) {
         console.log(error)
       }
-
     },
     async getDecimals() {
-      let data = await this.rewardToken.decimals().call();
-      this.fromTotal.decimals = data;
+      const data = await this.rewardToken.decimals().call()
+      this.fromTotal.decimals = data
     },
     async getTotalSupply() {
-      let data = await this.rewardToken.totalSupply().call();
-      console.log('getTotalSupply====>' + data);
-      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
-      this.fromTotal.lpTotal = arr1;
-      this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal));
-      console.log(new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal)));
+      const data = await this.rewardToken.totalSupply().call()
+      console.log('getTotalSupply====>' + data)
+      const arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
+      this.fromTotal.lpTotal = arr1
+      this.fromTotal.beenLocked = new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal))
+      console.log(new Decimal(this.fromTotal.totalpy).sub(new Decimal(this.fromTotal.lpTotal)))
       console.log(this.fromTotal.beenLocked)
     },
     async getBalanceOf() {
-      let data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call();
-      console.log('getBalanceOf====>' + parseInt(data._hex ? data._hex : data.constant_result[0], 16) + this.fromTotal.decimals);
-      let arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
-      this.fromTotal.unlocked = this.fromTotal.lpTotal - arr1;
+      const data = await this.rewardToken.balanceOf(ipConfig.FactoryManager).call()
+      console.log('getBalanceOf====>' + parseInt(data._hex ? data._hex : data.constant_result[0], 16) + this.fromTotal.decimals)
+      const arr1 = Decimal(parseInt(data._hex ? data._hex : data.constant_result[0], 16)).div(Math.pow(10, this.fromTotal.decimals))
+      this.fromTotal.unlocked = this.fromTotal.lpTotal - arr1
     },
     async clickFactory() {
-      this.disabled1 = true;
-      var functionSelector = 'burnToken()';
+      this.disabled1 = true
+      var functionSelector = 'burnToken()'
       var parameter = []
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(ipConfig.FactoryManager, functionSelector, {}, parameter);
+      const transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(ipConfig.FactoryManager, functionSelector, {}, parameter)
       window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
         window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
           getConfirmedTransaction(res.txid).then((result) => {
-            window.location.reload();
+            window.location.reload()
           })
         }).catch(err => {
-          console.log(err);
-          this.disabled1 = false;
-        });
+          console.log(err)
+          this.disabled1 = false
+        })
       })
     },
     async addReward() {
-      this.disabled2 = true;
+      this.disabled2 = true
       this.factory.addRewardPoolLiquidity().send({ shouldPollResponse: true }).then((res) => {
-        console.log(res);
+        console.log(res)
       }).catch(err => {
-        console.log(err);
-        this.disabled2 = false;
+        console.log(err)
+        this.disabled2 = false
       })
     },
     async add() {
-      let data = null;
+      let data = null
       this.pairData.forEach(item => {
         if (item.pair.toLocaleUpperCase() == 'WTRX/USDT') {
-          data = item;
+          data = item
         }
-      });
+      })
       if (data) {
         console.log('gettoken')
         this.getFactory(data.address).then(res => {
-          console.log('addLP====>' + Decimal(res).div(Math.pow(10, 18)));
+          console.log('addLP====>' + Decimal(res).div(Math.pow(10, 18)))
 
-          this.lpTotal1 = Decimal(res).div(Math.pow(10, 18));
+          this.lpTotal1 = Decimal(res).div(Math.pow(10, 18))
         })
         this.getFactory(data.token2.address).then(arrs => {
-          console.log('addLP2====>' + Decimal(arrs).div(Math.pow(10, 18)));
-          this.unlocked1 = Decimal(arrs).div(Math.pow(10, 18));
+          console.log('addLP2====>' + Decimal(arrs).div(Math.pow(10, 18)))
+          this.unlocked1 = Decimal(arrs).div(Math.pow(10, 18))
         })
       }
     },
     setRewardPool() {
-      this.disabled2 = true;
+      this.disabled2 = true
       this.factory.addRewardPoolLiquidity().send({ shouldPollResponse: true }).then(res => {
-        console.log('setRewardPool===>' + res);
+        console.log('setRewardPool===>' + res)
         window.location.reload()
-        this.disabled2 = false;
+        this.disabled2 = false
       })
     },
     getFactory(address) {
       return new Promise(function(resolve, reject) {
-        var functionSelector = 'balanceOf(address)';
+        var functionSelector = 'balanceOf(address)'
         var parameter = [
           { type: 'address', value: ipConfig.FactoryManager }
         ]
         window.tronWeb.transactionBuilder.triggerConstantContract(address, functionSelector, {}, parameter).then((transaction) => {
-          let myBalanceInPool = parseInt(transaction.constant_result[0], 16)
-          resolve(myBalanceInPool);
+          const myBalanceInPool = parseInt(transaction.constant_result[0], 16)
+          resolve(myBalanceInPool)
         })
       })
     },
@@ -286,12 +284,12 @@ export default {
     },
     open5() {
       window.open('https://medium.com/@AbeloFinance')
-    },
+    }
     // open6(){
     //    window.open('https://twitter.com/AbeloFinance')
     // },
 
-  },
+  }
 
 }
 </script>

@@ -1,33 +1,26 @@
 <template>
-  <el-dialog title=""
-             :visible.sync="showAlert"
-             :width="mobile?'480px':' 90%'"
-             custom-class="dialog_recevive"
-             :before-close="handleClosea">
-    <span slot="title"
-          class="select_size">
+  <el-dialog title="" :visible.sync="showAlert" :width="mobile?'480px':' 90%'" custom-class="dialog_recevive" :before-close="handleClosea">
+    <span slot="title" class="select_size">
       <span> {{$t('ywr')}} </span>
     </span>
     <div class="box_sizes">
       <div class="provider receive__Pool receove_Share">
-          <div class="received ">
-            <span class="rg ftblod">{{token1Num}}</span>
-            <div class="lt ">
-                   <img :src="requierImg(token1.name,0)"
-                   alt="" />
-              <span>{{token1.name}}</span>
-            </div>
-            
+        <div class="received ">
+          <span class="rg ftblod">{{token1Num}}</span>
+          <div class="lt ">
+            <img :src="requierImg(token1.name,0)" alt="" />
+            <span>{{token1.name}}</span>
           </div>
-          <div class="add">+</div>
-                  <div class="received ">
-            <span class="rg ftblod">{{token2Num}}</span>
-            <div class="lt ">
-                   <img :src="requierImg(token2.name,0)"
-                   alt="" />
-              <span>{{token2.name}}</span>
-            </div>
+
+        </div>
+        <div class="add">+</div>
+        <div class="received ">
+          <span class="rg ftblod">{{token2Num}}</span>
+          <div class="lt ">
+            <img :src="requierImg(token2.name,0)" alt="" />
+            <span>{{token2.name}}</span>
           </div>
+        </div>
       </div>
     </div>
     <div class="receive__size">{{$t('oiei')}}</div>
@@ -36,9 +29,7 @@
         <div class="">
           <div class="received mrge32" v-show="false">
             <div class="lt ">
-              <img class="lt_icon"
-                   src="@/assets/img/btc.svg"
-                   alt="">
+              <img class="lt_icon" src="@/assets/img/btc.svg" alt="">
               <span>ETH/USDT Burned</span>
             </div>
             <span class="rg ftblod">0.000000233456</span>
@@ -50,7 +41,7 @@
             <span class="ftblod">1{{token1.name}}={{justPrice.toFixed(6)}} {{token2.name}}</span>
           </div>
           <div class="conversion ftblod">1{{token2.name}}={{reversePrice.toFixed(6)}} {{token1.name}}</div>
-         
+
         </div>
       </div>
     </div>
@@ -59,56 +50,60 @@
 </template>
 
 <script>
-import {IsPc} from '../../utils/index'
+import { IsPc } from '../../utils/index'
 export default {
-  props:{
-      showAlert: {
-        type: Boolean,
-        default: false,
-      },
-      token1Num: {
-        type: [String,Number],
-        default: '0',
-      },
-      token2Num: {
-        type: [String,Number],
-        default: '0',
-      },
-      t1Per: {
-        type: [String,Number],
-        default: '0',
-      },
-      t2Per: {
-        type: [String,Number],
-        default: '0',
-      },
-      token1:{
-        type:Object,
-        default:{}
-      },
-      clickFn:{
-        type:Function
-      },
-      token2:{
-        type:Object,
-        default:{}
-      },
-      reciveLptoken: {
-        type: [String,Number,Object],
-        default: '0',
-      },
-      justPrice: {
-        type: [String,Number],
-        default: '0',
-      },
-      reversePrice: {
-        type: [String,Number],
-        default: '0',
+  props: {
+    showAlert: {
+      type: Boolean,
+      default: false
+    },
+    token1Num: {
+      type: [String, Number],
+      default: '0'
+    },
+    token2Num: {
+      type: [String, Number],
+      default: '0'
+    },
+    t1Per: {
+      type: [String, Number],
+      default: '0'
+    },
+    t2Per: {
+      type: [String, Number],
+      default: '0'
+    },
+    token1: {
+      type: Object,
+      default: () => {
+        return {}
       }
-  },    
-  data () {
+    },
+    clickFn: {
+      type: Function
+    },
+    token2: {
+      type: Object,
+      default: () => {
+        return {}
+      }
+    },
+    reciveLptoken: {
+      type: [String, Number, Object],
+      default: '0'
+    },
+    justPrice: {
+      type: [String, Number],
+      default: '0'
+    },
+    reversePrice: {
+      type: [String, Number],
+      default: '0'
+    }
+  },
+  data() {
     return {
-        mobile: IsPc()
+      mobile: IsPc()
     }
   },
   components: {
@@ -117,30 +112,29 @@ export default {
     // vfromInput: fromInput,
     // setselect
 
-  }
-  , methods: {
-      requierImg (name,number) {
-      let str;
+  },
+  methods: {
+    requierImg(name, number) {
+      let str
       // debugger
       if (name) {
         try {
-           if (number != undefined) {
-              str = name.split('/');
-              return require('@/assets/img/currency/'+str[number]+'.png')
-              
-           }
-            return require('@/assets/img/currency/'+name+'.png')
+          if (number != undefined) {
+            str = name.split('/')
+            return require('@/assets/img/currency/' + str[number] + '.png')
+          }
+          return require('@/assets/img/currency/' + name + '.png')
         } catch (error) {
-            return require('@/assets/img/currency/avitve.png')
+          return require('@/assets/img/currency/avitve.png')
         }
       } else {
-           return require('@/assets/img/currency/avitve.png')
+        return require('@/assets/img/currency/avitve.png')
       }
     },
-    handleClosea () {
+    handleClosea() {
       this.$emit('close')
     }
-  },
+  }
 }
 </script>
 
@@ -169,7 +163,7 @@ export default {
 .title__num {
   font-size: 40px;
   font-weight: normal;
-  color:#FC6446;
+  color: #fc6446;
   margin-bottom: 8px;
 }
 .receive__Pool {
@@ -203,24 +197,24 @@ export default {
   padding: 24px;
 }
 
-.recevive_btn{
+.recevive_btn {
   margin-top: 48px;
 }
-.add{
+.add {
   text-align: left;
-font-size: 24px;
-color: #878B97;
-margin: 10px 0;
+  font-size: 24px;
+  color: #878b97;
+  margin: 10px 0;
 }
 @media screen and (max-width: 750px) {
-  .receove_Share{
+  .receove_Share {
     padding: 18px;
   }
-  .conversion{
+  .conversion {
     font-size: 0.37rem;
   }
-  .mobiles   span{
-        font-size: 0.37rem;
-    }
+  .mobiles span {
+    font-size: 0.37rem;
+  }
 }
 </style>
