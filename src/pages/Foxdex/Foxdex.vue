@@ -178,8 +178,8 @@ export default {
         this.rewardToken = await window.tronWeb.contract().at(ipConfig.RewardToken);
         this.factory = await window.tronWeb.contract().at(ipConfig.FactoryManager);
         await this.getDecimals();
-        this.getTotalSupply()
-        this.getBalanceOf()
+        await this.getTotalSupply()
+        await this.getBalanceOf()
         this.disabled3 = false;
         this.disabled4 = false;
       } catch (error) {
