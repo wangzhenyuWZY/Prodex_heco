@@ -41,14 +41,8 @@
       </div>
 
       <div class="table">
-        <el-table
-v-if="mobile"
-:data="pairList"
-header-cell-class-name="adddd"
-header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-cell-class-name="dddsadsa"
-style="width: 100%">
+        <el-table v-if="mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
           <el-table-column prop="full_name" :label="$t('home.Name')">
             <template slot-scope="scope">
               <div class="reqimg">
@@ -112,23 +106,20 @@ style="width: 100%">
           <el-table-column :label="$t('operation')">
             <template slot-scope="scope">
               <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
-                <p class="homeb1">{{$t('homeb1')}}</p>
+
+                <el-button size="mini" round>{{$t('homeb1')}}</el-button>
               </router-link>
+              <br>
               <router-link :to="{ path: '/pool/connectpool', query: { pairAddress:scope.row.contract_address }}">
-                <p class="homeb2">{{$t('homeb2')}}</p>
+
+                <el-button size="mini" round>{{$t('homeb2')}}</el-button>
               </router-link>
             </template>
             <span></span>
           </el-table-column>
         </el-table>
-        <el-table
-v-if="!mobile"
-:data="pairList"
-header-cell-class-name="adddd"
-header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-cell-class-name="dddsadsa"
-style="width: 100%">
+        <el-table v-if="!mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
           <el-table-column prop="full_name" width="110px" label="name">
             <template slot-scope="scope">
               <div class="table_size">
@@ -321,19 +312,18 @@ export default {
   height: 22px;
   margin-left: 207px;
 }
-.homeb1 {
-  width: 30px;
 
-  color: #fc6446;
+.el-button {
+  border-radius: 0px;
+  border: 0;
   border-bottom: 2px solid #fc6446;
-}
-.homeb2 {
-  width: 72px;
-  margin-top: 4px;
   color: #fc6446;
-  border-bottom: 2px solid #fc6446;
+  background: 0;
+  margin-bottom: 4px;
 }
-
+.el-button--mini.is-round {
+  padding: 2px 0px;
+}
 // .c-top {
 //   margin: 0 auto;
 //   overflow: hidden;
