@@ -106,13 +106,13 @@
           <el-table-column :label="$t('operation')" >
             <template slot-scope="scope">
               <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
-                
-                <el-button size="mini" round>{{$t('homeb1')}}</el-button>
+                <p class="homeb1"> <span> {{$t('homeb1')}}</span> </p>
+                <!-- <el-button size="mini" round></el-button> -->
               </router-link>
-              <br>
+             
               <router-link :to="{ path: '/pool/connectpool', query: { pairAddress:scope.row.contract_address }}">
-               
-                <el-button size="mini" round>{{$t('homeb2')}}</el-button>
+               <p class="homeb2"> <span> {{$t('homeb2')}}</span></p>
+                <!-- <el-button size="mini" round>{{$t('homeb2')}}</el-button> -->
               </router-link>
             </template>
             <span></span>
@@ -312,21 +312,31 @@ export default {
   height: 22px;
   margin-left: 207px;
 }
-
-.el-button{
-  border-radius: 0px;
-  border: 0;
-  border-bottom: 2px solid  #fc6446;
-  color: #fc6446;
-  background: 0;
-  margin-bottom: 4px;
+.homeb1{
+   color: #fc6446;
+  span{
+    border-bottom: 2px solid #fc6446;
+  }
 }
-.el-button--mini.is-round{
-      
-
-      padding: 2px 0px;
-
+.homeb2{
+  margin-top: 3px;
+   color: #fc6446;
+  span{
+    border-bottom: 2px solid #fc6446;
+  } 
 }
+
+// .el-button{
+//   border-radius: 0px;
+//   border: 0;
+//   border-bottom: 2px solid  #fc6446;
+//   color: #fc6446;
+//   background: 0;
+//   margin-bottom: 4px;
+// }
+// .el-button--mini.is-round{
+//       padding: 2px 0px;
+// }
 // .c-top {
 //   margin: 0 auto;
 //   overflow: hidden;
@@ -404,10 +414,10 @@ export default {
   background: #ffffff;
 
   .b2-top {
-    height: 112px;
+    height: 80px;
     .top1 {
-      margin-top: 54px;
-      margin-left: 41px;
+      margin-top: 30px;
+      margin-left: 30px;
       float: left;
       height: 22px;
       font-size: 20px;
