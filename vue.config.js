@@ -34,6 +34,7 @@ module.exports = {
         })
       )
       config.optimization = {
+        usedExports: true,
         splitChunks: {
           cacheGroups: {
             vendor: {
@@ -43,7 +44,8 @@ module.exports = {
               minChunks: 1,
               maxInitialRequests: 5,
               minSize: 0,
-              priority: 100
+              priority: 100,
+              reuseExistingChunk: true
             },
             common: {
               chunks: 'all',
@@ -52,7 +54,8 @@ module.exports = {
               minChunks: 2,
               maxInitialRequests: 5,
               minSize: 0,
-              priority: 60
+              priority: 60,
+              reuseExistingChunk: true
             },
             styles: {
               name: 'styles',
