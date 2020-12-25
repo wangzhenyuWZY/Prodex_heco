@@ -3,7 +3,7 @@
     <!-- <div class="c-top"> -->
     <!-- <samp class="c-mp">FoxDex Protocol Analytics</samp> -->
     <!-- <div class="c-inp">
-      <input type="text" placeholder="Search FoxDex pairs and tokens">  
+      <input type="text" placeholder="Search FoxDex pairs and tokens">
       </div> -->
 
     <!-- </div> -->
@@ -19,7 +19,7 @@
         </div>
         <div class="mian-box2">
 
-         <chart2 /> 
+         <chart2 />
          <circular />
         </div>
       </div>
@@ -30,9 +30,9 @@
         <samp class="top1">{{$t('home.TopPairs')}}</samp>
 
         <!-- <template slot-scope="scope">
-              <div>   
+              <div>
                 <img :src="$requierImg(scope.row.token1.name,1)"
-                   alt="" /> 
+                   alt="" />
                    <img :src="$requierImg(scope.row.token1.name,0)"
                    alt="" />
               </div>
@@ -41,8 +41,14 @@
       </div>
 
       <div class="table">
-        <el-table v-if="mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
+        <el-table
+v-if="mobile"
+:data="pairList"
+header-cell-class-name="adddd"
+header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+cell-class-name="dddsadsa"
+style="width: 100%">
           <el-table-column prop="full_name" :label="$t('home.Name')">
             <template slot-scope="scope">
               <div class="reqimg">
@@ -103,7 +109,7 @@
             </template>
             <span></span>
           </el-table-column>
-          <el-table-column :label="$t('operation')" >
+          <el-table-column :label="$t('operation')">
             <template slot-scope="scope">
               <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
                 <p class="homeb1"> <span> {{$t('homeb1')}}</span> </p>
@@ -118,15 +124,21 @@
             <span></span>
           </el-table-column>
         </el-table>
-        <el-table v-if="!mobile" :data="pairList" header-cell-class-name="adddd" header-row-class-name="tabe_tr"
-                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}" cell-class-name="dddsadsa" style="width: 100%">
+        <el-table
+v-if="!mobile"
+:data="pairList"
+header-cell-class-name="adddd"
+header-row-class-name="tabe_tr"
+                  :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
+cell-class-name="dddsadsa"
+style="width: 100%">
           <el-table-column prop="full_name" width="110px" label="name">
             <template slot-scope="scope">
               <div class="table_size">
 
                 {{scope.$index+1}}
                 <!-- <img :src="$requierImg(scope.row.trade_token_name,0)"
-                   alt="" /> 
+                   alt="" />
                    <img :src="$requierImg(scope.row.base_token_name,0)"
                    alt="" /> -->
                 {{scope.row.trade_token_name.toLocaleUpperCase()}}-{{scope.row.base_token_name.toLocaleUpperCase()}}
@@ -172,12 +184,12 @@
 <script>
 // import { mapState } from 'vuex'
 import { api } from '../../api/api'
-import chart from './chart.vue'
-import chart2 from './chart2.vue'
-import circular from './circular'
+// import chart from './chart.vue'
+// import chart2 from './chart2.vue'
+// import circular from './circular'
 // import {TokenData,PairData} from '../../utils/index'
 import { IsPc } from '../../utils/index'
-import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool, getTokenDenormalizedWeight } from "../../utils/tronwebFn"
+import { getBalanceInPool } from '../../utils/tronwebFn'
 export default {
   // computed: {
   //   ...mapState(['pairData'])
@@ -185,7 +197,7 @@ export default {
   watch: {
     // pairData(list){
     //   let that = this
-    //   this.pairList = JSON.parse(JSON.stringify(list)) 
+    //   this.pairList = JSON.parse(JSON.stringify(list))
     //   if(this.pairList.length>0){
     //     this.$initTronWeb().then(function (tronWeb) {
     //       that.init();
@@ -197,7 +209,7 @@ export default {
   data() {
     return {
       pairList: [],
-      mobile: IsPc(),
+      mobile: IsPc()
     }
   },
   mounted() {
@@ -205,19 +217,19 @@ export default {
   },
   methods: {
     async init() {
-      let that = this
-      let pairList = []
+      // const that = this
+      // const pairList = []
       for (let index = 0; index < this.pairList.length; index++) {
-        const el = this.pairList[index];
+        const el = this.pairList[index]
         // getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
         //   el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        // })  
+        // })
         // getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
         //   el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        // })   
+        // })
         debugger
-        let res = await getBalanceInPool(el, el.token1);
-        let res1 = await getBalanceInPool(el, el.token2);
+        const res = await getBalanceInPool(el, el.token1)
+        const res1 = await getBalanceInPool(el, el.token2)
         // let res2 = await getLpBalanceInPool(el);
         // if(el.token1.name=='USDT'){
         //   let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
@@ -226,16 +238,16 @@ export default {
         //   let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
         //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
         // }
-        el.token1Balance = res.toFixed(4);
-        el.token2Balance = res1.toFixed(4);
+        el.token1Balance = res.toFixed(4)
+        el.token2Balance = res1.toFixed(4)
         // pairList.push(el)
 
         this.$set(this.pairList, index, el)
       }
       // this.pairList = pairList
     },
-    async getVolPrice24() {//获取24小时量和价格
-      let res = await api.get24HourTradingVolume()
+    async getVolPrice24() { // 获取24小时量和价格
+      const res = await api.get24HourTradingVolume()
       if (res.data.code == 0) {
         this.pairList = res.data.data
         // this.pairList.forEach((rsp)=>{
@@ -253,28 +265,28 @@ export default {
   },
   filters: {
     setAssets(n) {
-      console.log(n);
-      n += '';
+      console.log(n)
+      n += ''
       if (n) {
         try {
-          let arr = n.split('.');
-          let arr1;
+          const arr = n.split('.')
+          let arr1
           if (arr.length > 1) {
             if (arr[1].length > 4) {
               arr1 = arr[0] + '.' + arr[1].slice(0, 4)
             } else {
-              arr1 = n;
+              arr1 = n
             }
           } else {
-            arr1 = arr[0];
+            arr1 = arr[0]
           }
-          return arr1;
+          return arr1
         } catch (error) {
-          console.log(error);
-          return n;
+          console.log(error)
+          return n
         }
       }
-      return '--';
+      return '--'
     }
   }
 }

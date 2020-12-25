@@ -24,68 +24,67 @@ const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
 }
-const isProduction = process.env.NODE_ENV !== 'development';
 export default new VueRouter({
   mode: 'hash',
   routes: [
-    { path: '/', component: Home,},
-    { path: '/exchange', component: Exchange,},
+    { path: '/', component: Home },
+    { path: '/exchange', component: Exchange },
     { path: '/pool', component: Pool,
-      children:[
+      children: [
         {
-          path:'/',
-          name:'liquidity',
-          component:liquidity
+          path: '/',
+          name: 'liquidity',
+          component: liquidity
         },
-      
+
         {
-          path:'addpoll',
-          name:'addfrombox',
-          component:addfrombox
-        },
-        {
-          path:'connectpool',
-          name:'Connectbox',
-          component:Connectbox
+          path: 'addpoll',
+          name: 'addfrombox',
+          component: addfrombox
         },
         {
-          path:'selctoken',
-          name:'selctoken',
-          component:selctoken
+          path: 'connectpool',
+          name: 'Connectbox',
+          component: Connectbox
         },
         {
-          path:'removeLiquidity',
-          name:'removeLiquidity',
-          component:removeLiquidity
+          path: 'selctoken',
+          name: 'selctoken',
+          component: selctoken
         },
         {
-          path:'recevive',
-          name:'recevive',
-          component:recevive
+          path: 'removeLiquidity',
+          name: 'removeLiquidity',
+          component: removeLiquidity
         },
         {
-          path:'willRecevive',
-          name:'willRecevive',
-          component:willRecevive
+          path: 'recevive',
+          name: 'recevive',
+          component: recevive
         },
         {
-          path:'pairs',
-          name:'createpair',
-          component:createpair
+          path: 'willRecevive',
+          name: 'willRecevive',
+          component: willRecevive
         },
         {
-          path:'importpool',
-          name:'importpool',
-          component:importpool
+          path: 'pairs',
+          name: 'createpair',
+          component: createpair
+        },
+        {
+          path: 'importpool',
+          name: 'importpool',
+          component: importpool
         }
       ]
-  },
-    { path: '/foxdex', component: Foxdex},
-    { path: '/wtrx', component: Wtrx}, 
-    { path: '/stake', component: Stake},
+    },
+    { path: '/foxdex', component: Foxdex },
+    { path: '/wtrx', component: Wtrx },
+    { path: '/stake', component: Stake },
     {
-      path:"/test",
-      component:Stakes
+      path: '/test',
+      component: Stakes
     }
   ]
 })

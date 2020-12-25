@@ -1,16 +1,16 @@
 <template>
   <div class="chart2">
-  
-      <div class="c-top"> 
+
+      <div class="c-top">
       <samp class="cp">Volume(24hr):<samp class="cp1">$403,739,802<samp class="cp2">+85.84%</samp></samp></samp>
       <samp class="cp-img">
         <samp class="cp-d">
-           D  
+           D
         </samp>
         <samp class="cp-w">
           W
         </samp>
-       
+
         <img src="../../assets/img/icon_y.png" alt=""></samp>
     </div>
       <div id="yChart" :style="{width: '960px', height: '300px'}"></div>
@@ -20,44 +20,44 @@
 <script>
 
 export default {
-  name: 'hello',
-  data () {
+  name: 'Hello',
+  data() {
     return {
       msg: 'Welcome to Your Vue.js App'
     }
   },
-  mounted(){
-    this.drawLine();
+  mounted() {
+    this.drawLine()
   },
   methods: {
-    drawLine(){
-        // 基于准备好的dom，初始化echarts实例
-let myChart = this.$echarts.init(document.getElementById('yChart'));
-let option = {
-    // backgroundColor:"pink",
-    xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-    },
-    yAxis: [
+    drawLine() {
+      // 基于准备好的dom，初始化echarts实例
+      const myChart = this.$echarts.init(document.getElementById('yChart'))
+      const option = {
+        // backgroundColor:"pink",
+        xAxis: {
+          type: 'category',
+          data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis: [
           {
-              position:'right',
-              type : 'value',
-              splitArea : {show : true}
+            position: 'right',
+            type: 'value',
+            splitArea: { show: true }
           },
           {
-          type: 'value'
-          },
-          ],
-    series: [
-      {
-        data: [500, 232, 901, 934, 290, 1330, 920],
-        type: 'line'
-      }]
-};
+            type: 'value'
+          }
+        ],
+        series: [
+          {
+            data: [500, 232, 901, 934, 290, 1330, 920],
+            type: 'line'
+          }]
+      }
 
-        // 绘制图表
-        myChart.setOption(option);
+      // 绘制图表
+      myChart.setOption(option)
     }
   }
 }
@@ -90,7 +90,6 @@ let option = {
   color: #19212E;
   line-height: 18px;
   margin-right: 40px;
-  
 
 }
 .cp-img{
@@ -126,6 +125,5 @@ let option = {
     }
   }
 }
-
 
 </style>

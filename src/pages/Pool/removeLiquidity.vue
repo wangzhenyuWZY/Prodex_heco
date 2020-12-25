@@ -2,7 +2,8 @@
 <div class="removeLq">
   <container top="32">
     <!-- top="0" -->
-    <div class="title"
+    <div
+class="title"
          slot="title">
       <div class="lt_box">
         <span class="icon_box">
@@ -14,7 +15,8 @@
         <span class="content_text">{{$t('rly')}}</span>
       </div>
       <div class="rg_box">
-        <img src="@/assets/img/icon_instructions.svg"
+        <img
+src="@/assets/img/icon_instructions.svg"
              alt="" />
       </div>
     </div>
@@ -26,8 +28,11 @@
           <div class="box_slider">
             <div class="between">{{slidenum}}%</div>
             <div class="demonstration">
-              <el-slider :show-tooltip="false" :max="100"
-                         v-model="slidenum" @change="changeSlide"
+              <el-slider
+:show-tooltip="false"
+:max="100"
+                         v-model="slidenum"
+@change="changeSlide"
                          ></el-slider>
             </div>
           </div>
@@ -50,7 +55,8 @@
             <div class="">
               <div class="received mobilerece">
                 <div class="lt">
-                  <img class="lt_icon"
+                  <img
+class="lt_icon"
                       src="@/assets/img/icon_wen.svg"
                       alt="">
                   <span>{{token1.name}}</span>
@@ -59,7 +65,8 @@
               </div>
               <div class="received ive_top">
                 <div class="lt">
-                  <img src="@/assets/img/icon_wen.svg"
+                  <img
+src="@/assets/img/icon_wen.svg"
                       alt="">
                   <span>{{token2.name}}</span>
                 </div>
@@ -68,12 +75,12 @@
             </div>
             <div class="weth">
               <el-button class="weth_btn" @click="showAlert = true">{{$t('rly1')}} {{pair.pair}}</el-button>
-              
+
             </div>
           </div>
         </div>
         <div class="mount_title" hidden>
-         {{$t('Exc.Price')}} 
+         {{$t('Exc.Price')}}
         </div>
         <div class="box_sizes box_Price" hidden>
           <div class="provider Receive">
@@ -116,33 +123,33 @@
 </template>
 
 <script>
-const Decimal = require('decimal.js');
-import { container ,frominput,setselect} from '../../components/index'
+const Decimal = require('decimal.js')
+import { container, frominput, setselect } from '../../components/index'
 import recevive from './willRecevive'
-import removealert from './valret';
-import BigNumber from 'bignumber.js';
+import removealert from './valret'
+import BigNumber from 'bignumber.js'
 export default {
-  data () {
+  data() {
     return {
       test1: '',
       value1: '',
       value2: '',
       value3: '',
       value4: 0,
-      maxBalance:0,
-      slidenum:0,
-      percentage:0,
-      pair:{},
-      token1:{},
-      token2:{},
-      token1BalanceInPool:0,
-      token2BalanceInPool:0,
-      showAlert:false,
-      justPrice:0,
-      reversePrice:0,
-      tyepUrl:'',
-      showAlert1:false,
-      alertType:'success' // success  waiting
+      maxBalance: 0,
+      slidenum: 0,
+      percentage: 0,
+      pair: {},
+      token1: {},
+      token2: {},
+      token1BalanceInPool: 0,
+      token2BalanceInPool: 0,
+      showAlert: false,
+      justPrice: 0,
+      reversePrice: 0,
+      tyepUrl: '',
+      showAlert1: false,
+      alertType: 'success' // success  waiting
     }
   },
   components: {
@@ -150,12 +157,12 @@ export default {
     recevive,
     removealert
   },
-  created(){
-    let setData =  sessionStorage.getItem('toRemove'); 
-    let paramsData = this.$route.params.pair;
-    if(this.$route.params.pair||setData){
-      let totatlData = this.$route.params.pair|| setData
-      this.pair = JSON.parse(totatlData);
+  created() {
+    const setData = sessionStorage.getItem('toRemove')
+    const paramsData = this.$route.params.pair
+    if (this.$route.params.pair || setData) {
+      const totatlData = this.$route.params.pair || setData
+      this.pair = JSON.parse(totatlData)
       this.token1 = this.pair.token1
       this.token2 = this.pair.token2
       this.token1BalanceInPool = this.token1.balanceInPool
@@ -165,79 +172,77 @@ export default {
       this.getSpotPrice(this.token2.address, this.token1.address, 'reversePrice')
     }
   },
-  methods:{
-    closeAlert(){
+  methods: {
+    closeAlert() {
       this.showAlert1 = false
       window.location.reload()
     },
-    async getBalance(){
-      let that = this
-      var functionSelector = 'balanceOf(address)';
+    async getBalance() {
+      const that = this
+      var functionSelector = 'balanceOf(address)'
       var parameter = [
-        {type: 'address', value: window.tronWeb.defaultAddress.base58}
+        { type: 'address', value: window.tronWeb.defaultAddress.base58 }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address,functionSelector,{}, parameter);
-      if(transaction){
-        that.maxBalance = parseInt(transaction.constant_result[0],16)
+      const transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(that.pair.address, functionSelector, {}, parameter)
+      if (transaction) {
+        that.maxBalance = parseInt(transaction.constant_result[0], 16)
       }
     },
-    async approveLpToken(){
-      let that = this
-      var functionSelector = 'approve(address,uint256)';
+    async approveLpToken() {
+      const that = this
+      var functionSelector = 'approve(address,uint256)'
       var parameter = [
-        {type:'address',value:that.pair.address},
-        {type:'uint256',value:'100000000000000000000'}
+        { type: 'address', value: that.pair.address },
+        { type: 'uint256', value: '100000000000000000000' }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.addrss,functionSelector,{shouldPollResponse:true}, parameter);
-      if (!transaction.result || !transaction.result.result)
-        return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-            that.$message.success('success');
-          });
-      }) 
+      const transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.addrss, functionSelector, { shouldPollResponse: true }, parameter)
+      if (!transaction.result || !transaction.result.result) { return console.error('Unknown error: ' + transaction, null, 2) }
+      window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+          that.$message.success('success')
+        })
+      })
     },
-    async exitPool(){
-      let that = this
+    async exitPool() {
+      const that = this
       var functionSelector = 'exitPool(uint256,uint256[])'
-      let slidenum = Decimal(that.slidenum).div(100)
-      let maxBalance = Decimal(this.maxBalance)
+      const slidenum = Decimal(that.slidenum).div(100)
+      const maxBalance = Decimal(this.maxBalance)
       // let num = Decimal(slidenum).mul(Decimal(maxBalance)).toString()
       let num = new BigNumber(slidenum)
       num = num.times(maxBalance)
       var parameter = [
-          {type: 'uint256', value: num.toFixed()},
-          {type: 'uint256[]', value:[0,0] }
+        { type: 'uint256', value: num.toFixed() },
+        { type: 'uint256[]', value: [0, 0] }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address,functionSelector,{}, parameter);
-      if (!transaction.result || !transaction.result.result)
-        return console.error('Unknown error: ' + transaction, null, 2);
-      window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-              that.showAlert = false
-              that.tyepUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txID;
-              that.showAlert1 =true
-          });
-      }) 
+      const transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(that.pair.address, functionSelector, {}, parameter)
+      if (!transaction.result || !transaction.result.result) { return console.error('Unknown error: ' + transaction, null, 2) }
+      window.tronWeb.trx.sign(transaction.transaction).then(function(signedTransaction) {
+        window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function(res) {
+          that.showAlert = false
+          that.tyepUrl = 'https://shasta.tronscan.org/#/transaction/' + res.txID
+          that.showAlert1 = true
+        })
+      })
     },
-    changeSlide(num){
-      if(num){
+    changeSlide(num) {
+      if (num) {
         this.slidenum = num
       }
-      this.token1BalanceInPool = this.token1.balanceInPool*this.slidenum/100
-      this.token2BalanceInPool = this.token2.balanceInPool*this.slidenum/100
+      this.token1BalanceInPool = this.token1.balanceInPool * this.slidenum / 100
+      this.token2BalanceInPool = this.token2.balanceInPool * this.slidenum / 100
     },
-    async getSpotPrice (address1, address2, name) {
-      var functionSelector = 'getSpotPrice(address,address)';
+    async getSpotPrice(address1, address2, name) {
+      var functionSelector = 'getSpotPrice(address,address)'
       var parameter = [
         { type: 'address', value: address1 },
         { type: 'address', value: address2 }
       ]
-      let transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter);
+      const transaction = await window.tronWeb.transactionBuilder.triggerConstantContract(this.pair.address, functionSelector, {}, parameter)
       if (transaction) {
         name == 'justPrice' ? this.justPrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals) : this.reversePrice = parseInt(transaction.constant_result[0], 16) / Math.pow(10, this.pair.decimals)
       }
-    },
+    }
   }
 }
 </script>
@@ -473,7 +478,7 @@ color: #0F1730;
             line-height: 0.74rem;
             font-size: 0.35rem;
           }
-        
+
       }
   .mobilerece{
     span{

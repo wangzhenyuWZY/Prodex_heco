@@ -114,10 +114,10 @@
 </template>
 
 <script>
-const Decimal = require('decimal.js');
-import { mapActions, mapState } from "vuex";
+const Decimal = require('decimal.js')
+import { mapActions, mapState } from 'vuex'
 import { TokenData, PairData } from '../../utils/index'
-import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from "../../utils/tronwebFn"
+import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from '../../utils/tronwebFn'
 export default {
   data() {
     return {
@@ -129,7 +129,7 @@ export default {
       lpTotal: 0,
       share: 0,
       tokenList: []
-    };
+    }
   },
   watch: {
     tokenData(list) {
@@ -143,7 +143,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["connectFlag", "walletAddres", 'tokenData', 'pairData', 'dark']),
+    ...mapState(['connectFlag', 'walletAddres', 'tokenData', 'pairData', 'dark'])
   },
   created() {
     this.tokenList = JSON.parse(JSON.stringify(this.tokenData))
@@ -156,15 +156,15 @@ export default {
 
   },
   methods: {
-    init() {//初始化tronweb
-      let that = this
+    init() { // 初始化tronweb
+      const that = this
       this.$initTronWeb().then(function(tronWeb) {
         that.getpairList()
       })
     },
     toPool(item) {
       this.$router.push({
-        name: "Connectbox",
+        name: 'Connectbox',
         params: {
           pair: JSON.stringify(item)
         }
@@ -173,16 +173,16 @@ export default {
     toRemove(item) {
       item.token1.balanceInPool = this.token1Balance
       item.token2.balanceInPool = this.token2Balance
-      sessionStorage.setItem('toRemove', JSON.stringify(item));
+      sessionStorage.setItem('toRemove', JSON.stringify(item))
       this.$router.push({
-        name: "removeLiquidity",
+        name: 'removeLiquidity',
         params: {
           pair: JSON.stringify(item)
         }
       })
     },
     getpairList() {
-      let that = this
+      const that = this
       this.pairList.forEach((item, index) => {
         item.show = false
         getMyBalanceInPool(item).then((res) => {
@@ -192,7 +192,7 @@ export default {
       })
     },
     toggleDrop(item) {
-      let that = this
+      const that = this
       that.pairList.forEach((ktem) => {
         if (ktem.pair !== item.pair) {
           ktem.show = false
@@ -209,11 +209,10 @@ export default {
             that.getBalance(item)
           }
         })
-
       }
     },
     getBalance(item) {
-      let that = this
+      const that = this
       getBalanceInPool(item, item.token1).then((res) => {
         that.token1Balance = Decimal(res).mul(that.share)
       })
@@ -222,13 +221,12 @@ export default {
       })
     },
     requierImg(name, number) {
-      let str;
+      let str
       if (name) {
         try {
           if (number != undefined) {
-            str = name.split('/');
+            str = name.split('/')
             return require('@/assets/img/currency/' + str[number] + '.png')
-
           }
           return require('@/assets/img/currency/' + name + '.png')
         } catch (error) {
@@ -237,9 +235,9 @@ export default {
       } else {
         return require('@/assets/img/currency/avitve.png')
       }
-    },
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

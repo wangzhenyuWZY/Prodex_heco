@@ -73,11 +73,11 @@ export default {
   props: {
     showAlert: {
       type: Boolean,
-      default: false,
+      default: false
     },
     item: {
       type: Number,
-      default: 1,
+      default: 1
     },
     selectType: {
       type: String,
@@ -88,21 +88,21 @@ export default {
     ...mapState(['tokenData', 'pairData']),
     // eslint-disable-next-line vue/return-in-computed-property
     tokenListArr() {
-      let filtername = this.filterName
-      let iSort = this.iSort
+      const filtername = this.filterName
+      const iSort = this.iSort
       if (this.selectType == '') {
         if (this.tokenList && this.tokenList.length > 0) {
           return this.tokenList.filter((el) => {
-            el.name = el.name.toUpperCase();
+            el.name = el.name.toUpperCase()
             return el.name.includes(filtername.toUpperCase())
           })
         }
       } else {
         if (this.pairList && this.pairList.length > 0) {
-          let arry = this.pairList.filter(el => this.selectType == el.token1.name || this.selectType == el.token2.name)
+          const arry = this.pairList.filter(el => this.selectType == el.token1.name || this.selectType == el.token2.name)
           return arry.filter((el) => {
-            el.token1.name = el.token1.name.toUpperCase();
-            el.token2.name = el.token2.name.toUpperCase();
+            el.token1.name = el.token1.name.toUpperCase()
+            el.token2.name = el.token2.name.toUpperCase()
             return el.token1.name.includes(filtername.toUpperCase()) || el.token2.name.includes(filtername.toUpperCase())
           })
         }
@@ -134,13 +134,13 @@ export default {
   },
   methods: {
     checkToken() {
-      let that = this
-      let data = { address: this.newTokenAddress }
+      const that = this
+      const data = { address: this.newTokenAddress }
       getToken(data).then((res) => {
         if (res.data.code == 0) {
           alert('添加成功')
           PairData().then((res) => {
-            that.$store.dispatch('setPairData', res);
+            that.$store.dispatch('setPairData', res)
           })
         } else {
           alert('添加失败')
@@ -166,9 +166,9 @@ export default {
     },
     filter(n) {
       if (this.selectType == '') {
-        return n.name;
+        return n.name
       } else {
-        return this.selectType == n.token1.name ? n.token2.name : n.token1.name;
+        return this.selectType == n.token1.name ? n.token2.name : n.token1.name
       }
     },
     selectClick(e, index) {
@@ -178,7 +178,7 @@ export default {
       } else {
         this.$emit('linkage', e)
       }
-    },
+    }
   }
 
 }
