@@ -2,7 +2,7 @@ module.exports = {
    nav:{
     message:'张三',
     home1:'首页',
-    Exchange:'兑换',
+    Exchange:'交易',
     Pool:'流动池',
     FoxDex:'关于',
     WTRX:'WTRX',
@@ -122,7 +122,7 @@ module.exports = {
     Yol:'您选择的',
     Total:'获得的总',
     sfox:'要存放Abelo_LP代币，请在此处获取',
-    stfe:'获得的总FOX',
+    stfe:'获得的总Abelo',
     syuf:'您无抵押的Abelo_LP',
     sysfl:'您的权益Abelo_LP',
     RLty:'消除流动性页面',
@@ -249,5 +249,9 @@ module.exports = {
   dex9:'销毁',
   unstb1:'取消抵押',
   unstb2:'提取收益',
+  homeb1:'交易',
+  homeb2:'增加流动性',
+  operation:'操作',
+  
  
 }
