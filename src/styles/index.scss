@@ -74,7 +74,7 @@ img{
     border-radius: 32px;
     height: 56px;
     text-align: center;
-    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
+    background: linear-gradient(136deg, #FF4471 0%, #C3259F 100%);
     margin:0 auto;
     padding: 0;
     font-size: 18px;
@@ -89,8 +89,7 @@ img{
 }
 .from_botton:hover ,.from_botton:focus{
     color: #fff ;
-    border-color:#FC6446;
-    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
+    background: linear-gradient(136deg, #E72C59 0%, #B3178F 100%);
 }.from_botton.is-disabled:focus{
     background: #F4F5FA;
 
@@ -163,13 +162,15 @@ img{
     color: #0F1730;
 }
 .green_btn{
-    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
+    
+background: linear-gradient(136deg, #FF4471 0%, #C3259F 100%);
     padding: 0 12px;
     
 }　
 .green_btn:active,.green_btn:focus,.green_btn:hover{
     color: #FFFFFF;
-    background: linear-gradient(122deg, #FA7447 0%, #FE4943 100%);
+    
+background: linear-gradient(136deg, #FF4471 0%, #C3259F 100%);
     border: none;
 }
 .fff_button{
@@ -256,6 +257,10 @@ img{
 // element
 .el-dialog__wrapper{
     overflow: hidden;
+}
+html,body{
+    background:#FFF8F9;
+    font-family: Roboto-Regular, Roboto;
 }
 @media screen and (max-width: 750px) {
     #app{

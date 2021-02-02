@@ -13,7 +13,7 @@
             :disabled ="disabled"
             ref="input"
             @mousewheel.prevent
-            onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))" 
+            onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
             :maxlength="maxlength"
           />
           <div class="input_max" v-if="showmax" @click="setValue">MAX</div>
@@ -24,85 +24,85 @@
 </template>
 
 <script>
-  export default {
-      props: {
+export default {
+  props: {
     lable: {
-      type: [String,Number],
-      default: 0,
+      type: [String, Number],
+      default: 0
     },
     value: {
-      default: "0.0",
+      default: '0.0'
     },
-    placeholder:{
-       type:[String,Number],
-       default:''
+    placeholder: {
+      type: [String, Number],
+      default: ''
     },
-    disabled:{
-        type: Boolean,
-        default: false,
+    disabled: {
+      type: Boolean,
+      default: false
     },
-    maxlength:{
-      type:Number
+    maxlength: {
+      type: Number
     },
     showSelect: {
       type: Boolean,
-      default: true,
+      default: true
     },
     hadelClicks: {
-      default:null
+      default: null
     },
     text: {
       type: String,
-      default: " ",
+      default: ' '
     },
     hideSlect: {
       type: Boolean,
-      default: false,
-    },
-    showmax:{
-      type:Boolean,
       default: false
     },
-    balance:{
-       default:'0'
+    showmax: {
+      type: Boolean,
+      default: false
+    },
+    balance: {
+      default: '0'
     }
   },
   data() {
     return {
       isShow: false,
-      className: "",
-    };
+      className: ''
+    }
   },
   methods: {
     hadelClick(e) {
-        let value = e.target.value+'';
-        if (value.indexOf(".") != -1) {
-          let str = value.split(".");
-            if (str[1].length >8) {
-              value =str[0]+'.' +str[1].slice(0,8);
-              this.$refs.input.value = value;
-            }
+      let value = e.target.value + ''
+      if (value.indexOf('.') != -1) {
+        const str = value.split('.')
+        if (str[1].length > 8) {
+          value = str[0] + '.' + str[1].slice(0, 8)
+          this.$refs.input.value = value
         }
-      this.$emit("input", Number(value));
+      }
+      this.$emit('input', Number(value))
       if (this.hadelClicks) {
-        this.$emit('hadelClick',Number(value));
+        this.$emit('hadelClick', Number(value))
       }
     },
-    setValue () {
-       this.$emit("input", this.balance);
+    setValue() {
+      this.$emit('input', this.balance)
     },
     addClass() {
-      this.className = "open";
+      this.className = 'open'
     },
     selectClick(e) {
-      console.log(e);
+      console.log(e)
     },
     showModel() {
-      this.isShow = !this.isShow;
-      this.className = this.className == "" ? "open" : "";
-    },
-  },
+      this.isShow = !this.isShow
+      this.className = this.className == '' ? 'open' : ''
+    }
   }
+}
 </script>
 <style lang="scss" scoped>
 .from_data {
@@ -115,13 +115,13 @@
     padding-left: 16px;
   }
   .from_input {
-    
+
     .input_lt {
       position: relative;
          display: flex;
          justify-items: center;
          align-items: center;
-         background: #F4F5FA; 
+         background: #F4F5FA;
              border-radius: 16px;
       .input_max{
         width: 56px;
@@ -193,7 +193,7 @@
     }
     .show_size {
       font-family: roboto-mediumitalic;
-      color: #FC6446;
+      color: #05C98E;
     }
   }
   .from_icon {
@@ -219,7 +219,7 @@ background: #F6F7FB;
   flex: 1;
 }
 .globle_input::placeholder{
-  
+
 color: #A6AEB7;
 font-size: 18px;
 }
@@ -264,6 +264,6 @@ font-size: 18px;
     .from_lable{
       font-size: 14px;
     }
-   
+
 }
 </style>

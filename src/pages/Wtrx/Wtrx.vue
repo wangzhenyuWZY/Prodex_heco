@@ -4,45 +4,37 @@
       <div class="wtrx-box">
         <div class="wtrx-box1">
           <div class="wtrx-left">
-            <samp class="trx">TRX <img class="wtrx_img"
-                   src="@/assets/img/icon_arrow_right.svg"
-                   alt=""> WTRX</samp>
-            <div class="trx-a"> <samp class="trx-a1">TRX{{$t('Exc.Balance')}} :</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
-            <input type="number"
-                   v-model="trxNum"
-                   :disabled="inputdisabled1"
-                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                  :placeholder= "$t('wtrx.petao')">
-            <div class="trx-b"> <samp class="trx-b1">{{$t('wtrx.yog')}} WTRX:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
+            <samp class="trx">ETH <img class="wtrx_img" src="@/assets/img/icon_arrow_right.svg" alt=""> WETH</samp>
+            <div class="trx-a"> <samp class="trx-a1">ETH{{$t('Exc.Balance')}} :</samp><samp class="trx-a2"> {{trxBalance}}</samp> </div>
+            <input
+                type="number"
+                v-model="trxNum"
+                :disabled="inputdisabled1"
+                onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
+                :placeholder="$t('wtrx.petao')">
+            <div class="trx-b"> <samp class="trx-b1">{{$t('wtrx.yog')}} WETH:</samp><samp class="wtrx-b2">{{trxNum?trxNum:'0'}}</samp></div>
             <div class="wtr-btn">
-              <el-button class="from_botton"
-                         :loading="btnLoading1"
-                         :disabled="btnDisabled1"
-                         @click="changeWtrx">{{$t('confirm')}}</el-button>
+              <el-button class="from_botton" :loading="btnLoading1" :disabled="btnDisabled1" @click="changeWtrx">{{$t('confirm')}}</el-button>
             </div>
           </div>
           <div class="wtrx-right">
-            <samp class="wtrx1">WTRX <img class="wtrx_img"
-                   src="@/assets/img/icon_arrow_right.svg"
-                   alt=""> TRX</samp>
-            <div class="wtrx-a"> <samp class="wtrx-a1">WTRX {{$t('Exc.Balance')}} :</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
-            <input type="number"
-                   v-model="wtrxNum"
-                   :disabled="inputdisabled1"
-                   onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
-                   :placeholder= "$t('wtrx.petao1')">
-            <div class="wtrx-b"> <samp class="wtrx-b1">{{$t('wtrx.yog')}} TRX:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
+            <samp class="wtrx1">WETH <img class="wtrx_img" src="@/assets/img/icon_arrow_right.svg" alt=""> ETH</samp>
+            <div class="wtrx-a"> <samp class="wtrx-a1">WETH {{$t('Exc.Balance')}} :</samp><samp class="wtrx-a2">{{wtrxBalance}}</samp> </div>
+            <input
+type="number"
+v-model="wtrxNum"
+:disabled="inputdisabled1"
+onKeypress="return (/[\d,.]/.test(String.fromCharCode(event.keyCode)))"
+                   :placeholder="$t('wtrx.petao1')">
+            <div class="wtrx-b"> <samp class="wtrx-b1">{{$t('wtrx.yog')}} ETH:</samp><samp class="wtrx-b2">{{wtrxNum?wtrxNum:0}}</samp></div>
             <div class="wtr-btn ">
-              <el-button class="from_botton"
-                         :loading="btnLoading2"
-                         :disabled="btnDisabled2"
-                         @click="getAllowance">{{$t('confirm')}}</el-button>
+              <el-button class="from_botton" :loading="btnLoading2" :disabled="btnDisabled2" @click="getAllowance">{{$t('confirm')}}</el-button>
             </div>
           </div>
         </div>
 
         <div class="wtrx-bottom">
-          <p>{{$t('wtrx.Whatis')}} WTRX?</p>
+          <p>{{$t('wtrx.Whatis')}} WETH?</p>
           <p>{{$t('wtrx.titn')}}
             <br> {{$t('wtrx.titn1')}}
           </p>
@@ -51,20 +43,18 @@
         </div>
       </div>
     </div>
-    <valert
-      :isShow="showAlert"
-      :alertType='typeName'
-      :url="typeUrl"
-      @close ='showAlert=false'
-    />
+    <valert :isShow="showAlert" :alertType='typeName' :url="typeUrl" @close='showAlert=false' />
   </div>
 </template>
 <script>
 import ipConfig from '../../config/ipconfig.bak'
-import { approved, allowance,getConfirmedTransaction } from '../../utils/tronwebFn'
+import { Approved, Allowance } from '../../utils/tronwebFn'
 import valert from '../Pool/valret'
+import {WETH} from '../../api/deployments'
+import Web3 from 'web3'
+import BigNumber from 'bignumber.js'
 export default {
-  data () {
+  data() {
     return {
       wtrxContract: null,
       trxBalance: 0,
@@ -78,216 +68,184 @@ export default {
       inputdisabled2: true,
       btnLoading1: false,
       btnLoading2: false,
-      proNmae:'Confirm',
-      showAlert:false,
-      typeName:'success',
-      stup:1,
-      typeUrl:''
-    };
+      proNmae: 'Confirm',
+      showAlert: false,
+      typeName: 'success',
+      stup: 1,
+      typeUrl: ''
+    }
   },
-  components:{
+  components: {
     valert
   },
   computed: {
-
+    myAddress(){
+      return this.$store.state.app.defaultAccout;
+    }
   },
   watch: {
-    trxNum (value) {
+    trxNum(value) {
       this.trxNum = this.inputType(this.trxNum)
       if (value != '') {
-        if (value <= parseInt(this.trxBalance)) {
-          this.btnDisabled1 = false;
-          return;
+        if (parseFloat(value) <= parseFloat(this.trxBalance)) {
+          this.btnDisabled1 = false
+          return
         }
         this.btnDisabled1 = true
       } else {
-        this.btnDisabled1 = true;
+        this.btnDisabled1 = true
       }
     },
-    wtrxNum (value) {
+    wtrxNum(value) {
       this.wtrxNum = this.inputType(this.wtrxNum)
       if (value != '') {
-        if (value <= parseInt(this.wtrxBalance)) {
-          this.btnDisabled2 = false;
-          return;
+        if (parseFloat(value) <= parseFloat(this.wtrxBalance)) {
+          this.btnDisabled2 = false
+          return
         }
         this.btnDisabled2 = true
       } else {
-        this.btnDisabled2 = true;
+        this.btnDisabled2 = true
+      }
+    },
+    myAddress(address){
+      if(address){
+        this.gettrx()
+        this.getWtrx()
       }
     }
   },
-  created () {
-    this.init();
+  created() {
+    
+  },
+  mounted() {
+    if(this.$store.state.app.defaultAccout){
+      this.gettrx()
+      this.getWtrx()
+    }
   },
   methods: {
-    init () {//初始化tronweb
-      let that = this
-      this.$initTronWeb().then(function (tronWeb) {
-        that.gettrx();
-        that.getWtrxContract()
+    gettrx() {
+      var that = this
+      web3.eth.getBalance(this.$store.state.app.defaultAccout).then(res=>{
+        that.trxBalance = Web3.utils.fromWei(res);
       })
     },
-    gettrx () {
-      var that = this;
-      window.tronWeb.trx.getAccount(window.tronWeb.defaultAddress.base58).then(function (account) {
-        that.trxBalance = window.tronWeb.fromSun(account.balance)
-      });
+    async getWtrx() { // 获取wtrxbalance
+      const that = this
+      let BFactoryContract = new web3.eth.Contract(WETH.abi, WETH.address)
+      BFactoryContract.methods.balanceOf(this.$store.state.app.defaultAccout).call().then((result)=>{
+        that.wtrxBalance = Web3.utils.fromWei(result);
+        that.inputdisabled1 = false
+        that.inputdisabled2 = false
+      })
     },
-    async getWtrxContract () {//链接wtrx合约
-      console.log('ipConfig.wtrxAddress==========='+ipConfig.wtrxAddress)
-      this.wtrxContract = await window.tronWeb.contract().at(ipConfig.wtrxAddress);
-      if (this.wtrxContract) {
-        this.getWtrx()
-      }
+    changeWtrx() { // 兑换wtrx
+      const that = this
+      this.loading1(1)
+      web3.eth.sendTransaction({
+          from: this.$store.state.app.defaultAccout,
+          to: WETH.address,
+          value:web3.utils.toWei(this.trxNum) 
+      })
+      .then(function(receipt){
+          that.getWtrx()
+          that.gettrx()
+          that.loading1()
+      })
     },
-    async getWtrx () {//获取wtrxbalance
-      let that = this
-      try {
-        let res = await that.wtrxContract["balanceOf"](window.tronWeb.defaultAddress.base58).call();
-        that.wtrxBalance = window.tronWeb.fromSun(res);
-        this.inputdisabled1 = false
-        this.inputdisabled2 = false
-      } catch (error) {
-        console.log(error);
-      }
-    },
-    async changeWtrx () {//兑换wtrx
-      let that = this;
-      this.loading1(1);
-      try {
-        let res = await that.wtrxContract["deposit"]().send({
-          feeLimit: 100000000,
-          callValue: window.tronWeb.toSun(that.trxNum),
-          tokenId: 0,
-          shouldPollResponse: true
-        });
+    getAllowance() { // 查询授权
+      const that = this
+      that.loading2(1)
+      Allowance(WETH, WETH.address).then((res) => {
         if (res) {
-          this.getWtrx();
-          this.gettrx();
-        }
-        this.loading1();
-      } catch (error) {
-        if (error == "Confirmation declined by user") {
-           that.$message.success('success');
-        }
-        this.loading1();
-        console.log(error);
-      }
-    },
-    getAllowance () {//查询授权
-      let that = this;
-      that.loading2(1);
-      allowance(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then((res) => {
-        if (res) {
-          that.approveBalance = parseInt(res._hex?res._hex:res.constant_result[0], 16)
-          if (that.approveBalance == 0 || window.tronWeb.toSun(this.wtrxNum)>that.approveBalance) {
+          that.approveBalance = web3.utils.fromWei(res)
+          if (that.approveBalance == 0 || this.wtrxNum > that.approveBalance) {
             // alert('    ');
-            if (that.proNmae=='approved') {
-                  that.loading2(1);
-                  // that.showAlert = true;
-                  approved(ipConfig.wtrxAddress, ipConfig.wtrxAddress).then(res=>{
-                     console.log(res);
-                      that.proNmae = 'Confirm';
-                      that.loading2(0);
-                  }).catch(err=>{
-                    that.$message.error('privilege grant failed');
-                    that.loading2(0);
-                  })
+            if (that.proNmae == 'approved') {
+              that.loading2(1)
+              // that.showAlert = true;
+              Approved(WETH.abi,WETH.address,WETH.address).then(res => {
+                console.log(res)
+                that.proNmae = 'Confirm'
+                that.loading2(0)
+              }).catch(() => {
+                that.$message.error('privilege grant failed')
+                that.loading2(0)
+              })
             } else {
-             
-              if ( that.stup ==1 ) {
-                    that.proNmae = 'approved';
-                    that.loading2(0);
-                     that.stup+=1;
+              if (that.stup == 1) {
+                that.proNmae = 'approved'
+                that.loading2(0)
+                that.stup += 1
               } else {
-                  that.changeTrx();
+                that.changeTrx()
               }
-             
             }
-
           } else {
             that.changeTrx()
           }
         } else {
-          that.loading2();
+          that.loading2()
         }
       })
     },
-    async changeTrx () {//兑换trx
-      let that = this;
-      let contractAddress = ipConfig.wtrxAddress;
-      let functionSelector = 'withdraw(uint256)';
-      let options = {};
-       that.loading2(1);
-      let parameter = [{ type: 'uint256', value: window.tronWeb.toSun(this.wtrxNum) }];
+    async changeTrx() { // 兑换trx
+      const that = this
+      that.loading2(1)
+      let withdrawNum = new BigNumber(this.wtrxNum)
+      withdrawNum = withdrawNum.times(Math.pow(10,18))
       try {
-        let transaction = await window.tronWeb.transactionBuilder.triggerSmartContract(contractAddress, functionSelector, options, parameter);
-        if (!transaction.result || !transaction.result.result) {
-          that.loading2(0);
-          return console.error('Unknown error: ' + transaction, null, 2);
-        }
-        window.tronWeb.trx.sign(transaction.transaction).then(function (signedTransaction) {
-          window.tronWeb.trx.sendRawTransaction(signedTransaction).then(function (res) {
-            that.showAlert = true;
-            that.typeUrl = 'https://shasta.tronscan.org/#/transaction/'+res.txid;
-            getConfirmedTransaction(res.txid).then((res1)=>{
-              console.log(res1);
-                 that.$message.success(this.$t('aut'))
-                if (that.stup != 1) {
-                    that.proNmae = 'Confirm';
-                }
-                that.stup = 1;
-                that.getWtrx();
-                that.gettrx();
-                that.loading2(0);
-            })
-        
-           
-          });
-        });
-      } catch (error) {
-        that.loading2(0);
-        console.log(error);
+        let WETHContract = new web3.eth.Contract(WETH.abi, WETH.address)
+        WETHContract.methods.withdraw(withdrawNum.toFixed()).send({from:this.$store.state.app.defaultAccout}).then((result)=>{
+          that.$message.success(this.$t('aut'))
+          if (that.stup != 1) {
+            that.proNmae = 'Confirm'
+          }
+          that.stup = 1
+          that.getWtrx()
+          that.gettrx()
+          that.loading2(0)
+        })
+      }catch (error) {
+        alert(error)
       }
-
+      
     },
-    loading1 (n) {
+    loading1(n) {
       if (n) {
-        this.btnLoading1 = true;
-        this.btnDisabled1 = true;
+        this.btnLoading1 = true
+        this.btnDisabled1 = true
       } else {
-        this.btnLoading1 = false;
-        this.btnDisabled1 = false;
+        this.btnLoading1 = false
+        this.btnDisabled1 = false
       }
     },
-    loading2 (n) {
+    loading2(n) {
       if (n) {
-        this.btnLoading2 = true;
-        this.btnDisabled2 = true;
+        this.btnLoading2 = true
+        this.btnDisabled2 = true
       } else {
-        this.btnLoading2 = false;
-        this.btnDisabled2 = false;
+        this.btnLoading2 = false
+        this.btnDisabled2 = false
       }
-
     },
-    inputType (n) {
-      if (n.indexOf(".") != -1) {
-        let str = n.split(".");
+    inputType(n) {
+      if (n.indexOf('.') != -1) {
+        const str = n.split('.')
         if (str[1].length > 8) {
-          return n = str[0] + '.' + str[1].slice(0, 8);
+          n = str[0] + '.' + str[1].slice(0, 8)
+          return n
         }
       }
-      return n;
+      return n
     }
   },
-  mounted () {
-  }
+  
 }
 </script>
 
 <style lang="scss" scoped>
-
 .wtrx {
   color: #0f1730;
 }
@@ -327,7 +285,6 @@ export default {
     font-weight: 500;
     color: #0f1730;
     line-height: 22px;
- 
   }
   .trx-a {
     margin-top: 40px;
@@ -416,7 +373,7 @@ export default {
       .wtrx-a2 {
         height: 18px;
         font-size: 18px;
-        font-family:roboto;
+        font-family: roboto;
         font-weight: 400;
         color: #0f1730;
         line-height: 18px;
@@ -479,11 +436,11 @@ export default {
   color: #0f1730;
 }
 .wtrx-bottom p:nth-child(2) {
-  font-family:roboto;
+  font-family: roboto;
   font-weight: 400;
   margin-top: 8px;
   font-size: 16px;
-  color: #A2A5AE;
+  color: #a2a5ae;
   text-align: center;
   line-height: 22px;
 }
@@ -500,7 +457,7 @@ export default {
   font-weight: 400;
   margin-top: 8px;
   font-size: 16px;
-  color: #A2A5AE;
+  color: #a2a5ae;
   text-align: center;
   line-height: 22px;
 }
@@ -519,7 +476,6 @@ export default {
 
 @media screen and (max-width: 750px) {
   .wtrx {
-  
     .wtrx-box1 {
       flex-wrap: wrap;
       .wtrx-right {
@@ -532,7 +488,7 @@ export default {
             font-size: 0.37rem;
           }
           .wtrx-a2 {
-          font-size: 0.37rem;
+            font-size: 0.37rem;
           }
         }
         .trx-b {
@@ -545,43 +501,43 @@ export default {
         width: 9rem;
         margin-bottom: 20px;
         font-size: 0.5rem;
-        .trx{
-              // font-size: 0.45rem;
+        .trx {
+          // font-size: 0.45rem;
         }
         .trx-b {
           margin-top: 1rem;
         }
         .trx-a {
           margin-top: 20px;
-          .trx-a1{
+          .trx-a1 {
             font-size: 0.37rem;
           }
-              .trx-a2 {
-          font-size: 0.37rem;
-        }
+          .trx-a2 {
+            font-size: 0.37rem;
+          }
         }
         .trx-a2 {
           font-size: 0.37rem;
         }
       }
     }
-    .wtrx-box{
-        height: 100%;
-            padding-top: 0;
-        // padding: 0 0.4rem;
+    .wtrx-box {
+      height: 100%;
+      padding-top: 0;
+      // padding: 0 0.4rem;
     }
-    .wtrx-bottom{
+    .wtrx-bottom {
       width: 100%;
       font-size: 0.4rem;
-      p:nth-child(2),p:nth-child(4){
-          font-size: 0.3rem;
-          padding: 0 0.5rem;
+      p:nth-child(2),
+      p:nth-child(4) {
+        font-size: 0.3rem;
+        padding: 0 0.5rem;
       }
-      p:nth-child(4){
+      p:nth-child(4) {
         padding-bottom: 1rem;
       }
-      p{
-        
+      p {
       }
     }
   }

@@ -6,27 +6,28 @@
         <slot name="body"></slot>
     </div>
   </div>
-      <slot name="footer" ></slot>
+  <div class="footer1">
+      <slot name="footer" ></slot></div>
   </div>
 </template>
 
 <script>
 export default {
-  props:{
-    top:{
-      type:String,
-      default:'72'
+  props: {
+    top: {
+      type: String,
+      default: '72'
     },
-    pdd:{
-      type:Boolean,
-      default:false
+    pdd: {
+      type: Boolean,
+      default: false
     },
-    mobile:{
-      type:Boolean,
-      default:false
+    mobile: {
+      type: Boolean,
+      default: false
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -41,7 +42,7 @@ export default {
   padding-bottom: 230px;
 }
 .toal_bg {
-  
+
   background: #FFFFFF;
   border-radius: 20px;
   box-sizing: border-box;
@@ -50,9 +51,12 @@ export default {
     padding: 0 20px;
   }
 }
+.footer1{
+  margin-top: -35px;
+}
 
 @media screen and (max-width: 750px)  {
-  
+
   .totalModel{
     max-width: 100%;
     padding-bottom: 20px;
@@ -60,7 +64,7 @@ export default {
         padding: 0 0.35rem;
       }
   }
-  
+
     .setpdd{
       // padding: 0 0.4rem ;
       // padding-left: 0.4rem;
@@ -70,9 +74,9 @@ export default {
    padding-left: 0.4rem;
   padding-right: 0.4rem;
 }
-    
+
 }
-@media screen and (max-width: 375px)  { 
+@media screen and (max-width: 375px)  {
 
 }
 </style>

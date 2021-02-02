@@ -17,93 +17,93 @@
 </template>
 
 <script>
-  export default {
-    props: {
-      lable: {
-        type: [String,Number,Boolean],
-        default: "0",
-      },
-      value: {
-        default: "0.0",
-      },
-      showSelect: {
-        type: Boolean,
-        default: false,
-      },
-      text: {
-        type: String,
-        default: "",
-      },
-      imgUrl: {
-        type: String,
-        default: null,
-      },
-      item: {
-        type: String,
-        default: "",
-      },
-      balance: {
-        type: [Number,String],
-        default: 0,
-      },
-      hideSlect: {
-        type: Boolean,
-        default: false,
-      },
+export default {
+  props: {
+    lable: {
+      type: [String, Number, Boolean],
+      default: '0'
     },
+    value: {
+      default: '0.0'
+    },
+    showSelect: {
+      type: Boolean,
+      default: false
+    },
+    text: {
+      type: String,
+      default: ''
+    },
+    imgUrl: {
+      type: String,
+      default: null
+    },
+    item: {
+      type: String,
+      default: ''
+    },
+    balance: {
+      type: [Number, String],
+      default: 0
+    },
+    hideSlect: {
+      type: Boolean,
+      default: false
+    }
+  },
   data() {
     return {
       isShow: false,
-      className: "",
+      className: '',
       tokenList: [],
-      itemToken:{}
-    };
+      itemToken: {}
+    }
   },
   watch: {
     text: {
-    handler(newName, oldName) {
-      console.log('obj.a changed');
-    },
-    deep: true
-  }
+      handler(newName, oldName) {
+        console.log('obj.a changed')
+      },
+      deep: true
+    }
   },
-  created(){
-    console.log('imgurl=====',this.imgUrl)
+  created() {
+    console.log('imgurl=====', this.imgUrl)
   },
   methods: {
-    requierImg () {
-        if (this.text) {
-           try {
-               return require('@/assets/img/currency/'+this.text+'.png')
-           } catch (error) {
-              return require('@/assets/img/currency/avitve.png')
-           }
+    requierImg() {
+      if (this.text) {
+        try {
+          return require('@/assets/img/currency/' + this.text + '.png')
+        } catch (error) {
+          return require('@/assets/img/currency/avitve.png')
         }
+      }
     },
     hadelClick(e) {
-      this.$emit("input", e.target.value);
+      this.$emit('input', e.target.value)
     },
     ddd() {
       alert(2222)
     },
     addClass() {
-      this.className = "open";
+      this.className = 'open'
     },
     iconHlep() {
 
     },
-     selectClick(e) {
+    selectClick(e) {
       e.item = this.item
-      this.$emit('change',e)
-      console.log(e.address);
+      this.$emit('change', e)
+      console.log(e.address)
     },
     showModel() {
       // this.isShow = !this.isShow;
       // this.className = this.className == "" ? "open" : "";
       this.$emit('click')
-    },
-  },
+    }
   }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -143,12 +143,12 @@
           }
         }
       }
- 
+
       .open {
         max-height: 100%;
         transition: max-height 0.1s ease-in;
         transform-origin: 50% 0;
-        
+
       }
     }
       .from_select {
@@ -173,12 +173,12 @@
     }
     .show_size {
       font-family: roboto;
-      color: #FC6446;
+      color: #05C98E;
     }
   }
   .from_icon {
     display: inline-block;
-   
+
     border-radius: 50%;
     img{
         width: 32px;
@@ -200,9 +200,9 @@
     transform: translateX(-50%);
     overflow: hidden;
     .balance_size{
-      
+
         color: #0F1730;
-    
+
         // position: absolute;
     }
     .pads{
@@ -239,7 +239,7 @@
         left: 0;
         transform: translateX(-4.6rem);
       }
-   
+
     }
      .from_select{
       padding-right: 0.1rem;
@@ -247,7 +247,7 @@
         width: 0.5rem;
         height: auto;
       }
-      
+
     }
 }
 </style>

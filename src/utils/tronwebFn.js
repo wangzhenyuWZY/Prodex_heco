@@ -1,168 +1,108 @@
-import { Message } from 'element-ui';
-const initTronWeb = () => {//初始化tronweb
-    return new Promise(function (resolve, reject) {
-        let tries = 0;
-        const loadFinish = function () {
-            resolve(window.tronWeb);
-        };
-        let timer = setInterval(function () {
-            if (window.tronWeb) {
-                clearInterval(timer);
-                if (!window.tronWeb.defaultAddress.base58) {
-                    window.tronWeb.on('addressChanged', function () {
-                        return loadFinish();
-                    });
-                } else {
-                    return loadFinish();
-                }
-            }
-            if (tries > 10) {
-                clearInterval(timer);
-                reject();
-            }
-        }, 100);
-    });
+import store from '../store/index'
+import {BPool} from '../api/deployments'
+/**
+ * 查询授权
+ * @param {合约} Contract 
+ * @param {abi} ABI
+ */
+const Allowance = (Contract,Spender) => {
+  return new Promise(function(resolve, reject) {
+      const contract = new web3.eth.Contract(Contract.abi, Contract.address)
+      let defaultAccout = store.state.app.defaultAccout
+      contract.methods.allowance(defaultAccout,Spender).call().then((res)=>{
+          resolve(res)
+      })
+  })
 }
-const allowance = (coinAddress,contractAddress) => {//查询授权
-    return new Promise(function (resolve, reject) {
-        try {
-            window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["allowance"](window.tronWeb.defaultAddress.base58, contractAddress).call().then((res)=>{
-                    resolve(res)
-                })
-            })
-        } catch (error) {
-            console.log(error);
-            reject()
-        }
+/**
+ * 授权
+ * @param {合约ABI} ABI 
+ * @param {合约地址} ADDRESS 
+ * @param {合约地址}
+ */
+const Approved = (ABI,ADDRESS,Spender) => {
+  return new Promise(function(resolve, reject) {
+    const contract = new web3.eth.Contract(ABI, ADDRESS)
+    let defaultAccout = store.state.app.defaultAccout
+    contract.methods.approve(Spender,'100000000000000000000000000').send({from:defaultAccout}).then((result)=>{
+      resolve(result)
     })
+  })
 }
-const bPoolAllowance = (coinAddress,contractAddress) => {//BPool查询授权
-    return new Promise(function (resolve, reject) {
-        try {
-            var functionSelector = 'allowance(address,address)';
-            var parameter = [
-                {type: 'address', value: window.tronWeb.defaultAddress.base58},
-                {type: 'address', value: contractAddress}
-            ]
-            window.tronWeb.transactionBuilder.triggerConstantContract(coinAddress,functionSelector,{}, parameter).then((transaction)=>{
-                resolve(transaction)
-            })
-        } catch (error) {
-            console.log(error);
-            reject()
-        }
-    })
+/**
+ * 查询精度
+ * @param {合约地址} address 
+ * @param {abi} ABI
+ */
+const Decimals = (ABI,ADDRESS) => {
+  return new Promise(function(resolve, reject) {
+      const contract = new web3.eth.Contract(ABI, ADDRESS)
+      contract.methods.decimals().call().then((res)=>{
+          console.log(res)
+          resolve(res)
+      })
+  })
 }
-// const Web3Utils = require('web3');
-// const MAX = Web3Utils.utils.toTwosComplement(-1);
-const approved = (coinAddress,contractAddress) => {//授权
-    return new Promise(function (resolve, reject) {
-        try {
-            // console.log('MAX================'+MAX)
-            window.tronWeb.contract().at(coinAddress).then((Contract)=>{
-                Contract["approve"](contractAddress,'100000000000000000000000000').send({shouldPollResponse:true}).then((res)=>{
-                    if(res){
-                        resolve(res);
-                    }
-                })
-            })
-        } catch (error) {
-            reject(0)
-            console.log(error);
-        }
-    })
-}
-const decimals = (address) => {//查询精度
-    return new Promise(function (resolve, reject) {
-        try {
-            window.tronWeb.contract().at(address).then((Contract)=>{
-                Contract["decimals"]().call().then((res)=>{
-                    if(res){
-                        resolve(res);
-                    }
-                })
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    })
-}
-const getConfirmedTransaction = (id) => {//轮询获取交易信息
-    return new Promise(function (resolve, reject) {
-        try {
-            var interval = window.setInterval(()=>{
-                window.tronWeb.trx.getTransactionInfo(id).then((res)=>{
-                    if(res.contractResult){
-                        clearInterval(interval)
-                        console.log(res)
-                        resolve(res);
-                    }
-                })
-            },2000)
-        } catch (error) {
-            console.log(error);
-        }
-    })
+const getConfirmedTransaction = (id) => { // 轮询获取交易信息
+  return new Promise(function(resolve, reject) {
+    try {
+      var interval = window.setInterval(() => {
+        window.tronWeb.trx.getTransactionInfo(id).then((res) => {
+          if (res.contractResult) {
+            clearInterval(interval)
+            console.log(res)
+            resolve(res)
+          }
+        })
+      }, 2000)
+    } catch (error) {
+      console.log(error)
+    }
+  })
 }
 
-const getBalanceInPool = (pair,coin) =>{//获取单个币种在Pool中的余额
-    return new Promise(function (resolve, reject) {
-        var functionSelector = 'getBalance(address)';
-        var parameter = [
-            {type: 'address', value: coin.address}
-        ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-            let tokenBalanceInPool = parseInt(transaction.constant_result[0],16)/Math.pow(10,coin.decimals)
-            resolve(tokenBalanceInPool);
-        })
+const getBalanceInPool = (pair, coin) => { // 获取单个币种在Pool中的余额
+  return new Promise(function(resolve, reject) {
+    const contract = new web3.eth.Contract(BPool.abi, pair.address)
+    contract.methods.getBalance(coin.address).call().then((result)=>{
+      const tokenBalanceInPool = result / Math.pow(10, coin.decimals)
+      resolve(tokenBalanceInPool)
     })
+  })
 }
-const getMyBalanceInPool = (pair) =>{//获取Pool中我的LPtoken余额
-    return new Promise(function (resolve, reject) {
-        var functionSelector = 'balanceOf(address)';
-        var parameter = [
-            {type: 'address', value: window.tronWeb.defaultAddress.base58}
-        ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-            let myBalanceInPool = parseInt(transaction.constant_result[0],16)
-            resolve(myBalanceInPool);
-        })
+const getMyBalanceInPool = (pair) => { // 获取Pool中我的LPtoken余额
+  return new Promise(function(resolve, reject) {
+    const contract = new web3.eth.Contract(BPool.abi, pair.address)
+    let defaultAccout = store.state.app.defaultAccout
+    contract.methods.balanceOf(defaultAccout).call().then((result)=>{
+      resolve(result)
     })
+  })
 }
-const getLpBalanceInPool = (pair) =>{//获取LPtoken总额
-    return new Promise(function (resolve, reject) {
-        var functionSelector = 'totalSupply()';
-        var parameter = []
-        window.tronWeb.transactionBuilder.triggerConstantContract(pair.address,functionSelector,{}, parameter).then((transaction)=>{
-            let lpTotal = parseInt(transaction.constant_result[0],16)
-            resolve(lpTotal);
-        })
+const getLpBalanceInPool = (pair) => { // 获取LPtoken总额
+  return new Promise(function(resolve, reject) {
+    const contract = new web3.eth.Contract(BPool.abi, pair.address)
+    contract.methods.totalSupply().call().then((result)=>{
+      resolve(result)
     })
+  })
 }
-const getTokenDenormalizedWeight = (coinAddress,contractAddress) => {//获取token在交易对中的权重
-    return new Promise(function (resolve, reject) {
-        var functionSelector = 'getDenorm(address)';
-        var parameter = [
-            { type: 'address', value: coinAddress }
-        ]
-        window.tronWeb.transactionBuilder.triggerConstantContract(contractAddress, functionSelector, {}, parameter).then((transaction)=>{
-            if (transaction) {
-                let denormalizedWeight = transaction.constant_result[0]
-                resolve(denormalizedWeight)
-            }
-        })
+const getTokenDenormalizedWeight = (coinAddress, contractAddress) => { // 获取token在交易对中的权重
+  return new Promise(function(resolve, reject) {
+    const contract = new web3.eth.Contract(BPool.abi, contractAddress)
+    contract.methods.getDenorm(coinAddress).call().then((result)=>{
+      resolve(result)
     })
+  })
 }
 export {
-    approved,
-    decimals,
-    getConfirmedTransaction,
-    allowance,
-    getBalanceInPool,
-    getMyBalanceInPool,
-    getLpBalanceInPool,
-    bPoolAllowance,
-    getTokenDenormalizedWeight
+  Approved,
+  Decimals,
+  getConfirmedTransaction,
+  Allowance,
+  getBalanceInPool,
+  getMyBalanceInPool,
+  getLpBalanceInPool,
+  getTokenDenormalizedWeight
 }
-export default initTronWeb;
+

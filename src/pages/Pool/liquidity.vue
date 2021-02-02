@@ -1,5 +1,5 @@
 <template>
-  <div class="pool-box" :class="dark?'dark':''">
+  <div class="pool-box">
     <div class="pool_bg clearfix">
       <div class="pool-box1">
         <p>{{$t('pool.Lpr')}}</p>
@@ -114,10 +114,9 @@
 </template>
 
 <script>
-const Decimal = require('decimal.js');
-import { mapActions, mapState } from "vuex";
-import { TokenData, PairData } from '../../utils/index'
-import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from "../../utils/tronwebFn"
+const Decimal = require('decimal.js')
+import { mapActions, mapState } from 'vuex'
+import { getBalanceInPool, getMyBalanceInPool, getLpBalanceInPool } from '../../utils/tronwebFn'
 export default {
   data() {
     return {
@@ -128,8 +127,17 @@ export default {
       myBalanceInPool: 0,
       lpTotal: 0,
       share: 0,
-      tokenList: []
-    };
+      tokenList: [],
+      connectFlag:true
+    }
+  },
+  computed: {
+    pairData(){
+      return this.$store.state.app.pairData;
+    },
+    tokenData(){
+      return this.$store.state.app.tokenData;
+    },
   },
   watch: {
     tokenData(list) {
@@ -138,33 +146,24 @@ export default {
     pairData(list) {
       this.pairList = JSON.parse(JSON.stringify(list))
       if (this.pairList && this.pairList.length > 0) {
-        this.init()
+        this.getpairList()
       }
     }
-  },
-  computed: {
-    ...mapState(["connectFlag", "walletAddres", 'tokenData', 'pairData', 'dark']),
   },
   created() {
     this.tokenList = JSON.parse(JSON.stringify(this.tokenData))
     this.pairList = JSON.parse(JSON.stringify(this.pairData))
     if (this.pairList && this.pairList.length > 0) {
-      this.init()
+      this.getpairList()
     }
   },
   mounted() {
 
   },
   methods: {
-    init() {//初始化tronweb
-      let that = this
-      this.$initTronWeb().then(function(tronWeb) {
-        that.getpairList()
-      })
-    },
     toPool(item) {
       this.$router.push({
-        name: "Connectbox",
+        name: 'Connectbox',
         params: {
           pair: JSON.stringify(item)
         }
@@ -173,26 +172,27 @@ export default {
     toRemove(item) {
       item.token1.balanceInPool = this.token1Balance
       item.token2.balanceInPool = this.token2Balance
-      sessionStorage.setItem('toRemove', JSON.stringify(item));
+      sessionStorage.setItem('toRemove', JSON.stringify(item))
       this.$router.push({
-        name: "removeLiquidity",
+        name: 'removeLiquidity',
         params: {
           pair: JSON.stringify(item)
         }
       })
     },
     getpairList() {
-      let that = this
+      const that = this
       this.pairList.forEach((item, index) => {
         item.show = false
         getMyBalanceInPool(item).then((res) => {
           item.myBalanceInPool = Decimal(res).div(Math.pow(10, 18)).toFixed(6).toString()
           that.$set(that.pairList, index, item)
         })
+        console.log(that.pairList)
       })
     },
     toggleDrop(item) {
-      let that = this
+      const that = this
       that.pairList.forEach((ktem) => {
         if (ktem.pair !== item.pair) {
           ktem.show = false
@@ -209,11 +209,10 @@ export default {
             that.getBalance(item)
           }
         })
-
       }
     },
     getBalance(item) {
-      let that = this
+      const that = this
       getBalanceInPool(item, item.token1).then((res) => {
         that.token1Balance = Decimal(res).mul(that.share)
       })
@@ -222,13 +221,12 @@ export default {
       })
     },
     requierImg(name, number) {
-      let str;
+      let str
       if (name) {
         try {
           if (number != undefined) {
-            str = name.split('/');
+            str = name.split('/')
             return require('@/assets/img/currency/' + str[number] + '.png')
-
           }
           return require('@/assets/img/currency/' + name + '.png')
         } catch (error) {
@@ -237,9 +235,9 @@ export default {
       } else {
         return require('@/assets/img/currency/avitve.png')
       }
-    },
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

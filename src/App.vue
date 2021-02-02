@@ -6,57 +6,59 @@
 </template>
 
 <script>
-import Vue from 'vue';
 import navBar from './components/common/Navbar'
-import {mapActions} from 'vuex'
-import initTronWeb from './utils/tronwebFn'
-import { TokenData,PairData } from './utils/index'
+import { mapActions } from 'vuex'
+import { TokenData, PairData } from './utils/index'
+import Web3 from 'web3'
 export default {
   name: 'App',
-  components:{
+  components: {
     navBar
   },
   created() {
-    this.init();
-    TokenData().then((res)=>{
-      this.$store.dispatch('setTokenData', res);
+    if (typeof web3 !== 'undefined') {
+        web3 = new Web3(web3.currentProvider);
+    } else {
+        web3 = new Web3('https://kovan.infura.io/v3/58c5c1771340434488786a1d5e8ac86f')
+    }
+    this.init()
+    TokenData().then((res) => {
+      this.$store.state.app.tokenData = res
     })
-    PairData().then((res)=>{
-      this.$store.dispatch('setPairData', res);
+    PairData().then((res) => {
+      this.$store.state.app.pairData = res
     })
   },
   methods: {
-  ...mapActions(['connectWallett']),
-     async init () {
-       this.$initTronWeb().then((tronWeb)=> {
-          this.connectWallett()
-      })
-  }
+    async init(){
+      const accounts = await ethereum.enable() 
+      if(accounts && accounts.length>0){
+          this.$store.state.app.defaultAccout = accounts[0]
+      }
+    }
 
-  },
+  }
 
 }
 </script>
 
 <style lang="scss" >
-html, body, #app{
+html,
+body,
+#app {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  
-
 }
-#app{
-  //  background: url(./assets/img/bg.png) 
+#app {
+  //  background: url(./assets/img/bg.png)
   //  background-image: url(./assets/img/BG1.png);
   //  background-repeat: no-repeat;
   //  background-size: 100% 380px;
   //  background-size: cover;
 }
-html{
+html {
   //  background: #FFFFFF;
-  background: #F6F7FB;
+  background: #f6f7fb;
 }
-
-
 </style>

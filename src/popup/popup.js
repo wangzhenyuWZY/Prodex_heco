@@ -3,8 +3,8 @@ import Popup from './ipopup.vue'
 
 const PopupBox = Vue.extend(Popup)
 
-Popup.install = function (data) {
-  let instance = new PopupBox({
+Popup.install = function(data) {
+  const instance = new PopupBox({
     data
   }).$mount()
 

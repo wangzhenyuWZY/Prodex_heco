@@ -8,24 +8,23 @@
       <!-- <recevive/> -->
         <!-- <willRecevive/> -->
               <!-- <liquidity/> -->
-    <!-- <vAlret/> --> 
+    <!-- <vAlret/> -->
       <router-view></router-view>
     <!-- <liquidity/> -->
     <!-- <Pool1/> -->
     <!-- <Pool2/> -->
     <!-- <createpair/> -->
-     
+
   </div>
 
 </template>
 
 <script>
 
-
 export default {
-  data () {
+  data() {
     return {
-      
+
     }
   },
   components: {
@@ -33,23 +32,23 @@ export default {
     // connectbox,
     // selctoken
     // AddLiquidity,
-      // recevive,
-      //  willRecevive,
+    // recevive,
+    //  willRecevive,
     // vAlret
-  },    
+  },
 
-  created () {
-    
+  created() {
+
   },
   methods: {
-    
+
   }
 
 }
 </script>
 
 <style lang="scss" >
-  
+
 .globle_title{
     // margin-top: 128px;
     height: 28px;
@@ -58,7 +57,7 @@ export default {
     font-weight: normal;
     color: #0F1730;
     line-height: 28px;
-  
+
 }
 @import '@/styles/pool.scss';
 @media screen and (max-width: 750px) {
@@ -78,7 +77,7 @@ export default {
         font-size: 0.4rem;
         padding-bottom: 0.3rem;
       }
-      
+
     }
     .pool-box2 {
         .pool-butt{
@@ -86,8 +85,8 @@ export default {
                 font-size : 0.35rem;
                 width: 170px;
             }
-        } 
-    } 
+        }
+    }
     .fees{
        .fees_account{
          font-size: 0.35rem;
@@ -102,7 +101,7 @@ export default {
   }
   .ppcode{
     padding: 0 0.4rem ;
-    
+
   }
 
 }

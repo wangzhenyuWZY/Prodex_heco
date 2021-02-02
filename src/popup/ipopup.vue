@@ -1,25 +1,21 @@
 <template>
-  <el-dialog title=""
-             :visible.sync="showAlert"
-             :width="!mobile?'90%':'480px'"
-             custom-class="dialog_selct"
-             :close-on-click-modal="false"
+  <el-dialog
+title=""
+:visible.sync="showAlert"
+:width="!mobile?'90%':'480px'"
+custom-class="dialog_selct"
+:close-on-click-modal="false"
              :before-close="handleClosea">
-    <span slot="title"
-          class="select_size">
+    <span slot="title" class="select_size">
       <span>Connect to Wallet</span>
-      <img class="select_title"
-           src="@/assets/img/icon_instructions.svg"
-           alt="">
+      <img class="select_title" src="@/assets/img/icon_instructions.svg" alt="">
     </span>
     <div class="conter">
 
       <div class="mag_list">
-        <div class="currency_list"
-             @click="tlink">
-          <button class="con-but"> <img src="../assets/img/conter.png"
-                 alt=""> Tronlink wallet <i class="el-icon-loading"
-               v-show="connect!=null"></i> </button>
+        <div class="currency_list" @click="tlink">
+          <button class="con-but"> <img src="../assets/img/conter.png" alt=""> Tronlink wallet <i class="el-icon-loading" v-show="connect!=null"></i>
+          </button>
         </div>
       </div>
       <div class="con-p">
@@ -37,86 +33,67 @@
 // import tokenData from '../utils/token'
 import { mapState } from 'vuex'
 import store from '../store/index'
-import { Notification } from 'element-ui';
-import {IsPc} from '../utils/index'
+import { Notification } from 'element-ui'
+import { IsPc } from '../utils/index'
 import initTronWeb from '../utils/tronwebFn'
 export default {
-  data () {
+  data() {
     return {
       value: '',
       showAlert: false,
       connect: null,
       index: 1,
-      mobile:IsPc(),
-      conter:1,
+      mobile: IsPc(),
+      conter: 1
       // tokenList: tokenData.tokenList,
     }
   },
   computed: {
-    ...mapState(["connectFlag"])
+    ...mapState(['connectFlag'])
 
   },
-  created () {
+  created() {
 
     // console.log('showAlert====================', this.showAlert)
   },
   methods: {
-    handleClosea () {
-      console.log("点击关闭");
+    handleClosea() {
+      console.log('点击关闭')
       this.showAlert = false
       // this.$emit('closeAlert')
     },
-    tlink () {
-      this.connectWill();
-
+    tlink() {
+      this.connectWill()
     },
-    connectWill () {
+    async connectWill() {
       let that = this
-      this.connect = setInterval(async () => {
-        this.index += 1;
-        if (this.index > 10) {
-          clearInterval(this.connect);
-          this.index = 0;
-          this.connect = null;
-          that.showAlert = false;
-          Notification({
-            title: '连接失败',
-            message: '请检查钱包',
-            position: 'bottom-right',
-            type: 'error'
-          });
-          that.showAlert = false;
-          return;
-        }
-        if (window.tronWeb && window.tronWeb.defaultAddress.base58) {
-            initTronWeb().then(res=>{
-               clearInterval(this.connect);
-               that.conter +=1;
-               if (that.conter == 2) {
-                 that.conter = false;
-                  store.dispatch('connectWallett');
-                  that.index = 0;
-                  that.connect = null;
-                  that.showAlert = false;
-                    Notification({
-                      title: '连接成功',
-                      message: '请检查钱包',
-                      position: 'bottom-right',
-                      type: 'success'
-                    });
-                  
-               } 
-           
-              })
-            // store.dispatch('connectWallett');
-           
-
+      debugger
+      if (window.ethereum) {
+          try {
+              // 请求用户授权
+              const accounts = await ethereum.enable() 
+              if(accounts && accounts.length>0){
+                  this.walleted = true
+                  console.log(that.$store.state.app.defaultAccout)
+                  console.log(accounts[0])
+                  that.$store.state.app.defaultAccout = accounts[0]
+                  that.showAlert = false
+              }
+          } catch (error) {
+              // 用户拒绝使用账户
+              this.walleted = false
           }
-
-      }, 1000)
+      }else if (window.web3) {
+          window.web3 = new Web3(this.rpcURL)
+          this.walleted = true
+      }
+      // 没有安装以太坊钱包插件(MetaMask)...
+      else {
+          console.log('需要安装以太坊钱包插件(例如MetaMask)才能使用!')
+      }
     },
-    show () {
-      this.showAlert = true;
+    show() {
+      this.showAlert = true
     }
   }
 }
@@ -146,7 +123,7 @@ export default {
   font-size: 18px;
   font-family: roboto-mediumitalic;
   font-weight: 400;
-  color: #FC6446;
+  color: #fc6446;
   line-height: 21px;
 }
 .conter {
@@ -237,28 +214,25 @@ export default {
 .currency_list::-webkit-scrollbar-thumb {
   border-radius: 4px;
 }
-
-
 </style>
 
 <style lang="scss" scoped>
 @media screen and (max-width: 750px) {
-  .currency_list{
-  width: 100%;
-  text-align: center;
-  .con-but{
-    margin-left: 0;
+  .currency_list {
+    width: 100%;
+    text-align: center;
+    .con-but {
+      margin-left: 0;
+    }
   }
-  }
-  .con-p1{
+  .con-p1 {
     font-size: 0.37rem;
   }
-  .con-p{
+  .con-p {
     margin-left: 0;
   }
   .conter {
-  padding: 0 20px;
-}
-
+    padding: 0 20px;
+  }
 }
 </style>

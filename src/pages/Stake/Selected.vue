@@ -25,8 +25,7 @@
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token1.name:''}}</span>
-               <img class="lt_icon" :src="requierImg(farmtoal.item.token1.name,0)"
-                   alt="" /> 
+                <img class="lt_icon" :src="requierImg(farmtoal.item.token1.name,0)" alt="" />
               </div>
 
             </div>
@@ -37,10 +36,9 @@
             <div class="received">
               <div class="lt">
                 <span>{{farmtoal.item?farmtoal.item.token2.name:''}}</span>
-                <img class="lt_icon" :src="requierImg( farmtoal.item.token2.name,0)"
-                   alt="" /> 
+                <img class="lt_icon" :src="requierImg( farmtoal.item.token2.name,0)" alt="" />
               </div>
-              <!-- <div class="rg"> 
+              <!-- <div class="rg">
                 <span class="text_color">APR:</span> <span class="ftblod">322.16%</span>
                  </div> -->
             </div>
@@ -67,7 +65,8 @@
           <div class="rg ftblod">{{farmtoal.shareToal}}</div>
         </div>
         <div class="Approve_btns clearfix">
-          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve"> {{$t('unstb1')}}</el-button>
+          <el-button class="Approve1 from_botton fl_lt" :loading="farmtoal.btnFlag3" :disabled="Withdrawal" @click="Approve"> {{$t('unstb1')}}
+          </el-button>
           <el-button class="Approve1 from_botton fl_rg" :loading="farmtoal.btnFlag2" :disabled="reward" @click="amount">{{$t('unstb2')}}</el-button>
         </div>
         <div class="ftblod mrge12"> {{$t('Stake.Approve')}}</div>
@@ -76,7 +75,7 @@
             <div class="">
               <div class="received ">
                 <div class="lt">
-                  <frominput showmax :balance="farmtoal.balanceOf"  :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
+                  <frominput showmax :balance="farmtoal.balanceOf" :disabled="!connectFlag" :placeholder="0.0" v-model="test1" />
                 </div>
                 <div class="rg mobles_rg">Abelo_LP</div>
               </div>
@@ -93,8 +92,7 @@
 </template>
 
 <script>
-import { container, frominput, setselect } from '../../components/index'
-import { mapState } from 'vuex'
+import { container, frominput } from '../../components/index'
 import valret from '../Pool/valret'
 export default {
   props: {
@@ -111,7 +109,8 @@ export default {
         btnFlag3: false,
         showAlert1: false,
         defaultAddress: '',
-        item: { token1: {}, token2: {} }
+        item: { token1: {}, token2: {}},
+        
       }
     },
     farmList: {
@@ -119,7 +118,6 @@ export default {
     }
   },
   computed: {
-    ...mapState(['connectFlag']),
     reward() {
       if (this.connectFlag && this.farmtoal.uniswaplp != 0) {
         if (!this.farmtoal.btnFlag2) {
@@ -136,7 +134,7 @@ export default {
         }
         return true
       }
-      return true;
+      return true
     },
     stakes() {
       if (this.connectFlag && this.test1 != '') {
@@ -145,7 +143,7 @@ export default {
         }
         return true
       }
-      return true;
+      return true
     }
   },
   data() {
@@ -155,7 +153,7 @@ export default {
       value2: '',
       value3: '',
       value4: 0,
-
+      connectFlag:true
     }
   },
   watch: {
@@ -171,14 +169,14 @@ export default {
   },
   methods: {
     requierImg(name, number) {
-      console.log( "----------------" + name);
-      let str;
+      console.log('----------------' + name)
+      let str
       // debugger
       if (name) {
         try {
           if (number != undefined) {
-            str = name.split('/');
-            
+            str = name.split('/')
+
             return require('@/assets/img/currency/' + str[number] + '.png')
           }
           return require('@/assets/img/currency/' + name + '.png')
@@ -205,35 +203,34 @@ export default {
       this.$emit('stake', this.farmtoal.item, this.test1)
     },
     handelInit() {
-      this.test1 = '';
+      this.test1 = ''
       this.$emit('back')
     },
     butlink() {
-      console.log("点击了");
+      console.log('点击了')
       this.$popup({
         click: () => {
-          // 点击按钮事件 
+          // 点击按钮事件
 
           this.$router.push('../../popup/popup')
-
         }
       })
     }
 
-  },
+  }
 }
 </script>
 
 <style lang="scss"   scoped>
 .fbbb {
-  color:  #FC6446;
+  color: #EA3981;
 }
 .rgh {
   float: right;
   font-size: 15px;
 }
 .colorF {
-  color:  #FC6446;
+  color: #EA3981;
 }
 .stake_slect {
   color: #0f1730;
@@ -286,7 +283,7 @@ export default {
     .between {
       font-size: 56px;
       font-weight: normal;
-      color:  #FC6446;
+      color: #fc6446;
       width: 144px;
     }
     .demonstration {
@@ -416,7 +413,7 @@ export default {
     .rg {
     }
     .setColr {
-      color:  #FC6446;
+      color: #fc6446;
     }
   }
   .setSlider {
@@ -460,7 +457,7 @@ export default {
       border-radius: 28px;
       border: 1px solid#FC6446;
       font-size: 20px;
-      color:  #FC6446;
+      color: #fc6446;
       padding: 0;
       width: 200px;
       height: 32px;

@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import {getTokenList,getPairList} from '../api/api'
+import { getTokenList, getPairList } from '../api/api'
 // import tokenDataDev from './token'
 // import tokenProdData from './token.prod.js'
 /* eslint-disable */
