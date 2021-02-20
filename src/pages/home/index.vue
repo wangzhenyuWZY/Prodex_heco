@@ -1,533 +1,454 @@
 <template>
   <div class="container">
-    <!-- <div class="c-top"> -->
-    <!-- <samp class="c-mp">FoxDex Protocol Analytics</samp> -->
-    <!-- <div class="c-inp">
-      <input type="text" placeholder="Search FoxDex pairs and tokens">
-      </div> -->
-
-    <!-- </div> -->
-    <!-- <div class="c-box1">
-      <div class="box1-p">
-        <span class="bpa">ETH Price:<samp class="bpa1">{{ 389.98 }}</samp></span>
-        <span class="bpb">Transactions (24H): <samp class="bpb2">{{173.444}}</samp></span>
-        <span class="bpc">Pairs:<samp class="bpc3">{{ 19.162}}</samp></span>
-      </div>
-      <div class="c-mian">
-        <div class="mian-box1">
-          <chart/>
+    <Navbar></Navbar>
+    <div class="homeContainer">
+      <SearchBar></SearchBar>
+      <div class="blockInfo">
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.maxNum/Math.pow(10,6)}}</p>
+          <p class="name">总量</p>
         </div>
-        <div class="mian-box2">
-
-         <chart2 />
-         <circular />
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.useNum/Math.pow(10,6)}}</p>
+          <p class="name">流通量</p>
+        </div>
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.waitNum/Math.pow(10,6)}}</p>
+          <p class="name">待产出</p>
+        </div>
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.yestodayNum/Math.pow(10,6)}}</p>
+          <p class="name">昨日产出</p>
+        </div>
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.accountNum}}</p>
+          <p class="name">账户数</p>
+        </div>
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.yestodayTransNum}}</p>
+          <p class="name">昨日交易量</p>
+        </div>
+        <div class="blockInfoItem">
+          <p class="val">{{homeInfo.superPeer}}</p>
+          <p class="name">超级节点</p>
         </div>
       </div>
-
-    </div> -->
-    <div class="c-box2">
-      <div class="b2-top">
-        <samp class="top1">{{$t('home.TopPairs')}}</samp>
-
-        <!-- <template slot-scope="scope">
-              <div>
-                <img :src="$requierImg(scope.row.token1.name,1)"
-                   alt="" />
-                   <img :src="$requierImg(scope.row.token1.name,0)"
-                   alt="" />
-              </div>
-            </template> -->
-
-      </div>
-
-      <div class="table">
-        <el-table
-          v-if="mobile"
-          :data="pairList"
-          header-cell-class-name="adddd"
-          header-row-class-name="tabe_tr"
-          :header-row-style="{backgroundColor:'#F4F5FA',color:'#878B97',height:'18px'}"
-          cell-class-name="dddsadsa"
-          style="width: 100%">
-          <el-table-column prop="full_name" :label="$t('home.Name')">
-            <template slot-scope="scope">
-              <div class="reqimg">
-                <span>
-                  <img :src="$requierImg(scope.row.base_token_name)" alt="" />
-                  <img :src="$requierImg(scope.row.trade_token_name)" alt="" />
-                </span>
-                <span>{{scope.row.trade_token_name.toLocaleUpperCase()}}/
-                  {{scope.row.base_token_name.toLocaleUpperCase()}}</span>
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="trade_token_liquidity" :label="$t('home.Assets')">
-            <template slot-scope="scope">
-              <div>
-                {{scope.row.trade_token_liquidity| setAssets  }}
-                {{scope.row.trade_token_name.toLocaleUpperCase()}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="base_token_liquidity" :label="$t('home.Assets')">
-            <template slot-scope="scope">
-              <div>
-                {{scope.row.base_token_liquidity | setAssets }}
-                {{scope.row.base_token_name.toLocaleUpperCase()}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="pair_quantity" :label="$t('home.Liquidity')">
-            <template slot-scope="scope">
-              <div>
-                {{scope.row.pair_quantity | setAssets }}
-              </div>
-            </template>
-            <span></span>
-          </el-table-column>
-          <el-table-column prop="trade_price" :label="$t('home.price')">
-            <template slot-scope="scope">
-              <div>
-                {{scope.row.trade_price ? scope.row.trade_price  : "--"}}
-              </div>
-            </template>
-            <span></span>
-          </el-table-column>
-          <el-table-column prop="base_quantity_24" :label="$t('home.Volume')">
-            <template slot-scope="scope">
-              <div>
-                {{scope.row.base_quantity_24 ? scope.row.base_quantity_24  : "--"}}
-              </div>
-            </template>
-            <span></span>
-          </el-table-column>
-          <el-table-column prop="price_change_24" :label="$t('home.Change')">
-            <template slot-scope="scope">
-              <div>
-                {{(scope.row.price_change_24*100).toFixed(2)}}%
-              </div>
-            </template>
-            <span></span>
-          </el-table-column>
-          <el-table-column :label="$t('operation')">
-            <template slot-scope="scope">
-              <router-link :to="{ path: '/exchange', query: { pairAddress:scope.row.contract_address }}" style="padding-bottom:10px;">
-                <p class="homeb1"> <span> {{$t('homeb1')}}</span> </p>
-                <!-- <el-button size="mini" round></el-button> -->
-              </router-link>
-             
-              <router-link :to="{ path: '/pool/connectpool', query: { pairAddress:scope.row.contract_address }}">
-               <p class="homeb2"> <span> {{$t('homeb2')}}</span></p>
-                <!-- <el-button size="mini" round>{{$t('homeb2')}}</el-button> -->
-              </router-link>
-            </template>
-            <span></span>
-          </el-table-column>
-        </el-table>
-        <el-table
-          v-if="!mobile"
-          :data="pairList"
-          header-cell-class-name="adddd"
-          header-row-class-name="tabe_tr"
-                            :header-row-style="{backgroundColor:'#F4F8FB',color:'#606266'}"
-          cell-class-name="dddsadsa"
-          style="width: 100%">
-          <el-table-column prop="full_name" width="110px" label="name">
-            <template slot-scope="scope">
-              <div class="table_size">
-
-                {{scope.$index+1}}
-                <!-- <img :src="$requierImg(scope.row.trade_token_name,0)"
-                   alt="" />
-                   <img :src="$requierImg(scope.row.base_token_name,0)"
-                   alt="" /> -->
-                {{scope.row.trade_token_name.toLocaleUpperCase()}}-{{scope.row.base_token_name.toLocaleUpperCase()}}
-              </div>
-            </template>
-          </el-table-column>
-          <el-table-column prop="trade_token_name" label="Assets">
-            <template slot-scope="scope">
-              <div class="table_size">
-                <p>
-                  <span style="color:#FC6446">{{scope.row.trade_token_liquidity | setAssets}}</span>
-                  {{scope.row.trade_token_name.toLocaleUpperCase()}}
-                </p>
-                <p>
-                  <span style="color:#FC6446">{{scope.row.base_token_liquidity | setAssets}}</span>
-                  {{scope.row.base_token_name.toLocaleUpperCase()}}
-                </p>
-
-              </div>
-            </template>
-          </el-table-column>
-
-          <el-table-column prop="pair_quantity" label="liquidity">
-            <template slot-scope="scope">
-              <div class="table_size">
-                {{scope.row.pair_quantity ? scope.row.pair_quantity  : "--"}}
-              </div>
-            </template>
-            <span></span>
-          </el-table-column>
-
-        </el-table>
-
-      </div>
-      <div class="pagin">
-        <el-pagination background v-if="pairList && pairList.length>=10" layout="prev, pager, next" :total="pairList?pairList.length:0">
-        </el-pagination>
+      <div class="blockDetail clearfix">
+        <div class="detailWrap fl hei241">
+          <div class="detailTitle">
+            <h2>最新区块</h2>
+            <p class="checkMore" @click="checkAllBlock">查看所有区块<i></i></p>
+          </div>
+          <div class="detailCon">
+            <ul class="translist">
+              <li v-for="(item,index) in blockList" :key="index">
+                <p>{{item.blockNumber}}<span class="time">{{item.timestamp}}</span></p>
+                <p>{{item.transactionNumber}}交易</p>
+                <p>{{item.dotcAmount/Math.pow(10,6)}}  DOTC</p>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="detailWrap fr hei241">
+          <div class="detailTitle">
+            <h2>最新交易</h2>
+            <p class="checkMore" @click="checkAllTrans">查看所有交易<i></i></p>
+          </div>
+          <div class="detailCon">
+            <ul class="transblock">
+              <li v-for="(item,index) in transList" :key="index">
+                <div class="top">
+                  <span class="hash">{{item.hash}}</span>
+                  <span class="num">{{item.dotcAmount}}  DOTC</span>
+                </div>
+                <div class="btm">
+                  <p class="transdt">发送方<span>{{item.from}}</span></p>
+                  <p class="transdt">接收方<span>{{item.to}}</span></p>
+                  <span class="times">{{item.timestamp}}</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="detailWrap fl hei270">
+          <div class="detailTitle">
+            <h2>七日交易量 <span></span>(dotc)</h2>
+          </div>
+          <div class="detailCon">
+            <canvas class="container" id="container" height='270px' width="100%"></canvas>
+          </div>
+        </div>
+        <div class="detailWrap fr hei270">
+          <div class="detailTitle">
+            <h2>七日账户增长数</h2>
+          </div>
+          <div class="detailCon">
+            <canvas class="container" id="container1" height='270px' width="100%"></canvas>
+          </div>
+        </div>
       </div>
     </div>
+    <Btm></Btm>
   </div>
 </template>
 
 <script>
-// import { mapState } from 'vuex'
-import { api } from '../../api/api'
-// import chart from './chart.vue'
-// import chart2 from './chart2.vue'
-// import circular from './circular'
-// import {TokenData,PairData} from '../../utils/index'
-import { IsPc } from '../../utils/index'
-import { getBalanceInPool } from '../../utils/tronwebFn'
+import Navbar from '../../components/Navbar'
+import SearchBar from '../../components/SearchBar'
+import Btm from '../../components/Btm'
+const F2 = require('@antv/f2/lib/index')
+import {getChainInfo,getSnapshot,getBlockList,getTransList} from '../../api/user'
+import {formartTimeStamp,plusXing} from '../../config/utils'
 export default {
-  // computed: {
-  //   ...mapState(['pairData'])
-  // },
+  components:{
+    Navbar,
+    SearchBar,
+    Btm
+  },
   watch: {
-    // pairData(list){
-    //   let that = this
-    //   this.pairList = JSON.parse(JSON.stringify(list))
-    //   if(this.pairList.length>0){
-    //     this.$initTronWeb().then(function (tronWeb) {
-    //       that.init();
-    //       that.getVolPrice24()
-    //     })
-    //   }
-    // }
+    
   },
   data() {
     return {
-      pairList: [],
-      mobile: IsPc()
+      homeInfo:{},
+      chartData:[],
+      pageNum:0,
+      pageNum1:0,
+      blockList:[],
+      transList:[],
+      over:null
     }
   },
   mounted() {
-    this.getVolPrice24()
+    this.getHomeInfo()
+    this.getChartData()
+    this.queryBlockList()
+    this.queryTransList()
+    this.websocket()
+  },
+  beforeDestroy () {
+    this.over()
   },
   methods: {
-    async init() {
-      // const that = this
-      // const pairList = []
-      for (let index = 0; index < this.pairList.length; index++) {
-        const el = this.pairList[index]
-        // getTokenDenormalizedWeight(el.token1.address,el.address).then((response) => {
-        //   el.token1.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        // })
-        // getTokenDenormalizedWeight(el.token2.address,el.address).then((response) => {
-        //   el.token2.widget = parseInt(response,16)/Math.pow(10,el.decimals)
-        // })
-        debugger
-        const res = await getBalanceInPool(el, el.token1)
-        const res1 = await getBalanceInPool(el, el.token2)
-        // let res2 = await getLpBalanceInPool(el);
-        // if(el.token1.name=='USDT'){
-        //   let bil = 1+parseFloat(el.token2.widget/el.token1.widget)
-        //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
-        // }else if(el.token2.name=='USDT'){
-        //   let bil = 1+parseFloat(el.token1.widget/el.token2.widget)
-        //   el.liquidity = (bil*parseFloat(res1)).toFixed(4)
-        // }
-        el.token1Balance = res.toFixed(4)
-        el.token2Balance = res1.toFixed(4)
-        // pairList.push(el)
-
-        this.$set(this.pairList, index, el)
-      }
-      // this.pairList = pairList
+    checkAllBlock(){
+      this.$router.push('/BlockHistory')
     },
-    async getVolPrice24() { // 获取24小时量和价格
-      const res = await api.get24HourTradingVolume()
-      if (res.data.code == 0) {
-        this.pairList = res.data.data
-        // this.pairList.forEach((rsp)=>{
-        //   data.forEach((rsp2)=>{
-        //     if(rsp.pair.toUpperCase() == rsp2.full_name.toUpperCase()){
-        //       rsp.pair_quantity = rsp2.pair_quantity
-        //       rsp.base_quantity_24 = rsp2.base_quantity_24.toFixed(4)
-        //       rsp.trade_price = rsp2.trade_price.toFixed(4)
-        //       rsp.price_change_24 = rsp2.price_change_24.toFixed(4)
-        //     }
-        //   })
-        // })
-      }
-    }
-  },
-  filters: {
-    setAssets(n) {
-      console.log(n)
-      n += ''
-      if (n) {
-        try {
-          const arr = n.split('.')
-          let arr1
-          if (arr.length > 1) {
-            if (arr[1].length > 4) {
-              arr1 = arr[0] + '.' + arr[1].slice(0, 4)
-            } else {
-              arr1 = n
-            }
-          } else {
-            arr1 = arr[0]
-          }
-          return arr1
-        } catch (error) {
-          console.log(error)
-          return n
+    checkAllTrans(){
+      this.$router.push('/TransferHistory')
+    },
+    createCharts(){
+      const chart = new F2.Chart({
+        id: 'container',
+        pixelRatio: window.devicePixelRatio
+      });
+      chart.source(this.chartData, {
+        value: {
+          tickCount: 5,
+          min: 0
+        },
+        date: {
+          type: 'timeCat',
+          range: [ 0, 1 ],
+          tickCount: 3
         }
+      });
+      chart.tooltip({
+        custom: true,
+        showXTip: true,
+        showYTip: true,
+        snap: true,
+        crosshairsType: 'xy',
+        crosshairsStyle: {
+          lineDash: [ 2 ]
+        }
+      });
+      chart.axis('snapshotDate', {
+        label: function label(text, index, total) {
+          const textCfg = {};
+          if (index === 0) {
+            textCfg.textAlign = 'left';
+          } else if (index === total - 1) {
+            textCfg.textAlign = 'right';
+          }
+          return textCfg;
+        }
+      });
+      chart.axis('transactionNum', {
+        grid: {
+          lineDash: null,
+          stroke: '#1C1C1C',
+          lineWidth: 1
+        }
+      });
+      chart.line().position('snapshotDate*transactionNum').color('#25C83B');
+      chart.render();
+    },
+    createCharts1(){
+      const chart = new F2.Chart({
+        id: 'container1',
+        pixelRatio: window.devicePixelRatio
+      });
+      chart.source(this.chartData, {
+        value: {
+          tickCount: 5,
+          min: 0
+        },
+        date: {
+          type: 'timeCat',
+          range: [ 0, 1 ],
+          tickCount: 3
+        }
+      });
+      chart.tooltip({
+        custom: true,
+        showXTip: true,
+        showYTip: true,
+        snap: true,
+        crosshairsType: 'xy',
+        crosshairsStyle: {
+          lineDash: [ 2 ]
+        }
+      });
+      chart.axis('snapshotDate', {
+        label: function label(text, index, total) {
+          const textCfg = {};
+          if (index === 0) {
+            textCfg.textAlign = 'left';
+          } else if (index === total - 1) {
+            textCfg.textAlign = 'right';
+          }
+          return textCfg;
+        }
+      });
+      chart.axis('accountIncreaseNum', {
+        grid: {
+          lineDash: null,
+          stroke: '#1C1C1C',
+          lineWidth: 1
+        }
+      });
+      chart.line().position('snapshotDate*accountIncreaseNum').color('#25C83B');
+      chart.render();
+    },
+    getHomeInfo(){
+      let that = this
+      getChainInfo().then((res)=>{
+        if(res.data.statusCode==200){
+          that.homeInfo = res.data.data
+        }
+      })
+    },
+    getChartData(){
+      let that = this
+      getSnapshot().then((res)=>{
+        if(res.data.statusCode==200){
+          that.chartData = res.data.data
+          that.createCharts()
+          that.createCharts1()
+        }
+      })
+    },
+    queryBlockList(){
+      let that = this
+      getBlockList({pageNum:this.pageNum}).then(res=>{
+        if(res.data.statusCode==200){
+          res.data.data.forEach(item=>{
+            item.timestamp  = formartTimeStamp(item.timestamp)
+          })
+          that.blockList = res.data.data
+        }
+      })
+    },
+    queryTransList(){
+      let that = this
+      getTransList({pageNum:this.pageNum1}).then(res=>{
+        if(res.data.statusCode==200){
+          res.data.data.forEach(item=>{
+            item.from = plusXing(item.from,5,5)
+            item.to = plusXing(item.to,5,5)
+            item.timestamp  = formartTimeStamp(item.timestamp)
+          })
+          that.transList = res.data.data
+        }
+      })
+    },
+    websocket () {
+      let ws = new WebSocket('ws://47.57.4.24:8011/websocket/1')
+      ws.onopen = () => {
+      // Web Socket 已连接上，使用 send() 方法发送数据
+          ws.send()
+          console.log('数据发送中...')
       }
-      return '--'
+      ws.onmessage = evt => {
+        debugger
+      // console.log('数据已接收...')
+      }
+      ws.onclose = function () {
+      // 关闭 websocket
+      console.log('连接已关闭...')
+      }
+      // 组件销毁时调用，中断websocket链接
+      this.over = () => {
+        ws.close()
+      }
     }
   }
 }
 </script>
-<style  lang="scss" scoped>
-.reqimg {
-  display: flex;
-  align-items: center;
-  span {
-    overflow: hidden;
-    float: left;
-    position: relative;
-    color:#3A85FF;
-    &:nth-child(1) {
-      width: 40px;
-      height: 25px;
-    }
-  }
-  img {
-    position: absolute;
-    left: 12px;
-    top: 0;
-    width: 25px;
-    height: 25px;
-  }
-
-  img:nth-child(2) {
-    transform: translateX(-12px);
-  }
-}
-.container {
-  padding-top: 120px;
-}
-.t-img {
-  width: 22px;
-  height: 22px;
-  margin-left: 207px;
-}
-.homeb1{
-   color: #fc6446;
-  span{
-    border-bottom: 2px solid #fc6446;
-  }
-}
-.homeb2{
-  margin-top: 3px;
-   color: #fc6446;
-  span{
-    border-bottom: 2px solid #fc6446;
-  } 
-}
-
-// .el-button{
-//   border-radius: 0px;
-//   border: 0;
-//   border-bottom: 2px solid  #fc6446;
-//   color: #fc6446;
-//   background: 0;
-//   margin-bottom: 4px;
-// }
-// .el-button--mini.is-round{
-//       padding: 2px 0px;
-// }
-// .c-top {
-//   margin: 0 auto;
-//   overflow: hidden;
-//   width: 800px;
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-// }
-// .c-mp {
-//   margin-top: 40px;
-//   height: 27px;
-//   font-size: 24px;
-//   font-family: Roboto-Medium, Roboto;
-//   font-weight: normal;
-//   color: #0f1730;
-//   line-height: 28px;
-// }
-.c-inp {
-  margin-top: 16px;
-  width: 800px;
-  height: 48px;
-  background: #ffffff;
-  border-radius: 28px;
-  input {
-    width: 262px;
-    height: 20px;
-    font-size: 18px;
-    font-family: roboto-mediumitalic;
-    color: #a6aeb7;
-    line-height: 21px;
-    margin-top: 14px;
-    margin-left: 280px;
-  }
-}
-.c-box1 {
-  width: 1200px;
-  height: 1004px;
-  background: #ffffff;
-  border-radius: 16px;
-  overflow: hidden;
-  margin: 0 auto;
-  margin-top: 40px;
-  .box1-p {
-    display: flex;
-    justify-content: center;
-    border-bottom: 1px #ffe5ebf2 solid;
-
-    .bpa,
-    .bpb,
-    .bpc {
-      margin: 32px 24px;
-      height: 22px;
-      font-size: 20px;
-      font-family: roboto-mediumitalic;
-      font-weight: normal;
-      color: #0f1730;
-      line-height: 23px;
-    }
-  }
-  .mian-box1,
-  .mian-box2 {
-    width: 960px;
-    height: 360px;
-    border: 1px #ffe5ebf2 solid;
-    margin: 44px auto;
-  }
-}
-.c-box2 {
-  // margin-top: 120px;
-  width: 1200px;
-  margin: 0 auto;
-  height: 960px;
-  border-radius: 16px;
-  overflow: hidden;
-  background: #ffffff;
-
-  .b2-top {
-    height: 80px;
-    .top1 {
-      margin-top: 30px;
-      margin-left: 30px;
-      float: left;
-      height: 22px;
-      font-size: 20px;
-      font-family: roboto-mediumitalice;
-      font-weight: 500;
-      color: #0f1730;
-      line-height: 23px;
-    }
-    .top-inp {
-      width: 583px;
-      height: 48px;
-      float: right;
-      margin-top: 40px;
-      margin-right: 32px;
-      background: #ffffff;
-      border-radius: 28px;
-      border: 1px solid #a6aeb7;
-      input {
-        border-radius: 28px;
-        color: #a6aeb7;
-        line-height: 21px;
-        // margin-left: 207px;
-        margin-top: 12px;
-        width: 197px;
-        height: 20px;
-        font-size: 18px;
-        font-family: roboto-mediumitalic;
+<style  lang="less" scoped>
+.homeContainer{
+  
+  .blockInfo{
+    width:100%;
+    overflow:hidden;
+    background:#1C1C1C;
+    border-radius: 10px;
+    box-shadow: 0px 2px 2px 0px rgba(46, 49, 56, 0.7);
+    min-height:100px;
+    margin-top:30px;
+    margin-bottom:30px;
+    .blockInfoItem{
+      float:left;
+      width:14%;
+      text-align:center;
+      .val{
+        font-size:18px;
+        color:#25C83B;
+        padding-bottom:3px;
+        padding-top:32px;
+      }
+      .name{
+        font-size:12px;
+        color:#585858;
+        line-height:100%;
       }
     }
   }
-
-  .pagin {
-    margin-left: 400px;
-    margin-top: 33px;
-  }
-  .table {
-    height: 760px;
-    background: #ffffff;
-
-    .tabe_tr {
-      /* background-image: linear-gradient(131deg, #FFA61B 0%, #F3330E 100%) ; */
-      height: 40px;
+  .blockDetail{
+    .detailWrap{
+      width: 49%;
+      background:#1C1C1C;
+      border-radius:10px;
+      margin-bottom:30px;
+      &.fl{float:left;}
+      &.fr{float:right;}
+      &.hei241{height:291px;}
+      &.hei270{height:320px;padding-bottom:15px;}
+      .detailTitle{
+        height:50px;
+        overflow:hidden;
+        padding:0 20px;
+        h2{
+          float:left;
+          font-size:16px;
+          color:#fff;
+          line-height:50px;
+          span{
+            font-size:12px;
+            color:#585858;
+          }
+        }
+        .checkMore{
+          float:right;
+          font-size:12px;
+          color:#B7B7B7;
+          line-height:50px;
+          cursor: pointer;
+          i{
+            display:inline-block;
+            vertical-align: middle;
+            width:32px;
+            height:32px;
+            background:url(../../assets/img/caret.png) no-repeat center;
+            background-size:100% 100%;
+          }
+        }
+      }
+      .detailCon{
+        padding:10px 20px;
+        .translist{
+          li{
+            overflow:hidden;
+            margin-bottom:10px;
+            p{
+              float:left;
+              font-size:14px;
+              color:#fff;
+              line-height:18px;
+              width:33%;
+              .time{color:#585858;padding-left:12px;font-size:12px;}
+              &:nth-child(2){text-align:center;}
+              &:last-child{text-align:right;}
+            }
+          }
+        }
+        .transblock{
+          li{
+            .top{
+              padding-bottom:7px;
+              overflow: hidden;
+              .hash{font-size:14px;color:#25C83B;line-height:14px;float:left;}
+              .num{font-size:14px;color:#fff;line-height:18px;float:right;}
+            }
+            .btm{
+              .transdt{
+                float:left;
+                margin-right:30px;
+                font-size:12px;
+                color:#B7B7B7;
+                line-height:14px;
+                span{
+                  padding-left:10px;
+                  font-size:12px;
+                  color:#25C83B;
+                  line-height:14px;
+                }
+              }
+              .times{
+                font-size:12px;
+                color:#585858;
+                line-height:12px;
+                float:right;
+              }
+            }
+          }
+        }
+        .container{
+          height:270px;
+        }
+      }
     }
   }
-
-  .el-table tr {
-    background-color: inherit;
-  }
 }
-
-::v-deep {
-  .el-pagination.is-background .el-pager li:not(.disabled) {
-    background-color: #f4f5fa; // 进行修改未选中背景和字体
-    color: #878b97;
-  }
-  .el-pagination.is-background .el-pager li:not(.disabled).active {
-    background-color: #0f1730; // 进行修改选中项背景和字体
-    color: #fff;
-  }
-}
-</style>
-<style  scoped>
->>> .cell div {
-  color:#0F1730;
-}
->>> .adddd {
-  background-color: #f4f8fb;
-  margin-left: 20px;
-}
->>> .el-table__row {
-  height: 72px;
-  background: #ffffff;
-}
-
 @media screen and (max-width: 750px) {
-  .container {
-    padding-top: 50px;
+  .homeContainer{
+    .blockInfo{
+      padding-bottom:15px;
+      .blockInfoItem{
+        width:30%;
+      }
+    }
+    .blockDetail{
+      .detailWrap{
+        width:100%;
+        .detailCon{
+          .translist{
+            li{
+              overflow:hidden;
+              margin-bottom:15px;
+              p{
+                white-space: nowrap;
+                overflow:hidden;
+                &:nth-child(1){width:100%;span{float:right;padding-bottom:5px;}}
+                &:nth-child(2){float:left;text-align:left;}
+                &:nth-child(3){float:right;}
+              }
+            }
+          }
+        }
+      }
+    }
   }
-  .c-box2 {
-    width: 100%;
-    height: auto;
-  }
-  .c-box2 .table {
-    height: auto;
-  }
-  .c-box2 .b2-top {
-    height: 40px;
-    line-height: 40px;
-  }
-  .c-box2 .b2-top .top1 {
-    margin-top: 0;
-    line-height: 40px;
-  }
-
-  >>> .cell {
-    margin-left: 0;
-    font-size: 0.3rem !important;
-  }
+    
 }
 </style>
