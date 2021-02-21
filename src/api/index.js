@@ -3,7 +3,7 @@ const api = {
   getSnapshot:'/chain/getSnapshot',
   blockList:'/block/list/',
   transactionList:'/transaction/list/',
-  addressInfo:'/address/getAddress/',
+  addressInfo:'/address/getByAddress/',
   listByAddress:'/transaction/listByAddress/',
   listByHash:'/transaction/getByHash/',
   blockGetByHash:'/block/getByHash/',

@@ -4,8 +4,8 @@
         <div class="homeContainer clearfix">
             <SearchBar :address='address' @change="change"></SearchBar>
             <div class="accdetailCon">
-                <div class="accdetail">地址：<span class="green">{{accountInfo.address}}</span><i></i></div>
-                <div class="accdetail">余额：<span>{{accountInfo.Amount}} DOCT</span></div>
+                <div class="accdetail tag-read" @click="copyAddress" :data-clipboard-text="accountInfo.address">地址：<span class="green">{{accountInfo.plusaddress}}</span><i></i></div>
+                <div class="accdetail">余额：<span>{{accountInfo.amount}} DOCT</span></div>
             </div>
             <div class="blockCon">
                 
@@ -62,6 +62,7 @@ import SearchBar from '../../components/SearchBar'
 import Btm from '../../components/Btm'
 import {getAddressInfo,listByAddress} from '../../api/user'
 import {formartTimeStamp,plusXing} from '../../config/utils'
+import Clipboard from 'clipboard'; 
 export default {
   components:{
     Navbar,
@@ -98,6 +99,7 @@ export default {
         let that = this
         getAddressInfo({address:this.address}).then(res=>{
             if(res.data.statusCode==200){
+                res.data.data.plusaddress = plusXing(res.data.data.address,5,5)
                 that.accountInfo = res.data.data
             }
         })
@@ -114,7 +116,22 @@ export default {
                 that.transList = res.data.data
             }
         })
-    }
+    },
+    copyAddress(){
+            let that = this
+            var clipboard = new Clipboard('.tag-read')  
+            clipboard.on('success', e => {  
+                that.$message.success('复制成功');
+            // 释放内存  
+            clipboard.destroy()  
+            })  
+            clipboard.on('error', e => {  
+            // 不支持复制  
+            console.log('该浏览器不支持自动复制')  
+            // 释放内存  
+            clipboard.destroy()  
+            })
+        },
   },
 }
 </script>
