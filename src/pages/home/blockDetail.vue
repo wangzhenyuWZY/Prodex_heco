@@ -6,7 +6,7 @@
             <div class="blockCon">
                 <div class="blockTitle">
                     <h2>区块</h2>
-                    <p>区块#2000</p>
+                    <p>区块#{{blockDetail.blockNumber}}</p>
                 </div>
                 <div class="blockContainer">
                     <div class="blockInfoItem clearfix">
@@ -64,7 +64,7 @@ export default {
   data(){
       return {
           blockDetail:{},
-          address:'1'
+          address:this.$route.query.searchval
       }
   },
   created(){
@@ -128,7 +128,7 @@ export default {
                 &.green{
                     color:#25C83B;
                 }
-                i.true{
+                i{
                     display:inline-block;
                     vertical-align:middle;
                     width:18px;
@@ -136,6 +136,10 @@ export default {
                     background:url(../../assets/img/config.png) no-repeat center;
                     background-size:100% 100%;
                     margin-right:8px;
+                    &.false{
+                        background:url(../../assets/img/holder.png) no-repeat center;
+                        background-size:100% 100%;
+                    }
                 }
             }
         }

@@ -73,3 +73,12 @@ export function blockGetByHash(data) {
     data
   )
 }
+
+//搜索
+export function blockGetByAllHash(data) {
+  return request(
+    api.blockGetByAllHash+data.hash,
+    'get',
+    data
+  )
+}

@@ -6,7 +6,7 @@
             <div class="blockCon">
                 <div class="blockTitle">
                     <h2>区块</h2>
-                    <p>区块#2000至1000 总共2000个区块</p>
+                    <p>区块#{{blockList[0].blockNumber}}至{{blockList[9].blockNumber}} 总共{{pageTotal}}个区块</p>
                 </div>
                 <div class="blockTable">
                     <table>

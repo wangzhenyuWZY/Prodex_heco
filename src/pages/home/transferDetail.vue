@@ -24,15 +24,15 @@
                     </div>
                     <div class="blockInfoItem clearfix">
                         <span class="infokey">哈希值：</span>
-                        <div class="infoval green">{{transDetail.hash}} <i class="add"></i></div>
+                        <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.hash">{{transDetail.hash}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
                         <span class="infokey">发送方：</span>
-                        <div class="infoval green">{{transDetail.from}} <i class="add"></i></div>
+                        <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.from">{{transDetail.from}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
                         <span class="infokey">接收方：</span>
-                        <div class="infoval green">{{transDetail.to}} <i class="add"></i></div>
+                        <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.to">{{transDetail.to}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
                         <span class="infokey">交易量：</span>
@@ -60,6 +60,7 @@ import SearchBar from '../../components/SearchBar'
 import Btm from '../../components/Btm'
 import {listByHash} from '../../api/user'
 import {formartTimeStamp,plusXing} from '../../config/utils'
+import Clipboard from 'clipboard'; 
 export default {
   components:{
     Navbar,
@@ -69,20 +70,35 @@ export default {
   data(){
       return {
           transDetail:{},
-          address:''
+          address:this.$route.query.searchval
       }
   },
   created(){
       this.getListByHash()
   },
   methods:{
+      copyAddress(){
+            let that = this
+            var clipboard = new Clipboard('.tag-read')  
+            clipboard.on('success', e => {  
+                that.$message.success('复制成功');
+            // 释放内存  
+            clipboard.destroy()  
+            })  
+            clipboard.on('error', e => {  
+            // 不支持复制  
+            console.log('该浏览器不支持自动复制')  
+            // 释放内存  
+            clipboard.destroy()  
+            })
+        },
       getListByHash(){
           let that = this
           listByHash({hash:this.address}).then(res=>{
               if(res.data.statusCode==200){
                 //   res.data.data.hash = plusXing(res.data.data.hash,5,5)
-                  res.data.data.from = plusXing(res.data.data.from,5,5)
-                  res.data.data.to = plusXing(res.data.data.to,5,5)
+                //   res.data.data.from = plusXing(res.data.data.from,5,5)
+                //   res.data.data.to = plusXing(res.data.data.to,5,5)
                   res.data.data.timestamp  = formartTimeStamp(res.data.data.timestamp)
                   that.transDetail = res.data.data
               }

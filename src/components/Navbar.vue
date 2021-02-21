@@ -3,6 +3,9 @@
         <div class="logo">
             <img src="../assets/img/logo.png">
         </div>
+        <div class="navico" @click="drawer=true">
+            <img src="../assets/img/icon_nav.svg">
+        </div>
         <ul class="navlist">
             <li :class="nav==0?'active':''" @click="toHome">首页</li>
             <li :class="nav==1?'active':''" @click="toBlock">区块</li>
@@ -10,7 +13,7 @@
             <li :class="nav==3?'active':''" @click="toWhitepage">白皮书</li>
         </ul>
         <div class="rtNav">
-            <div class="downlogad">下载</div>
+            <div class="downlogad" @click="toDownload">下载</div>
             <div class="lang">
                 <span>简体中文</span>
                 <div class="downlang">
@@ -20,13 +23,35 @@
                 </div>
             </div>
         </div>
+        <!---->
+        <el-drawer :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false">
+            <ul class="navlist">
+                <li :class="nav==0?'active':''" @click="toHome">首页</li>
+                <li :class="nav==1?'active':''" @click="toBlock">区块</li>
+                <li :class="nav==2?'active':''" @click="toTransfer">交易</li>
+                <li :class="nav==3?'active':''" @click="toWhitepage">白皮书</li>
+            </ul>
+            <div class="rtNav clearfix">
+                <div class="downlogad" @click="toDownload">下载</div>
+                <div class="lang">
+                    <span @click="langstatus=true">简体中文</span>
+                    <div class="downlang" v-show="langstatus">
+                        <p>简体中文</p>
+                        <p>English</p>
+                        <p>繁体中文</p>
+                    </div>
+                </div>
+            </div>
+        </el-drawer>    
     </div>
 </template>
 <script>
 export default {
   data(){
     return {
-        nav:localStorage.getItem('nav') || 0
+        nav:localStorage.getItem('nav') || 0,
+        drawer:false,
+        langstatus:false
     };
   },
   created(){
@@ -47,10 +72,14 @@ export default {
       toWhitepage(){
           localStorage.setItem('nav',3)
         //   this.$router.push('/')
+      },
+      toDownload(){
+          this.$router.push('/Download')
       }
   }
 }
 </script>
+
 <style lang='less' scoped>
 .browserHead{
     width:100%;
@@ -63,6 +92,7 @@ export default {
         line-height:60px;
         width:118px;
     }
+    .navico{display:none;}
     .navlist{
         float:left;
         padding-left:30px;
@@ -136,6 +166,44 @@ export default {
     }
 }
 @media screen and (max-width: 750px) {
-    .browserHead{display:none;}
+    .browserHead{
+        .navlist,.rtNav{
+            display:none;
+        }
+        .drawer_body{
+            .navlist,.rtNav{
+                display:block;
+            }
+        }
+        .navico{display:block;float:right;
+            img{width:30px;}
+        }
+    }
 }
+</style>
+<style >
+.drawer_body {
+  width: 69% !important;
+  background: #1C1C1C;
+  border-radius: 16px 0px 0px 16px;
+  color: #ffffff;
+  /* position: relative; */
+  outline: 0;
+}
+.browserHead .drawer_body .navlist{padding-top:60px;float:initial;}
+.browserHead .drawer_body .navlist li{
+    font-size:13px;
+    color:#fff;
+    line-height:60px;
+    cursor: pointer;
+    margin-right:20px;
+    float:initial;
+}
+.browserHead .drawer_body .navlist li.active{color:#FFA006;}
+.browserHead .drawer_body .rtNav{width:100%;float:initial;position:absolute;bottom:20px;left:20px;}
+.browserHead .drawer_body .rtNav .lang .downlang{
+    display:block;
+    top:-88px;
+}
+.browserHead .drawer_body .rtNav .lang .downlang p:active{color:#FFA006;}
 </style>

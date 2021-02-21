@@ -6,7 +6,8 @@ const api = {
   addressInfo:'/address/getAddress/',
   listByAddress:'/transaction/listByAddress/',
   listByHash:'/transaction/getByHash/',
-  blockGetByHash:'/block/getByHash/'
+  blockGetByHash:'/block/getByHash/',
+  blockGetByAllHash:'/block/getAllByHash/'
 }
 
 export default api

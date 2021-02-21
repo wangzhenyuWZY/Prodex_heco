@@ -6,7 +6,7 @@
             <div class="blockCon">
                 <div class="blockTitle">
                     <h2>交易</h2>
-                    <p>区块：#1242231</p>
+                    <p>仅显示最后1000条交易</p>
                 </div>
                 <div class="blockTable">
                     <table>
@@ -86,6 +86,7 @@ export default {
       getTransList({pageNum:this.pageNum}).then(res=>{
         if(res.data.statusCode==200){
           res.data.data.forEach(item=>{
+            item.hash = plusXing(item.hash,5,5)
             item.from = plusXing(item.from,5,5)
             item.to = plusXing(item.to,5,5)
             item.timestamp  = formartTimeStamp(item.timestamp)

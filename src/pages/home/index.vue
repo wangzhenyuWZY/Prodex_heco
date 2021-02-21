@@ -2,7 +2,7 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="homeContainer">
-      <SearchBar></SearchBar>
+      <SearchBar @change='searchHash'></SearchBar>
       <div class="blockInfo">
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.maxNum/Math.pow(10,6)}}</p>
@@ -41,7 +41,7 @@
           </div>
           <div class="detailCon">
             <ul class="translist">
-              <li v-for="(item,index) in blockList" :key="index">
+              <li v-for="(item,index) in blockList" v-show="index<8" :key="index">
                 <p>{{item.blockNumber}}<span class="time">{{item.timestamp}}</span></p>
                 <p>{{item.transactionNumber}}交易</p>
                 <p>{{item.dotcAmount/Math.pow(10,6)}}  DOTC</p>
@@ -56,12 +56,12 @@
           </div>
           <div class="detailCon">
             <ul class="transblock">
-              <li v-for="(item,index) in transList" :key="index">
+              <li v-for="(item,index) in transList" v-show="index<4" :key="index">
                 <div class="top">
                   <span class="hash">{{item.hash}}</span>
                   <span class="num">{{item.dotcAmount}}  DOTC</span>
                 </div>
-                <div class="btm">
+                <div class="btm clearfix">
                   <p class="transdt">发送方<span>{{item.from}}</span></p>
                   <p class="transdt">接收方<span>{{item.to}}</span></p>
                   <span class="times">{{item.timestamp}}</span>
@@ -74,7 +74,7 @@
           <div class="detailTitle">
             <h2>七日交易量 <span></span>(dotc)</h2>
           </div>
-          <div class="detailCon">
+          <div class="detailCon nolrpad">
             <canvas class="container" id="container" height='270px' width="100%"></canvas>
           </div>
         </div>
@@ -82,7 +82,7 @@
           <div class="detailTitle">
             <h2>七日账户增长数</h2>
           </div>
-          <div class="detailCon">
+          <div class="detailCon nolrpad">
             <canvas class="container" id="container1" height='270px' width="100%"></canvas>
           </div>
         </div>
@@ -97,7 +97,7 @@ import Navbar from '../../components/Navbar'
 import SearchBar from '../../components/SearchBar'
 import Btm from '../../components/Btm'
 const F2 = require('@antv/f2/lib/index')
-import {getChainInfo,getSnapshot,getBlockList,getTransList} from '../../api/user'
+import {getChainInfo,getSnapshot,getBlockList,getTransList,blockGetByAllHash} from '../../api/user'
 import {formartTimeStamp,plusXing} from '../../config/utils'
 export default {
   components:{
@@ -253,7 +253,7 @@ export default {
       getBlockList({pageNum:this.pageNum}).then(res=>{
         if(res.data.statusCode==200){
           res.data.data.forEach(item=>{
-            item.timestamp  = formartTimeStamp(item.timestamp)
+            item.timestamp  = formartTimeStamp(item.timestamp/1000)
           })
           that.blockList = res.data.data
         }
@@ -264,24 +264,40 @@ export default {
       getTransList({pageNum:this.pageNum1}).then(res=>{
         if(res.data.statusCode==200){
           res.data.data.forEach(item=>{
+            item.hash = plusXing(item.hash,5,5)
             item.from = plusXing(item.from,5,5)
             item.to = plusXing(item.to,5,5)
-            item.timestamp  = formartTimeStamp(item.timestamp)
+            item.timestamp  = formartTimeStamp(item.timestamp/1000)
           })
           that.transList = res.data.data
         }
       })
     },
     websocket () {
-      let ws = new WebSocket('ws://47.57.4.24:8011/websocket/1')
+      let that = this
+      let ws = new WebSocket('ws://47.57.4.24:8011/webSocket/10')
       ws.onopen = () => {
       // Web Socket 已连接上，使用 send() 方法发送数据
-          ws.send()
+          // ws.send()
           console.log('数据发送中...')
       }
       ws.onmessage = evt => {
         debugger
-      // console.log('数据已接收...')
+        if(evt.data!=='连接成功'){
+          let data = JSON.parse(evt.data)
+          that.homeInfo = data.chainInfo.data
+          data.blocks.data.forEach(item=>{
+            item.timestamp  = formartTimeStamp(item.timestamp/1000)
+          })
+          that.blockList = data.blocks.data
+          data.transactions.data.forEach(item=>{
+            item.hash = plusXing(item.hash,5,5)
+            item.from = plusXing(item.from,5,5)
+            item.to = plusXing(item.to,5,5)
+            item.timestamp  = formartTimeStamp(item.timestamp/1000)
+          })
+          that.transList = data.transactions.data
+        }
       }
       ws.onclose = function () {
       // 关闭 websocket
@@ -366,6 +382,14 @@ export default {
       }
       .detailCon{
         padding:10px 20px;
+        &.nolrpad{
+          padding:0
+        }
+        .transblock{
+          li{
+            margin-bottom:10px;
+          }
+        }
         .translist{
           li{
             overflow:hidden;
@@ -376,7 +400,7 @@ export default {
               color:#fff;
               line-height:18px;
               width:33%;
-              .time{color:#585858;padding-left:12px;font-size:12px;}
+              .time{color:#585858;padding-left:12px;font-size:12px;white-space: nowrap;}
               &:nth-child(2){text-align:center;}
               &:last-child{text-align:right;}
             }
@@ -415,12 +439,14 @@ export default {
         }
         .container{
           height:270px;
+          padding-top:0 !important;
         }
       }
     }
   }
 }
 @media screen and (max-width: 750px) {
+  .homeContainer .blockDetail .detailWrap .detailCon .transblock li .btm .transdt{margin-right: 5px;}
   .homeContainer{
     .blockInfo{
       padding-bottom:15px;
@@ -431,6 +457,9 @@ export default {
     .blockDetail{
       .detailWrap{
         width:100%;
+        &.hei241{
+          height:345px;
+        }
         .detailCon{
           .translist{
             li{

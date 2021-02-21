@@ -32,7 +32,11 @@
                                 <td class="green">{{item.blockNumber}}</td>
                                 <td class="green">{{item.from}}</td>
                                 <td class="green">{{item.to}}</td>
-                                <td class="true"><i></i>已确定</td>
+                                <td :class="item.status==2?'true':'false'">
+                                    <div v-show="item.status==2"><i class="true"></i>已确定</div>
+                                    <div v-show="item.status==1"><i class="false"></i>待确定</div>
+                                    <div v-show="item.status==3"><i class="false"></i>失败</div>
+                                </td>
                                 <td>{{item.dotcAmount}}</td>
                             </tr>
                         </tbody>
@@ -69,7 +73,7 @@ export default {
         accountInfo:{},
         transList:[],
         pageNum:0,
-        address:'asdfasdf'
+        address:this.$route.query.searchval
     };
   },
   created(){

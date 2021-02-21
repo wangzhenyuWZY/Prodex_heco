@@ -5,6 +5,7 @@
     </div>
 </template>
 <script>
+import {blockGetByAllHash} from '../api/user'
 export default {
   props:['address'],
   data(){
@@ -22,7 +23,33 @@ export default {
   },
   methods:{
     changed(){
-      this.$emit('change',this.val)
+      let that = this
+      blockGetByAllHash({hash:this.val}).then(res=>{
+        if(res.data.statusCode==200){
+          if(res.data.data.type=='transaction'){
+            that.$router.push({
+              path:'/TransferDetail',
+              query:{
+                  searchval:that.val
+              }
+            })  
+          }else if(res.data.data.type=='block'){
+            that.$router.push({
+              path:'/BlockDetail',
+              query:{
+                  searchval:that.val
+              }
+            }) 
+          }else if(res.data.data.type=='address'){
+            that.$router.push({
+              path:'/AccountDetail',
+              query:{
+                  searchval:that.val
+              }
+            })
+          }
+        }
+      })
     }
   }
 }
