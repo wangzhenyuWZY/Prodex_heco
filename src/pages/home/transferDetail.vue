@@ -5,45 +5,45 @@
             <SearchBar :address='address'></SearchBar>
             <div class="blockCon">
                 <div class="blockTitle">
-                    <h2>交易明细</h2>
+                    <h2>{{$t('lang43')}}</h2>
                 </div>
                 <div class="blockContainer">
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">状态：</span>
-                        <div class="infoval green" v-show="transDetail.status==2"><i class="true"></i>已确定</div>
-                        <div class="infoval green" v-show="transDetail.status==1"><i class="false"></i>待确定</div>
-                        <div class="infoval green" v-show="transDetail.status==3"><i class="false"></i>失败</div>
+                        <span class="infokey">{{$t('lang14')}}：</span>
+                        <div class="infoval green" v-show="transDetail.status==2"><i class="true"></i>{{$t('lang16')}}</div>
+                        <div class="infoval green" v-show="transDetail.status==1"><i class="false"></i>{{$t('lang17')}}</div>
+                        <div class="infoval green" v-show="transDetail.status==3"><i class="false"></i>{{$t('lang18')}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">区块高度：</span>
+                        <span class="infokey">{{$t('lang19')}}：</span>
                         <div class="infoval">{{transDetail.blockNumber}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">时间戳：</span>
+                        <span class="infokey">{{$t('lang20')}}：</span>
                         <div class="infoval">{{transDetail.timestamp}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">哈希值：</span>
+                        <span class="infokey">{{$t('lang21')}}：</span>
                         <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.hash">{{transDetail.hash}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">发送方：</span>
+                        <span class="infokey">{{$t('lang39')}}：</span>
                         <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.from">{{transDetail.from}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">接收方：</span>
+                        <span class="infokey">{{$t('lang40')}}：</span>
                         <div class="infoval green tag-read" @click="copyAddress" :data-clipboard-text="transDetail.to">{{transDetail.to}} <i class="add"></i></div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">交易量：</span>
-                        <div class="infoval">{{transDetail.dotcAmount}} DOTC</div>
+                        <span class="infokey">{{$t('lang24')}}：</span>
+                        <div class="infoval">{{transDetail.dotcAmount/Math.pow(10,6)}}}} DOTC</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">交易费用：</span>
-                        <div class="infoval green">{{transDetail.gas}} DOTC</div>
+                        <span class="infokey">{{$t('lang44')}}：</span>
+                        <div class="infoval green">{{transDetail.gas/Math.pow(10,6)}}}} DOTC</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">数据输入：</span>
+                        <span class="infokey">{{$t('lang45')}}：</span>
                         <div class="dataput" v-html="transDetail.data">
                             <!-- &nbsp;{{transDetail.data}} -->
                         </div>
@@ -81,7 +81,7 @@ export default {
             let that = this
             var clipboard = new Clipboard('.tag-read')  
             clipboard.on('success', e => {  
-                that.$message.success('复制成功');
+                that.$message.success(that.$t('lang46'));
             // 释放内存  
             clipboard.destroy()  
             })  

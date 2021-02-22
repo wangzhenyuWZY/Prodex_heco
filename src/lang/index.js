@@ -5,12 +5,14 @@ Vue.use(VueI18n)
 
 import zh from './config/zh'
 import en from './config/en'
+import tw from './config/tw'
 
 const i18n = new VueI18n({
-  locale: localStorage.getItem('lang') || 'en',
+  locale: localStorage.getItem('lang') || 'zh',
   messages: {
     zh,
-    en
+    en,
+    tw
   }
 })
 export default i18n

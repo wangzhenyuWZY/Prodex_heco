@@ -5,42 +5,42 @@
             <SearchBar :address='address'></SearchBar>
             <div class="blockCon">
                 <div class="blockTitle">
-                    <h2>区块</h2>
-                    <p>区块#{{blockDetail.blockNumber}}</p>
+                    <h2>{{$t('lang2')}}</h2>
+                    <p>{{$t('lang2')}}#{{blockDetail.blockNumber}}</p>
                 </div>
                 <div class="blockContainer">
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">状态：</span>
-                        <div class="infoval green" v-show="blockDetail.status==2"><i class="true"></i>已确定</div>
-                        <div class="infoval green" v-show="blockDetail.status==1"><i class="false"></i>待确定</div>
-                        <div class="infoval green" v-show="blockDetail.status==3"><i class="false"></i>失败</div>
+                        <span class="infokey">{{$t('lang14')}}：</span>
+                        <div class="infoval green" v-show="blockDetail.status==2"><i class="true"></i>{{$t('lang16')}}</div>
+                        <div class="infoval green" v-show="blockDetail.status==1"><i class="false"></i>{{$t('lang17')}}</div>
+                        <div class="infoval green" v-show="blockDetail.status==3"><i class="false"></i>{{$t('lang18')}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">区块高度：</span>
+                        <span class="infokey">{{$t('lang19')}}：</span>
                         <div class="infoval">{{blockDetail.blockNumber}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">时间戳：</span>
+                        <span class="infokey">{{$t('lang20')}}：</span>
                         <div class="infoval">{{blockDetail.timestamp}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">哈希值：</span>
+                        <span class="infokey">{{$t('lang21')}}：</span>
                         <div class="infoval green">{{blockDetail.hash}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">交易：</span>
+                        <span class="infokey">{{$t('lang22')}}：</span>
                         <div class="infoval">{{blockDetail.transactionNumber}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">验证人：</span>
+                        <span class="infokey">{{$t('lang23')}}：</span>
                         <div class="infoval green">{{blockDetail.verifyHash}}</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">交易量：</span>
+                        <span class="infokey">{{$t('lang24')}}：</span>
                         <div class="infoval">{{blockDetail.dotcAmount/Math.pow(10,6)}} DOTC</div>
                     </div>
                     <div class="blockInfoItem clearfix">
-                        <span class="infokey">交易块哈希值：</span>
+                        <span class="infokey">{{$t('lang25')}}：</span>
                         <div class="infoval green">{{blockDetail.hash}}</div>
                     </div>
                 </div>

@@ -4,25 +4,25 @@
         <div class="homeContainer clearfix">
             <SearchBar :address='address' @change="change"></SearchBar>
             <div class="accdetailCon">
-                <div class="accdetail tag-read" @click="copyAddress" :data-clipboard-text="accountInfo.address">地址：<span class="green">{{accountInfo.plusaddress}}</span><i></i></div>
-                <div class="accdetail">余额：<span>{{accountInfo.amount}} DOCT</span></div>
+                <div class="accdetail tag-read" @click="copyAddress" :data-clipboard-text="accountInfo.address">{{$t('lang7')}}：<span class="green">{{accountInfo.plusaddress}}</span><i></i></div>
+                <div class="accdetail">{{$t('lang8')}}：<span>{{accountInfo.amount}} DOCT</span></div>
             </div>
             <div class="blockCon">
                 
                 <div class="blockTitle">
-                    <h2>交易</h2>
+                    <h2>{{$t('lang3')}}</h2>
                 </div>
                 <div class="blockTable">
                     <table>
                         <thead>
                             <tr>
-                                <th>交易哈希</th>
-                                <th>区块</th>
-                                <th>时间</th>
-                                <th>发送人</th>
-                                <th>接收人</th>
-                                <th>状态</th>
-                                <th>交易量(DOTC)</th>
+                                <th>{{$t('lang9')}}</th>
+                                <th>{{$t('lang10')}}</th>
+                                <th>{{$t('lang11')}}</th>
+                                <th>{{$t('lang12')}}</th>
+                                <th>{{$t('lang13')}}</th>
+                                <th>{{$t('lang14')}}</th>
+                                <th>{{$t('lang15')}}(DOTC)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -33,11 +33,11 @@
                                 <td class="green">{{item.from}}</td>
                                 <td class="green">{{item.to}}</td>
                                 <td :class="item.status==2?'true':'false'">
-                                    <div v-show="item.status==2"><i class="true"></i>已确定</div>
-                                    <div v-show="item.status==1"><i class="false"></i>待确定</div>
-                                    <div v-show="item.status==3"><i class="false"></i>失败</div>
+                                    <div v-show="item.status==2"><i class="true"></i>{{$t('lang16')}}</div>
+                                    <div v-show="item.status==1"><i class="false"></i>{{$t('lang17')}}</div>
+                                    <div v-show="item.status==3"><i class="false"></i>{{$t('lang18')}}</div>
                                 </td>
-                                <td>{{item.dotcAmount}}</td>
+                                <td>{{item.dotcAmount/Math.pow(10,6)}}}}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -121,7 +121,7 @@ export default {
             let that = this
             var clipboard = new Clipboard('.tag-read')  
             clipboard.on('success', e => {  
-                that.$message.success('复制成功');
+                that.$message.success(that.$t('lang46'));
             // 释放内存  
             clipboard.destroy()  
             })  

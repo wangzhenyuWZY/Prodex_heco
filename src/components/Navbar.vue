@@ -7,38 +7,38 @@
             <img src="../assets/img/icon_nav.svg">
         </div>
         <ul class="navlist">
-            <li :class="nav==0?'active':''" @click="toHome">首页</li>
-            <li :class="nav==1?'active':''" @click="toBlock">区块</li>
-            <li :class="nav==2?'active':''" @click="toTransfer">交易</li>
-            <li :class="nav==3?'active':''" @click="toWhitepage">白皮书</li>
+            <li :class="nav==0?'active':''" @click="toHome">{{$t('lang1')}}</li>
+            <li :class="nav==1?'active':''" @click="toBlock">{{$t('lang2')}}</li>
+            <li :class="nav==2?'active':''" @click="toTransfer">{{$t('lang3')}}</li>
+            <li :class="nav==3?'active':''" @click="toWhitepage">{{$t('lang4')}}</li>
         </ul>
         <div class="rtNav">
-            <div class="downlogad" @click="toDownload">下载</div>
+            <div class="downlogad" @click="toDownload">{{$t('lang5')}}</div>
             <div class="lang">
-                <span>简体中文</span>
+                <span>{{langeuage}}</span>
                 <div class="downlang">
-                    <p>简体中文</p>
-                    <p>English</p>
-                    <p>繁体中文</p>
+                    <p @click="changeLang('zh')">简体中文</p>
+                    <p @click="changeLang('en')">English</p>
+                    <p @click="changeLang('tw')">繁体中文</p>
                 </div>
             </div>
         </div>
         <!---->
         <el-drawer :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false">
             <ul class="navlist">
-                <li :class="nav==0?'active':''" @click="toHome">首页</li>
-                <li :class="nav==1?'active':''" @click="toBlock">区块</li>
-                <li :class="nav==2?'active':''" @click="toTransfer">交易</li>
-                <li :class="nav==3?'active':''" @click="toWhitepage">白皮书</li>
+                <li :class="nav==0?'active':''" @click="toHome">{{$t('lang1')}}</li>
+                <li :class="nav==1?'active':''" @click="toBlock">{{$t('lang2')}}</li>
+                <li :class="nav==2?'active':''" @click="toTransfer">{{$t('lang3')}}</li>
+                <li :class="nav==3?'active':''" @click="toWhitepage">{{$t('lang4')}}</li>
             </ul>
             <div class="rtNav clearfix">
-                <div class="downlogad" @click="toDownload">下载</div>
+                <div class="downlogad" @click="toDownload">{{$t('lang5')}}</div>
                 <div class="lang">
-                    <span @click="langstatus=true">简体中文</span>
+                    <span @click="langstatus=true">{{langeuage}}</span>
                     <div class="downlang" v-show="langstatus">
-                        <p>简体中文</p>
-                        <p>English</p>
-                        <p>繁体中文</p>
+                        <p @click="changeLang('zh')">简体中文</p>
+                        <p @click="changeLang('en')">English</p>
+                        <p @click="changeLang('tw')">繁体中文</p>
                     </div>
                 </div>
             </div>
@@ -51,10 +51,19 @@ export default {
     return {
         nav:localStorage.getItem('nav') || 0,
         drawer:false,
-        langstatus:false
+        langstatus:false,
+        langeuage:'简体中文'
     };
   },
   created(){
+      const i18n = this.$i18n.locale
+      if(i18n=='zh'){
+          this.langeuage = '简体中文'
+      }else if(i18n=='tw'){
+          this.langeuage = '繁体中文'
+      }else if(i18n=='en'){
+          this.langeuage = 'English'
+      }
   },
   methods:{
       toHome(){
@@ -74,7 +83,27 @@ export default {
         //   this.$router.push('/')
       },
       toDownload(){
-          this.$router.push('/Download')
+          const i18n = this.$i18n.locale
+          if(i18n=='en'){
+              window.location.href = 'http://wap.dotcash.vip/Down/IndexEN'
+          }else if(i18n=='zh'){
+              window.location.href = 'http://wap.dotcash.vip/Down/IndexCN'
+          }else if(i18n=='tw'){
+              window.location.href = 'http://wap.dotcash.vip/Down/IndexTW'
+          }
+          
+      },
+      changeLang(lang){
+        const i18n = this.$i18n.locale
+        this.$i18n.locale = lang
+        localStorage.setItem('lang', this.$i18n.locale)
+        if(lang=='zh'){
+          this.langeuage = '简体中文'
+        }else if(lang=='tw'){
+            this.langeuage = '繁体中文'
+        }else if(lang=='en'){
+            this.langeuage = 'English'
+        }
       }
   }
 }

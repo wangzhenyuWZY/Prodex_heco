@@ -1,6 +1,6 @@
 <template>
     <div class="searchbox">
-        <input placeholder="输入地址/交易哈希/区块号" v-model="val" >
+        <input :placeholder="$t('lang6')" v-model="val" >
         <i @click="changed"></i>
     </div>
 </template>

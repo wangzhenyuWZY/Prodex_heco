@@ -5,20 +5,20 @@
             <SearchBar></SearchBar>
             <div class="blockCon">
                 <div class="blockTitle">
-                    <h2>交易</h2>
-                    <p>仅显示最后1000条交易</p>
+                    <h2>{{$t('lang22')}}</h2>
+                    <p>{{$t('lang47')}}</p>
                 </div>
                 <div class="blockTable">
                     <table>
                         <thead>
                             <tr>
-                                <th>交易哈希</th>
-                                <th>区块</th>
-                                <th>时间</th>
-                                <th>发送人</th>
-                                <th>接收人</th>
-                                <th>状态</th>
-                                <th>交易量(DOTC)</th>
+                                <th>{{$t('lang9')}}</th>
+                                <th>{{$t('lang10')}}</th>
+                                <th>{{$t('lang11')}}</th>
+                                <th>{{$t('lang12')}}</th>
+                                <th>{{$t('lang13')}}</th>
+                                <th>{{$t('lang14')}}</th>
+                                <th>{{$t('lang15')}}(DOTC)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -28,10 +28,10 @@
                                 <td class="green">{{item.timestamp}}</td>
                                 <td class="green">{{item.from}}</td>
                                 <td class="green">{{item.to}}</td>
-                                <td class="true" v-show="item.status==2"><i></i>已确定</td>
-                                <td class="false" v-show="item.status==1"><i></i>待确定</td>
-                                <td class="false" v-show="item.status==3"><i></i>失败</td>
-                                <td>{{item.dotcAmount}}</td>
+                                <td class="true" v-show="item.status==2"><i></i>{{$t('lang16')}}</td>
+                                <td class="false" v-show="item.status==1"><i></i>{{$t('lang17')}}</td>
+                                <td class="false" v-show="item.status==3"><i></i>{{$t('lang18')}}</td>
+                                <td>{{item.dotcAmount/Math.pow(10,6)}}}}</td>
                             </tr>
                         </tbody>
                     </table>

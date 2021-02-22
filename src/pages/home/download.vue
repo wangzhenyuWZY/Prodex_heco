@@ -1,11 +1,11 @@
 <template>
     <div class="downContainer">
-        <h2>手机下载 DOTC APP</h2>
+        <h2>{{$t('lang27')}} DOTC APP</h2>
         <div class="imgcon">
             <img src="../../assets/img/phone.png">
         </div>
-        <a class="downbtn active">Android 下载</a>
-        <a class="downbtn">iPhone 下载</a>
+        <a class="downbtn active" href="http://wap.dotcash.vip/Down/IndexCN">Android {{$t('lang5')}}</a>
+        <a class="downbtn" href="http://wap.dotcash.vip/Down/IndexCN">iPhone {{$t('lang5')}}</a>
     </div>
 </template>
 <style lang='less' scoped>

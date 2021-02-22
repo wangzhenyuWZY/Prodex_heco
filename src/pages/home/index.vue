@@ -2,68 +2,68 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="homeContainer">
-      <SearchBar @change='searchHash'></SearchBar>
+      <SearchBar></SearchBar>
       <div class="blockInfo">
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.maxNum/Math.pow(10,6)}}</p>
-          <p class="name">总量</p>
+          <p class="name">{{$t('lang28')}}</p>
         </div>
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.useNum/Math.pow(10,6)}}</p>
-          <p class="name">流通量</p>
+          <p class="name">{{$t('lang29')}}</p>
         </div>
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.waitNum/Math.pow(10,6)}}</p>
-          <p class="name">待产出</p>
+          <p class="name">{{$t('lang30')}}</p>
         </div>
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.yestodayNum/Math.pow(10,6)}}</p>
-          <p class="name">昨日产出</p>
+          <p class="name">{{$t('lang31')}}</p>
         </div>
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.accountNum}}</p>
-          <p class="name">账户数</p>
+          <p class="name">{{$t('lang32')}}</p>
         </div>
         <div class="blockInfoItem">
-          <p class="val">{{homeInfo.yestodayTransNum}}</p>
-          <p class="name">昨日交易量</p>
+          <p class="val">{{homeInfo.yestodayTransNum/Math.pow(10,6)}}</p>
+          <p class="name">{{$t('lang33')}}</p>
         </div>
         <div class="blockInfoItem">
           <p class="val">{{homeInfo.superPeer}}</p>
-          <p class="name">超级节点</p>
+          <p class="name">{{$t('lang34')}}</p>
         </div>
       </div>
       <div class="blockDetail clearfix">
         <div class="detailWrap fl hei241">
           <div class="detailTitle">
-            <h2>最新区块</h2>
-            <p class="checkMore" @click="checkAllBlock">查看所有区块<i></i></p>
+            <h2>{{$t('lang35')}}</h2>
+            <p class="checkMore" @click="checkAllBlock">{{$t('lang36')}}<i></i></p>
           </div>
           <div class="detailCon">
             <ul class="translist">
               <li v-for="(item,index) in blockList" v-show="index<8" :key="index">
                 <p>{{item.blockNumber}}<span class="time">{{item.timestamp}}</span></p>
-                <p>{{item.transactionNumber}}交易</p>
-                <p>{{item.dotcAmount/Math.pow(10,6)}}  DOTC</p>
+                <p>{{item.transactionNumber?item.transactionNumber:0}} {{$t('lang3')}}</p>
+                <p>{{item.dotcAmount?item.dotcAmount/Math.pow(10,6):0}}  DOTC</p>
               </li>
             </ul>
           </div>
         </div>
         <div class="detailWrap fr hei241">
           <div class="detailTitle">
-            <h2>最新交易</h2>
-            <p class="checkMore" @click="checkAllTrans">查看所有交易<i></i></p>
+            <h2>{{$t('lang37')}}</h2>
+            <p class="checkMore" @click="checkAllTrans">{{$t('lang38')}}<i></i></p>
           </div>
           <div class="detailCon">
             <ul class="transblock">
               <li v-for="(item,index) in transList" v-show="index<4" :key="index">
                 <div class="top">
                   <span class="hash">{{item.hash}}</span>
-                  <span class="num">{{item.dotcAmount}}  DOTC</span>
+                  <span class="num">{{item.dotcAmount/Math.pow(10,6)}}  DOTC</span>
                 </div>
                 <div class="btm clearfix">
-                  <p class="transdt">发送方<span>{{item.from}}</span></p>
-                  <p class="transdt">接收方<span>{{item.to}}</span></p>
+                  <p class="transdt">{{$t('lang39')}}<span>{{item.from}}</span></p>
+                  <p class="transdt">{{$t('lang40')}}<span>{{item.to}}</span></p>
                   <span class="times">{{item.timestamp}}</span>
                 </div>
               </li>
@@ -72,7 +72,7 @@
         </div>
         <div class="detailWrap fl hei270">
           <div class="detailTitle">
-            <h2>七日交易量 <span></span>(dotc)</h2>
+            <h2>{{$t('lang41')}} <span></span>(dotc)</h2>
           </div>
           <div class="detailCon nolrpad">
             <canvas class="container" id="container" height='270px' width="100%"></canvas>
@@ -80,7 +80,7 @@
         </div>
         <div class="detailWrap fr hei270">
           <div class="detailTitle">
-            <h2>七日账户增长数</h2>
+            <h2>{{$t('lang42')}}</h2>
           </div>
           <div class="detailCon nolrpad">
             <canvas class="container" id="container1" height='270px' width="100%"></canvas>
@@ -282,7 +282,6 @@ export default {
           console.log('数据发送中...')
       }
       ws.onmessage = evt => {
-        debugger
         if(evt.data!=='连接成功'){
           let data = JSON.parse(evt.data)
           that.homeInfo = data.chainInfo.data
