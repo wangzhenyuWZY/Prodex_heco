@@ -86,6 +86,7 @@ export default {
         if(res.data.statusCode==200){
           res.data.data.forEach(item=>{
             item.timestamp  = formartTimeStamp(item.timestamp)
+            item.verifyHash = plusXing(item.verifyHash,5,5)
           })
           that.blockList = res.data.data
           that.pageSize = res.data.pageSize

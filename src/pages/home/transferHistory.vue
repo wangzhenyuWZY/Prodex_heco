@@ -45,7 +45,7 @@
                 :page-size="pageSize"
                 layout="prev, pager, next, jumper"
                 :total="pageTotal">
-            </el-pagination>  
+            </el-pagination> 
         </div> 
         <Btm></Btm>
     </div>

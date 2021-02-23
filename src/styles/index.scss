@@ -124,13 +124,13 @@ html,body{
 .el-pager li.active{color:#fff;background: linear-gradient(316deg, #D98600 0%, #FBBA45 100%);}
 .el-pagination button:disabled{background:#212121;}
 .el-pager .more::before{line-height:50px;color:#fff;}  
-.el-pagination__editor.el-input{width: 100px;
-    height: 50px;
+.el-pagination__editor.el-input{width: 75px;
+    height: 30px;
     background: #252525;
     box-shadow: 2px 4px 8px 0px #151515, -2px -2px 4px 0px #1E1E1E;
     border-radius: 3px;
     border: 1px solid #323232;}
-.el-pagination__editor.el-input .el-input__inner{height:50px;line-height:50px;background:none;border:none;}
+.el-pagination__editor.el-input .el-input__inner{height:30px;line-height:30px;background:none;border:none;}
 .el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon{color:#B7B7B7;}
 @media screen and (max-width: 750px) {
     #app{
@@ -166,12 +166,22 @@ html,body{
     .el-pagination{
         white-space: inherit;
         .el-pager{
-            width:58%;
+            width:62%;
         }
     }
     .el-dialog, .el-pager li{
         margin-right:14px;
         margin-bottom:10px;
+    }
+    .el-pagination .btn-next, .el-pagination .btn-prev{
+        width: 30px;
+        height: 30px;
+        padding-right:0;
+    }
+    .el-dialog, .el-pager li{
+        width: 30px;
+        height: 30px;
+        line-height:30px;
     }
 }
 @font-face { // 正常
