@@ -13,11 +13,6 @@ export default new VueRouter({
   mode: 'hash',
   routes: [
     { path: '/', component: Home },
-    { path: '/BlockDetail', component: ()=> import('../pages/home/blockDetail') },
-    { path: '/BlockHistory', component: ()=> import('../pages/home/blockHistory') },
-    { path: '/TransferHistory', component: ()=> import('../pages/home/transferHistory') },
-    { path: '/AccountDetail', component: ()=> import('../pages/home/accountDetail') },
-    { path: '/TransferDetail', component: ()=> import('../pages/home/transferDetail') },
-    { path: '/Download', component: ()=> import('../pages/home/download') },
+    // { path: '/BlockDetail', component: ()=> import('../pages/home/blockDetail') }
   ]
 })
