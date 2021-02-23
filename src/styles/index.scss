@@ -91,8 +91,9 @@ img{
     width: 0;
 }
 html,body{
-    background:#121212;
+    background:linear-gradient(184deg, #282824 0%, #1A1918 100%);
     font-family: PingFangSC-Regular, PingFang SC;
+    min-height: 100vh;
 }
 .footer{clear:both;font-size:13px;color:#B7B7B7;line-height:100%;text-align:center;padding:21px 0;}
 .homeContainer{
@@ -132,6 +133,22 @@ html,body{
     border: 1px solid #323232;}
 .el-pagination__editor.el-input .el-input__inner{height:30px;line-height:30px;background:none;border:none;}
 .el-pagination .btn-next .el-icon, .el-pagination .btn-prev .el-icon{color:#B7B7B7;}
+
+.el-button.btn{
+    width:100%;
+    height:50px;
+    border-radius:12px;
+    background:#30694B;
+    font-size:16px;
+    color:#C4C2BE;
+    border:none;
+    margin-top:30px;
+}
+.el-button.is-disabled, .el-button.is-disabled:focus, .el-button.is-disabled:hover{
+    background:#30694B;
+    color:#C4C2BE;
+}
+
 @media screen and (max-width: 750px) {
     #app{
         .container{

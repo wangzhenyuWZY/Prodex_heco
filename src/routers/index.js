@@ -3,7 +3,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
-import Home from '../pages/home'
 
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
@@ -12,7 +11,6 @@ VueRouter.prototype.push = function push(location) {
 export default new VueRouter({
   mode: 'hash',
   routes: [
-    { path: '/', component: Home },
-    // { path: '/BlockDetail', component: ()=> import('../pages/home/blockDetail') }
+    { path: '/', name:'Exchange', component: ()=> import('../pages/exchange/exchange') }
   ]
 })
