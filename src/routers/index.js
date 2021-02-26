@@ -17,5 +17,8 @@ export default new VueRouter({
     { path: '/addLiquidity', name:'AddLiquidity', component: ()=> import('../pages/pool/addLiquidity') },
     { path: '/tradeMining', name:'TradeMining', component: ()=> import('../pages/mining/tradeMining') },
     { path: '/lpMining', name:'LpMining', component: ()=> import('../pages/mining/lpMining') },
+    { path: '/selectPool', name:'SelectPool', component: ()=> import('../pages/mining/selectPool') },
+    { path: '/prodex', name:'Prodex', component: ()=> import('../pages/prodex/prodex') },
+    { path: '/prodexInfo', name:'ProdexInfo', component: ()=> import('../pages/prodex/prodexInfo') }
   ]
 })

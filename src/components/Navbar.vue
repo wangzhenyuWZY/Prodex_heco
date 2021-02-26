@@ -4,9 +4,9 @@
             <img class="logo" src="../assets/img/icon2.png">
             <ul class="navlist clearfix">
                 <li :class="nav==0?'active':''" @click="toExchange">兑换</li>
-                <li :class="nav==1?'active':''">资金池</li>
-                <li :class="nav==2?'active':''">交易挖矿</li>
-                <li :class="nav==3?'active':''">流动挖矿</li>
+                <li :class="nav==1?'active':''" @click="toPool">资金池</li>
+                <li :class="nav==2?'active':''" @click="toDealMining">交易挖矿</li>
+                <li :class="nav==3?'active':''" @click="toLpMining">流动挖矿</li>
                 <li :class="nav==4?'active':''">Prodex</li>
             </ul>
         </div>
@@ -35,17 +35,17 @@ export default {
           localStorage.setItem('nav',0)
           this.$router.push('/')
       },
-      toBlock(){
+      toPool(){
           localStorage.setItem('nav',1)
-          this.$router.push('/BlockHistory')
+          this.$router.push('/pool')
       },
-      toTransfer(){
+      toDealMining(){
           localStorage.setItem('nav',2)
-          this.$router.push('/TransferHistory')
+          this.$router.push('/tradeMining')
       },
-      toWhitepage(){
+      toLpMining(){
           localStorage.setItem('nav',3)
-        //   this.$router.push('/')
+          this.$router.push('/lpMining')
       }
   }
 }

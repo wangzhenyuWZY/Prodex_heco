@@ -4,7 +4,7 @@
     <div class="exchangeBar">
         <selectToken v-show="false"></selectToken>
         <div class="panelTop clearfix">
-            <i class="return"></i>
+            <i class="return" @click="toPool"></i>
             <div class="tips">
                 <p class="tipText">
                     When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
@@ -62,7 +62,9 @@ export default {
     
   },
   methods: {
-    
+    toPool(){
+        this.$router.push('/pool')
+    }
   }
 }
 </script>

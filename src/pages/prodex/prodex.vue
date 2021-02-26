@@ -3,16 +3,15 @@
     <Navbar></Navbar>
     <div class="poolContainer">
         <div class="poolRewards">
-            <h2>Liquidity provider rewards</h2>
-            <p>Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</p>
-            <a>Read more about providing liquidity</a>
+            <h2>Uniswap liquidity mining</h2>
+            <p>Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token.</p>
+            <a>Read more about Prodex</a>
         </div>
-        <div class="addOrCreate">
-            <router-link to="/addLiquidity" class="btn add">Add Liquidity</router-link>
-            <router-link to="/create" class="btn create">Create a pair</router-link>
+        <div class="partic clearfix">
+            <span class="fl">Participating pools</span>
+            <span class="fr">Rewards have ended!</span>
+            <input placeholder="Rewards have ended!">
         </div>
-        <p class="connectTips">Connect to a wallet to view your liquidity.</p>
-        <p class="notLiquidity">Don't see a pool you joined?<span>Import it.</span></p>
     </div>
   </div>
 </template>
@@ -72,46 +71,37 @@ export default {
           color:#C4C2BE;
           line-height:18px;
           text-decoration: underline;
+          cursor: pointer;
       }
   }
-  .addOrCreate{
-      padding-top:20px;
-      padding-bottom:66px;
-      width:300px;
+  .partic{
+      padding-top:28px;
+      width:600px;
       margin:0 auto;
-      overflow:hidden;
-      .btn{
-          width: 140px;
-          height: 32px;
-          background: #30694B;
-          border-radius: 16px;
-          text-align:center;
-          line-height:32px;
-          color:#fff;
-          font-size:14px;
-          &.add{
-              float:left;
-          }
-          &.create{
-              float:right;
-              background:none;
-              border: 1px solid #333936;
-              color:#536A5E;
-          }
+      span.fl{
+          float:left;
+          font-size:16px;
+          color:#C4C2BE;
+          line-height:22px;
       }
-  }
-  .connectTips{
-      font-size:14px;
-      color:#6A6A6A;
-      line-height:20px;
-  }
-  .notLiquidity{
-      font-size:14px;
-      color:#C4C2BE;
-      line-height:20px;
-      padding-top:120px;
-      span{
-          color:#FFA006;
+      span.fr{
+          float:right;
+          font-size:16px;
+          color:#837F76;
+          line-height:20px;
+      }
+      input{
+          width: 100%;
+            height: 60px;
+            box-shadow: 2px 2px 3px 0px rgba(19, 19, 19, 0.5);
+            border-radius: 12px;
+            border: 1px solid #38393B;
+            font-size:14px;
+            text-indent: 26px;
+            margin-top:20px;
+            background:none;
+            color:#fff;
+            &::-webkit-input-placeholder{color:#837F76;}
       }
   }
 }
@@ -120,7 +110,7 @@ export default {
        .poolRewards{
            margin-top:40px;
            width:345px;
-           height:190px;
+           height:140px;
            background-size:124px 161px;
            h2{
                line-height:22px;
@@ -129,6 +119,19 @@ export default {
                padding-bottom:20px;
            }
        } 
+       .partic{
+           padding:20px 15px;
+           width:auto;
+           text-align:left;
+           span.fl{
+               float:inherit;
+               display:block;
+           }
+           span.fr{
+               float:inherit;
+               display:block;
+           }
+       }
     }
 }
 </style>

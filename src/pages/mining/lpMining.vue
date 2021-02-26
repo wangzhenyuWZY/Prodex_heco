@@ -8,14 +8,54 @@
           <span class="active">Mdex LP</span>
           <span>Single Token</span>
         </div>
-        <ul class="lpPoolList">
+        <ul class="lpPoolList clearfix">
+          <li>
+            <div class="coinLogo">
+              <img src="../../assets/img/btc.png">
+              <!-- <img class="or" src="../../assets/img/icon15.png">
+              <img src="../../assets/img/eth.png"> -->
+            </div>
+            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <a class="btn active">APY Loading...</a>
+            <a class="btn select">Select</a>
+          </li>
           <li>
             <div class="coinLogo">
               <img src="../../assets/img/btc.png">
               <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png">
             </div>
-            <p>MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <a class="btn active">APY Loading...</a>
+            <a class="btn select">Select</a>
+          </li>
+          <li>
+            <div class="coinLogo">
+              <img src="../../assets/img/btc.png">
+              <img class="or" src="../../assets/img/icon15.png">
+              <img src="../../assets/img/eth.png">
+            </div>
+            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <a class="btn active">APY Loading...</a>
+            <a class="btn select">Select</a>
+          </li>
+          <li>
+            <div class="coinLogo">
+              <img src="../../assets/img/btc.png">
+              <img class="or" src="../../assets/img/icon15.png">
+              <img src="../../assets/img/eth.png">
+            </div>
+            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <a class="btn active">APY Loading...</a>
+            <a class="btn select">Select</a>
+          </li>
+          <li>
+            <div class="coinLogo">
+              <img src="../../assets/img/btc.png">
+              <img class="or" src="../../assets/img/icon15.png">
+              <img src="../../assets/img/eth.png">
+            </div>
+            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
             <a class="btn active">APY Loading...</a>
             <a class="btn select">Select</a>
           </li>
@@ -97,5 +137,64 @@ export default {
       }
     }
   }
+  .lpPoolList{
+    text-align:center;
+    width:1000px;
+    margin:20px auto;
+    li{
+      float:left;
+      width: 300px;
+      height: 250px;
+      background: #232221;
+      box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      border: 1px solid #232221;
+      margin:0 7px;
+      margin-bottom:15px;
+      .coinLogo{
+        text-align:center;
+        padding:18px 0 10px;
+        img{
+          width:24px;
+          vertical-align: middle;
+          &.or{
+            width:18px;
+            margin:0 16px;
+          }
+        }
+      }
+      .stakeInfo{
+        font-size:12px;
+        color:#C4C2BE;
+        line-height:20px;
+        text-align: center;
+      }
+      .btn{
+        display:inline-block;
+        width: 270px;
+        height: 32px;
+        border-radius: 6px;
+        border: 1px solid #353330;
+        margin-top:20px;
+        text-align:center;
+        line-height:32px;
+        box-sizing: border-box;
+        font-size:14px;
+        color:#009346;
+        cursor: pointer;
+        &.active{
+          background:#30694B;
+          color:#fff;
+          border:none;
+        }
+      }
+    }
+  }
+}
+@media screen and (max-width: 750px) {
+  .lpMiningContainer .lpPoolList{width:auto;padding:0 15px;}
+  .lpMiningContainer .lpPoolList li{width:49%;height:290px;padding:0 15px;box-sizing:border-box;margin:0;margin-bottom:20px;}
+  .lpMiningContainer .lpPoolList li:nth-child(2n){margin-left:2%;}
+  .lpMiningContainer .lpPoolList li .btn{width:100%;}
 }
 </style>
