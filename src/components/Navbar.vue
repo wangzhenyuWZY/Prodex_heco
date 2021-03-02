@@ -11,20 +11,40 @@
             </ul>
         </div>
         <div class="toolCon">
-            <div class="connected">
+            <div class="connected" @click="walletFlag = !walletFlag">
                 Connect to a Wallet
             </div>
-            <div class="prodexbtn">Prodex</div>
-            <i class="setico"></i>
-            <i class="moreico"></i>
+            <div class="prodexbtn" @click="breakFlag = !breakFlag">Prodex</div>
+            <i class="setico" @click="setFlag = !setFlag"></i>
+            <i class="moreico" @click="moreFlag = !moreFlag"></i>
         </div>
+
+        <!---->
+        <Settings v-show="setFlag"></Settings>
+        <Mores v-show="moreFlag"></Mores>
+        <Wallet v-show="walletFlag"></Wallet>
+        <Breakdown v-show="breakFlag"></Breakdown>
     </div>
 </template>
 <script>
+import Settings from '@/components/setting'
+import Mores from '@/components/mores'
+import Wallet from '@/components/wallet'
+import Breakdown from '@/components/breakdown'
 export default {
+  components:{
+    Settings,
+    Mores,
+    Wallet,
+    Breakdown
+  }, 
   data(){
     return {
         nav:localStorage.getItem('nav') || 0,
+        setFlag:false,
+        moreFlag:false,
+        walletFlag:false,
+        breakFlag:false
     };
   },
   created(){
@@ -90,6 +110,7 @@ export default {
             color:#30694B;
             line-height:36px;
             margin-right:10px;
+            cursor: pointer;
         }
         .prodexbtn{
             display:inline-block;
