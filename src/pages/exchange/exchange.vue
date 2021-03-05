@@ -46,14 +46,23 @@ export default {
       pageNum1:0,
       blockList:[],
       transList:[],
-      over:null
+      over:null,
+      Web3:null
     }
   },
   mounted() {
-    
+    let that = this  
+    this.$initWeb3().then((web3)=>{
+      that.Web3 = web3  
+      that.getTransactionDetail()
+    })
   },
   methods: {
-    
+    async getTransactionDetail(){
+        var receipt = await this.Web3.eth.getTransactionReceipt('0x256f6fa652265689ad586ca2d1adbf7f72ad1df54e48184f42aa2f2c63ea1ef7');
+        debugger
+        console.log(receipt);
+    }
   }
 }
 </script>

@@ -6,6 +6,8 @@ import './plugins/element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import './styles/index.scss'
 import i18n from './lang'
+import initWeb3 from './utils/hecoFn'
+Vue.prototype.$initWeb3 = initWeb3
 Vue.config.productionTip = false
 if ('addEventListener' in document) {
   document.addEventListener('DOMContentLoaded', () => {
