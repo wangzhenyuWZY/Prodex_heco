@@ -1,7 +1,7 @@
 <template>
     <div class="tokenContainer">
         <h2 class="title">Select a token<i></i></h2>
-        <i class="closeico"></i>
+        <i class="closeico" @click="closePop"></i>
         <input class="searchput" placeholder="Search name or paste address">
         <h2 class="title">Common bases<i></i></h2>
         <div class="commonCoin">
@@ -18,16 +18,7 @@
         </div>
         <div class="tokenlistbar">
             <ul class="tokenlist">
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
-                <li><img>ETH</li>
+                <li v-for="(item,index) in tokens" :key="index" @click="changeToken(item)"><img :src="item.logoURI">{{item.name}}</li>
             </ul>
         </div>
         <div class="tokenlistbtm clearfix">
@@ -36,6 +27,38 @@
         </div>
     </div>
 </template>
+<script>
+import defaultTokenList from '@uniswap/default-token-list'
+export default {
+  data() {
+    return {
+      tokens:defaultTokenList.tokens
+    }
+  },
+  mounted() {
+    this.tokens.push({
+        name:'ST1',
+        logoURI:'',
+        address:'0x6e5B3b424072C915A55aBD58f69737023a3723a6',
+        decimals:18
+    })
+    this.tokens.push({
+        name:'ST2',
+        logoURI:'',
+        address:'0xdFC3e325e5F6cc2235A0d570B02B21224b251B70',
+        decimals:18
+    })
+  },
+  methods: {
+    closePop(){
+        this.$emit('closePop')
+    },
+    changeToken(item){
+        this.$emit('change',item)
+    }
+  }
+}
+</script>
 <style lang='less' scoped>
 .tokenContainer{
     position:absolute;

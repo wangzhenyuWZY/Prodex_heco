@@ -60,7 +60,6 @@ export default {
   methods: {
     async getTransactionDetail(){
         var receipt = await this.Web3.eth.getTransactionReceipt('0x256f6fa652265689ad586ca2d1adbf7f72ad1df54e48184f42aa2f2c63ea1ef7');
-        debugger
         console.log(receipt);
     }
   }

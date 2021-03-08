@@ -10,10 +10,8 @@ export default {
   components: {
   },
   created() {
-    
   },
   methods: {
-    
 
   }
 
