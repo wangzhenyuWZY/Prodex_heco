@@ -74,7 +74,6 @@ export default {
           this.web3 = web3
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
           this.isConnect = true
-          this.getPair(web3)
       })
     
   },
@@ -109,27 +108,30 @@ export default {
         //     console.log(result)
         // })
     },
-    getPair(web3){
-        let FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
-        FactoryContract.methods.getPair('0x6e5B3b424072C915A55aBD58f69737023a3723a6','0xdFC3e325e5F6cc2235A0d570B02B21224b251B70').call().then((result)=>{
-            console.log(result)
-        })
+    getPair(){
+        let that = this
+        if(this.token1.address && this.token2.address){
+            let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+            FactoryContract.methods.getPair(this.token1.address,this.token2.address).call().then((result)=>{
+                that.token1ApproveBalance = that.getAllowance(that.token1.address,result)
+                that.token2ApproveBalance = that.getAllowance(that.token2.address,result)
+            })
+        }
     },
     changeToken(token){
         this.tokensPop = false
         this.item==0?this.token1=token:this.token2=token
+        this.getPair()
         if(this.item==0){
-            this.token1ApproveBalance = this.getAllowance(token.address)
             this.token1Balance = this.getBalance(token.address)
             this.Token1Contract = new this.web3.eth.Contract(Token1.abi, this.token1.address)
         }else{
-            this.token2ApproveBalance = this.getAllowance(token.address)
             this.token2Balance = this.getBalance(token.address)
             this.Token2Contract = new this.web3.eth.Contract(Token1.abi, this.token2.address)
         }
     },
-    getAllowance(Spender){
-        const contract = new this.web3.eth.Contract(Router.abi, Router.address)
+    getAllowance(Spender,Contract){
+        const contract = new this.web3.eth.Contract(Token1.abi, Contract)
         contract.methods.allowance(this.web3.eth.defaultAccount,Spender).call().then((res)=>{
             return res
         })
