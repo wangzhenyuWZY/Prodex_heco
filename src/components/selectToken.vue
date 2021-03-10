@@ -39,13 +39,13 @@ export default {
     this.tokens.push({
         name:'ST1',
         logoURI:'',
-        address:'0x6e5B3b424072C915A55aBD58f69737023a3723a6',
+        address:'0xA255E08287EBeF8Af8B6055983f73dBc22bD4B13',
         decimals:18
     })
     this.tokens.push({
         name:'ST2',
         logoURI:'',
-        address:'0xdFC3e325e5F6cc2235A0d570B02B21224b251B70',
+        address:'0xD926c882469b0522655f28e97C5b4F3d72a5d81f',
         decimals:18
     })
   },

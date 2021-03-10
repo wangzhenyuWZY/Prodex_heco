@@ -37,7 +37,7 @@ Once you are happy with the rate click supply to review.
                 <i class="dropico"></i>
             </div>
         </div>
-        <el-button class="btn" :disabled='false' @click="createPair">{{isConnect?'Create':'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='false' @click="addLiquidity">{{isConnect?'Create':'Connect Wallet'}}</el-button>
     </div>
   </div>
 </template>
@@ -93,24 +93,26 @@ export default {
     },
     async createPair(){
         let that = this
+        let apr1 = await this.Token1Contract.methods.approve(Router.address,'1000000000000000000000').send({from:this.web3.eth.defaultAccount})
+        let apr2 = await this.Token2Contract.methods.approve(Router.address,'1000000000000000000000').send({from:this.web3.eth.defaultAccount})
+        let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+        FactoryContract.methods.createPair(that.token1.address,that.token2.address).send({from:this.web3.eth.defaultAccount}).then((result)=>{
+            that.addLiquidity()
+        })
+    },
+    async addLiquidity(){
+        let that = this
         let token1num = new BigNumber(this.token1Num)
-        token1num = token1num.times(Math.pow(10,18))
+        token1num = token1num.times(Math.pow(10,this.token1.decimals))
         let token2num = new BigNumber(this.token2Num)
-        token2num = token2num.times(Math.pow(10,18))
+        token2num = token2num.times(Math.pow(10,this.token2.decimals))
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
         let apr2 = await this.Token2Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
-        const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), token1num.toFixed(), token2num.toFixed(),this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
+        const ret3 = await that.RouterContract.methods.addLiquidity(that.token1.address, that.token2.address, token1num.toFixed(), token2num.toFixed(), token1num.toFixed(), token2num.toFixed(),this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
         if(ret3){
-            this.$message.success('创建成功')
+            that.$message.success('创建成功')
         }
-       
-       // let FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
-        // console.log(web3.eth.defaultAccount)
-        // FactoryContract.methods.createPair('0x6e5B3b424072C915A55aBD58f69737023a3723a6','0xdFC3e325e5F6cc2235A0d570B02B21224b251B70').send({from:web3.eth.defaultAccount}).then((result)=>{
-        //     debugger
-        //     console.log(result)
-        // })
     },
     getPair(web3){
         let FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)

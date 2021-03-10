@@ -31,7 +31,7 @@
                 <i class="dropico"></i>
             </div>
         </div>
-        <el-button class="btn" :disabled='false' @click="addLiquidity">{{isConnect?'Add Liquidity':'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
     </div>
   </div>
 </template>
@@ -67,6 +67,7 @@ export default {
       token2Balance:0,
       token1ApproveBalance:0,
       token2ApproveBalance:0,
+      isApproved:false
     }
   },
   mounted() {
@@ -87,35 +88,42 @@ export default {
             return res
         })
     },
+    async clickHdl(){
+        const MAX = Web3Utils.utils.toTwosComplement(-1)
+        if(this.token1ApproveBalance==0){
+            let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
+        }
+        if(this.token2ApproveBalance==0){
+            let apr2 = await this.Token2Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
+        }
+        this.addLiquidity()
+    },
     async addLiquidity(){
         let that = this
         let token1num = new BigNumber(this.token1Num)
-        token1num = token1num.times(Math.pow(10,18))
+        token1num = token1num.times(Math.pow(10,this.token1.decimals))
         let token2num = new BigNumber(this.token2Num)
-        token2num = token2num.times(Math.pow(10,18))
-        const MAX = Web3Utils.utils.toTwosComplement(-1)
-        let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
-        let apr2 = await this.Token2Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
+        token2num = token2num.times(Math.pow(10,this.token2.decimals))
         const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), token1num.toFixed(), token2num.toFixed(),this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
         if(ret3){
-            this.$message.success('创建成功')
+            this.$message.success('添加成功')
         }
-       
-       // let FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
-        // console.log(web3.eth.defaultAccount)
-        // FactoryContract.methods.createPair('0x6e5B3b424072C915A55aBD58f69737023a3723a6','0xdFC3e325e5F6cc2235A0d570B02B21224b251B70').send({from:web3.eth.defaultAccount}).then((result)=>{
-        //     debugger
-        //     console.log(result)
-        // })
     },
     getPair(){
         let that = this
         if(this.token1.address && this.token2.address){
             let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
             FactoryContract.methods.getPair(this.token1.address,this.token2.address).call().then((result)=>{
-                that.token1ApproveBalance = that.getAllowance(that.token1.address,result)
-                that.token2ApproveBalance = that.getAllowance(that.token2.address,result)
+                that.checkApprovedBalance()
             })
+        }
+    },
+    async checkApprovedBalance(){
+        let that = this
+        that.token1ApproveBalance = await that.getAllowance(that.token1.address)
+        that.token2ApproveBalance = await that.getAllowance(that.token2.address)
+        if(that.token1ApproveBalance>0 && that.token2ApproveBalance>0){
+            that.isApproved = true
         }
     },
     changeToken(token){
@@ -130,11 +138,10 @@ export default {
             this.Token2Contract = new this.web3.eth.Contract(Token1.abi, this.token2.address)
         }
     },
-    getAllowance(Spender,Contract){
-        const contract = new this.web3.eth.Contract(Token1.abi, Contract)
-        contract.methods.allowance(this.web3.eth.defaultAccount,Spender).call().then((res)=>{
-            return res
-        })
+    async getAllowance(Spender){
+        const contract = new this.web3.eth.Contract(Token1.abi, Spender)
+        let res = await contract.methods.allowance(this.web3.eth.defaultAccount,Router.address).call()
+        return res
     }
   }
 }
