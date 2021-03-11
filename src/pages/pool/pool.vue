@@ -11,8 +11,28 @@
             <router-link to="/addLiquidity" class="btn add">Add Liquidity</router-link>
             <router-link to="/create" class="btn create">Create a pair</router-link>
         </div>
-        <p class="connectTips">Connect to a wallet to view your liquidity.</p>
-        <p class="notLiquidity">Don't see a pool you joined?<span>Import it.</span></p>
+        <div class="liquidityList">
+            <div class="liquidityItem">
+                <div class="liquidityHead clearfix">
+                    <img src="../../assets/img/icon26.png">
+                    <img src="../../assets/img/icon27.png">
+                    <span>HUSD-WHT</span>
+                    <p>Manage</p>
+                </div>
+                <div class="liquidityCon">
+                    <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">1.921</span></p>
+                    <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">1.921</span></p>
+                    <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">1.921</span></p>
+                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">1.921%</span></p>
+                    <div class="addOrRemove clearfix">
+                        <router-link to="/addLiquidity">Add</router-link>
+                        <router-link to="/remove">Remove</router-link>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p class="connectTips" v-show="false">Connect to a wallet to view your liquidity.</p>
+        <p class="notLiquidity" v-show="false">Don't see a pool you joined?<span>Import it.</span></p>
     </div>
   </div>
 </template>
@@ -100,6 +120,74 @@ export default {
           }
       }
   }
+  .liquidityList{
+      width:600px;
+      margin:0 auto;
+    background: #232221;
+    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 18px;
+    border: 1px solid #232221;
+    box-sizing: border-box;
+    padding:20px 15px;
+    .liquidityItem{
+        text-align:left;
+        .liquidityHead{
+            padding-bottom:15px;
+            img{
+                vertical-align: middle;
+                width:20px;
+                margin-right:10px;
+            }
+            img{
+                vertical-align: middle;
+                width:20px;
+                margin-right:10px;
+            }
+            span{
+                font-size:18px;
+                color:#C4C2BE;
+                line-height:20px;
+                padding-left:10px;
+            }
+            p{
+                float:right;
+                font-size:12px;
+                color:#30694B;
+            }
+        }
+        .liquidityCon{
+            p{
+                padding-bottom:12px;
+                span{
+                    font-size:12px;
+                    color:#837F76;
+                    line-height:20px;
+                    &.fr{
+                        color:#C4C2BE;
+                        float:right;
+                    }
+                }
+            }
+            .addOrRemove{
+                a{
+                    display:inline-block;
+                    vertical-align:middle;
+                    width:274px;
+                    height:50px;                  
+                    background: #30694B;
+                    border-radius: 12px;
+                    line-height:50px;
+                    text-align:center;
+                    color:#fff;
+                    font-size:14px;
+                    &:first-child{
+                        margin-right:20px;
+                    }
+                }
+            }
+        }
+    }
+  }
   .connectTips{
       font-size:14px;
       color:#6A6A6A;
@@ -130,5 +218,7 @@ export default {
            }
        } 
     }
+    .poolContainer .liquidityList{width: 345px;}
+    .poolContainer .liquidityList .liquidityItem .liquidityCon .addOrRemove a{width:145px;}
 }
 </style>

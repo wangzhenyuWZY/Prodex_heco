@@ -13,8 +13,8 @@
             <h2>Add Liquidity</h2>
         </div>
         <div class="changePanel">
-            <h2>From</h2>
-            <input class='entrynum' v-model="token1Num">
+            <h2>Input</h2>
+            <input class='entrynum' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
                 <img :src="token1.logoURI" class="coinimg">
                 <span class="coinname">{{token1.name}}</span>
@@ -23,7 +23,7 @@
         </div>
         <i class="changeico"></i>
         <div class="changePanel">
-            <h2>To</h2>
+            <h2>Input</h2>
             <input class='entrynum' v-model="token2Num">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="token2.logoURI" class="coinimg">
@@ -31,8 +31,26 @@
                 <i class="dropico"></i>
             </div>
         </div>
+        <div class="PriceShare">
+            <p class="priceTitle">Prices and pool share</p>
+            <div class="pricebar">
+                <div class="priceItem">
+                    <p class="val">3.6434</p>
+                    <p class="title">Prodex per BTC</p>
+                </div>
+                <div class="priceItem">
+                    <p class="val">3.6434</p>
+                    <p class="title">BTC per Prodex</p>
+                </div>
+                <div class="priceItem">
+                    <p class="val">3.6434%</p>
+                    <p class="title">Share of Pool</p>
+                </div>
+            </div>
+        </div>
         <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
     </div>
+    <p class="prodexTips">☆ 通过增强流动性，您将获得Prodex奖励,如您所提供的流动性交易对未支持流动性质押获取Prodex，您暂时将无法获得Prodex奖励。</p>
   </div>
 </template>
 
@@ -67,7 +85,8 @@ export default {
       token2Balance:0,
       token1ApproveBalance:0,
       token2ApproveBalance:0,
-      isApproved:false
+      isApproved:false,
+      poolsReserves:null
     }
   },
   mounted() {
@@ -116,6 +135,9 @@ export default {
             FactoryContract.methods.getPair(this.token1.address,this.token2.address).call().then((result)=>{
                 that.checkApprovedBalance()
             })
+            FactoryContract.methods.getReserves(that.token1.address,that.token2.address).call().then((res)=>{
+                that.poolsReserves = res
+            })
         }
     },
     async checkApprovedBalance(){
@@ -142,11 +164,27 @@ export default {
         const contract = new this.web3.eth.Contract(Token1.abi, Spender)
         let res = await contract.methods.allowance(this.web3.eth.defaultAccount,Router.address).call()
         return res
+    },
+    caleToken2(){
+        let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+        this.poolsReserves
+        FactoryContract.methods.quote(1,100,200).call().then((result)=>{
+            console.log(result)
+        })
     }
   }
 }
 </script>
 <style  lang="less" scoped>
+.prodexTips{
+    width:345px;
+    font-size:10px;
+    color:#6A6A6A;
+    line-height:14px;
+    text-align:center;
+    padding-top:20px;
+    margin:0 auto;
+}
 .exchangeBar{
     width: 345px;
     min-height:400px;
@@ -268,6 +306,32 @@ export default {
                 height:6px;
                 background:url(../../assets/img/icon5.png) no-repeat center;
                 background-size:100% 100%;
+            }
+        }
+    }
+    .PriceShare{
+        padding-top:24px;
+        .priceTitle{
+            font-size:12px;
+            color:#C4C2BE;
+            line-height:17px;
+            padding-bottom:10px;
+        }
+        .pricebar{
+            font-size:0;
+            .priceItem{
+                display:inline-block;
+                vertical-align: middle;
+                width:33.3%;
+                text-align:center;
+                color:#6A6A6A;
+                line-height:22px;
+                .title{
+                    font-size:12px;
+                }
+                .val{
+                    font-size:16px;
+                }
             }
         }
     }

@@ -27,6 +27,6 @@ const initWeb3 = () => {
             resolve(web3js)
         });
     })
-  }
+}
 
 export default initWeb3
