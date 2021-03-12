@@ -38,6 +38,8 @@
 </template>
 <script>
 import Navbar from '../../components/Navbar'
+import {Factory,Token1,Router,Pair} from '../../utils/contract'
+import BigNumber from 'bignumber.js'
 export default {
   components:{
     Navbar,
@@ -47,14 +49,40 @@ export default {
   },
   data() {
     return {
-      
+      web3:null,
+      isConnect:false,
+      pairLength:0
     }
   },
   mounted() {
-    
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
+        this.isConnect = true
+        this.getBalanceInPool()
+        this.getTokenBalanceInPool()
+        this.getPairLength()
+    })
   },
   methods: {
-    
+    getPairLength(){
+        let that = this
+        this.FactoryContract.methods.allPairsLength().call().then(res=>{
+            that.pairLength = res
+        })
+    },
+    getBalanceInPool(){
+        let PoolContract = new this.web3.eth.Contract(Token1.abi, '0x579B60feF4d2CB2f4238DDe50c1e7Bc2117245EB')
+        PoolContract.methods.getBalance(this.web3.eth.defaultAccount).call().then(res=>{
+            console.log(res)
+        })
+    },
+    getTokenBalanceInPool(){
+        let PoolContract = new this.web3.eth.Contract(Pair.abi, '0x579B60feF4d2CB2f4238DDe50c1e7Bc2117245EB')
+        PoolContract.methods.balanceOf('0x55BC716a9d95767c821d37780aa33ea975E2C4A8').call().then(res=>{
+            console.log(res)
+        })
+    }
   }
 }
 </script>

@@ -48,6 +48,18 @@ export default {
         address:'0xD926c882469b0522655f28e97C5b4F3d72a5d81f',
         decimals:18
     })
+    this.tokens.push({
+        name:'ST3',
+        logoURI:'',
+        address:'0x55BC716a9d95767c821d37780aa33ea975E2C4A8',
+        decimals:18
+    })
+    this.tokens.push({
+        name:'ST4',
+        logoURI:'',
+        address:'0xCFeE4592B754B64429eC5ab5d18C517563729899',
+        decimals:18
+    })
   },
   methods: {
     closePop(){

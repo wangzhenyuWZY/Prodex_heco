@@ -24,26 +24,26 @@
         <i class="changeico"></i>
         <div class="changePanel">
             <h2>Input</h2>
-            <input class='entrynum' v-model="token2Num">
+            <input class='entrynum' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="token2.logoURI" class="coinimg">
                 <span class="coinname">{{token2.name}}</span>
                 <i class="dropico"></i>
             </div>
         </div>
-        <div class="PriceShare">
+        <div class="PriceShare" v-if="poolsReserves">
             <p class="priceTitle">Prices and pool share</p>
             <div class="pricebar">
                 <div class="priceItem">
-                    <p class="val">3.6434</p>
-                    <p class="title">Prodex per BTC</p>
+                    <p class="val">{{(poolsReserves[0]/poolsReserves[1]).toFixed(4)}}</p>
+                    <p class="title">{{token1.name}} per {{token2.name}}</p>
                 </div>
                 <div class="priceItem">
-                    <p class="val">3.6434</p>
-                    <p class="title">BTC per Prodex</p>
+                    <p class="val">{{(poolsReserves[1]/poolsReserves[0]).toFixed(4)}}</p>
+                    <p class="title">{{token2.name}} per {{token1.name}}</p>
                 </div>
                 <div class="priceItem">
-                    <p class="val">3.6434%</p>
+                    <p class="val">{{share}}%</p>
                     <p class="title">Share of Pool</p>
                 </div>
             </div>
@@ -86,7 +86,8 @@ export default {
       token1ApproveBalance:0,
       token2ApproveBalance:0,
       isApproved:false,
-      poolsReserves:null
+      poolsReserves:null,
+      share:0
     }
   },
   mounted() {
@@ -95,7 +96,6 @@ export default {
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
           this.isConnect = true
       })
-    
   },
   methods: {
     toPool(){
@@ -123,7 +123,7 @@ export default {
         token1num = token1num.times(Math.pow(10,this.token1.decimals))
         let token2num = new BigNumber(this.token2Num)
         token2num = token2num.times(Math.pow(10,this.token2.decimals))
-        const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), token1num.toFixed(), token2num.toFixed(),this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
+        const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), 0, 0,this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
         if(ret3){
             this.$message.success('添加成功')
         }
@@ -166,11 +166,32 @@ export default {
         return res
     },
     caleToken2(){
-        let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
-        this.poolsReserves
-        FactoryContract.methods.quote(1,100,200).call().then((result)=>{
-            console.log(result)
-        })
+        if(this.token1Num){
+            let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+            FactoryContract.methods.quote(this.token1Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+                this.token2Num = result
+                this.getShare()
+            })
+        }
+    },
+    caleToken1(){
+        if(this.token2Num){
+            let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+            FactoryContract.methods.quote(this.token2Num,this.poolsReserves[1],this.poolsReserves[0]).call().then((result)=>{
+                this.token1Num = result
+                this.getShare()
+            })
+        }
+    },
+    getShare(){
+        if(this.token1Num && this.poolsReserves){
+            let token1Total = new BigNumber(this.poolsReserves[0])
+            token1Total = token1Total.div(Math.pow(10,this.token1.decimals))
+            let token1Num = new BigNumber(this.token1Num)
+            let afterTotal = token1Num.plus(token1Total)
+            let share = token1Num.div(afterTotal)
+            this.share = share.times(100).toFixed(2)
+        }
     }
   }
 }
@@ -182,7 +203,6 @@ export default {
     color:#6A6A6A;
     line-height:14px;
     text-align:center;
-    padding-top:20px;
     margin:0 auto;
 }
 .exchangeBar{
