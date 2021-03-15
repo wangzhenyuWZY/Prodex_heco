@@ -19,6 +19,37 @@
             <i class="moreico" @click="moreFlag = !moreFlag"></i>
         </div>
 
+        <div class="nav_merge">
+          <img class="merge_img" src="@/assets/img/icon17.png" @click="drawer = true" alt="">
+        </div>
+        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
+          <ul class="mobelNavlist">
+              <li>
+                  <img src="@/assets/img/icon28.png">
+                  <span>首页</span>
+              </li>
+              <li @click="toExchange">
+                  <img src="@/assets/img/icon29.png">
+                  <span>兑换</span>
+              </li>
+              <li @click="toPool">
+                  <img src="@/assets/img/icon30.png">
+                  <span>资金池</span>
+              </li>
+              <li @click="toLpMining">
+                  <img src="@/assets/img/icon31.png">
+                  <span>流动性挖矿</span>
+              </li>
+              <li>
+                  <img src="@/assets/img/icon32.png">
+                  <span>免费发行交易对</span>
+              </li>
+              <li>
+                  <img src="@/assets/img/icon33.png">
+                  <span>Prodex</span>
+              </li>
+          </ul>
+        </el-drawer>
         <!---->
         <Settings v-show="setFlag"></Settings>
         <Mores v-show="moreFlag"></Mores>
@@ -44,7 +75,8 @@ export default {
         setFlag:false,
         moreFlag:false,
         walletFlag:false,
-        breakFlag:false
+        breakFlag:false,
+        drawer:false
     };
   },
   created(){
@@ -76,6 +108,7 @@ export default {
     height:70px;
     border-bottom:1px solid #282827;
     padding:20px 15px;
+    .nav_merge{display:none;}
     .navigation{
         float:left;
         .logo{
@@ -144,7 +177,7 @@ export default {
 }
 @media screen and (max-width: 750px) {
     .navcontainer{
-        .navigation .navlist li{padding-left:15px;}
+        .navigation .navlist{display:none;}
         .toolCon{
             position:fixed;
             bottom:0;
@@ -155,6 +188,35 @@ export default {
                 margin-right:14px;
             }
         }
+        .nav_merge{
+            display:block;
+            float:right;
+            .merge_img{
+                width:22px;
+            }
+        }
+        .mobelNavlist{
+            padding-top:20px;
+            li{
+                padding:20px;
+                img{
+                    width:22px;
+                }
+                span{
+                    font-size:14px;
+                    color:#C4C2BE;
+                    line-height:22px;
+                    padding-left:10px;
+                }
+            }
+        }
     }
+}
+</style>
+<style >
+.drawer_body {
+  width: 60% !important;
+  background: #232221;
+  outline: 0;
 }
 </style>

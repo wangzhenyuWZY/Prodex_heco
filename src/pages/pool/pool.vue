@@ -51,7 +51,9 @@ export default {
     return {
       web3:null,
       isConnect:false,
-      pairLength:0
+      pairLength:0,
+      pairAddressList:[],
+      pairList:[]
     }
   },
   mounted() {
@@ -69,6 +71,48 @@ export default {
         let that = this
         this.FactoryContract.methods.allPairsLength().call().then(res=>{
             that.pairLength = res
+            that.getPairList()
+        })
+    },
+    getPairList(){
+        for(var i=0;i<=this.pairLength;i++){
+            this.FactoryContract.methods.allPairs(i).call().then(res=>{
+                this.pairAddressList.push(res)
+            })
+        }
+        this.getMyPool()
+    },
+    getMyPool(){
+        let that = this
+        this.pairAddressList.forEach((item,index)=>{
+            let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
+            PoolContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                if(res){
+                    that.pairList.push({
+                        addrss:item,
+                        decimails:18,
+                        totalSupply:0,
+                        myLpTotal:res,
+                        token1:{},
+                        token2:{},
+                    })
+                }
+                if(index==(that.pairAddressList-1)){
+                    that.getPairDetail()
+                }
+            })
+        })
+    },
+    getPairDetail(){
+        let that = this
+        that.pairList.forEach((item,index)=>{
+            let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
+            PoolContract.methods.totalSupply().call().then(res=>{
+                item.totalSupply = res
+            })
+            PoolContract.methods.decimails().call().then(res=>{
+                item.decimails = res
+            })
         })
     },
     getBalanceInPool(){

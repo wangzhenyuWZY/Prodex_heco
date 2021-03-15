@@ -35,11 +35,11 @@
             <p class="priceTitle">Prices and pool share</p>
             <div class="pricebar">
                 <div class="priceItem">
-                    <p class="val">{{(poolsReserves[0]/poolsReserves[1]).toFixed(4)}}</p>
+                    <p class="val">{{(token1BalanceInPool/token2BalanceInPool).toFixed(4)}}</p>
                     <p class="title">{{token1.name}} per {{token2.name}}</p>
                 </div>
                 <div class="priceItem">
-                    <p class="val">{{(poolsReserves[1]/poolsReserves[0]).toFixed(4)}}</p>
+                    <p class="val">{{(token2BalanceInPool/token1BalanceInPool).toFixed(4)}}</p>
                     <p class="title">{{token2.name}} per {{token1.name}}</p>
                 </div>
                 <div class="priceItem">
@@ -87,7 +87,9 @@ export default {
       token2ApproveBalance:0,
       isApproved:false,
       poolsReserves:null,
-      share:0
+      share:0,
+      token1BalanceInPool:0,
+      token2BalanceInPool:0
     }
   },
   mounted() {
@@ -137,6 +139,8 @@ export default {
             })
             FactoryContract.methods.getReserves(that.token1.address,that.token2.address).call().then((res)=>{
                 that.poolsReserves = res
+                that.token1BalanceInPool = res[0]/Math.pow(10,that.token1.decimals)
+                that.token2BalanceInPool = res[1]/Math.pow(10,that.token2.decimals)
             })
         }
     },
@@ -166,16 +170,16 @@ export default {
         return res
     },
     caleToken2(){
-        if(this.token1Num){
+        if(this.token1Num && parseInt(this.poolsReserves[0])){
             let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
-            FactoryContract.methods.quote(this.token1Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+            FactoryContract.methods.quote(this.token1Num,this.token1BalanceInPool,this.token2BalanceInPool).call().then((result)=>{
                 this.token2Num = result
                 this.getShare()
             })
         }
     },
     caleToken1(){
-        if(this.token2Num){
+        if(this.token2Num && parseInt(this.poolsReserves[0])){
             let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
             FactoryContract.methods.quote(this.token2Num,this.poolsReserves[1],this.poolsReserves[0]).call().then((result)=>{
                 this.token1Num = result

@@ -5,59 +5,31 @@
         <p class="earntip">Earn MDX tokens by staking HSwap LP<br> && Tokens</p>
         <el-button class="btn">Total Value Locked 0.00 USDT</el-button>
         <div class="staketab">
-          <span class="active">Mdex LP</span>
-          <span>Single Token</span>
+          <span :class="isMult?'active':''" @click="isMult=true">Mdex LP</span>
+          <span :class="!isMult?'active':''" @click="isMult=false">Single Token</span>
         </div>
-        <ul class="lpPoolList clearfix">
-          <li>
+        <ul class="lpPoolList clearfix" v-show="isMult">
+          <li v-for="(item,index) in multLpPool" :key="index">
             <div class="coinLogo">
               <img src="../../assets/img/btc.png">
               <!-- <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> 0 USDT</p>
             <a class="btn active">APY Loading...</a>
-            <a class="btn select">Select</a>
+            <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
-          <li>
+        </ul>
+        <ul class="lpPoolList clearfix" v-show="!isMult">
+          <li v-for="(item,index) in singleLpPool" :key="index">
             <div class="coinLogo">
               <img src="../../assets/img/btc.png">
-              <img class="or" src="../../assets/img/icon15.png">
-              <img src="../../assets/img/eth.png">
+              <!-- <img class="or" src="../../assets/img/icon15.png">
+              <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
+            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnTotal).toFixed(2)}} PDX(Total)<br> 0 USDT</p>
             <a class="btn active">APY Loading...</a>
-            <a class="btn select">Select</a>
-          </li>
-          <li>
-            <div class="coinLogo">
-              <img src="../../assets/img/btc.png">
-              <img class="or" src="../../assets/img/icon15.png">
-              <img src="../../assets/img/eth.png">
-            </div>
-            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
-            <a class="btn active">APY Loading...</a>
-            <a class="btn select">Select</a>
-          </li>
-          <li>
-            <div class="coinLogo">
-              <img src="../../assets/img/btc.png">
-              <img class="or" src="../../assets/img/icon15.png">
-              <img src="../../assets/img/eth.png">
-            </div>
-            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
-            <a class="btn active">APY Loading...</a>
-            <a class="btn select">Select</a>
-          </li>
-          <li>
-            <div class="coinLogo">
-              <img src="../../assets/img/btc.png">
-              <img class="or" src="../../assets/img/icon15.png">
-              <img src="../../assets/img/eth.png">
-            </div>
-            <p class="stakeInfo">MDX/USDT <br>Earn 254051 MDX(Per Day)<br> Earn 7621538 MDX(Per Month)<br> 0 USDT</p>
-            <a class="btn active">APY Loading...</a>
-            <a class="btn select">Select</a>
+            <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
         </ul>
     </div>
@@ -66,6 +38,7 @@
 
 <script>
 import Navbar from '../../components/Navbar'
+import {Factory,LpPair,Pool,Token1} from '../../utils/contract'
 export default {
   components:{
     Navbar,
@@ -75,20 +48,92 @@ export default {
   },
   data() {
     return {
+      isMult:true,
       homeInfo:{},
       chartData:[],
       pageNum:0,
       pageNum1:0,
       blockList:[],
       transList:[],
-      over:null
+      isConnect:false,
+      PoolContract:null,
+      FactoryContract:null,
+      poolLength:0,
+      pairAddressList:[],
+      multLpPool:[],
+      singleLpPool:[]
     }
   },
   mounted() {
-    
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
+        this.PoolContract = new web3.eth.Contract(Pool.abi, Pool.address)
+        this.isConnect = true
+        this.getPairLength()
+    })
   },
   methods: {
-    
+    goDeposit(item){
+      this.$router.push({
+        name: 'SelectPool',
+        params: {
+          miningPool: JSON.stringify(item)
+        }
+      })
+    },
+    async getPairLength(){
+        let that = this
+        let pdxPerBlock = await this.PoolContract.methods.pdxPerBlock().call()
+        this.pdxPerBlock = pdxPerBlock/Math.pow(10,18)
+        this.totalAllocPoint = await this.PoolContract.methods.totalAllocPoint().call()
+        this.PoolContract.methods.poolLength().call().then(res=>{
+            that.poolLength = res
+            that.getPairList()
+        })
+    },
+    async getPairList(){
+        for(var i=0;i<this.poolLength;i++){
+            let res = await this.PoolContract.methods.poolInfo(i).call()
+            if(res)
+            res.pid = i
+            this.getPoolDetail(res)
+        }
+    },
+    async getPoolDetail(item){
+      let isMultLP = await this.PoolContract.methods.isMultLP(item.lpToken).call()
+      if(isMultLP){
+        let PairContract = new this.web3.eth.Contract(LpPair.abi, item.lpToken)
+        let token1Address = await PairContract.methods.token0().call()
+        let token2Address = await PairContract.methods.token1().call()
+        let Token1Contract = new this.web3.eth.Contract(Token1.abi,token1Address)
+        let Token2Contract = new this.web3.eth.Contract(Token1.abi,token2Address)
+        let token1Name = await Token1Contract.methods.symbol().call()
+        let token2Name = await Token2Contract.methods.symbol().call()
+        this.multLpPool.push({
+          pid:item.pid,
+          lpAddress:item.lpToken,
+          earnPerDay:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24,
+          earnPerMonth:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24*30,
+          allocPoint:item.allocPoint,
+          totalAmount:item.totalAmount,
+          token1Address:token1Address,
+          token2Address:token2Address,
+          token1Name:token1Name,
+          token2Name:token2Name
+        })
+      }else{
+        let TokenContract = new this.web3.eth.Contract(Token1.abi,item.lpToken)
+        let tokenName = await TokenContract.methods.symbol().call()
+        this.singleLpPool.push({
+          pid:item.pid,
+          lpAddress:item.lpToken,
+          earnPerDay:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24,
+          earnTotal:0,
+          tokenName:tokenName
+        })
+      }
+    },
   }
 }
 </script>

@@ -9,8 +9,8 @@ transfer ETHEREUM mainnet tokens</p>
           <div class="stakeinfo">
             <p class="staketitle">Your Balance</p>
             <div class="balance">
-              <img>
-              Prodex
+              <img src="@/assets/img/icon27.png">
+              {{myLpBalance}}
             </div>
             <el-button class="btn">Harvest All Token</el-button>
           </div>
@@ -21,6 +21,17 @@ transfer ETHEREUM mainnet tokens</p>
             </div>
             <el-button class="btn">Connect Wallet</el-button>
           </div>
+          <div class="stakeinfo">
+            <p class="staketitle">Your Balance</p>
+            <div class="balance">
+              <img src="@/assets/img/icon27.png">
+              {{myLpBalance}}
+            </div>
+            <div class="stakeput">
+              <input v-model="stakeNum"><span @click="stakeNum = myLpBalance">MAX</span>
+            </div>
+            <el-button class="btn" @click="toStake">Stake</el-button>
+          </div>
         </div>
     </div>
   </div>
@@ -28,6 +39,9 @@ transfer ETHEREUM mainnet tokens</p>
 
 <script>
 import Navbar from '../../components/Navbar'
+import {LpPair,Pool,Token1} from '../../utils/contract'
+const Web3Utils = require('web3')
+import BigNumber from 'bignumber.js'
 export default {
   components:{
     Navbar,
@@ -37,14 +51,66 @@ export default {
   },
   data() {
     return {
-      
+      miningPool:{},
+      isConnect:false,
+      LpPoolContract:null,
+      PoolContract:null,
+      LpTokenContract:null,
+      myLpBalance:0,
+      stakeNum:0,
+      lpApproveBalance:0,
+      isApproved:false
     }
   },
   mounted() {
+    let that = this
+    if(this.$route.params.miningPool){
+      this.miningPool = JSON.parse(this.$route.params.miningPool)
+      this.$initWeb3().then((web3)=>{
+          that.web3 = web3
+          that.LpTokenContract = new this.web3.eth.Contract(Token1.abi, this.miningPool.lpAddress)
+          that.PoolContract = new web3.eth.Contract(Pool.abi,Pool.address)
+          that.LpPoolContract = new web3.eth.Contract(LpPair.abi, that.miningPool.lpAddress)
+          that.LpPoolContract.methods.balanceOf(that.web3.eth.defaultAccount).call().then(res=>{
+            that.myLpBalance = res/Math.pow(10,18)
+          })
+          that.isConnect = true
+          that.getAllowance()
+      })
+    }
     
   },
   methods: {
-    
+    async getAllowance(){
+        let res = await this.LpTokenContract.methods.allowance(this.web3.eth.defaultAccount,Pool.address).call()
+        if(parseInt(res)){
+          this.isApproved = true
+          this.lpApproveBalance = res
+        }
+    },
+    async toStake(){
+      if(this.isApproved){
+        this.doDeposit()
+      }else{
+        const MAX = Web3Utils.utils.toTwosComplement(-1)
+        let apr1 = await this.LpTokenContract.methods.approve(Pool.address,MAX).send({from:this.web3.eth.defaultAccount})
+        if(apr1){
+          this.isApproved = true
+          this.doDeposit()
+        }
+      }
+    },
+    doDeposit(){
+      let that = this
+      let stakeNum = new BigNumber(this.stakeNum)
+      stakeNum = stakeNum.times(Math.pow(10,18))
+      console.log('stakenum====='+stakeNum)
+      that.PoolContract.methods.deposit(this.miningPool.pid,stakeNum.toFixed()).send({from:this.web3.eth.defaultAccount}).then(res=>{
+        if(res){
+          debugger
+        }
+      })
+    }
   }
 }
 </script>
@@ -71,12 +137,30 @@ export default {
       display:inline-block;
       vertical-align: middle;
       width: 345px;
-      height: 191px;
       background: #232221;
       box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
       border-radius: 18px;
       border: 1px solid #232221;
-      &:first-child{margin-right:15px;}
+      margin-right:15px;
+      padding-bottom:20px;
+      .stakeput{
+        padding-bottom:20px;
+        input{
+          border:1px solid #484744;
+          border-radius:5px;
+          outline: none;
+          background:none;
+          font-size:14px;
+          text-indent:10px;
+          line-height:40px;
+          color:#fff;
+        }
+        span{
+          padding-left:10px;
+          color:#fff;
+          cursor: pointer;
+        }
+      }
       .staketitle{
         font-size:12px;
         color:#837F76;
