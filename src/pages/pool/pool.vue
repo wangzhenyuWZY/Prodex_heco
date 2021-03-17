@@ -12,18 +12,18 @@
             <router-link to="/create" class="btn create">Create a pair</router-link>
         </div>
         <div class="liquidityList">
-            <div class="liquidityItem">
+            <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">
                 <div class="liquidityHead clearfix">
                     <img src="../../assets/img/icon26.png">
                     <img src="../../assets/img/icon27.png">
-                    <span>HUSD-WHT</span>
+                    <span>{{item.token1.name}}-{{item.token2.name}}</span>
                     <p>Manage</p>
                 </div>
                 <div class="liquidityCon">
-                    <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">1.921</span></p>
+                    <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">{{item.myLpTotal}}</span></p>
                     <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">1.921</span></p>
                     <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">1.921</span></p>
-                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">1.921%</span></p>
+                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare).toFixed(2)}}%</span></p>
                     <div class="addOrRemove clearfix">
                         <router-link to="/addLiquidity">Add</router-link>
                         <router-link to="/remove">Remove</router-link>
@@ -53,7 +53,8 @@ export default {
       isConnect:false,
       pairLength:0,
       pairAddressList:[],
-      pairList:[]
+      pairList:[],
+      FactoryContract:null
     }
   },
   mounted() {
@@ -61,7 +62,6 @@ export default {
         this.web3 = web3
         this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
         this.isConnect = true
-        this.getBalanceInPool()
         this.getTokenBalanceInPool()
         this.getPairLength()
     })
@@ -74,25 +74,31 @@ export default {
             that.getPairList()
         })
     },
-    getPairList(){
-        for(var i=0;i<=this.pairLength;i++){
-            this.FactoryContract.methods.allPairs(i).call().then(res=>{
-                this.pairAddressList.push(res)
-            })
+    async getPairList(){
+        for(var i=0;i<this.pairLength;i++){
+            let res = await this.FactoryContract.methods.allPairs(i).call()
+            this.pairAddressList.push(res)
+            if(i==(this.pairLength-1)){
+                this.getMyPool()
+            }
         }
-        this.getMyPool()
     },
-    getMyPool(){
+    async getMyPool(){
         let that = this
         this.pairAddressList.forEach((item,index)=>{
             let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
+            let totalSupply = 0
+            PoolContract.methods.totalSupply().call().then(res=>{
+                totalSupply = res
+            })
             PoolContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
                 if(res){
                     that.pairList.push({
                         addrss:item,
                         decimails:18,
-                        totalSupply:0,
+                        totalSupply:totalSupply,
                         myLpTotal:res,
+                        myShare:res/totalSupply,
                         token1:{},
                         token2:{},
                     })
@@ -113,12 +119,9 @@ export default {
             PoolContract.methods.decimails().call().then(res=>{
                 item.decimails = res
             })
-        })
-    },
-    getBalanceInPool(){
-        let PoolContract = new this.web3.eth.Contract(Token1.abi, '0x579B60feF4d2CB2f4238DDe50c1e7Bc2117245EB')
-        PoolContract.methods.getBalance(this.web3.eth.defaultAccount).call().then(res=>{
-            console.log(res)
+            PoolContract.methods.symbol().call().then(res=>{
+                item.name = res
+            })
         })
     },
     getTokenBalanceInPool(){

@@ -8,98 +8,17 @@
         <el-button class="btn">提现奖励</el-button>
       </div>
       <ul class="poolList clearfix">
-        <li>
+        <li v-for="(item,index) in pairList" :key="index">
           <div class="timeico">12.83</div>
           <div class="coinLogo">
             <img src="../../assets/img/btc.png">
             <img class="or" src="../../assets/img/icon15.png">
             <img src="../../assets/img/eth.png">
           </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
+          <h2 class="poolCoin">{{item.token1Name}}-{{item.token2Name}}</h2>
           <div class="earninfo">
             <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
-            <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
-            <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
-            <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
-            <p class="earninfoItem">个人奖励：<span>0 MDX</span></p>
-          </div>
-        </li>
-        <li>
-          <div class="coinLogo">
-            <img src="../../assets/img/btc.png">
-            <img class="or" src="../../assets/img/icon15.png">
-            <img src="../../assets/img/eth.png">
-          </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
-          <div class="earninfo">
-            <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
-            <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
-            <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
-            <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
-            <p class="earninfoItem">个人奖励：<span>0 MDX</span></p>
-          </div>
-        </li>
-        <li>
-          <div class="coinLogo">
-            <img src="../../assets/img/btc.png">
-            <img class="or" src="../../assets/img/icon15.png">
-            <img src="../../assets/img/eth.png">
-          </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
-          <div class="earninfo">
-            <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
-            <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
-            <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
-            <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
-            <p class="earninfoItem">个人奖励：<span>0 MDX</span></p>
-          </div>
-        </li>
-        <li>
-          <div class="coinLogo">
-            <img src="../../assets/img/btc.png">
-            <img class="or" src="../../assets/img/icon15.png">
-            <img src="../../assets/img/eth.png">
-          </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
-          <div class="earninfo">
-            <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
-            <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
-            <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
-            <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
-            <p class="earninfoItem">个人奖励：<span>0 MDX</span></p>
-          </div>
-        </li>
-        <li>
-          <div class="timeico"></div>
-          <div class="coinLogo">
-            <img src="../../assets/img/btc.png">
-            <img class="or" src="../../assets/img/icon15.png">
-            <img src="../../assets/img/eth.png">
-          </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
-          <div class="earninfo">
-            <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
-            <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
-            <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
-            <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
-            <p class="earninfoItem">个人奖励：<span>0 MDX</span></p>
-          </div>
-        </li>
-        <li>
-          <div class="coinLogo">
-            <img src="../../assets/img/btc.png">
-            <img class="or" src="../../assets/img/icon15.png">
-            <img src="../../assets/img/eth.png">
-          </div>
-          <h2 class="poolCoin">HUSD-WHT</h2>
-          <div class="earninfo">
-            <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
-            <p class="earninfoItem">当前总奖励：<span>18039 PRX</span></p>
+            <p class="earninfoItem">当前总奖励：<span>{{item.pdxAmount}} PDX</span></p>
             <p class="earninfoItem">交易总额：<span>$23,232,334.023</span></p>
             <p class="earninfoItem">当前交易额：<span>$23,245.002</span></p>
             <p class="earninfoItem">个人交易额：<span>$0(0.00%)</span></p>
@@ -113,6 +32,7 @@
 
 <script>
 import Navbar from '../../components/Navbar'
+import {Pool,Token1,SwapMing} from '../../utils/contract'
 export default {
   components:{
     Navbar,
@@ -122,20 +42,53 @@ export default {
   },
   data() {
     return {
-      homeInfo:{},
-      chartData:[],
-      pageNum:0,
-      pageNum1:0,
-      blockList:[],
-      transList:[],
-      over:null
+      SwapMingContract:null,
+      poolLength:0,
+      pairList:[]
     }
   },
   mounted() {
-    
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.SwapMingContract = new web3.eth.Contract(SwapMing.abi, SwapMing.address)
+        this.getPairLength()
+    })
   },
   methods: {
-    
+    async getPairLength(){
+        let that = this
+        this.SwapMingContract.methods.poolLength().call().then(res=>{
+            that.poolLength = res
+            that.getPairList()
+        })
+    },
+    async getPairList(){
+        for(var i=0;i<this.poolLength;i++){
+            let res = await this.SwapMingContract.methods.poolInfo(i).call()
+            if(res){
+              res.pid = i
+              this.getPoolDetail(res)
+            }
+        }
+    },
+    async getPoolDetail(item){
+      let res = await this.SwapMingContract.methods.getPoolInfo(item.pid).call()
+      let userreward = await this.SwapMingContract.methods.getUserReward(item.pid).call()
+      if(res){
+        let Token1Contract = new this.web3.eth.Contract(Token1.abi,res[0])
+        let Token2Contract = new this.web3.eth.Contract(Token1.abi,res[1])
+        let token1Name = await Token1Contract.methods.symbol().call()
+        let token2Name = await Token2Contract.methods.symbol().call()
+
+        item.token1Name = token1Name
+        item.token2Name = token2Name
+        item.pdxAmount = res.pdxAmount
+        item.allocPoint = res.allocPoint
+        item.totalQuantity = res.totalQuantity
+        item.quantity = res.quantity
+        this.pairList.push(item)
+      }
+    }
   }
 }
 </script>

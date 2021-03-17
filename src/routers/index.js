@@ -19,6 +19,10 @@ export default new VueRouter({
     { path: '/lpMining', name:'LpMining', component: ()=> import('../pages/mining/lpMining') },
     { path: '/selectPool', name:'SelectPool', component: ()=> import('../pages/mining/selectPool') },
     { path: '/prodex', name:'Prodex', component: ()=> import('../pages/prodex/prodex') },
-    { path: '/prodexInfo', name:'ProdexInfo', component: ()=> import('../pages/prodex/prodexInfo') }
+    { path: '/prodexInfo', name:'ProdexInfo', component: ()=> import('../pages/prodex/prodexInfo') },
+    { path: '/create1', name:'Create1', component: ()=> import('../pages/create/create1') },
+    { path: '/create2', name:'Create2', component: ()=> import('../pages/create/create2') },
+    { path: '/create3', name:'Create3', component: ()=> import('../pages/create/create3') },
+    { path: '/removeLiquidity', name:'RemoveLiquidity', component: ()=> import('../pages/pool/removeLiquidity') }
   ]
 })

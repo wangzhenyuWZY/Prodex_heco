@@ -10,16 +10,16 @@ transfer ETHEREUM mainnet tokens</p>
             <p class="staketitle">Your Balance</p>
             <div class="balance">
               <img src="@/assets/img/icon27.png">
-              {{myLpBalance}}
+              {{pdxBalance}}
             </div>
-            <el-button class="btn">Harvest All Token</el-button>
+            <el-button class="btn" @click="toClaim">Harvest All Token</el-button>
           </div>
           <div class="stakeinfo">
             <p class="staketitle">Staked</p>
             <div class="balance">
-              Locked
+              Locked {{totalAmount}}
             </div>
-            <el-button class="btn">Connect Wallet</el-button>
+            <el-button class="btn" @click="unStake">Unstake</el-button>
           </div>
           <div class="stakeinfo">
             <p class="staketitle">Your Balance</p>
@@ -30,7 +30,7 @@ transfer ETHEREUM mainnet tokens</p>
             <div class="stakeput">
               <input v-model="stakeNum"><span @click="stakeNum = myLpBalance">MAX</span>
             </div>
-            <el-button class="btn" @click="toStake">Stake</el-button>
+            <el-button class="btn" @click="toStake">{{isApproved?'Stake':'Approve'}}</el-button>
           </div>
         </div>
     </div>
@@ -59,13 +59,16 @@ export default {
       myLpBalance:0,
       stakeNum:0,
       lpApproveBalance:0,
-      isApproved:false
+      isApproved:false,
+      pdxBalance:0,
+      totalAmount:0
     }
   },
   mounted() {
     let that = this
-    if(this.$route.params.miningPool){
-      this.miningPool = JSON.parse(this.$route.params.miningPool)
+    if(this.$route.query.miningPool){
+      this.miningPool = JSON.parse(this.$route.query.miningPool)
+      this.totalAmount = this.miningPool.totalAmount
       this.$initWeb3().then((web3)=>{
           that.web3 = web3
           that.LpTokenContract = new this.web3.eth.Contract(Token1.abi, this.miningPool.lpAddress)
@@ -74,13 +77,25 @@ export default {
           that.LpPoolContract.methods.balanceOf(that.web3.eth.defaultAccount).call().then(res=>{
             that.myLpBalance = res/Math.pow(10,18)
           })
+          that.PoolContract.methods.poolInfo(that.miningPool.pid).call().then(res=>{
+            that.totalAmount = res.totalAmount/Math.pow(10,18)
+          })
           that.isConnect = true
           that.getAllowance()
+          that.getMyPdx()
       })
     }
     
   },
   methods: {
+    getMyPdx(){
+      let that = this
+      that.PoolContract.methods.pending(this.miningPool.pid,this.web3.eth.defaultAccount).call().then(res=>{
+        if(res){
+          that.pdxBalance = res[0]/Math.pow(10,18)
+        }
+      })
+    },
     async getAllowance(){
         let res = await this.LpTokenContract.methods.allowance(this.web3.eth.defaultAccount,Pool.address).call()
         if(parseInt(res)){
@@ -107,7 +122,25 @@ export default {
       console.log('stakenum====='+stakeNum)
       that.PoolContract.methods.deposit(this.miningPool.pid,stakeNum.toFixed()).send({from:this.web3.eth.defaultAccount}).then(res=>{
         if(res){
-          debugger
+          that.$message.success('质押成功')
+        }
+      })
+    },
+    toClaim(){
+      let that = this
+      that.PoolContract.methods.withdraw(this.miningPool.pid,0).send({from:this.web3.eth.defaultAccount}).then(res=>{
+        if(res){
+          that.$message.success('PDX奖励领取成功')
+        }
+      })
+    },
+    unStake(){
+      let that = this
+      let stakeNum = new BigNumber(this.totalAmount)
+      stakeNum = stakeNum.times(Math.pow(10,18))
+      that.PoolContract.methods.withdraw(this.miningPool.pid,stakeNum).send({from:this.web3.eth.defaultAccount}).then(res=>{
+        if(res){
+          that.$message.success('解除质押成功')
         }
       })
     }

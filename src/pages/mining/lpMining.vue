@@ -39,6 +39,7 @@
 <script>
 import Navbar from '../../components/Navbar'
 import {Factory,LpPair,Pool,Token1} from '../../utils/contract'
+import BigNumber from 'bignumber.js'
 export default {
   components:{
     Navbar,
@@ -76,8 +77,8 @@ export default {
   methods: {
     goDeposit(item){
       this.$router.push({
-        name: 'SelectPool',
-        params: {
+        path: '/selectPool',
+        query: {
           miningPool: JSON.stringify(item)
         }
       })
@@ -101,8 +102,8 @@ export default {
         }
     },
     async getPoolDetail(item){
-      let isMultLP = await this.PoolContract.methods.isMultLP(item.lpToken).call()
-      if(isMultLP){
+      // let isMultLP = await this.PoolContract.methods.isMultLP(item.lpToken).call()
+      if(item.pid>3){
         let PairContract = new this.web3.eth.Contract(LpPair.abi, item.lpToken)
         let token1Address = await PairContract.methods.token0().call()
         let token2Address = await PairContract.methods.token1().call()
@@ -116,7 +117,7 @@ export default {
           earnPerDay:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24,
           earnPerMonth:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24*30,
           allocPoint:item.allocPoint,
-          totalAmount:item.totalAmount,
+          totalAmount:item.totalAmount/Math.pow(10,18),
           token1Address:token1Address,
           token2Address:token2Address,
           token1Name:token1Name,
