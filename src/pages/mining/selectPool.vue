@@ -17,7 +17,7 @@ transfer ETHEREUM mainnet tokens</p>
           <div class="stakeinfo">
             <p class="staketitle">Staked</p>
             <div class="balance">
-              Locked {{totalAmount}}
+              Locked {{myStakeAmount}}
             </div>
             <el-button class="btn" @click="unStake">Unstake</el-button>
           </div>
@@ -61,25 +61,18 @@ export default {
       lpApproveBalance:0,
       isApproved:false,
       pdxBalance:0,
-      totalAmount:0
+      myStakeAmount:0
     }
   },
   mounted() {
     let that = this
     if(this.$route.query.miningPool){
       this.miningPool = JSON.parse(this.$route.query.miningPool)
-      this.totalAmount = this.miningPool.totalAmount
       this.$initWeb3().then((web3)=>{
           that.web3 = web3
           that.LpTokenContract = new this.web3.eth.Contract(Token1.abi, this.miningPool.lpAddress)
           that.PoolContract = new web3.eth.Contract(Pool.abi,Pool.address)
           that.LpPoolContract = new web3.eth.Contract(LpPair.abi, that.miningPool.lpAddress)
-          that.LpPoolContract.methods.balanceOf(that.web3.eth.defaultAccount).call().then(res=>{
-            that.myLpBalance = res/Math.pow(10,18)
-          })
-          that.PoolContract.methods.poolInfo(that.miningPool.pid).call().then(res=>{
-            that.totalAmount = res.totalAmount/Math.pow(10,18)
-          })
           that.isConnect = true
           that.getAllowance()
           that.getMyPdx()
@@ -90,6 +83,12 @@ export default {
   methods: {
     getMyPdx(){
       let that = this
+      that.LpPoolContract.methods.balanceOf(that.web3.eth.defaultAccount).call().then(res=>{
+        that.myLpBalance = res/Math.pow(10,18)
+      })
+      that.PoolContract.methods.userInfo(that.miningPool.pid,that.web3.eth.defaultAccount).call().then(res=>{
+        that.myStakeAmount = res.amount/Math.pow(10,18)
+      })
       that.PoolContract.methods.pending(this.miningPool.pid,this.web3.eth.defaultAccount).call().then(res=>{
         if(res){
           that.pdxBalance = res[0]/Math.pow(10,18)
@@ -136,7 +135,7 @@ export default {
     },
     unStake(){
       let that = this
-      let stakeNum = new BigNumber(this.totalAmount)
+      let stakeNum = new BigNumber(this.myStakeAmount)
       stakeNum = stakeNum.times(Math.pow(10,18))
       that.PoolContract.methods.withdraw(this.miningPool.pid,stakeNum).send({from:this.web3.eth.defaultAccount}).then(res=>{
         if(res){

@@ -2,12 +2,12 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="exchangeBar">
-        <h2 class="createTitle"><i class="returnBack"></i>删除流动性</h2>
+        <h2 class="createTitle"><i class="returnBack" @click="toPool"></i>删除流动性</h2>
         <div class="deleteType clearfix">
           <span class="fl">Amount</span>
           <span class="fr">Detailed</span>
         </div>
-        <span class="amount">0%</span>
+        <span class="amount">{{slidenum}}%</span>
         <el-slider
           :show-tooltip="false"
           :max="100"
@@ -15,19 +15,21 @@
           @change="changeSlide"
         ></el-slider>
         <div class="scale clearfix">
-          <span class="calibration">25%</span>
-          <span class="calibration">50%</span>
-          <span class="calibration">75%</span>
-          <span class="calibration">Max</span>
+          <span class="calibration" @click="slidenum=25">25%</span>
+          <span class="calibration" @click="slidenum=50">50%</span>
+          <span class="calibration" @click="slidenum=75">75%</span>
+          <span class="calibration" @click="slidenum=100">Max</span>
         </div>
-        <el-button class="btn" :disabled='false' @click="createNext">删除</el-button>
+        <el-button class="btn" :disabled='false' @click="handelClick">{{isApprove?'Remove':'Approve'}}</el-button>
     </div>
   </div>
 </template>
 
 <script>
+import BigNumber from 'bignumber.js'
 import Navbar from '../../components/Navbar'
 import {Factory,Token1,Router} from '../../utils/contract'
+const Web3Utils = require('web3')
 export default {
   components:{
     Navbar
@@ -38,19 +40,66 @@ export default {
       web3:null,
       hasToken:true,
       slidenum:0,
-      RouterContract:null
+      RouterContract:null,
+      poolDetail:null,
+      isApprove:false
     }
   },
   mounted() {
-      this.$initWeb3().then((web3)=>{
-          this.web3 = web3
-          this.isConnect = true
-          this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
-      })
+    let tokenData = this.$store.getters.tokenData
+    if(this.$route.query.poolDetail){
+        this.poolDetail = JSON.parse(this.$route.query.poolDetail)
+    }
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.isConnect = true
+        this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
+        this.getAllowance()
+    })
   },
   methods: {
+    toPool(){
+        this.$router.push('/pool')
+    },
     changeSlide(){
 
+    },
+    async handelClick(){
+      if(this.isApprove){
+        this.removeLiquidity()
+      }else{
+        const MAX = Web3Utils.utils.toTwosComplement(-1)
+        let PoolContract = new this.web3.eth.Contract(Token1.abi,this.poolDetail.address)
+        let apr1 = await PoolContract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
+        if(parseInt(apr1)){
+          this.isApprove = true
+        }
+      }
+    },
+    async getAllowance(Spender){
+        const contract = new this.web3.eth.Contract(Token1.abi, this.poolDetail.address)
+        let res = await contract.methods.allowance(this.web3.eth.defaultAccount,Router.address).call()
+        if(parseInt(res)){
+          this.isApprove = true
+        }
+        return res
+    },
+    async removeLiquidity(){
+      let tokenA = this.poolDetail.token1.address
+      let tokenB = this.poolDetail.token2.address
+      console.log(this.poolDetail.myLpTotal)
+      let liquidity = new BigNumber(this.poolDetail.myLpTotal)
+      liquidity = liquidity.times(this.slidenum/100)
+      let amountAMin = 0
+      let amountBMin = 0
+      let to = this.web3.eth.defaultAccount
+      let deadline = 1702480290
+      let res = await this.RouterContract.methods.removeLiquidity(tokenA,tokenB,liquidity,amountAMin,amountBMin,to,deadline).send({from:this.web3.eth.defaultAccount})
+      if(res){
+        this.$message.success('流动性移除成功')
+        window.location.reload()
+        console.log(res)
+      }
     }
   }
 }

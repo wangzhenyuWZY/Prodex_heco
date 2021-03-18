@@ -13,7 +13,7 @@
             <h2>Add Liquidity</h2>
         </div>
         <div class="changePanel">
-            <h2>Input</h2>
+            <h2>Input<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
             <input class='entrynum' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
                 <img :src="token1.logoURI" class="coinimg">
@@ -23,7 +23,7 @@
         </div>
         <i class="changeico"></i>
         <div class="changePanel">
-            <h2>Input</h2>
+            <h2>Input<span class="balance">{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
             <input class='entrynum' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="token2.logoURI" class="coinimg">
@@ -71,8 +71,12 @@ export default {
   data() {
     return {
       tokensPop:false,
-      token1:{},
-      token2:{},
+      token1:{
+          balance:0
+      },
+      token2:{
+          balance:0
+      },
       item:0,
       isConnect:false,
       web3:null,
@@ -93,6 +97,21 @@ export default {
     }
   },
   mounted() {
+      let tokenData = this.$store.getters.tokenData
+      if(this.$route.query.poolDetail){
+          let poolDetail = JSON.parse(this.$route.query.poolDetail)
+          let token1 = tokenData.filter((item)=>{return item.address == poolDetail.token1.address})
+          let token2 = tokenData.filter((item)=>{return item.address == poolDetail.token2.address})
+          this.token1 = token1[0]
+          this.token2 = token2[0]
+          this.token1.item = 0
+          this.token2.item = 1
+          this.$initWeb3().then((web3)=>{
+            this.web3 = web3
+            this.checkPair(this.token1)
+            this.checkPair(this.token2)
+          })
+      }
       this.$initWeb3().then((web3)=>{
           this.web3 = web3
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
@@ -103,11 +122,12 @@ export default {
     toPool(){
         this.$router.push('/pool')
     },
-    getBalance(address){
-        let TokenContract = new this.web3.eth.Contract(Token1.abi, address)
-        TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+    async getBalance(address){
+        let TokenContract = await new this.web3.eth.Contract(Token1.abi, address)
+        let res = await TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call()
+        if(res){
             return res
-        })
+        }
     },
     async clickHdl(){
         const MAX = Web3Utils.utils.toTwosComplement(-1)
@@ -121,6 +141,10 @@ export default {
     },
     async addLiquidity(){
         let that = this
+        if(parseFloat(this.token1Num)>this.token1.balance || parseFloat(this.token2Num)>this.token2.balance){
+            that.$message.error('余额不足')
+            return
+        }
         let token1num = new BigNumber(this.token1Num)
         token1num = token1num.times(Math.pow(10,this.token1.decimals))
         let token2num = new BigNumber(this.token2Num)
@@ -128,6 +152,7 @@ export default {
         const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), 0, 0,this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
         if(ret3){
             this.$message.success('添加成功')
+            window.location.reload()
         }
     },
     getPair(){
@@ -153,14 +178,36 @@ export default {
         }
     },
     changeToken(token){
+        let that = this
         this.tokensPop = false
         this.item==0?this.token1=token:this.token2=token
         this.getPair()
+        let TokenContract = new this.web3.eth.Contract(Token1.abi, token.address)
         if(this.item==0){
-            this.token1Balance = this.getBalance(token.address)
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token1, 'balance', res/Math.pow(10,token.decimals))
+            })
             this.Token1Contract = new this.web3.eth.Contract(Token1.abi, this.token1.address)
         }else{
-            this.token2Balance = this.getBalance(token.address)
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token2, 'balance', res/Math.pow(10,token.decimals))
+            })
+            this.Token2Contract = new this.web3.eth.Contract(Token1.abi, this.token2.address)
+        }
+    },
+    checkPair(token){
+        let that = this
+        this.getPair()
+        let TokenContract = new this.web3.eth.Contract(Token1.abi, token.address)
+        if(token.item==0){
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token1, 'balance', res/Math.pow(10,token.decimals))
+            })
+            this.Token1Contract = new this.web3.eth.Contract(Token1.abi, this.token1.address)
+        }else{
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token2, 'balance', res/Math.pow(10,token.decimals))
+            })
             this.Token2Contract = new this.web3.eth.Contract(Token1.abi, this.token2.address)
         }
     },
@@ -170,20 +217,28 @@ export default {
         return res
     },
     caleToken2(){
+        let that = this
         if(this.token1Num && parseInt(this.poolsReserves[0])){
+            let token1Num = new BigNumber(this.token1Num)
+            token1Num = token1Num.times(Math.pow(10,this.token1.decimals))
             let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
-            FactoryContract.methods.quote(this.token1Num,this.token1BalanceInPool,this.token2BalanceInPool).call().then((result)=>{
-                this.token2Num = result
-                this.getShare()
+            FactoryContract.methods.quote(token1Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+                that.token2Num = parseInt(result)/Math.pow(10,that.token2.decimals)
+                that.token2Num = that.token2Num.toFixed(2)
+                that.getShare()
             })
         }
     },
     caleToken1(){
+        let that = this
         if(this.token2Num && parseInt(this.poolsReserves[0])){
+            let token2Num = new BigNumber(this.token2Num)
+            token2Num = token2Num.times(Math.pow(10,this.token2.decimals))
             let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
-            FactoryContract.methods.quote(this.token2Num,this.poolsReserves[1],this.poolsReserves[0]).call().then((result)=>{
-                this.token1Num = result
-                this.getShare()
+            FactoryContract.methods.quote(token2Num,this.poolsReserves[1],this.poolsReserves[0]).call().then((result)=>{
+                that.token1Num = parseInt(result)/Math.pow(10,that.token1.decimals)
+                that.token1Num = that.token1Num.toFixed(2)
+                that.getShare()
             })
         }
     },
@@ -286,6 +341,11 @@ export default {
             padding-top:12px;
             padding-left:15px;
             padding-bottom:14px;
+            .balance{
+                float:right;
+                text-align:right;
+                padding-right:20px;
+            }
         }
         .entrynum{
             float:left;
@@ -302,6 +362,7 @@ export default {
             }
         }
         .coinbar{
+            position:relative;
             float:right;
             width:92px;
             height: 30px;
@@ -324,8 +385,9 @@ export default {
                 padding:0 4px;
             }
             .dropico{
-                display:inline-block;
-                vertical-align:middle;
+                position: absolute;
+                right: 12px;
+                top: 10px;
                 width:9px;
                 height:6px;
                 background:url(../../assets/img/icon5.png) no-repeat center;

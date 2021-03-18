@@ -3,7 +3,7 @@
     <Navbar></Navbar>
     <div class="lpMiningContainer">
         <p class="earntip">Earn MDX tokens by staking HSwap LP<br> && Tokens</p>
-        <el-button class="btn">Total Value Locked 0.00 USDT</el-button>
+        <el-button class="btn">Total Value Locked {{isMult?parseFloat(totalLocked).toFixed(2):parseFloat(sigleTotalLocked).toFixed(2)}} USDT</el-button>
         <div class="staketab">
           <span :class="isMult?'active':''" @click="isMult=true">Mdex LP</span>
           <span :class="!isMult?'active':''" @click="isMult=false">Single Token</span>
@@ -15,7 +15,7 @@
               <!-- <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> 0 USDT</p>
+            <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> {{parseFloat(item.totalPrice).toFixed(2)}} USDT</p>
             <a class="btn active">APY Loading...</a>
             <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
@@ -27,7 +27,7 @@
               <!-- <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnTotal).toFixed(2)}} PDX(Total)<br> 0 USDT</p>
+            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnTotal).toFixed(2)}} PDX(Total)<br> {{item.totalPrice}} USDT</p>
             <a class="btn active">APY Loading...</a>
             <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
@@ -62,10 +62,17 @@ export default {
       poolLength:0,
       pairAddressList:[],
       multLpPool:[],
-      singleLpPool:[]
+      singleLpPool:[],
+      usdtToken:null,
+      basicToken:'PUSDT',
+      totalLocked:0,
+      sigleTotalLocked:0
     }
   },
   mounted() {
+    let tokenData = this.$store.getters.tokenData
+    let usdtToken = tokenData.filter((res)=>{return res.name.toUpperCase() == this.basicToken})
+    this.usdtToken = usdtToken[0]
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
         this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
@@ -111,6 +118,32 @@ export default {
         let Token2Contract = new this.web3.eth.Contract(Token1.abi,token2Address)
         let token1Name = await Token1Contract.methods.symbol().call()
         let token2Name = await Token2Contract.methods.symbol().call()
+        let token1Decimals = await Token1Contract.methods.decimals().call()
+        let token2Decimals = await Token2Contract.methods.decimals().call()
+
+        let totalSupply = await PairContract.methods.totalSupply().call()
+        let basic = item.totalAmount/totalSupply
+        let reserves = await PairContract.methods.getReserves().call()
+        let token1Price = 0
+        let token2Price = 0
+        if(token1Name.toUpperCase()==this.basicToken){
+           token1Price = 1
+        }else{
+          let basicPairAddress = await this.FactoryContract.methods.getPair(token1Address,this.usdtToken.address).call()
+          let PairContract = new this.web3.eth.Contract(LpPair.abi, basicPairAddress)
+          token1Price = await PairContract.methods.price(token1Address,Math.pow(10,token1Decimals)+'').call()
+          token1Price = token1Price/Math.pow(10,6)
+        }
+        if(token2Name.toUpperCase()==this.basicToken){
+           token2Price = 1
+        }else{
+          let basicPairAddress = await this.FactoryContract.methods.getPair(token2Address,this.usdtToken.address).call()
+          let PairContract = new this.web3.eth.Contract(LpPair.abi, basicPairAddress)
+          token2Price = await PairContract.methods.price(token2Address,Math.pow(10,token2Decimals)+'').call()
+          token2Price = token2Price/Math.pow(10,6)
+        }
+        let totalPrice = basic*reserves[0]*token1Price/Math.pow(10,token1Decimals)+basic*reserves[1]*token2Price/Math.pow(10,token2Decimals)
+        this.totalLocked += totalPrice
         this.multLpPool.push({
           pid:item.pid,
           lpAddress:item.lpToken,
@@ -121,17 +154,33 @@ export default {
           token1Address:token1Address,
           token2Address:token2Address,
           token1Name:token1Name,
-          token2Name:token2Name
+          token2Name:token2Name,
+          token1Balance:basic*reserves[0],
+          token2Balance:basic*reserves[1],
+          totalPrice:totalPrice
         })
       }else{
         let TokenContract = new this.web3.eth.Contract(Token1.abi,item.lpToken)
         let tokenName = await TokenContract.methods.symbol().call()
+        let tokenDecimals = await TokenContract.methods.decimals().call()
+        let tokenPrice = 0
+        if(tokenName.toUpperCase()==this.basicToken){
+           tokenPrice = 1
+        }else{
+          let basicPairAddress = await this.FactoryContract.methods.getPair(item.lpToken,this.usdtToken.address).call()
+          let PairContract = new this.web3.eth.Contract(LpPair.abi, basicPairAddress)
+          tokenPrice = await PairContract.methods.price(item.lpToken,Math.pow(10,tokenDecimals)+'').call()
+          tokenPrice = tokenPrice/Math.pow(10,6)
+        }
+        let totalPrice = tokenPrice*item.totalAmount/Math.pow(10,tokenDecimals)
+        this.sigleTotalLocked += totalPrice
         this.singleLpPool.push({
           pid:item.pid,
           lpAddress:item.lpToken,
           earnPerDay:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24,
           earnTotal:0,
-          tokenName:tokenName
+          tokenName:tokenName,
+          totalPrice:totalPrice
         })
       }
     },

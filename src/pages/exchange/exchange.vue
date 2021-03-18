@@ -4,25 +4,25 @@
     <div class="exchangeBar">
         <selectToken v-show="tokensPop" @closePop='tokensPop=false' @change='changeToken'></selectToken>
         <div class="changePanel">
-            <h2>From</h2>
-            <input class='entrynum' v-model="token1Num">
+            <h2>From<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
                 <img :src="token1.logoURI" class="coinimg">
                 <span class="coinname">{{token1.name}}</span>
                 <i class="dropico"></i>
             </div>
         </div>
-        <i class="changeico"></i>
+        <i class="changeico" @click="convertToken"></i>
         <div class="changePanel">
-            <h2>To</h2>
-            <input class='entrynum' v-model="token2Num">
+            <h2>To<span class="balance">{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="token2.logoURI" class="coinimg">
                 <span class="coinname">{{token2.name}}</span>
                 <i class="dropico"></i>
             </div>
         </div>
-        <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Confirm Swap':'Approve'):'Connect Wallet'}}</el-button>
     </div>
   </div>
 </template>
@@ -44,23 +44,32 @@ export default {
   data() {
     return {
       tokensPop:false,
-      token1:{},
-      token2:{},
+      token1:{
+          balance:0
+      },
+      token2:{
+          balance:0
+      },
       item:0,
       isConnect:false,
       web3:null,
       Token1Contract:null,
       Token2Contract:null,
       RouterContract:null,
-      token1Num:0,
-      token2Num:0,
-      isApproved:false
+      FactoryContract:null,
+      token1Num:'',
+      token2Num:'',
+      isApproved:false,
+      token1BalanceInPool:0,
+      token2BalanceInPool:0,
+      hasPair:false
     }
   },
   mounted() {
       this.$initWeb3().then((web3)=>{
           this.web3 = web3
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
+          this.FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
           this.isConnect = true
       })
     
@@ -74,6 +83,13 @@ export default {
         TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
             return res
         })
+    },
+    convertToken(){
+        this.token1 = this.token2
+        this.token2 = this.token1
+        this.token1BalanceInPool = this.token2BalanceInPool
+        this.token2BalanceInPool = this.token1BalanceInPool
+        this.getPair()
     },
     async clickHdl(){
         const MAX = Web3Utils.utils.toTwosComplement(-1)
@@ -106,16 +122,74 @@ export default {
         return res
     },
     changeToken(token){
+        let that = this
         this.tokensPop = false
         this.item==0?this.token1=token:this.token2=token
-        this.getBalance(token.address)
+        let TokenContract = new this.web3.eth.Contract(Token1.abi, token.address)
         if(this.item==0){
             this.checkApprovedBalance()
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token1, 'balance', res/Math.pow(10,token.decimals))
+            })
             this.Token1Contract = new this.web3.eth.Contract(Token1.abi, this.token1.address)
         }else{
+            TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                that.$set(that.token2, 'balance', res/Math.pow(10,token.decimals))
+            })
             this.Token2Contract = new this.web3.eth.Contract(Token1.abi, this.token2.address)
         }
-    }
+        this.getPair()
+    },
+    getPair(){
+        let that = this
+        if(this.token1.address && this.token2.address){
+            this.FactoryContract.methods.getPair(this.token1.address,this.token2.address).call().then((result)=>{
+                if(parseInt(result)){
+                    that.hasPair = true
+                }else{
+                    that.$message.error('交易对不存在')
+                    that.hasPair = false
+                }
+            })
+            this.FactoryContract.methods.getReserves(that.token1.address,that.token2.address).call().then((res)=>{
+                that.poolsReserves = res
+                that.token1BalanceInPool = res[0]/Math.pow(10,that.token1.decimals)
+                that.token2BalanceInPool = res[1]/Math.pow(10,that.token2.decimals)
+            })
+        }
+    },
+    caleToken2(){
+        let that = this
+        if(!this.hasPair){
+            this.$message.error('交易对不存在')
+            return
+        }
+        if(this.token1Num && parseInt(this.poolsReserves[0])){
+            let token1Num = new BigNumber(this.token1Num)
+            token1Num = token1Num.times(Math.pow(10,this.token1.decimals))
+            let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+            FactoryContract.methods.getAmountOut(token1Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+                that.token2Num = parseInt(result)/Math.pow(10,that.token2.decimals)
+                that.token2Num = that.token2Num.toFixed(2)
+            })
+        }
+    },
+    caleToken1(){
+        let that = this
+        if(!this.hasPair){
+            this.$message.error('交易对不存在')
+            return
+        }
+        if(this.token2Num && parseInt(this.poolsReserves[0])){
+            let token2Num = new BigNumber(this.token2Num)
+            token2Num = token2Num.times(Math.pow(10,this.token2.decimals))
+            let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+            FactoryContract.methods.getAmountIn(token2Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+                that.token1Num = parseInt(result)/Math.pow(10,that.token1.decimals)
+                that.token1Num = that.token1Num.toFixed(2)
+            })
+        }
+    },
   }
 }
 </script>
@@ -144,6 +218,11 @@ export default {
             padding-top:12px;
             padding-left:15px;
             padding-bottom:14px;
+            .balance{
+                float:right;
+                text-align:right;
+                padding-right:20px;
+            }
         }
         .entrynum{
             float:left;
@@ -160,6 +239,7 @@ export default {
             }
         }
         .coinbar{
+            position:relative;
             float:right;
             width:92px;
             height: 30px;
@@ -182,8 +262,9 @@ export default {
                 padding:0 4px;
             }
             .dropico{
-                display:inline-block;
-                vertical-align:middle;
+                position: absolute;
+                right: 12px;
+                top: 10px;
                 width:9px;
                 height:6px;
                 background:url(../../assets/img/icon5.png) no-repeat center;

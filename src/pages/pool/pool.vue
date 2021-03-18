@@ -13,20 +13,20 @@
         </div>
         <div class="liquidityList">
             <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">
-                <div class="liquidityHead clearfix">
+                <div class="liquidityHead clearfix" @click="showCon(index)">
                     <img src="../../assets/img/icon26.png">
                     <img src="../../assets/img/icon27.png">
                     <span>{{item.token1.name}}-{{item.token2.name}}</span>
                     <p>Manage</p>
                 </div>
-                <div class="liquidityCon">
+                <div class="liquidityCon" v-show="item.show">
                     <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">{{item.myLpTotal}}</span></p>
-                    <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">1.921</span></p>
-                    <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">1.921</span></p>
+                    <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
+                    <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
                     <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
                     <div class="addOrRemove clearfix">
-                        <router-link to="/addLiquidity">Add</router-link>
-                        <router-link to="/remove">Remove</router-link>
+                        <a @click="toAddLiquidity(item)">Add</a>
+                        <a @click="toRemoveLiquidity(item)">Remove</a>
                     </div>
                 </div>
             </div>
@@ -67,6 +67,25 @@ export default {
     })
   },
   methods: {
+    toAddLiquidity(item){
+        this.$router.push({
+            path: '/addLiquidity',
+            query: {
+                poolDetail: JSON.stringify(item)
+            }
+        })
+    },
+    toRemoveLiquidity(item){
+        this.$router.push({
+            path: '/removeLiquidity',
+            query: {
+                poolDetail: JSON.stringify(item)
+            }
+        })
+    },
+    showCon(index){
+        this.$set(this.pairList[index],'show',!this.pairList[index].show)
+    },
     getPairLength(){
         let that = this
         this.FactoryContract.methods.allPairsLength().call().then(res=>{
@@ -97,6 +116,7 @@ export default {
                         myShare:0,
                         token1:{},
                         token2:{},
+                        show:false
                     }
                     that.getPairDetail(obj)
                 }
@@ -116,6 +136,7 @@ export default {
         let token2Address = await PoolContract.methods.token1().call()
             item.token1.address = token1Address
             item.token2.address = token2Address
+        let reserves = await PoolContract.methods.getReserves().call()    
         let Token1Contract = new this.web3.eth.Contract(Token1.abi, token1Address)
         let Token2Contract = new this.web3.eth.Contract(Token1.abi, token2Address)    
         let token1name = await Token1Contract.methods.symbol().call()
@@ -126,6 +147,9 @@ export default {
             item.token2.name = token2name
             item.token1.decimails = token1decimal
             item.token2.decimails = token2decimal
+        let basic = item.myLpTotal/item.totalSupply    
+        item.token1.poolBalance = basic*reserves[0]/Math.pow(10,token1decimal)
+        item.token2.poolBalance = basic*reserves[1]/Math.pow(10,token2decimal)   
         this.pairList.push(item)    
     },
     getTokenBalanceInPool(){
@@ -202,14 +226,15 @@ export default {
   .liquidityList{
       width:600px;
       margin:0 auto;
-    background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
-    border-radius: 18px;
-    border: 1px solid #232221;
-    box-sizing: border-box;
-    padding:20px 15px;
     .liquidityItem{
         text-align:left;
+        background: #232221;
+        box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+        border-radius: 18px;
+        border: 1px solid #232221;
+        box-sizing: border-box;
+        padding:20px 15px;
+        margin-bottom:20px;
         .liquidityHead{
             padding-bottom:15px;
             img{
