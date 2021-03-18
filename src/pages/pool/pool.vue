@@ -23,7 +23,7 @@
                     <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">{{item.myLpTotal}}</span></p>
                     <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">1.921</span></p>
                     <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">1.921</span></p>
-                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare).toFixed(2)}}%</span></p>
+                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
                     <div class="addOrRemove clearfix">
                         <router-link to="/addLiquidity">Add</router-link>
                         <router-link to="/remove">Remove</router-link>
@@ -38,7 +38,7 @@
 </template>
 <script>
 import Navbar from '../../components/Navbar'
-import {Factory,Token1,Router,Pair} from '../../utils/contract'
+import {Factory,Token1,Router,Pair,LpPair} from '../../utils/contract'
 import BigNumber from 'bignumber.js'
 export default {
   components:{
@@ -87,21 +87,18 @@ export default {
         let that = this
         this.pairAddressList.forEach((item,index)=>{
             let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
-            let totalSupply = 0
-            PoolContract.methods.totalSupply().call().then(res=>{
-                totalSupply = res
-            })
             PoolContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
-                if(res){
-                    that.pairList.push({
-                        addrss:item,
+                if(res!=='0'){
+                    let obj = {
+                        address:item,
                         decimails:18,
-                        totalSupply:totalSupply,
+                        totalSupply:0,
                         myLpTotal:res,
-                        myShare:res/totalSupply,
+                        myShare:0,
                         token1:{},
                         token2:{},
-                    })
+                    }
+                    that.getPairDetail(obj)
                 }
                 if(index==(that.pairAddressList-1)){
                     that.getPairDetail()
@@ -109,20 +106,27 @@ export default {
             })
         })
     },
-    getPairDetail(){
+    async getPairDetail(item){
         let that = this
-        that.pairList.forEach((item,index)=>{
-            let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
-            PoolContract.methods.totalSupply().call().then(res=>{
-                item.totalSupply = res
-            })
-            PoolContract.methods.decimails().call().then(res=>{
-                item.decimails = res
-            })
-            PoolContract.methods.symbol().call().then(res=>{
-                item.name = res
-            })
-        })
+        let PoolContract = new this.web3.eth.Contract(LpPair.abi, item.address)
+        let totalSupply = await PoolContract.methods.totalSupply().call()
+            item.totalSupply = totalSupply
+            item.myShare = item.myLpTotal/totalSupply
+        let token1Address = await PoolContract.methods.token0().call()
+        let token2Address = await PoolContract.methods.token1().call()
+            item.token1.address = token1Address
+            item.token2.address = token2Address
+        let Token1Contract = new this.web3.eth.Contract(Token1.abi, token1Address)
+        let Token2Contract = new this.web3.eth.Contract(Token1.abi, token2Address)    
+        let token1name = await Token1Contract.methods.symbol().call()
+        let token2name = await Token2Contract.methods.symbol().call()
+        let token1decimal = await Token1Contract.methods.decimals().call()
+        let token2decimal = await Token2Contract.methods.decimals().call()
+            item.token1.name = token1name
+            item.token2.name = token2name
+            item.token1.decimails = token1decimal
+            item.token2.decimails = token2decimal
+        this.pairList.push(item)    
     },
     getTokenBalanceInPool(){
         let PoolContract = new this.web3.eth.Contract(Pair.abi, '0x579B60feF4d2CB2f4238DDe50c1e7Bc2117245EB')
