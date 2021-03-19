@@ -69,7 +69,7 @@ export default {
     returnback(){
       this.$router.push('/create1')
     },
-    async createNext(){
+    createNext(){
       if(this.email == ''){
         this.$message.error('请填写邮箱地址')
         return
@@ -77,7 +77,7 @@ export default {
       this.isPledging = true
       this.createOrder()
     },
-    checkApprove(pledgeNum){
+    async checkApprove(pledgeNum){
       if(this.isApproved){
         this.toPledge(pledgeNum)
       }else{
