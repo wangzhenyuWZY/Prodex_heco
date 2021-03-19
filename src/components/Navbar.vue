@@ -7,12 +7,12 @@
                 <li :class="nav==1?'active':''" @click="toPool">资金池</li>
                 <li :class="nav==2?'active':''" @click="toDealMining">交易挖矿</li>
                 <li :class="nav==3?'active':''" @click="toLpMining">流动挖矿</li>
-                <li :class="nav==4?'active':''">Prodex</li>
+                <li :class="nav==4?'active':''" @click="toProdex">Prodex</li>
             </ul>
         </div>
         <div class="toolCon">
-            <div class="connected" @click="walletFlag = !walletFlag">
-                Connect to a Wallet
+            <div class="connected" @click="checkWalter">
+                {{!isConnect?'Connect to a Wallet':defaultAccount}}
             </div>
             <div class="prodexbtn" @click="breakFlag = !breakFlag">Prodex</div>
             <i class="setico" @click="setFlag = !setFlag"></i>
@@ -24,10 +24,6 @@
         </div>
         <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
           <ul class="mobelNavlist">
-              <li>
-                  <img src="@/assets/img/icon28.png">
-                  <span>首页</span>
-              </li>
               <li @click="toExchange">
                   <img src="@/assets/img/icon29.png">
                   <span>兑换</span>
@@ -40,11 +36,15 @@
                   <img src="@/assets/img/icon31.png">
                   <span>流动性挖矿</span>
               </li>
-              <li>
+              <li @click="toDealMining">
+                  <img src="@/assets/img/icon31.png">
+                  <span>交易挖矿</span>
+              </li>
+              <li @click="toCreate">
                   <img src="@/assets/img/icon32.png">
                   <span>免费发行交易对</span>
               </li>
-              <li>
+              <li @click="toProdex">
                   <img src="@/assets/img/icon33.png">
                   <span>Prodex</span>
               </li>
@@ -53,8 +53,8 @@
         <!---->
         <Settings v-show="setFlag"></Settings>
         <Mores v-show="moreFlag"></Mores>
-        <Wallet v-show="walletFlag"></Wallet>
-        <Breakdown v-show="breakFlag"></Breakdown>
+        <Wallet v-show="walletFlag" @close='walletFlag=false'></Wallet>
+        <Breakdown v-show="breakFlag" @close='breakFlag=false'></Breakdown>
     </div>
 </template>
 <script>
@@ -76,13 +76,32 @@ export default {
         moreFlag:false,
         walletFlag:false,
         breakFlag:false,
-        drawer:false
+        drawer:false,
+        isConnect:false,
+        defaultAccount:''
     };
   },
   created(){
-      
+      this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.isConnect = true
+        this.defaultAccount = this.plusXing(web3.eth.defaultAccount,5,5)
+    })
   },
   methods:{
+      checkWalter(){
+          if(!this.isConnect){
+              this.walletFlag()
+          }
+      },
+      plusXing (str,frontLen,endLen) { 
+        var len = str.length-frontLen-endLen;
+        var xing = '';
+        for (var i=0;i<len;i++) {
+            xing ='*******';
+        }
+        return str.substring(0,frontLen)+xing+str.substring(str.length-endLen);
+      },
       toExchange(){
           localStorage.setItem('nav',0)
           this.$router.push('/')
@@ -98,6 +117,14 @@ export default {
       toLpMining(){
           localStorage.setItem('nav',3)
           this.$router.push('/lpMining')
+      },
+      toProdex(){
+          localStorage.setItem('nav',4)
+          this.$router.push('/prodex')
+      },
+      toCreate(){
+          localStorage.setItem('nav',3)
+          this.$router.push('/create1')
       }
   }
 }

@@ -48,7 +48,7 @@
                 </div>
             </div>
         </div>
-        <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='isAdding' :loading='isAdding' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
     </div>
     <p class="prodexTips">☆ 通过增强流动性，您将获得Prodex奖励,如您所提供的流动性交易对未支持流动性质押获取Prodex，您暂时将无法获得Prodex奖励。</p>
   </div>
@@ -93,7 +93,8 @@ export default {
       poolsReserves:null,
       share:0,
       token1BalanceInPool:0,
-      token2BalanceInPool:0
+      token2BalanceInPool:0,
+      isAdding:false
     }
   },
   mounted() {
@@ -130,6 +131,7 @@ export default {
         }
     },
     async clickHdl(){
+        this.isAdding = true
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         if(this.token1ApproveBalance==0){
             let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
@@ -139,7 +141,7 @@ export default {
         }
         this.addLiquidity()
     },
-    async addLiquidity(){
+    addLiquidity(){
         let that = this
         if(parseFloat(this.token1Num)>this.token1.balance || parseFloat(this.token2Num)>this.token2.balance){
             that.$message.error('余额不足')
@@ -149,11 +151,23 @@ export default {
         token1num = token1num.times(Math.pow(10,this.token1.decimals))
         let token2num = new BigNumber(this.token2Num)
         token2num = token2num.times(Math.pow(10,this.token2.decimals))
-        const ret3 = await this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), 0, 0,this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
-        if(ret3){
-            this.$message.success('添加成功')
+        this.RouterContract.methods.addLiquidity(this.token1.address, this.token2.address, token1num.toFixed(), token2num.toFixed(), 0, 0,this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
+        .on('transactionHash', function(hash){
+            
+        })
+        .on('receipt', function(receipt){
+            that.isAdding = false
+            that.$message.success('添加成功')
             window.location.reload()
-        }
+            console.log(receipt)
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            that.isAdding = false
+        })
+        .on('error', function(){
+            that.$message.success('添加失败')
+            that.isAdding = false
+        });
     },
     getPair(){
         let that = this

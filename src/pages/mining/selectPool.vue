@@ -12,14 +12,14 @@ transfer ETHEREUM mainnet tokens</p>
               <img src="@/assets/img/icon27.png">
               {{pdxBalance}}
             </div>
-            <el-button class="btn" @click="toClaim">Harvest All Token</el-button>
+            <el-button class="btn" :disabled='isHarvesting' :loading='isHarvesting' @click="toClaim">Harvest All Token</el-button>
           </div>
           <div class="stakeinfo">
             <p class="staketitle">Staked</p>
             <div class="balance">
               Locked {{myStakeAmount}}
             </div>
-            <el-button class="btn" @click="unStake">Unstake</el-button>
+            <el-button class="btn" :disabled='isUnstaking' :loading='isUnstaking' @click="unStake">Unstake</el-button>
           </div>
           <div class="stakeinfo">
             <p class="staketitle">Your Balance</p>
@@ -30,7 +30,7 @@ transfer ETHEREUM mainnet tokens</p>
             <div class="stakeput">
               <input v-model="stakeNum"><span @click="stakeNum = myLpBalance">MAX</span>
             </div>
-            <el-button class="btn" @click="toStake">{{isApproved?'Stake':'Approve'}}</el-button>
+            <el-button class="btn" :disabled='isStaking' :loading='isStaking' @click="toStake">{{isApproved?'Stake':'Approve'}}</el-button>
           </div>
         </div>
     </div>
@@ -61,7 +61,10 @@ export default {
       lpApproveBalance:0,
       isApproved:false,
       pdxBalance:0,
-      myStakeAmount:0
+      myStakeAmount:0,
+      isStaking:false,
+      isUnstaking:false,
+      isHarvesting:false
     }
   },
   mounted() {
@@ -103,6 +106,7 @@ export default {
         }
     },
     async toStake(){
+      this.isStaking = true
       if(this.isApproved){
         this.doDeposit()
       }else{
@@ -119,29 +123,58 @@ export default {
       let stakeNum = new BigNumber(this.stakeNum)
       stakeNum = stakeNum.times(Math.pow(10,18))
       console.log('stakenum====='+stakeNum)
-      that.PoolContract.methods.deposit(this.miningPool.pid,stakeNum.toFixed()).send({from:this.web3.eth.defaultAccount}).then(res=>{
-        if(res){
+      that.PoolContract.methods.deposit(this.miningPool.pid,stakeNum.toFixed()).send({from:this.web3.eth.defaultAccount})
+      .on('receipt', function(receipt){
+          that.isStaking = false
           that.$message.success('质押成功')
-        }
+          window.location.reload()
+          console.log(receipt)
       })
+      .on('confirmation', function(confirmationNumber, receipt){
+          that.isStaking = false
+      })
+      .on('error', function(){
+          that.$message.success('质押失败')
+          that.isStaking = false
+      });
     },
     toClaim(){
       let that = this
-      that.PoolContract.methods.withdraw(this.miningPool.pid,0).send({from:this.web3.eth.defaultAccount}).then(res=>{
-        if(res){
+      that.isHarvesting = true
+      that.PoolContract.methods.withdraw(this.miningPool.pid,0).send({from:this.web3.eth.defaultAccount})
+      .on('receipt', function(receipt){
+          that.isHarvesting = false
           that.$message.success('PDX奖励领取成功')
-        }
+          window.location.reload()
+          console.log(receipt)
       })
+      .on('confirmation', function(confirmationNumber, receipt){
+          that.isHarvesting = false
+      })
+      .on('error', function(){
+          that.$message.success('PDX奖励领取失败')
+          that.isHarvesting = false
+      });
     },
     unStake(){
       let that = this
+      that.isUnstaking = true
       let stakeNum = new BigNumber(this.myStakeAmount)
       stakeNum = stakeNum.times(Math.pow(10,18))
-      that.PoolContract.methods.withdraw(this.miningPool.pid,stakeNum).send({from:this.web3.eth.defaultAccount}).then(res=>{
-        if(res){
+      that.PoolContract.methods.withdraw(this.miningPool.pid,stakeNum).send({from:this.web3.eth.defaultAccount})
+      .on('receipt', function(receipt){
+          that.isUnstaking = false
           that.$message.success('解除质押成功')
-        }
+          window.location.reload()
+          console.log(receipt)
       })
+      .on('confirmation', function(confirmationNumber, receipt){
+          that.isUnstaking = false
+      })
+      .on('error', function(){
+          that.$message.success('解除质押失败')
+          that.isUnstaking = false
+      });
     }
   }
 }

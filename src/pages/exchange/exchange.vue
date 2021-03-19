@@ -18,11 +18,11 @@
             <input class='entrynum' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="token2.logoURI" class="coinimg">
-                <span class="coinname">{{token2.name}}</span>
+                <span class="coinname">{{token2.name?token2.name:'Select'}}</span>
                 <i class="dropico"></i>
             </div>
         </div>
-        <el-button class="btn" :disabled='false' @click="clickHdl">{{isConnect?(isApproved?'Confirm Swap':'Approve'):'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='isSwaping' :loading='isSwaping' @click="clickHdl">{{isConnect?(isApproved?'Confirm Swap':'Approve'):'Connect Wallet'}}</el-button>
     </div>
   </div>
 </template>
@@ -62,7 +62,9 @@ export default {
       isApproved:false,
       token1BalanceInPool:0,
       token2BalanceInPool:0,
-      hasPair:false
+      hasPair:false,
+      baseToken:'PDX',
+      isSwaping:false
     }
   },
   mounted() {
@@ -71,6 +73,9 @@ export default {
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
           this.FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
           this.isConnect = true
+          let tokenData = this.$store.getters.tokenData
+          let token1 = tokenData.filter((item)=>{return item.name.toUpperCase() == this.baseToken})
+          this.changeToken(token1[0])
       })
     
   },
@@ -92,22 +97,36 @@ export default {
         this.getPair()
     },
     async clickHdl(){
+        this.isSwaping = true
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         if(this.token1ApproveBalance==0){
             let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
             this.isApproved = false
             this.doSwap()
+        }else{
+            this.doSwap()
         }
-        this.doSwap()
     },
     async doSwap(){
       let that = this
       let token1num = new BigNumber(this.token1Num)
       token1num = token1num.times(Math.pow(10,this.token1.decimals))
-      const ret3 = await this.RouterContract.methods.swapExactTokensForTokens(token1num.toFixed(),0,[this.token1.address,this.token2.address],this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
-      if(ret3){
-          console.log(ret3)
-      }
+      this.RouterContract.methods.swapExactTokensForTokens(token1num.toFixed(),0,[this.token1.address,this.token2.address],this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
+        .on('transactionHash', function(hash){
+            
+        })
+        .on('receipt', function(receipt){
+            that.isSwaping = false
+            that.$message.success('兑换成功')
+            window.location.reload()
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            that.isSwaping = false
+        })
+        .on('error', function(){
+            that.$message.success('兑换失败')
+            that.isSwaping = false
+        });
     },
     async checkApprovedBalance(){
         let that = this

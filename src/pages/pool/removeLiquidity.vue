@@ -20,7 +20,7 @@
           <span class="calibration" @click="slidenum=75">75%</span>
           <span class="calibration" @click="slidenum=100">Max</span>
         </div>
-        <el-button class="btn" :disabled='false' @click="handelClick">{{isApprove?'Remove':'Approve'}}</el-button>
+        <el-button class="btn" :disabled='isRemoving' :loading='isRemoving' @click="handelClick">{{isApprove?'Remove':'Approve'}}</el-button>
     </div>
   </div>
 </template>
@@ -42,7 +42,8 @@ export default {
       slidenum:0,
       RouterContract:null,
       poolDetail:null,
-      isApprove:false
+      isApprove:false,
+      isRemoving:false
     }
   },
   mounted() {
@@ -65,6 +66,7 @@ export default {
 
     },
     async handelClick(){
+      this.isRemoving = true
       if(this.isApprove){
         this.removeLiquidity()
       }else{
@@ -73,6 +75,7 @@ export default {
         let apr1 = await PoolContract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
         if(parseInt(apr1)){
           this.isApprove = true
+          this.isRemoving = false
         }
       }
     },
@@ -85,6 +88,7 @@ export default {
         return res
     },
     async removeLiquidity(){
+      let that = this
       let tokenA = this.poolDetail.token1.address
       let tokenB = this.poolDetail.token2.address
       console.log(this.poolDetail.myLpTotal)
@@ -94,12 +98,21 @@ export default {
       let amountBMin = 0
       let to = this.web3.eth.defaultAccount
       let deadline = 1702480290
-      let res = await this.RouterContract.methods.removeLiquidity(tokenA,tokenB,liquidity,amountAMin,amountBMin,to,deadline).send({from:this.web3.eth.defaultAccount})
-      if(res){
-        this.$message.success('流动性移除成功')
+      this.RouterContract.methods.removeLiquidity(tokenA,tokenB,parseInt(liquidity),amountAMin,amountBMin,to,deadline).send({from:this.web3.eth.defaultAccount})
+      .on('transactionHash', function(hash){
+      })
+      .on('receipt', function(receipt){
+        that.isRemoving = false
+        that.$message.success('流动性移除成功')
         window.location.reload()
-        console.log(res)
-      }
+      })
+      .on('confirmation', function(confirmationNumber, receipt){
+          
+      })
+      .on('error', function(){
+          that.$message.success('流动性移除失败')
+          that.isRemoving = false
+      });
     }
   }
 }

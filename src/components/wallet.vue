@@ -2,7 +2,7 @@
     <div class="walletContainer">
         <div class="walletTitle">
             <h2>Connect to a <br>wallet</h2>
-            <i class="closeico"></i>
+            <i class="closeico" @click="close"></i>
         </div>
         <div class="walletCon">
             <div class="walletItem clearfix">
@@ -21,6 +21,21 @@
         </div>
     </div>
 </template>
+<script>
+export default {
+  data(){
+    return {
+    };
+  },
+  created(){
+  },
+  methods:{
+      close(){
+          this.$emit('close')
+      }
+  }
+}
+</script>
 <style lang='less' scoped>
 .walletContainer{
     position:absolute;

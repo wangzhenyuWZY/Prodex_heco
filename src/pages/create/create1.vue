@@ -3,15 +3,15 @@
     <Navbar></Navbar>
     <div class="exchangeBar">
         <h2 class="createTitle">token 信息</h2>
-        <p class="selType" @click="hasToken = true"><i></i>我没有Token，帮我发行HECO Token</p>
-        <div class="hasToken" v-show="hasToken">
-          <input placeholder="Token 全称">
-          <input placeholder="Token 简称">
-          <input placeholder="Token 总量">
-        </div>
-        <p class="selType" @click="hasToken = false"><i></i>我已发行HECO Token,帮我创建交易对</p>
+        <p class="selType" @click="hasToken = false"><i :class="!hasToken?'active':''"></i>我没有Token，帮我发行HECO Token</p>
         <div class="hasToken" v-show="!hasToken">
-          <input placeholder="Token 合约地址">
+          <input placeholder="Token 全称" v-model="tokenName">
+          <input placeholder="Token 简称" v-model="symbol">
+          <input placeholder="Token 总量" v-model="totalsupply">
+        </div>
+        <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>我已发行HECO Token,帮我创建交易对</p>
+        <div class="hasToken" v-show="hasToken">
+          <input placeholder="Token 合约地址" v-model="contractAddress" >
         </div>  
         <el-button class="btn" :disabled='false' @click="createNext">下一步  创建交易对</el-button>
     </div>
@@ -28,7 +28,11 @@ export default {
     return {
       isConnect:false,
       web3:null,
-      hasToken:true
+      hasToken:true,
+      tokenName:'',
+      symbol:'',
+      totalsupply:'',
+      contractAddress:''
     }
   },
   mounted() {
@@ -38,7 +42,47 @@ export default {
       })
   },
   methods: {
-    
+    createNext(){
+      let tokenInfo = {
+          tokenName:this.tokenName,
+          symbol:this.symbol,
+          totalsupply:this.totalsupply,
+          hasToken:this.hasToken,
+          contractAddress:this.contractAddress
+      }
+      if(this.hasToken){
+        if(this.contractAddress==''){
+          this.$message.error('请填写合约地址')
+          return
+        }
+        this.$router.push({
+          path: '/create2',
+          query: {
+            tokenInfo: JSON.stringify(tokenInfo)
+          }
+        })
+      }else{
+        if(this.tokenName==''){
+          this.$message.error('请填写Token 全称')
+          return
+        }
+        if(this.symbol==''){
+          this.$message.error('请填写Token 简称')
+          return
+        }
+        if(this.totalsupply==''){
+          this.$message.error('请填写Token 总量')
+          return
+        }
+        this.$router.push({
+          path: '/create2',
+          query: {
+            tokenInfo: JSON.stringify(tokenInfo)
+          }
+        })
+      }
+      
+    }
   }
 }
 </script>
@@ -75,6 +119,10 @@ export default {
         border-radius: 2px;
         border: 1px solid #38393B;
         margin-right:10px;
+        &.active{
+          background:url('../../assets/img/icon35.png') no-repeat center;
+          background-size:100% 100%;
+        }
       }
     }
     .hasToken{

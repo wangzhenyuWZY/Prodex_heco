@@ -9,7 +9,7 @@
         </div>
         <div class="addOrCreate">
             <router-link to="/addLiquidity" class="btn add">Add Liquidity</router-link>
-            <router-link to="/create" class="btn create">Create a pair</router-link>
+            <router-link to="/create1" class="btn create">Create a pair</router-link>
         </div>
         <div class="liquidityList">
             <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">

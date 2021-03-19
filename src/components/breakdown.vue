@@ -2,7 +2,7 @@
     <div class="breakdownCon">
         <div class="breakTitle">
             <h2>Your Prodex Breakdown</h2>
-            <i class="closeico"></i>
+            <i class="closeico" @click="close"></i>
         </div>
         <div class="breakcon">
             <p>Prodex price:<span>$19.54</span></p>
@@ -12,6 +12,21 @@
         <a class="view">View Prodex Analytics</a>
     </div>
 </template>
+<script>
+export default {
+  data(){
+    return {
+    };
+  },
+  created(){
+  },
+  methods:{
+      close(){
+          this.$emit('close')
+      }
+  }
+}
+</script>
 <style lang='less' scoped>
 .breakdownCon{
     position:absolute;

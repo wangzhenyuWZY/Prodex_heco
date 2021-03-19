@@ -16,7 +16,7 @@
               <img src="../../assets/img/eth.png"> -->
             </div>
             <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> {{parseFloat(item.totalPrice).toFixed(2)}} USDT</p>
-            <a class="btn active">APY Loading...</a>
+            <a class="btn active">APY {{parseFloat(item.apy).toFixed(2)}}%</a>
             <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
         </ul>
@@ -27,8 +27,8 @@
               <!-- <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnTotal).toFixed(2)}} PDX(Total)<br> {{item.totalPrice}} USDT</p>
-            <a class="btn active">APY Loading...</a>
+            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> {{item.totalPrice}} USDT</p>
+            <a class="btn active">APY {{parseFloat(item.apy).toFixed(2)}}%</a>
             <a class="btn select" @click="goDeposit(item)">Select</a>
           </li>
         </ul>
@@ -66,15 +66,27 @@ export default {
       usdtToken:null,
       basicToken:'PUSDT',
       totalLocked:0,
-      sigleTotalLocked:0
+      sigleTotalLocked:0,
+      blockNumber:0,
+      period:0,
+      pdxToken:null,
+      pdxName:'PDX',
+      pdxPrice:0,
+      dayBlock:0
     }
   },
   mounted() {
     let tokenData = this.$store.getters.tokenData
     let usdtToken = tokenData.filter((res)=>{return res.name.toUpperCase() == this.basicToken})
     this.usdtToken = usdtToken[0]
+    let pdxToken = tokenData.filter((res)=>{return res.name.toUpperCase() == this.pdxName})
+    this.pdxToken = pdxToken[0]
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
+        web3.eth.getBlockNumber().then(res=>{
+          this.blockNumber = res
+          console.log('当前区块高度'+this.blockNumber)
+        })
         this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
         this.PoolContract = new web3.eth.Contract(Pool.abi, Pool.address)
         this.isConnect = true
@@ -95,6 +107,13 @@ export default {
         let pdxPerBlock = await this.PoolContract.methods.pdxPerBlock().call()
         this.pdxPerBlock = pdxPerBlock/Math.pow(10,18)
         this.totalAllocPoint = await this.PoolContract.methods.totalAllocPoint().call()
+        let period = await this.PoolContract.methods.phase(this.blockNumber).call()
+        let periodBlock = this.pdxPerBlock/Math.pow(2,period)
+        this.dayBlock = 24*60*60/3*periodBlock
+        let basicPairAddress = await this.FactoryContract.methods.getPair(this.pdxToken.address,this.usdtToken.address).call()
+        let PairContract = new this.web3.eth.Contract(LpPair.abi, basicPairAddress)
+        let pdxPrice = await PairContract.methods.price(this.pdxToken.address,Math.pow(10,this.pdxToken.decimals)+'').call()
+        this.pdxPrice = pdxPrice/Math.pow(10,6)
         this.PoolContract.methods.poolLength().call().then(res=>{
             that.poolLength = res
             that.getPairList()
@@ -144,6 +163,8 @@ export default {
         }
         let totalPrice = basic*reserves[0]*token1Price/Math.pow(10,token1Decimals)+basic*reserves[1]*token2Price/Math.pow(10,token2Decimals)
         this.totalLocked += totalPrice
+        
+        let apy = this.dayBlock*parseInt(item.allocPoint)/10*this.pdxPrice*365/totalPrice
         this.multLpPool.push({
           pid:item.pid,
           lpAddress:item.lpToken,
@@ -157,7 +178,8 @@ export default {
           token2Name:token2Name,
           token1Balance:basic*reserves[0],
           token2Balance:basic*reserves[1],
-          totalPrice:totalPrice
+          totalPrice:totalPrice,
+          apy:apy
         })
       }else{
         let TokenContract = new this.web3.eth.Contract(Token1.abi,item.lpToken)
@@ -174,13 +196,17 @@ export default {
         }
         let totalPrice = tokenPrice*item.totalAmount/Math.pow(10,tokenDecimals)
         this.sigleTotalLocked += totalPrice
+
+        let apy = this.dayBlock*parseInt(item.allocPoint)/10*this.pdxPrice*365/totalPrice
         this.singleLpPool.push({
           pid:item.pid,
           lpAddress:item.lpToken,
           earnPerDay:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24,
+          earnPerMonth:this.pdxPerBlock*item.allocPoint/this.totalAllocPoint*60/3*60*24*30,
           earnTotal:0,
           tokenName:tokenName,
-          totalPrice:totalPrice
+          totalPrice:totalPrice,
+          apy:apy
         })
       }
     },

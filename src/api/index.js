@@ -1,13 +1,9 @@
 const api = {
-  getChainInfo: '/chain/getChainInfo',
-  getSnapshot:'/chain/getSnapshot',
-  blockList:'/block/list/',
-  transactionList:'/transaction/list/',
-  addressInfo:'/address/getByAddress/',
-  listByAddress:'/transaction/listByAddress/',
-  listByHash:'/transaction/getByHash/',
-  blockGetByHash:'/block/getByHash/',
-  blockGetByAllHash:'/block/getAllByHash/'
+  createPledge: '/pledge/create',
+  updateTxHash:'/pledge/updateTxHash',
+  pledgeDetail:'/pledge/get/{orderId}',
+  getPoolInfo:'/poolInfo/get',
+  getSingle:'/poolInfo/getSingle'
 }
 
 export default api

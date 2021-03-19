@@ -2,26 +2,30 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="exchangeBar">
-        <h2 class="createTitle"><i class="returnBack"></i>创建交易对</h2>
+        <h2 class="createTitle"><i class="returnBack" @click="returnback"></i>创建交易对</h2>
         <p class="createpair">即将创建以下交易对</p>
         <div class="pairlist">
           <div class="pairitem">
             <i></i>
-            ABC & USDT
+            {{tokenInfo.symbol}} & USDT
           </div>
           <div class="pairitem">
             <i></i>
-            ABC & USDT
+            {{tokenInfo.symbol}} & PDX
           </div>
         </div>
-        <input placeholder="您的邮箱" class="emailput">
-        <el-button class="btn" :disabled='false' @click="createNext">下一步  质押PDX</el-button>
+        <input placeholder="您的邮箱" class="emailput" v-model="email">
+        <el-button class="btn" :disabled='isPledging' :loading='isPledging' @click="createNext">下一步  质押PDX</el-button>
     </div>
   </div>
 </template>
 
 <script>
 import Navbar from '../../components/Navbar'
+import {createPledge,updateTxHash} from '../../api/user'
+import {Pledge,Token1} from '../../utils/contract'
+import BigNumber from 'bignumber.js'
+const Web3Utils = require('web3')
 export default {
   components:{
     Navbar
@@ -30,17 +34,102 @@ export default {
     return {
       isConnect:false,
       web3:null,
-      hasToken:true
+      tokenInfo:{},
+      email:'',
+      PledgeContract:null,
+      pdxToken:null,
+      pdxName:'PDX',
+      isApproved:false,
+      isPledging:false
     }
   },
   mounted() {
-      this.$initWeb3().then((web3)=>{
-          this.web3 = web3
-          this.isConnect = true
-      })
+    let tokenData = this.$store.getters.tokenData
+    let pdxToken = tokenData.filter((item)=>{return item.name.toUpperCase() == this.pdxName})
+    this.pdxToken = pdxToken[0]
+    if(this.$route.query.tokenInfo){
+      let tokenInfo = this.$route.query.tokenInfo
+      this.tokenInfo = JSON.parse(tokenInfo)
+    }
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.isConnect = true
+        this.PledgeContract = new web3.eth.Contract(Pledge.abi, Pledge.address)
+        this.PdxContract = new web3.eth.Contract(Token1.abi, this.pdxToken.address)
+        // this.getAllowance()
+    })
   },
   methods: {
-    
+    async getAllowance(){
+        let res = await this.PledgeContract.methods.allowance(this.web3.eth.defaultAccount,this.pdxToken.address).call()
+        if(parseInt(res)){
+          this.isApproved = true
+        }
+    },
+    returnback(){
+      this.$router.push('/create1')
+    },
+    async createNext(){
+      if(this.email == ''){
+        this.$message.error('请填写邮箱地址')
+        return
+      }
+      this.isPledging = true
+      this.createOrder()
+    },
+    checkApprove(pledgeNum){
+      if(this.isApproved){
+        this.toPledge(pledgeNum)
+      }else{
+        const MAX = Web3Utils.utils.toTwosComplement(-1)
+        let apr1 = await this.PdxContract.methods.approve(Pledge.address,MAX).send({from:this.web3.eth.defaultAccount})
+        if(apr1){
+          this.toPledge(pledgeNum)
+        }
+      }
+    },
+    createOrder(){
+      let that = this
+      let data = {
+        userId:this.email,
+        tokenName:this.tokenInfo.tokenName,
+        Symbol:this.tokenInfo.symbol,
+        decimals:18,
+        totalsupply:this.tokenInfo.totalsupply,
+        type:this.tokenInfo.hasToken?2:1,
+        contractAddress:this.tokenInfo.contractAddress
+      }
+      createPledge(data).then((res)=>{
+        if(res.data.status==200){
+          let price = res.data.data
+          let pledgeNum = 10000/price
+          that.checkApprove(pledgeNum)
+        }else{
+          that.isPledging = false
+          that.$message.error(res.data.message)
+        }
+      })
+    },
+    async toPledge(pledgeNum){
+      let num = new BigNumber(pledgeNum)
+      num = num.times(Math.pow(10,this.pdxToken.decimals))
+      let res = await this.PledgeContract.methods.pledge(num).send({from:this.web3.eth.defaultAccount})
+      if(res){
+        this.postHash()
+      }
+    },
+    postHash(){
+      let that = this
+      updateTxHash(data).then((res)=>{
+        if(res.data.status==200){
+          that.isPledging = false
+          that.$router.push('/create3')
+        }else{
+          that.isPledging = false
+          that.$message.error(res.data.message)
+        }
+      })
+    }
   }
 }
 </script>
@@ -90,6 +179,8 @@ export default {
           width:18px;
           height:18px;
           margin-right:10px;
+          background: url(../../assets/img/icon36.png) no-repeat center;
+          background-size:100% 100%;
         }
       }
     }
