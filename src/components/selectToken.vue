@@ -3,8 +3,8 @@
         <h2 class="title">Select a token<i></i></h2>
         <i class="closeico" @click="closePop"></i>
         <input class="searchput" placeholder="Search name or paste address">
-        <h2 class="title">Common bases<i></i></h2>
-        <div class="commonCoin">
+        <h2 class="title" v-show='false'>Common bases<i></i></h2>
+        <div class="commonCoin" v-show='false'>
             <div class="coinitem"><img>ETH</div>
             <div class="coinitem"><img>ETH</div>
             <div class="coinitem"><img>ETH</div>
@@ -21,7 +21,7 @@
                 <li v-for="(item,index) in tokenList" :key="index" @click="changeToken(item)"><img :src="item.logoURI">{{item.name}}</li>
             </ul>
         </div>
-        <div class="tokenlistbtm clearfix">
+        <div class="tokenlistbtm clearfix" v-show='false'>
             <span class="fl">Uniswap Default List</span>
             <span class="fr">Change</span>
         </div>

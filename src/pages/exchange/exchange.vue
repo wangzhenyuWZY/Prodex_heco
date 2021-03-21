@@ -97,11 +97,13 @@ export default {
         this.getPair()
     },
     async clickHdl(){
+        
         this.isSwaping = true
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         if(this.token1ApproveBalance==0){
             let apr1 = await this.Token1Contract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
             this.isApproved = false
+            this.isSwaping = false
             this.doSwap()
         }else{
             this.doSwap()
@@ -109,8 +111,22 @@ export default {
     },
     async doSwap(){
       let that = this
+      that.isSwaping = true
       let token1num = new BigNumber(this.token1Num)
       token1num = token1num.times(Math.pow(10,this.token1.decimals))
+
+      let token1BalanceInPool = this.token1BalanceInPool+this.token1Num
+      let token2BalanceInPool = this.token2BalanceInPool-this.token2Num
+      let beforePrice = this.token1BalanceInPool/this.token2BalanceInPool
+      let afterPrice = parseFloat(token1BalanceInPool)/parseFloat(token2BalanceInPool)
+      let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
+      console.log(tolerance)
+      console.log(this.$store.getters.tolerance)
+      if(this.$store.getters.tolerance && tolerance>this.$store.getters.tolerance){
+          this.$message.error('价格波动超出限制')
+          that.isSwaping = false
+          return
+      }
       this.RouterContract.methods.swapExactTokensForTokens(token1num.toFixed(),0,[this.token1.address,this.token2.address],this.web3.eth.defaultAccount,1702480290 ).send({from:this.web3.eth.defaultAccount})
         .on('transactionHash', function(hash){
             

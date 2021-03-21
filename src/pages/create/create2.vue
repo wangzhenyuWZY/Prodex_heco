@@ -67,7 +67,7 @@ export default {
         }
     },
     returnback(){
-      this.$router.push('/create1')
+      this.$router.push('/create')
     },
     createNext(){
       if(this.email == ''){
@@ -77,14 +77,14 @@ export default {
       this.isPledging = true
       this.createOrder()
     },
-    async checkApprove(pledgeNum){
+    async checkApprove(item){
       if(this.isApproved){
-        this.toPledge(pledgeNum)
+        this.toPledge(item)
       }else{
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         let apr1 = await this.PdxContract.methods.approve(Pledge.address,MAX).send({from:this.web3.eth.defaultAccount})
         if(apr1){
-          this.toPledge(pledgeNum)
+          this.toPledge(item)
         }
       }
     },
@@ -93,37 +93,52 @@ export default {
       let data = {
         userId:this.email,
         tokenName:this.tokenInfo.tokenName,
-        Symbol:this.tokenInfo.symbol,
+        symbol:this.tokenInfo.symbol,
         decimals:18,
-        totalsupply:this.tokenInfo.totalsupply,
+        totalSupply:this.tokenInfo.totalsupply,
         type:this.tokenInfo.hasToken?2:1,
         contractAddress:this.tokenInfo.contractAddress
       }
       createPledge(data).then((res)=>{
         if(res.data.status==200){
-          let price = res.data.data
-          let pledgeNum = 10000/price
-          that.checkApprove(pledgeNum)
+          let item = res.data.data
+          that.checkApprove(item)
         }else{
           that.isPledging = false
           that.$message.error(res.data.message)
         }
       })
     },
-    async toPledge(pledgeNum){
-      let num = new BigNumber(pledgeNum)
-      num = num.times(Math.pow(10,this.pdxToken.decimals))
-      let res = await this.PledgeContract.methods.pledge(num).send({from:this.web3.eth.defaultAccount})
-      if(res){
-        this.postHash()
-      }
-    },
-    postHash(){
+    toPledge(item){
       let that = this
+      let num = 10000/item.pdxPrice
+      num = new BigNumber(num)
+      num = num.times(Math.pow(10,this.pdxToken.decimals))
+      console.log(num.toFixed())
+      this.PledgeContract.methods.pledge(num.toFixed()).send({from:this.web3.eth.defaultAccount})
+      .on('receipt', function(receipt){
+        debugger
+          item.txHash = receipt.txHash
+            that.postHash(item)
+        })
+        .on('confirmation', function(confirmationNumber, receipt){
+            
+        })
+        .on('error', function(){
+            that.$message.success('创建失败')
+            that.isPledging = false
+        })
+    },
+    postHash(item){
+      let that = this
+      let data = {
+        orderId:item.orderId,
+        txHash:item.txHash
+      }
       updateTxHash(data).then((res)=>{
         if(res.data.status==200){
           that.isPledging = false
-          that.$router.push('/create3')
+          that.$router.push('/createSuc')
         }else{
           that.isPledging = false
           that.$message.error(res.data.message)

@@ -8,6 +8,7 @@
           <input placeholder="Token 全称" v-model="tokenName">
           <input placeholder="Token 简称" v-model="symbol">
           <input placeholder="Token 总量" v-model="totalsupply">
+          <input placeholder="Token 接收地址" v-model="totalsupply">
         </div>
         <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>我已发行HECO Token,帮我创建交易对</p>
         <div class="hasToken" v-show="hasToken">
@@ -56,7 +57,7 @@ export default {
           return
         }
         this.$router.push({
-          path: '/create2',
+          path: '/createConfirm',
           query: {
             tokenInfo: JSON.stringify(tokenInfo)
           }
@@ -75,7 +76,7 @@ export default {
           return
         }
         this.$router.push({
-          path: '/create2',
+          path: '/createConfirm',
           query: {
             tokenInfo: JSON.stringify(tokenInfo)
           }

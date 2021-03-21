@@ -8,6 +8,7 @@
                 <li :class="nav==2?'active':''" @click="toDealMining">交易挖矿</li>
                 <li :class="nav==3?'active':''" @click="toLpMining">流动挖矿</li>
                 <li :class="nav==4?'active':''" @click="toProdex">Prodex</li>
+                <li :class="nav==5?'active':''" @click="toCreate">免费发行交易对</li>
             </ul>
         </div>
         <div class="toolCon">
@@ -123,8 +124,8 @@ export default {
           this.$router.push('/prodex')
       },
       toCreate(){
-          localStorage.setItem('nav',3)
-          this.$router.push('/create1')
+          localStorage.setItem('nav',5)
+          this.$router.push('/create')
       }
   }
 }

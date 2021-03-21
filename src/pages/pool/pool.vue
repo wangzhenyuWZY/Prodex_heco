@@ -9,7 +9,6 @@
         </div>
         <div class="addOrCreate">
             <router-link to="/addLiquidity" class="btn add">Add Liquidity</router-link>
-            <router-link to="/create1" class="btn create">Create a pair</router-link>
         </div>
         <div class="liquidityList">
             <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">
@@ -21,8 +20,8 @@
                 </div>
                 <div class="liquidityCon" v-show="item.show">
                     <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">{{item.myLpTotal}}</span></p>
-                    <p class="clearfix"><span class="fl">Pooled MDX：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
-                    <p class="clearfix"><span class="fl">Pooled ETH：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
+                    <p class="clearfix"><span class="fl">Pooled {{item.token1.name}}：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
+                    <p class="clearfix"><span class="fl">Pooled {{item.token2.name}}：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
                     <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
                     <div class="addOrRemove clearfix">
                         <a @click="toAddLiquidity(item)">Add</a>
@@ -204,7 +203,7 @@ export default {
       margin:0 auto;
       overflow:hidden;
       .btn{
-          width: 140px;
+          width: 240px;
           height: 32px;
           background: #30694B;
           border-radius: 16px;

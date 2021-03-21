@@ -5,11 +5,11 @@
             <div class="setItem">
                 <p class="setTitle">Slippage tolerance</p>
                 <div class="setTolerance clearfix">
-                    <span>0.1%</span>
-                    <span class="active">0.1%</span>
-                    <span>0.1%</span>
+                    <span @click='setTolerance(0.1,0)' :class="curryToler==0?'active':''">0.1%</span>
+                    <span @click='setTolerance(0.5,1)' :class="curryToler==1?'active':''">0.5%</span>
+                    <span @click='setTolerance(1,2)' :class="curryToler==2?'active':''">1%</span>
                     <div class="setPut">
-                        <input>
+                        <input v-model='toler' @input='personToler'>
                         <a>%</a>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     minutes
                 </div>
             </div>
-            <div class="setItem clearfix">
+            <div class="setItem clearfix" v-show='false'>
                 <p class="setTitle fl">Toggle Expert Mode</p>
                 <div class="swichBar clearfix">
                     <span class="active">On</span>
@@ -40,6 +40,31 @@
         </div>
     </div>  
 </template>
+<script>
+export default {
+  data(){
+    return {
+        curryToler:0,
+        toler:''
+    };
+  },
+  created(){
+  },
+  methods:{
+      close(){
+          this.$emit('close')
+      },
+      setTolerance(num,cur){
+          this.curryToler = cur
+          this.$store.commit('SET_TOLERANCE', num)
+      },
+      personToler(){
+            this.curryToler = 3
+          this.$store.commit('SET_TOLERANCE', this.toler)   
+      }
+  }
+}
+</script>
 <style lang='less' scoped>
 .setContainer{
     position:absolute;

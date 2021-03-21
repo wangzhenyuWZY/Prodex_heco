@@ -2,7 +2,7 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="lpMiningContainer">
-        <p class="earntip">Earn MDX tokens by staking HSwap LP<br> && Tokens</p>
+        <p class="earntip">Earn PDX tokens by staking HSwap LP<br> && Tokens</p>
         <el-button class="btn">Total Value Locked {{isMult?parseFloat(totalLocked).toFixed(2):parseFloat(sigleTotalLocked).toFixed(2)}} USDT</el-button>
         <div class="staketab">
           <span :class="isMult?'active':''" @click="isMult=true">Mdex LP</span>
