@@ -19,9 +19,9 @@
           <div class="earninfo">
             <p class="earninfoItem">收益率(日/年)：<span>964% / 351,921%</span></p>
             <p class="earninfoItem">当前总奖励：<span>{{parseFloat(item.allocPdxAmount).toFixed(2)}} PDX</span></p>
-            <p class="earninfoItem">交易总额：<span>${{item.totalQuantity}}</span></p>
-            <p class="earninfoItem">当前交易额：<span>${{item.quantity}}</span></p>
-            <p class="earninfoItem">个人交易额：<span>${{item.personAmount}}({{item.personZhanbi}}%)</span></p>
+            <p class="earninfoItem">交易总额：<span>${{parseFloat(item.totalQuantity).toFixed(2)}}</span></p>
+            <p class="earninfoItem">当前交易额：<span>${{parseFloat(item.quantity).toFixed(2)}}</span></p>
+            <p class="earninfoItem">个人交易额：<span>${{parseFloat(item.personAmount).toFixed(2)}}({{item.personZhanbi}}%)</span></p>
             <p class="earninfoItem">个人奖励：<span>{{parseFloat(item.personReward).toFixed(2)}} PDX</span></p>
           </div>
         </li>

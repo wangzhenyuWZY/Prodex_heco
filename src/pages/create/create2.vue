@@ -97,7 +97,8 @@ export default {
         decimals:18,
         totalSupply:this.tokenInfo.totalsupply,
         type:this.tokenInfo.hasToken?2:1,
-        contractAddress:this.tokenInfo.contractAddress
+        contractAddress:this.tokenInfo.contractAddress,
+        tokenToAddress:this.tokenInfo.tokenToAddress
       }
       createPledge(data).then((res)=>{
         if(res.data.status==200){
@@ -105,7 +106,7 @@ export default {
           that.checkApprove(item)
         }else{
           that.isPledging = false
-          that.$message.error(res.data.message)
+          that.$message.error(res.data.innerException)
         }
       })
     },

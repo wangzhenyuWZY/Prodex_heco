@@ -7,7 +7,7 @@
             <h2>From<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
             <input class='entrynum' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
-                <img :src="token1.logoURI" class="coinimg">
+                <img :src="requierImg(token1.name)" class="coinimg">
                 <span class="coinname">{{token1.name}}</span>
                 <i class="dropico"></i>
             </div>
@@ -17,7 +17,7 @@
             <h2>To<span class="balance">{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
             <input class='entrynum' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
-                <img :src="token2.logoURI" class="coinimg">
+                <img :src="requierImg(token2.name)" class="coinimg">
                 <span class="coinname">{{token2.name?token2.name:'Select'}}</span>
                 <i class="dropico"></i>
             </div>
@@ -80,6 +80,15 @@ export default {
     
   },
   methods: {
+    requierImg(name) {
+      if (name) {
+        try {
+          return require('@/assets/img/logo/' + name + '.png')
+        } catch (error) {
+          return require('@/assets/img/logo/PETH.png')
+        }
+      }
+    },
     toPool(){
         this.$router.push('/pool')
     },

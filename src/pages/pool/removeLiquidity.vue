@@ -73,7 +73,7 @@ export default {
         const MAX = Web3Utils.utils.toTwosComplement(-1)
         let PoolContract = new this.web3.eth.Contract(Token1.abi,this.poolDetail.address)
         let apr1 = await PoolContract.methods.approve(Router.address,MAX).send({from:this.web3.eth.defaultAccount})
-        if(parseInt(apr1)){
+        if(apr1){
           this.isApprove = true
           this.isRemoving = false
         }
@@ -98,7 +98,7 @@ export default {
       let amountBMin = 0
       let to = this.web3.eth.defaultAccount
       let deadline = 1702480290
-      this.RouterContract.methods.removeLiquidity(tokenA,tokenB,parseInt(liquidity),amountAMin,amountBMin,to,deadline).send({from:this.web3.eth.defaultAccount})
+      this.RouterContract.methods.removeLiquidity(tokenA,tokenB,parseInt(liquidity).toFixed(),amountAMin,amountBMin,to,deadline).send({from:this.web3.eth.defaultAccount})
       .on('transactionHash', function(hash){
       })
       .on('receipt', function(receipt){

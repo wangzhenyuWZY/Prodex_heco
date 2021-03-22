@@ -13,8 +13,8 @@
         <div class="liquidityList">
             <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">
                 <div class="liquidityHead clearfix" @click="showCon(index)">
-                    <img src="../../assets/img/icon26.png">
-                    <img src="../../assets/img/icon27.png">
+                    <img :src="requierImg(item.token1.name)">
+                    <img :src="requierImg(item.token2.name)">
                     <span>{{item.token1.name}}-{{item.token2.name}}</span>
                     <p>Manage</p>
                 </div>
@@ -39,6 +39,7 @@
 import Navbar from '../../components/Navbar'
 import {Factory,Token1,Router,Pair,LpPair} from '../../utils/contract'
 import BigNumber from 'bignumber.js'
+import {getPoolInfo} from '@/api/user'
 export default {
   components:{
     Navbar,
@@ -53,19 +54,28 @@ export default {
       pairLength:0,
       pairAddressList:[],
       pairList:[],
-      FactoryContract:null
+      FactoryContract:null,
+      pairData:[]
     }
   },
   mounted() {
+    this.getPairData()  
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
         this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
         this.isConnect = true
-        this.getTokenBalanceInPool()
-        this.getPairLength()
     })
   },
   methods: {
+    requierImg(name) {
+      if (name) {
+        try {
+          return require('@/assets/img/logo/' + name + '.png')
+        } catch (error) {
+          return require('@/assets/img/logo/PETH.png')
+        }
+      }
+    },
     toAddLiquidity(item){
         this.$router.push({
             path: '/addLiquidity',
@@ -85,6 +95,15 @@ export default {
     showCon(index){
         this.$set(this.pairList[index],'show',!this.pairList[index].show)
     },
+    getPairData(){
+      let that = this
+      getPoolInfo().then(res=>{
+        if(res.data.status==200){
+          that.pairData = res.data.data
+          that.getMyPool()
+        }
+      })
+    },
     getPairLength(){
         let that = this
         this.FactoryContract.methods.allPairsLength().call().then(res=>{
@@ -103,24 +122,29 @@ export default {
     },
     async getMyPool(){
         let that = this
-        this.pairAddressList.forEach((item,index)=>{
-            let PoolContract = new this.web3.eth.Contract(Pair.abi, item)
+        this.pairData.forEach((item,index)=>{
+            let PoolContract = new this.web3.eth.Contract(Pair.abi, item.contract)
             PoolContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
                 if(res!=='0'){
                     let obj = {
-                        address:item,
-                        decimails:18,
+                        address:item.contract,
+                        decimails:item.wei,
                         totalSupply:0,
                         myLpTotal:res,
                         myShare:0,
-                        token1:{},
-                        token2:{},
+                        token1:{
+                            address:item.coinInfos[0].token,
+                            name:item.coinInfos[0].symbol,
+                            decimails:item.coinInfos[0].wei
+                        },
+                        token2:{
+                            address:item.coinInfos[1].token,
+                            name:item.coinInfos[1].symbol,
+                            decimails:item.coinInfos[1].wei
+                        },
                         show:false
                     }
                     that.getPairDetail(obj)
-                }
-                if(index==(that.pairAddressList-1)){
-                    that.getPairDetail()
                 }
             })
         })
@@ -131,31 +155,11 @@ export default {
         let totalSupply = await PoolContract.methods.totalSupply().call()
             item.totalSupply = totalSupply
             item.myShare = item.myLpTotal/totalSupply
-        let token1Address = await PoolContract.methods.token0().call()
-        let token2Address = await PoolContract.methods.token1().call()
-            item.token1.address = token1Address
-            item.token2.address = token2Address
-        let reserves = await PoolContract.methods.getReserves().call()    
-        let Token1Contract = new this.web3.eth.Contract(Token1.abi, token1Address)
-        let Token2Contract = new this.web3.eth.Contract(Token1.abi, token2Address)    
-        let token1name = await Token1Contract.methods.symbol().call()
-        let token2name = await Token2Contract.methods.symbol().call()
-        let token1decimal = await Token1Contract.methods.decimals().call()
-        let token2decimal = await Token2Contract.methods.decimals().call()
-            item.token1.name = token1name
-            item.token2.name = token2name
-            item.token1.decimails = token1decimal
-            item.token2.decimails = token2decimal
+        let reserves = await PoolContract.methods.getReserves().call()      
         let basic = item.myLpTotal/item.totalSupply    
-        item.token1.poolBalance = basic*reserves[0]/Math.pow(10,token1decimal)
-        item.token2.poolBalance = basic*reserves[1]/Math.pow(10,token2decimal)   
+        item.token1.poolBalance = basic*reserves[0]/Math.pow(10,item.token1.decimails)
+        item.token2.poolBalance = basic*reserves[1]/Math.pow(10,item.token2.decimails)   
         this.pairList.push(item)    
-    },
-    getTokenBalanceInPool(){
-        let PoolContract = new this.web3.eth.Contract(Pair.abi, '0x579B60feF4d2CB2f4238DDe50c1e7Bc2117245EB')
-        PoolContract.methods.balanceOf('0x55BC716a9d95767c821d37780aa33ea975E2C4A8').call().then(res=>{
-            console.log(res)
-        })
     }
   }
 }

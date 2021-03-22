@@ -5,22 +5,48 @@
             <i class="closeico" @click="close"></i>
         </div>
         <div class="breakcon">
-            <p>Prodex price:<span>$19.54</span></p>
+            <p>Prodex price:<span>${{pdxPrice}}</span></p>
             <p>Prodex in circulation:<span>289,227,438</span></p>
-            <p>Total Supply<span>1,000,000,000</span></p>
+            <p>Total Supply<span>{{pdxTotal}}</span></p>
         </div>
         <a class="view">View Prodex Analytics</a>
     </div>
 </template>
 <script>
+import {Token1,Factory,LpPair} from '../utils/contract'
+import BigNumber from 'bignumber.js'
 export default {
   data(){
     return {
+        PdxToken:null,
+        pdxTotal:0,
+        web3:null,
+        UsdtToken:null,
+        pdxPrice:0
     };
   },
   created(){
+    let tokenData = this.$store.getters.tokenData
+    let pdxToken = tokenData.filter((res)=>{return res.name.toUpperCase() == 'PDX'})
+    this.PdxToken = pdxToken[0]
+    let usdtToken = tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
+    this.UsdtToken = usdtToken[0]
+    this.$initWeb3().then((web3)=>{
+        this.web3 = web3
+        this.FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+        this.getPdxInfo()
+    })
   },
   methods:{
+      async getPdxInfo(){
+        let TokenContract = new this.web3.eth.Contract(Token1.abi, this.PdxToken.address)
+        let res = await TokenContract.methods.totalSupply().call()
+        this.pdxTotal = res/Math.pow(10,this.PdxToken.decimals)
+        let basicPairAddress = await this.FactoryContract.methods.getPair(this.PdxToken.address,this.UsdtToken.address).call()
+        let PairContract = new this.web3.eth.Contract(LpPair.abi, basicPairAddress)
+        let pdxPrice = await PairContract.methods.price(this.PdxToken.address,Math.pow(10,this.PdxToken.decimals)+'').call()
+        this.pdxPrice = pdxPrice/Math.pow(10,6)
+      },
       close(){
           this.$emit('close')
       }

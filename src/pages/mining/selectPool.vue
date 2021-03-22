@@ -57,7 +57,7 @@ export default {
       PoolContract:null,
       LpTokenContract:null,
       myLpBalance:0,
-      stakeNum:0,
+      stakeNum:'',
       lpApproveBalance:0,
       isApproved:false,
       pdxBalance:0,

@@ -17,7 +17,7 @@ const initWeb3 = () => {
         } else if (window.web3) {   // 老版 MetaMask Legacy dapp browsers...
             web3Provider = window.web3.currentProvider;
         } else {
-            web3Provider = new Web3.providers.HttpProvider('http://localhost:8545');
+            web3Provider = new Web3.providers.HttpProvider('https://http-mainnet.hecochain.com');
         }
         let web3js = new Web3(web3Provider);//web3js就是你需要的web3实例
         

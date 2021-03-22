@@ -8,7 +8,7 @@
           <input placeholder="Token 全称" v-model="tokenName">
           <input placeholder="Token 简称" v-model="symbol">
           <input placeholder="Token 总量" v-model="totalsupply">
-          <input placeholder="Token 接收地址" v-model="totalsupply">
+          <input placeholder="Token 接收地址" v-model="tokenToAddress">
         </div>
         <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>我已发行HECO Token,帮我创建交易对</p>
         <div class="hasToken" v-show="hasToken">
@@ -33,7 +33,8 @@ export default {
       tokenName:'',
       symbol:'',
       totalsupply:'',
-      contractAddress:''
+      contractAddress:'',
+      tokenToAddress:''
     }
   },
   mounted() {
@@ -49,11 +50,16 @@ export default {
           symbol:this.symbol,
           totalsupply:this.totalsupply,
           hasToken:this.hasToken,
-          contractAddress:this.contractAddress
+          contractAddress:this.contractAddress,
+          tokenToAddress:this.tokenToAddress
       }
       if(this.hasToken){
         if(this.contractAddress==''){
           this.$message.error('请填写合约地址')
+          return
+        }
+        if(!this.web3.utils.isAddress(this.contractAddress)){
+          this.$message.error('合约地址格式不正确')
           return
         }
         this.$router.push({

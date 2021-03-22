@@ -38,7 +38,7 @@ export function getPoolInfo(data) {
   )
 }
 
-//获取地址信息
+//获取单币挖矿信息
 export function getSingle(data) {
   return request(
     api.getSingle,
