@@ -2,34 +2,34 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="lpMiningContainer">
-        <p class="earntip">Earn PDX tokens by staking HSwap LP<br> && Tokens</p>
-        <el-button class="btn">Total Value Locked {{isMult?parseFloat(totalLocked).toFixed(2):parseFloat(sigleTotalLocked).toFixed(2)}} USDT</el-button>
+        <p class="earntip">{{$t('lang43')}}</p>
+        <el-button class="btn">{{$t('lang44')}} {{isMult?parseFloat(totalLocked).toFixed(2):parseFloat(sigleTotalLocked).toFixed(2)}} USDT</el-button>
         <div class="staketab">
           <span :class="isMult?'active':''" @click="isMult=true">Pdex LP</span>
-          <span :class="!isMult?'active':''" @click="isMult=false">Single Token</span>
+          <span :class="!isMult?'active':''" @click="isMult=false">{{$t('lang107')}}</span>
         </div>
         <ul class="lpPoolList clearfix" v-show="isMult">
-          <li v-for="(item,index) in multLpPool" :key="index">
+          <li v-for="(item,index) in multLpPool" :key="index" @click="checkThis(index)" :class="active==index?'active':''">
             <div class="coinLogo">
               <img :src="requierImg(item.token1Name)">
               <img class="or" src="@/assets/img/icon15.png">
               <img :src="requierImg(item.token2Name)">
             </div>
-            <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> {{parseFloat(item.totalPrice).toFixed(2)}} USDT</p>
+            <p class="stakeInfo">{{item.token1Name}}/{{item.token2Name}} <br>{{$t('lang45')}} {{parseFloat(item.earnPerDay).toFixed(2)}} PDX({{$t('lang46')}})<br> {{$t('lang45')}} {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX({{$t('lang47')}})<br> {{parseFloat(item.totalPrice).toFixed(2)}} USDT</p>
             <a class="btn active">APY {{parseFloat(item.apy).toFixed(2)}}%</a>
-            <a class="btn select" @click="goDeposit(item)">Select</a>
+            <a class="btn select" @click="goDeposit(item)">{{$t('lang48')}}</a>
           </li>
         </ul>
         <ul class="lpPoolList clearfix" v-show="!isMult">
-          <li v-for="(item,index) in singleLpPool" :key="index">
+          <li v-for="(item,index) in singleLpPool" :key="index" @click="checkSingleThis(index)" :class="singleActive==index?'active':''">
             <div class="coinLogo">
               <img :src="requierImg(item.tokenName)">
               <!-- <img class="or" src="../../assets/img/icon15.png">
               <img src="../../assets/img/eth.png"> -->
             </div>
-            <p class="stakeInfo">{{item.tokenName}} <br>Earn {{parseFloat(item.earnPerDay).toFixed(2)}} PDX(Per Day)<br> Earn {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX(Per Month)<br> {{item.totalPrice}} USDT</p>
+            <p class="stakeInfo">{{item.tokenName}} <br>{{$t('lang45')}} {{parseFloat(item.earnPerDay).toFixed(2)}} PDX({{$t('lang46')}})<br> {{$t('lang45')}} {{parseFloat(item.earnPerMonth).toFixed(2)}} PDX({{$t('lang47')}})<br> {{item.totalPrice}} USDT</p>
             <a class="btn active">APY {{parseFloat(item.apy).toFixed(2)}}%</a>
-            <a class="btn select" @click="goDeposit(item)">Select</a>
+            <a class="btn select" @click="goDeposit(item)">{{$t('lang48')}}</a>
           </li>
         </ul>
     </div>
@@ -44,9 +44,6 @@ import {getPoolInfo,getSingle} from '@/api/user'
 export default {
   components:{
     Navbar,
-  },
-  watch: {
-    
   },
   data() {
     return {
@@ -75,29 +72,57 @@ export default {
       pdxPrice:0,
       dayBlock:0,
       pairData:[],
-      singleData:[]
+      singleData:[],
+      singleActive:'',
+      active:''
     }
   },
+  computed: {
+    tokenData : {
+        get(){
+            return this.$store.state.app.tokenData;
+        },
+        set(v){
+            return v
+        }
+    }
+  },
+  watch: {
+    tokenData(list) {
+      this.tokenData = list  
+      this.init()
+    },
+  },
   mounted() {
-    let tokenData = this.$store.getters.tokenData
-    let usdtToken = tokenData.filter((res)=>{return res.name.toUpperCase() == this.basicToken})
-    this.usdtToken = usdtToken[0]
-    let pdxToken = tokenData.filter((res)=>{return res.name.toUpperCase() == this.pdxName})
-    this.pdxToken = pdxToken[0]
-    this.$initWeb3().then((web3)=>{
-        this.web3 = web3
-        web3.eth.getBlockNumber().then(res=>{
-          this.blockNumber = res
-          console.log('当前区块高度'+this.blockNumber)
-        })
-        this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
-        this.PoolContract = new web3.eth.Contract(Pool.abi, Pool.address)
-        this.isConnect = true
-        this.getPairData()
-        this.getSingleData()
-    })
+    this.init()
   },
   methods: {
+    init(){
+      if(this.tokenData.length>0){
+        let usdtToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == this.basicToken})
+        this.usdtToken = usdtToken[0]
+        let pdxToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == this.pdxName})
+        this.pdxToken = pdxToken[0]
+        this.$initWeb3().then((web3)=>{
+            this.web3 = web3
+            web3.eth.getBlockNumber().then(res=>{
+              this.blockNumber = res
+              console.log('当前区块高度'+this.blockNumber)
+            })
+            this.FactoryContract = new web3.eth.Contract(Factory.abi, Factory.address)
+            this.PoolContract = new web3.eth.Contract(Pool.abi, Pool.address)
+            this.isConnect = true
+            this.getPairData()
+            this.getSingleData()
+        })
+      }
+    },
+    checkThis(i){
+      this.active = i
+    },
+    checkSingleThis(i){
+      this.singleActive = i
+    },
     requierImg(name) {
       if (name) {
         try {
@@ -312,6 +337,9 @@ export default {
       border: 1px solid #232221;
       margin:0 7px;
       margin-bottom:15px;
+      &.active{
+        border: 1px solid #009346;
+      }
       .coinLogo{
         text-align:center;
         padding:18px 0 10px;

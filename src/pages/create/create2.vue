@@ -2,8 +2,8 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="exchangeBar">
-        <h2 class="createTitle"><i class="returnBack" @click="returnback"></i>创建交易对</h2>
-        <p class="createpair">即将创建以下交易对</p>
+        <h2 class="createTitle"><i class="returnBack" @click="returnback"></i>{{$t('lang28')}}</h2>
+        <p class="createpair">{{$t('lang29')}}</p>
         <div class="pairlist">
           <div class="pairitem">
             <i></i>
@@ -14,8 +14,8 @@
             {{tokenInfo.symbol}} & PDX
           </div>
         </div>
-        <input placeholder="您的邮箱" class="emailput" v-model="email">
-        <el-button class="btn" :disabled='isPledging' :loading='isPledging' @click="createNext">下一步  质押PDX</el-button>
+        <input :placeholder="$t('lang30')" class="emailput" v-model="email">
+        <el-button class="btn" :disabled='isPledging' :loading='isPledging' @click="createNext">{{$t('lang31')}}</el-button>
     </div>
   </div>
 </template>
@@ -71,7 +71,7 @@ export default {
     },
     createNext(){
       if(this.email == ''){
-        this.$message.error('请填写邮箱地址')
+        this.$message.error(this.$t('lang32'))
         return
       }
       this.isPledging = true
@@ -118,7 +118,6 @@ export default {
       console.log(num.toFixed())
       this.PledgeContract.methods.pledge(num.toFixed()).send({from:this.web3.eth.defaultAccount})
       .on('receipt', function(receipt){
-        debugger
           item.txHash = receipt.txHash
             that.postHash(item)
         })
@@ -126,7 +125,7 @@ export default {
             
         })
         .on('error', function(){
-            that.$message.success('创建失败')
+            that.$message.success(this.$t('lang33'))
             that.isPledging = false
         })
     },
@@ -139,6 +138,12 @@ export default {
       updateTxHash(data).then((res)=>{
         if(res.data.status==200){
           that.isPledging = false
+          that.$router.push({
+            path: '/createSuc',
+            query: {
+              email: that.email
+            }
+          })
           that.$router.push('/createSuc')
         }else{
           that.isPledging = false
@@ -211,6 +216,7 @@ export default {
       color:#fff;
       line-height:60px;
       background:none;
+      box-sizing: border-box;
       &::-webkit-input-placeholder{
         color:#837F76;
       }

@@ -7,10 +7,10 @@
             <i class="return" @click="toPool"></i>
             <div class="tips">
                 <p class="tipText">
-                    When you add liquidity, you are given pool tokens representing your position. These tokens automatically earn fees proportional to your share of the pool, and can be redeemed at any time.
+                    {{$t('lang74')}}
                 </p>
             </div>
-            <h2>Add Liquidity</h2>
+            <h2>{{$t('lang75')}}</h2>
         </div>
         <div class="changePanel">
             <h2>Input<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
@@ -32,7 +32,7 @@
             </div>
         </div>
         <div class="PriceShare" v-if="poolsReserves">
-            <p class="priceTitle">Prices and pool share</p>
+            <p class="priceTitle">{{$t('lang76')}}</p>
             <div class="pricebar">
                 <div class="priceItem">
                     <p class="val">{{(token1BalanceInPool/token2BalanceInPool).toFixed(4)}}</p>
@@ -44,13 +44,13 @@
                 </div>
                 <div class="priceItem">
                     <p class="val">{{share}}%</p>
-                    <p class="title">Share of Pool</p>
+                    <p class="title">{{$t('lang77')}}</p>
                 </div>
             </div>
         </div>
-        <el-button class="btn" :disabled='isAdding' :loading='isAdding' @click="clickHdl">{{isConnect?(isApproved?'Add Liquidity':'Approve'):'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='isAdding' :loading='isAdding' @click="clickHdl">{{isConnect?(isApproved?$t('lang75'):$t('lang97')):'Connect Wallet'}}</el-button>
     </div>
-    <p class="prodexTips">☆ 通过增强流动性，您将获得Prodex奖励,如您所提供的流动性交易对未支持流动性质押获取Prodex，您暂时将无法获得Prodex奖励。</p>
+    <p class="prodexTips">☆ {{$t('lang78')}}。</p>
   </div>
 </template>
 
@@ -64,9 +64,6 @@ export default {
   components:{
     Navbar,
     selectToken
-  },
-  watch: {
-    
   },
   data() {
     return {
@@ -97,12 +94,40 @@ export default {
       isAdding:false
     }
   },
-  mounted() {
-      let tokenData = this.$store.getters.tokenData
-      if(this.$route.query.poolDetail){
+  computed: {
+    tokenData : {
+        get(){
+            return this.$store.state.app.tokenData;
+        },
+        set(v){
+            return v
+        }
+    }
+  },
+  watch: {
+    tokenData(list) {
+      this.tokenData = list  
+      if(!this.token1.name && this.$route.query.poolDetail){
           let poolDetail = JSON.parse(this.$route.query.poolDetail)
-          let token1 = tokenData.filter((item)=>{return item.address == poolDetail.token1.address})
-          let token2 = tokenData.filter((item)=>{return item.address == poolDetail.token2.address})
+          let token1 = this.tokenData.filter((item)=>{return item.address == poolDetail.token1.address})
+          let token2 = this.tokenData.filter((item)=>{return item.address == poolDetail.token2.address})
+          this.token1 = token1[0]
+          this.token2 = token2[0]
+          this.token1.item = 0
+          this.token2.item = 1
+          this.$initWeb3().then((web3)=>{
+            this.web3 = web3
+            this.checkPair(this.token1)
+            this.checkPair(this.token2)
+          })
+      }
+    },
+  },  
+  mounted() {
+      if(this.$route.query.poolDetail && this.tokenData.length>0){
+          let poolDetail = JSON.parse(this.$route.query.poolDetail)
+          let token1 = this.tokenData.filter((item)=>{return item.address == poolDetail.token1.address})
+          let token2 = this.tokenData.filter((item)=>{return item.address == poolDetail.token2.address})
           this.token1 = token1[0]
           this.token2 = token2[0]
           this.token1.item = 0
@@ -158,7 +183,7 @@ export default {
     addLiquidity(){
         let that = this
         if(parseFloat(this.token1Num)>this.token1.balance || parseFloat(this.token2Num)>this.token2.balance){
-            that.$message.error('余额不足')
+            that.$message.error(that.$t('lang79'))
             return
         }
         let token1num = new BigNumber(this.token1Num)
@@ -171,7 +196,7 @@ export default {
         })
         .on('receipt', function(receipt){
             that.isAdding = false
-            that.$message.success('添加成功')
+            that.$message.success(that.$t('lang80'))
             window.location.reload()
             console.log(receipt)
         })
@@ -179,7 +204,7 @@ export default {
             that.isAdding = false
         })
         .on('error', function(){
-            that.$message.success('添加失败')
+            that.$message.success(that.$t('lang81'))
             that.isAdding = false
         });
     },
@@ -392,17 +417,18 @@ export default {
         .coinbar{
             position:relative;
             float:right;
-            width:92px;
+            width:33%;
             height: 30px;
             border-radius: 6px;
             border: 1px solid #484744;
-            text-align:center;
             font-size:0;
-            margin-right:15px;
+            margin-right:3%;
             .coinimg{
                 display:inline-block;
                 vertical-align:middle;
                 width:16px;
+                margin-left:10px;
+                margin-top:-3px;
             }
             .coinname{
                 display:inline-block;
@@ -415,7 +441,7 @@ export default {
             .dropico{
                 position: absolute;
                 right: 12px;
-                top: 10px;
+                top: 12px;
                 width:9px;
                 height:6px;
                 background:url(../../assets/img/icon5.png) no-repeat center;

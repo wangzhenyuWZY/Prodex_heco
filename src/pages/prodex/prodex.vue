@@ -3,8 +3,8 @@
     <Navbar></Navbar>
     <div class="poolContainer">
         <div class="poolRewards">
-            <h2>Uniswap liquidity mining</h2>
-            <p>Deposit your Liquidity Provider tokens to receive UNI, the Uniswap protocol governance token.</p>
+            <h2>{{$t('lang100')}}</h2>
+            <p>Deposit your Liquidity Provider tokens to receive PDX, the Prodex protocol governance token.</p>
             <a>Read more about Prodex</a>
         </div>
         <div class="partic clearfix">

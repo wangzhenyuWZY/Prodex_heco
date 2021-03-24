@@ -46,3 +46,12 @@ export function getSingle(data) {
     data
   )
 }
+
+//获取币种列表
+export function getCoinInfoList(data) {
+  return request(
+    api.getCoinInfoList,
+    'get',
+    data
+  )
+}

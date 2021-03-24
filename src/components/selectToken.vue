@@ -1,6 +1,6 @@
 <template>
     <div class="tokenContainer">
-        <h2 class="title">Select a token<i></i></h2>
+        <h2 class="title">{{$t('lang13')}}<i></i></h2>
         <i class="closeico" @click="closePop"></i>
         <input class="searchput" placeholder="Search name or paste address">
         <h2 class="title" v-show='false'>Common bases<i></i></h2>
@@ -33,12 +33,24 @@ export default {
   data() {
     return {
       tokens:defaultTokenList.tokens,
-      tokenList:[
-      ]
     }
   },
+  computed: {
+    tokenList : {
+        get(){
+            return this.$store.state.app.tokenData;
+        },
+        set(v){
+            return v
+        }
+    }
+  },
+  watch: {
+    tokenList(list) {
+      this.tokenList = list  
+    },
+  },
   mounted() {
-      this.tokenList = this.$store.getters.tokenData
   },
   methods: {
     closePop(){

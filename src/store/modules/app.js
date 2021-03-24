@@ -2,7 +2,8 @@ const state = {
   defaultAccout: '',
   tokenData:[],
   pairData:[],
-  tolerance:0
+  tolerance:0,
+  language:'zh'
 }
 const mutations = {
   SET_DEFAULT_ACCOUT(state, name) {
@@ -16,6 +17,9 @@ const mutations = {
   },
   SET_TOLERANCE(state, name) {
     state.tolerance = name
+  },
+  SET_LANGUAGE(state, name) {
+    state.language = name
   }
 }
 const actions = {
@@ -26,11 +30,14 @@ const actions = {
   setTokenData({ commit }, name) {
     commit('SET_TOKEN_DATA', name)
   },
-  setTokenData({ commit }, name) {
+  setPairData({ commit }, name) {
     commit('SET_PAIR_DATA', name)
   },
   setTolerance({ commit }, name) {
     commit('SET_TOLERANCE', name)
+  },
+  setLanguage({ commit }, name) {
+    commit('SET_LANGUAGE', name)
   }
 }
 export default {

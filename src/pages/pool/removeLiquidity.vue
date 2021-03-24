@@ -2,10 +2,10 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="exchangeBar">
-        <h2 class="createTitle"><i class="returnBack" @click="toPool"></i>删除流动性</h2>
+        <h2 class="createTitle"><i class="returnBack" @click="toPool"></i>{{$t('lang94')}}</h2>
         <div class="deleteType clearfix">
-          <span class="fl">Amount</span>
-          <span class="fr">Detailed</span>
+          <span class="fl">{{$t('lang95')}}</span>
+          <span class="fr">{{$t('lang96')}}</span>
         </div>
         <span class="amount">{{slidenum}}%</span>
         <el-slider
@@ -20,7 +20,7 @@
           <span class="calibration" @click="slidenum=75">75%</span>
           <span class="calibration" @click="slidenum=100">Max</span>
         </div>
-        <el-button class="btn" :disabled='isRemoving' :loading='isRemoving' @click="handelClick">{{isApprove?'Remove':'Approve'}}</el-button>
+        <el-button class="btn" :disabled='isRemoving' :loading='isRemoving' @click="handelClick">{{isApprove?$t('lang90'):$t('lang97')}}</el-button>
     </div>
   </div>
 </template>
@@ -103,14 +103,14 @@ export default {
       })
       .on('receipt', function(receipt){
         that.isRemoving = false
-        that.$message.success('流动性移除成功')
+        that.$message.success(that.$t('lang98'))
         window.location.reload()
       })
       .on('confirmation', function(confirmationNumber, receipt){
           
       })
       .on('error', function(){
-          that.$message.success('流动性移除失败')
+          that.$message.success(that.$t('lang99'))
           that.isRemoving = false
       });
     }

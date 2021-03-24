@@ -1,13 +1,13 @@
 <template>
     <div class="breakdownCon">
         <div class="breakTitle">
-            <h2>Your Prodex Breakdown</h2>
+            <h2>{{$t('lang1')}}</h2>
             <i class="closeico" @click="close"></i>
         </div>
         <div class="breakcon">
-            <p>Prodex price:<span>${{pdxPrice}}</span></p>
-            <p>Prodex in circulation:<span>289,227,438</span></p>
-            <p>Total Supply<span>{{pdxTotal}}</span></p>
+            <p>{{$t('lang2')}}:<span>${{pdxPrice}}</span></p>
+            <p>{{$t('lang3')}}:<span>{{pdxTotal}}</span></p>
+            <p>{{$t('lang4')}}:<span>1000000000</span></p>
         </div>
         <a class="view">View Prodex Analytics</a>
     </div>
@@ -25,16 +25,37 @@ export default {
         pdxPrice:0
     };
   },
-  created(){
-    let tokenData = this.$store.getters.tokenData
-    let pdxToken = tokenData.filter((res)=>{return res.name.toUpperCase() == 'PDX'})
+  computed: {
+    tokenData : {
+        get(){
+            return this.$store.state.app.tokenData;
+        },
+        set(v){
+            return v
+        }
+    }
+  },
+  watch: {
+    tokenData(list) {
+      this.tokenData = list  
+      let pdxToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PDX'})
+        this.PdxToken = pdxToken[0]
+        let usdtToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
+        this.UsdtToken = usdtToken[0]
+      this.getPdxInfo()
+    },
+  }, 
+  mounted(){
+    let pdxToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PDX'})
     this.PdxToken = pdxToken[0]
-    let usdtToken = tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
+    let usdtToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
     this.UsdtToken = usdtToken[0]
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
         this.FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
-        this.getPdxInfo()
+        if(this.tokenData.length>0){
+            this.getPdxInfo()
+        }
     })
   },
   methods:{
@@ -109,10 +130,11 @@ export default {
 }
 @media screen and (max-width: 750px) {
     .breakdownCon{
-        top:auto;
-        bottom:0;
-        left:0;
-        margin-left:0;
+        top: 50%;
+        /* bottom: 0; */
+        left: 50%;
+        margin-left: -188px;
+        margin-top: -110px;
     }
 }
 </style>

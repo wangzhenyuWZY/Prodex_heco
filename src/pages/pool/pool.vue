@@ -3,12 +3,12 @@
     <Navbar></Navbar>
     <div class="poolContainer">
         <div class="poolRewards">
-            <h2>Liquidity provider rewards</h2>
-            <p>Liquidity providers earn a 0.3% fee on all trades proportional to their share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.</p>
-            <a>Read more about providing liquidity</a>
+            <h2>{{$t('lang82')}}</h2>
+            <p>{{$t('lang83')}}</p>
+            <a>{{$t('lang84')}}</a>
         </div>
         <div class="addOrCreate">
-            <router-link to="/addLiquidity" class="btn add">Add Liquidity</router-link>
+            <router-link to="/addLiquidity" class="btn add">{{$t('lang75')}}</router-link>
         </div>
         <div class="liquidityList">
             <div class="liquidityItem" v-for="(item,index) in pairList" :key="index">
@@ -16,16 +16,16 @@
                     <img :src="requierImg(item.token1.name)">
                     <img :src="requierImg(item.token2.name)">
                     <span>{{item.token1.name}}-{{item.token2.name}}</span>
-                    <p>Manage</p>
+                    <p>{{$t('lang85')}}</p>
                 </div>
                 <div class="liquidityCon" v-show="item.show">
-                    <p class="clearfix"><span class="fl">您的总池令牌：</span><span class="fr">{{item.myLpTotal}}</span></p>
-                    <p class="clearfix"><span class="fl">Pooled {{item.token1.name}}：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
-                    <p class="clearfix"><span class="fl">Pooled {{item.token2.name}}：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
-                    <p class="clearfix"><span class="fl">您的池子份额：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
+                    <p class="clearfix"><span class="fl">{{$t('lang86')}}：</span><span class="fr">{{item.myLpTotal}}</span></p>
+                    <p class="clearfix"><span class="fl">{{$t('lang87')}} {{item.token1.name}}：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
+                    <p class="clearfix"><span class="fl">{{$t('lang87')}} {{item.token2.name}}：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
+                    <p class="clearfix"><span class="fl">{{$t('lang88')}}：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
                     <div class="addOrRemove clearfix">
-                        <a @click="toAddLiquidity(item)">Add</a>
-                        <a @click="toRemoveLiquidity(item)">Remove</a>
+                        <a @click="toAddLiquidity(item)">{{$t('lang89')}}</a>
+                        <a @click="toRemoveLiquidity(item)">{{$t('lang90')}}</a>
                     </div>
                 </div>
             </div>
@@ -130,7 +130,7 @@ export default {
                         address:item.contract,
                         decimails:item.wei,
                         totalSupply:0,
-                        myLpTotal:res,
+                        myLpTotal:res/Math.pow(10,18),
                         myShare:0,
                         token1:{
                             address:item.coinInfos[0].token,

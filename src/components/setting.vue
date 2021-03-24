@@ -1,9 +1,9 @@
 <template>
     <div class="popmask">
         <div class="setContainer">
-            <h2>Transaction Settings</h2>
+            <h2>{{$t('lang14')}}</h2>
             <div class="setItem">
-                <p class="setTitle">Slippage tolerance</p>
+                <p class="setTitle">{{$t('lang15')}}</p>
                 <div class="setTolerance clearfix">
                     <span @click='setTolerance(0.1,0)' :class="curryToler==0?'active':''">0.1%</span>
                     <span @click='setTolerance(0.5,1)' :class="curryToler==1?'active':''">0.5%</span>
@@ -15,10 +15,10 @@
                 </div>
             </div>
             <div class="setItem">
-                <p class="setTitle">Transaction deadline</p>
+                <p class="setTitle">{{$t('lang16')}}</p>
                 <div class="setDeadline">
                     <span><input value="20"></span>
-                    minutes
+                    {{$t('lang17')}}
                 </div>
             </div>
             <div class="setItem clearfix" v-show='false'>
@@ -29,12 +29,12 @@
                 </div>
             </div>
             <div class="setItem">
-                <p class="setTitle">Choose language</p>
+                <p class="setTitle">{{$t('lang101')}}</p>
                 <div class="langlist clearfix">
-                    <span>简体中文</span>
-                    <span class="active">English</span>
-                    <span>한국어</span>
-                    <span>繁体中文</span>
+                    <span @click="changeLang('zh')" :class="lang=='zh'?'active':''">简体中文</span>
+                    <span @click="changeLang('en')" :class="lang=='en'?'active':''">English</span>
+                    <span @click="changeLang('jr')" :class="lang=='jr'?'active':''">日本語</span>
+                    <span @click="changeLang('kr')" :class="lang=='kr'?'active':''">한국어</span>
                 </div>
             </div>
         </div>
@@ -45,12 +45,18 @@ export default {
   data(){
     return {
         curryToler:0,
-        toler:''
+        toler:'',
+        lang:this.$i18n.locale
     };
   },
   created(){
   },
   methods:{
+      changeLang(ln){
+          this.$i18n.locale = ln
+          this.lang = ln
+          localStorage.setItem('lang', this.$i18n.locale)
+      },
       close(){
           this.$emit('close')
       },

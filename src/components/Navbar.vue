@@ -1,14 +1,15 @@
 <template>
+    <div>
     <div class="navcontainer clearfix">
         <div class="navigation clearfix">
             <img class="logo" src="../assets/img/icon2.png">
             <ul class="navlist clearfix">
-                <li :class="nav==0?'active':''" @click="toExchange">兑换</li>
-                <li :class="nav==1?'active':''" @click="toPool">资金池</li>
-                <li :class="nav==2?'active':''" @click="toDealMining">交易挖矿</li>
-                <li :class="nav==3?'active':''" @click="toLpMining">流动挖矿</li>
+                <li :class="nav==0?'active':''" @click="toExchange">{{$t('lang8')}}</li>
+                <li :class="nav==1?'active':''" @click="toPool">{{$t('lang9')}}</li>
+                <li :class="nav==2?'active':''" @click="toDealMining">{{$t('lang10')}}</li>
+                <li :class="nav==3?'active':''" @click="toLpMining">{{$t('lang11')}}</li>
                 <li :class="nav==4?'active':''" @click="toProdex">Prodex</li>
-                <li :class="nav==5?'active':''" @click="toCreate">免费发行交易对</li>
+                <li :class="nav==5?'active':''" @click="toCreate">{{$t('lang12')}}</li>
             </ul>
         </div>
         <div class="toolCon">
@@ -23,39 +24,41 @@
         <div class="nav_merge">
           <img class="merge_img" src="@/assets/img/icon17.png" @click="drawer = true" alt="">
         </div>
-        <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
-          <ul class="mobelNavlist">
-              <li @click="toExchange">
-                  <img src="@/assets/img/icon29.png">
-                  <span>兑换</span>
-              </li>
-              <li @click="toPool">
-                  <img src="@/assets/img/icon30.png">
-                  <span>资金池</span>
-              </li>
-              <li @click="toLpMining">
-                  <img src="@/assets/img/icon31.png">
-                  <span>流动性挖矿</span>
-              </li>
-              <li @click="toDealMining">
-                  <img src="@/assets/img/icon31.png">
-                  <span>交易挖矿</span>
-              </li>
-              <li @click="toCreate">
-                  <img src="@/assets/img/icon32.png">
-                  <span>免费发行交易对</span>
-              </li>
-              <li @click="toProdex">
-                  <img src="@/assets/img/icon33.png">
-                  <span>Prodex</span>
-              </li>
-          </ul>
-        </el-drawer>
+        
         <!---->
         <Settings v-show="setFlag"></Settings>
         <Mores v-show="moreFlag"></Mores>
         <Wallet v-show="walletFlag" @close='walletFlag=false'></Wallet>
         <Breakdown v-show="breakFlag" @close='breakFlag=false'></Breakdown>
+    </div>
+    <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
+        <ul class="mobelNavlist">
+            <li @click="toExchange">
+                <img src="@/assets/img/icon29.png">
+                <span>{{$t('lang8')}}</span>
+            </li>
+            <li @click="toPool">
+                <img src="@/assets/img/icon30.png">
+                <span>{{$t('lang9')}}</span>
+            </li>
+            <li @click="toLpMining">
+                <img src="@/assets/img/icon31.png">
+                <span>{{$t('lang11')}}</span>
+            </li>
+            <li @click="toDealMining">
+                <img src="@/assets/img/icon31.png">
+                <span>{{$t('lang10')}}</span>
+            </li>
+            <li @click="toCreate">
+                <img src="@/assets/img/icon32.png">
+                <span>{{$t('lang12')}}</span>
+            </li>
+            <li @click="toProdex">
+                <img src="@/assets/img/icon33.png">
+                <span>Prodex</span>
+            </li>
+        </ul>
+    </el-drawer>
     </div>
 </template>
 <script>
@@ -85,8 +88,11 @@ export default {
   created(){
       this.$initWeb3().then((web3)=>{
         this.web3 = web3
-        this.isConnect = true
-        this.defaultAccount = this.plusXing(web3.eth.defaultAccount,5,5)
+        if(web3.eth.defaultAccount){
+            this.isConnect = true
+            this.defaultAccount = this.plusXing(web3.eth.defaultAccount,5,5)
+        }
+        
     })
   },
   methods:{
@@ -205,13 +211,18 @@ export default {
 }
 @media screen and (max-width: 750px) {
     .navcontainer{
+        position: fixed;
+        top: 0;
+        width: 100%;
         .navigation .navlist{display:none;}
         .toolCon{
             position:fixed;
-            bottom:0;
-            left:15px;
-            right:15px;
-            padding:20px 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px 15px;
+            width: 100%;
+            background:linear-gradient(184deg, #282824 0%, #1A1918 100%);
             .prodexbtn{
                 margin-right:14px;
             }
@@ -223,7 +234,10 @@ export default {
                 width:22px;
             }
         }
-        .mobelNavlist{
+        
+    }
+}
+.mobelNavlist{
             padding-top:20px;
             li{
                 padding:20px;
@@ -238,8 +252,6 @@ export default {
                 }
             }
         }
-    }
-}
 </style>
 <style >
 .drawer_body {

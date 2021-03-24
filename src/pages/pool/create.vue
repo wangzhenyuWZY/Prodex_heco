@@ -227,17 +227,18 @@ export default {
         }
         .coinbar{
             float:right;
-            width:92px;
+            width:33%;
             height: 30px;
             border-radius: 6px;
             border: 1px solid #484744;
-            text-align:center;
             font-size:0;
-            margin-right:15px;
+            margin-right:3%;
             .coinimg{
                 display:inline-block;
                 vertical-align:middle;
                 width:16px;
+                margin-left:10px;
+                margin-top:-3px;
             }
             .coinname{
                 display:inline-block;

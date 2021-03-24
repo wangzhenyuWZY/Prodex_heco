@@ -22,7 +22,7 @@
                 <i class="dropico"></i>
             </div>
         </div>
-        <el-button class="btn" :disabled='isSwaping' :loading='isSwaping' @click="clickHdl">{{isConnect?(isApproved?'Confirm Swap':'Approve'):'Connect Wallet'}}</el-button>
+        <el-button class="btn" :disabled='isSwaping' :loading='isSwaping' @click="clickHdl">{{isConnect?(isApproved?$t('lang38'):$t('lang37')):'Connect Wallet'}}</el-button>
     </div>
   </div>
 </template>
@@ -67,15 +67,35 @@ export default {
       isSwaping:false
     }
   },
+  computed: {
+    tokenData : {
+        get(){
+            return this.$store.state.app.tokenData;
+        },
+        set(v){
+            return v
+        }
+    }
+  },
+  watch: {
+    tokenData(list) {
+      this.tokenData = list  
+      if(!this.token1.name){
+          let token1 = this.tokenData.filter((item)=>{return item.name.toUpperCase() == this.baseToken})
+        this.changeToken(token1[0])
+      }
+    },
+  },  
   mounted() {
       this.$initWeb3().then((web3)=>{
           this.web3 = web3
           this.RouterContract = new web3.eth.Contract(Router.abi, Router.address)
           this.FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
           this.isConnect = true
-          let tokenData = this.$store.getters.tokenData
-          let token1 = tokenData.filter((item)=>{return item.name.toUpperCase() == this.baseToken})
-          this.changeToken(token1[0])
+          if(this.tokenData.length>0){
+              let token1 = this.tokenData.filter((item)=>{return item.name.toUpperCase() == this.baseToken})
+             this.changeToken(token1[0])
+          }
       })
     
   },
@@ -132,7 +152,7 @@ export default {
       console.log(tolerance)
       console.log(this.$store.getters.tolerance)
       if(this.$store.getters.tolerance && tolerance>this.$store.getters.tolerance){
-          this.$message.error('价格波动超出限制')
+          this.$message.error(this.$t('lang39'))
           that.isSwaping = false
           return
       }
@@ -142,14 +162,14 @@ export default {
         })
         .on('receipt', function(receipt){
             that.isSwaping = false
-            that.$message.success('兑换成功')
+            that.$message.success(that.$t('lang40'))
             window.location.reload()
         })
         .on('confirmation', function(confirmationNumber, receipt){
             that.isSwaping = false
         })
         .on('error', function(){
-            that.$message.success('兑换失败')
+            that.$message.success(that.$t('lang41'))
             that.isSwaping = false
         });
     },
@@ -191,7 +211,7 @@ export default {
                 if(parseInt(result)){
                     that.hasPair = true
                 }else{
-                    that.$message.error('交易对不存在')
+                    that.$message.error(that.$t('lang42'))
                     that.hasPair = false
                 }
             })
@@ -205,7 +225,7 @@ export default {
     caleToken2(){
         let that = this
         if(!this.hasPair){
-            this.$message.error('交易对不存在')
+            this.$message.error(that.$t('lang42'))
             return
         }
         if(this.token1Num && parseInt(this.poolsReserves[0])){
@@ -221,7 +241,7 @@ export default {
     caleToken1(){
         let that = this
         if(!this.hasPair){
-            this.$message.error('交易对不存在')
+            this.$message.error(that.$t('lang42'))
             return
         }
         if(this.token2Num && parseInt(this.poolsReserves[0])){
@@ -285,17 +305,18 @@ export default {
         .coinbar{
             position:relative;
             float:right;
-            width:92px;
+            width:33%;
             height: 30px;
             border-radius: 6px;
             border: 1px solid #484744;
-            text-align:center;
             font-size:0;
-            margin-right:15px;
+            margin-right:3%;
             .coinimg{
                 display:inline-block;
                 vertical-align:middle;
                 width:16px;
+                margin-left:10px;
+                margin-top:-3px;
             }
             .coinname{
                 display:inline-block;
@@ -308,7 +329,7 @@ export default {
             .dropico{
                 position: absolute;
                 right: 12px;
-                top: 10px;
+                top: 12px;
                 width:9px;
                 height:6px;
                 background:url(../../assets/img/icon5.png) no-repeat center;

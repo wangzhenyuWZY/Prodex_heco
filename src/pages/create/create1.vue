@@ -2,19 +2,19 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="exchangeBar">
-        <h2 class="createTitle">token 信息</h2>
-        <p class="selType" @click="hasToken = false"><i :class="!hasToken?'active':''"></i>我没有Token，帮我发行HECO Token</p>
+        <h2 class="createTitle">token {{$t('lang19')}}</h2>
+        <p class="selType" @click="hasToken = false"><i :class="!hasToken?'active':''"></i>{{$t('lang20')}}</p>
         <div class="hasToken" v-show="!hasToken">
-          <input placeholder="Token 全称" v-model="tokenName">
-          <input placeholder="Token 简称" v-model="symbol">
-          <input placeholder="Token 总量" v-model="totalsupply">
-          <input placeholder="Token 接收地址" v-model="tokenToAddress">
+          <input :placeholder="$t('lang21')" v-model="tokenName">
+          <input :placeholder="$t('lang22')" v-model="symbol">
+          <input :placeholder="$t('lang23')" v-model="totalsupply">
+          <input :placeholder="$t('lang24')" v-model="tokenToAddress">
         </div>
-        <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>我已发行HECO Token,帮我创建交易对</p>
+        <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>{{$t('lang25')}}</p>
         <div class="hasToken" v-show="hasToken">
-          <input placeholder="Token 合约地址" v-model="contractAddress" >
+          <input :placeholder="$t('lang26')" v-model="contractAddress" >
         </div>  
-        <el-button class="btn" :disabled='false' @click="createNext">下一步  创建交易对</el-button>
+        <el-button class="btn" :disabled='false' @click="createNext">{{$t('lang27')}}</el-button>
     </div>
   </div>
 </template>
@@ -55,11 +55,11 @@ export default {
       }
       if(this.hasToken){
         if(this.contractAddress==''){
-          this.$message.error('请填写合约地址')
+          this.$message.error(this.$t('lang102'))
           return
         }
         if(!this.web3.utils.isAddress(this.contractAddress)){
-          this.$message.error('合约地址格式不正确')
+          this.$message.error(this.$t('lang103'))
           return
         }
         this.$router.push({
@@ -70,15 +70,15 @@ export default {
         })
       }else{
         if(this.tokenName==''){
-          this.$message.error('请填写Token 全称')
+          this.$message.error(this.$t('lang104'))
           return
         }
         if(this.symbol==''){
-          this.$message.error('请填写Token 简称')
+          this.$message.error(this.$t('lang105'))
           return
         }
         if(this.totalsupply==''){
-          this.$message.error('请填写Token 总量')
+          this.$message.error(this.$t('lang106'))
           return
         }
         this.$router.push({
@@ -145,6 +145,7 @@ export default {
         line-height:60px;
         background:none;
         margin-bottom:20px;
+        box-sizing: border-box;
         &::-webkit-input-placeholder{
           color:#837F76;
         }

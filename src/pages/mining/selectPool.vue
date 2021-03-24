@@ -2,27 +2,26 @@
   <div class="container">
     <Navbar></Navbar>
     <div class="poolContainer">
-        <h2 class="poolTitle">Prodex Pool</h2>
-        <p class="notice">Notice: We just support Heco now, don't<br>
-transfer ETHEREUM mainnet tokens</p>
+        <h2 class="poolTitle">{{$t('lang49')}}</h2>
+        <p class="notice">{{$t('lang50')}}</p>
         <div class="stakebox">
           <div class="stakeinfo">
-            <p class="staketitle">Your Balance</p>
+            <p class="staketitle">{{$t('lang51')}}</p>
             <div class="balance">
               <img src="@/assets/img/icon27.png">
               {{pdxBalance}}
             </div>
-            <el-button class="btn" :disabled='isHarvesting' :loading='isHarvesting' @click="toClaim">Harvest All Token</el-button>
+            <el-button class="btn" :disabled='isHarvesting' :loading='isHarvesting' @click="toClaim">{{$t('lang52')}}</el-button>
           </div>
           <div class="stakeinfo">
-            <p class="staketitle">Staked</p>
+            <p class="staketitle">{{$t('lang53')}}</p>
             <div class="balance">
-              Locked {{myStakeAmount}}
+              {{$t('lang54')}} {{myStakeAmount}}
             </div>
-            <el-button class="btn" :disabled='isUnstaking' :loading='isUnstaking' @click="unStake">Unstake</el-button>
+            <el-button class="btn" :disabled='isUnstaking' :loading='isUnstaking' @click="unStake">{{$t('lang55')}}</el-button>
           </div>
           <div class="stakeinfo">
-            <p class="staketitle">Your Balance</p>
+            <p class="staketitle">{{$t('lang56')}}</p>
             <div class="balance">
               <img src="@/assets/img/icon27.png">
               {{myLpBalance}}
@@ -107,6 +106,10 @@ export default {
     },
     async toStake(){
       this.isStaking = true
+      if(this.stakeNum==0){
+        this.$message.msg(this.$t('lang108'))
+        return
+      }
       if(this.isApproved){
         this.doDeposit()
       }else{
@@ -126,7 +129,7 @@ export default {
       that.PoolContract.methods.deposit(this.miningPool.pid,stakeNum.toFixed()).send({from:this.web3.eth.defaultAccount})
       .on('receipt', function(receipt){
           that.isStaking = false
-          that.$message.success('质押成功')
+          that.$message.success(that.$t('lang57'))
           window.location.reload()
           console.log(receipt)
       })
@@ -134,7 +137,7 @@ export default {
           that.isStaking = false
       })
       .on('error', function(){
-          that.$message.success('质押失败')
+          that.$message.success(that.$t('lang58'))
           that.isStaking = false
       });
     },
@@ -144,7 +147,7 @@ export default {
       that.PoolContract.methods.withdraw(this.miningPool.pid,0).send({from:this.web3.eth.defaultAccount})
       .on('receipt', function(receipt){
           that.isHarvesting = false
-          that.$message.success('PDX奖励领取成功')
+          that.$message.success(that.$t('lang59'))
           window.location.reload()
           console.log(receipt)
       })
@@ -152,7 +155,7 @@ export default {
           that.isHarvesting = false
       })
       .on('error', function(){
-          that.$message.success('PDX奖励领取失败')
+          that.$message.success(that.$t('lang60'))
           that.isHarvesting = false
       });
     },
@@ -164,7 +167,7 @@ export default {
       that.PoolContract.methods.withdraw(this.miningPool.pid,stakeNum).send({from:this.web3.eth.defaultAccount})
       .on('receipt', function(receipt){
           that.isUnstaking = false
-          that.$message.success('解除质押成功')
+          that.$message.success(that.$t('lang61'))
           window.location.reload()
           console.log(receipt)
       })
@@ -172,7 +175,7 @@ export default {
           that.isUnstaking = false
       })
       .on('error', function(){
-          that.$message.success('解除质押失败')
+          that.$message.success(that.$t('lang62'))
           that.isUnstaking = false
       });
     }
@@ -189,7 +192,7 @@ export default {
     text-align:center;
   }
   .notice{
-    padding-top:14px;
+    padding: 14px 25px 0;
     font-size:16px;
     color:#C4C2BE;
     line-height:18px;

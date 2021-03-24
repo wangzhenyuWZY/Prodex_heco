@@ -4,22 +4,22 @@
             <img src="../assets/img/icon18.png">
             About
         </p>
-        <p>
+        <!-- <p>
             <img src="../assets/img/icon19.png">
             Docs
-        </p>
+        </p> -->
         <p>
             <img src="../assets/img/icon20.png">
-            Code
+            Github
         </p>
-        <p>
+        <!-- <p>
             <img src="../assets/img/icon21.png">
             Discord
         </p>
         <p>
             <img src="../assets/img/icon22.png">
             Analytics
-        </p>
+        </p> -->
     </div>
 </template>
 <style lang='less' scoped>
@@ -27,8 +27,8 @@
     position:absolute;
     right:15px;
     top:70px;
-    width: 119px;
-    height: 180px;
+    width: 100px;
+    height: 90px;
     background: #3D3B39;
     border-radius: 12px;
     box-sizing: border-box;
