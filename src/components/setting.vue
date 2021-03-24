@@ -73,7 +73,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .setContainer{
-    position:absolute;
+    position:fixed;
     top:70px;
     left:0;
     right:0;

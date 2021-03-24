@@ -206,6 +206,7 @@ export default {
       width:300px;
       margin:0 auto;
       overflow:hidden;
+      text-align:center;
       .btn{
           width: 240px;
           height: 32px;
@@ -215,9 +216,7 @@ export default {
           line-height:32px;
           color:#fff;
           font-size:14px;
-          &.add{
-              float:left;
-          }
+          display:inline-block;
           &.create{
               float:right;
               background:none;

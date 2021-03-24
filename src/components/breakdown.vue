@@ -76,7 +76,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .breakdownCon{
-    position:absolute;
+    position:fixed;
     top:240px;
     left:50%;
     width:375px;

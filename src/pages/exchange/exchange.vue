@@ -191,11 +191,12 @@ export default {
         this.item==0?this.token1=token:this.token2=token
         let TokenContract = new this.web3.eth.Contract(Token1.abi, token.address)
         if(this.item==0){
-            this.checkApprovedBalance()
             TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
+                console.log(res)
                 that.$set(that.token1, 'balance', res/Math.pow(10,token.decimals))
             })
             this.Token1Contract = new this.web3.eth.Contract(Token1.abi, this.token1.address)
+            this.checkApprovedBalance()
         }else{
             TokenContract.methods.balanceOf(this.web3.eth.defaultAccount).call().then(res=>{
                 that.$set(that.token2, 'balance', res/Math.pow(10,token.decimals))
@@ -262,7 +263,7 @@ export default {
     width: 345px;
     min-height:400px;
     background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow:inset 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
     border-radius: 18px;
     border: 1px solid #232221;
     box-sizing: border-box;
@@ -270,9 +271,8 @@ export default {
     margin:40px auto;
     position:relative;
     .changePanel{
-        width: 310px;
         height: 90px;
-        box-shadow: 2px 2px 3px 0px rgba(19, 19, 19, 0.5);
+        box-shadow:inset 2px 2px 3px 0px rgba(19, 19, 19, 0.5);
         border-radius: 12px;
         border: 1px solid #38393B;
         h2{
@@ -321,10 +321,12 @@ export default {
             .coinname{
                 display:inline-block;
                 vertical-align:middle;
-                font-size:14px;
+                font-size:12px;
                 color:#C4C2BE;
                 line-height:30px;
                 padding:0 4px;
+                width:54%;
+                text-align:center;
             }
             .dropico{
                 position: absolute;

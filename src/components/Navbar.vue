@@ -2,7 +2,11 @@
     <div>
     <div class="navcontainer clearfix">
         <div class="navigation clearfix">
-            <img class="logo" src="../assets/img/icon2.png">
+            <div class='logobar'>
+                <img class="logo" src="../assets/img/icon2.png">
+                Prodex
+            </div>
+            
             <ul class="navlist clearfix">
                 <li :class="nav==0?'active':''" @click="toExchange">{{$t('lang8')}}</li>
                 <li :class="nav==1?'active':''" @click="toPool">{{$t('lang9')}}</li>
@@ -16,9 +20,9 @@
             <div class="connected" @click="checkWalter">
                 {{!isConnect?'Connect to a Wallet':defaultAccount}}
             </div>
-            <div class="prodexbtn" @click="breakFlag = !breakFlag">Prodex</div>
-            <i class="setico" @click="setFlag = !setFlag"></i>
-            <i class="moreico" @click="moreFlag = !moreFlag"></i>
+            <div class="prodexbtn" @click="breakFlag = !breakFlag;setFlag =false;moreFlag =false;walletFlag=false;">Prodex</div>
+            <i class="setico" @click="setFlag = !setFlag;moreFlag =false;breakFlag=false;walletFlag=false;"></i>
+            <i class="moreico" @click="moreFlag = !moreFlag;breakFlag=false;walletFlag=false;setFlag=false"></i>
         </div>
 
         <div class="nav_merge">
@@ -145,8 +149,18 @@ export default {
     .nav_merge{display:none;}
     .navigation{
         float:left;
+        .logobar{
+            display:inline-block;
+            vertical-align:bottom;
+            font-size:14px;
+            color:#F8941F;
+            line-height:20px;
+            font-weight:600;
+        }
         .logo{
             width:19px;
+            vertical-align: bottom;
+            margin-right:10px;
         }
         .navlist{
             display:inline-block;
@@ -214,6 +228,8 @@ export default {
         position: fixed;
         top: 0;
         width: 100%;
+        z-index:99;
+        background:linear-gradient(180deg, #282824 0%, #1A1918 100%);
         .navigation .navlist{display:none;}
         .toolCon{
             position:fixed;

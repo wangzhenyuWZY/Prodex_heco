@@ -19,10 +19,9 @@ const initWeb3 = () => {
         } else {
             web3Provider = new Web3.providers.HttpProvider('https://http-mainnet.hecochain.com');
         }
-        let web3js = new Web3(web3Provider);//web3js就是你需要的web3实例
+        let web3js = new Web3(web3Provider);//web3实例
         
         web3js.eth.getAccounts(function (error, result) {
-            console.log(result)//授权成功后result能正常获取到账号了
             web3js.eth.defaultAccount = result[0]
             resolve(web3js)
         });

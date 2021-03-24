@@ -86,13 +86,12 @@ img{
     height: calc(100vh - 72px);
     width: 100%;
     overflow-y: auto;
-    margin-top: 70px;
 }
 .container::-webkit-scrollbar{
     width: 0;
 }
 html,body{
-    background:linear-gradient(184deg, #282824 0%, #1A1918 100%);
+    background-image: radial-gradient( #282824 0%, #1A1918 100%);
     font-family: PingFangSC-Regular, PingFang SC;
     min-height: 100vh;
 }
@@ -156,7 +155,7 @@ html,body{
             
         }
     }
-  
+    .container{margin-top:70px;}
     html,body{
         height: 100%;
         // max-width: 480px;

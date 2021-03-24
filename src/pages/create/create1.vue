@@ -3,15 +3,15 @@
     <Navbar></Navbar>
     <div class="exchangeBar">
         <h2 class="createTitle">token {{$t('lang19')}}</h2>
-        <p class="selType" @click="hasToken = false"><i :class="!hasToken?'active':''"></i>{{$t('lang20')}}</p>
-        <div class="hasToken" v-show="!hasToken">
+        <p class="selType" @click="hasToken = false;popshow=!popshow;popshow2=false"><i :class="!hasToken?'active':''"></i><span>{{$t('lang20')}}</span></p>
+        <div class="hasToken" v-show="!hasToken && popshow">
           <input :placeholder="$t('lang21')" v-model="tokenName">
           <input :placeholder="$t('lang22')" v-model="symbol">
           <input :placeholder="$t('lang23')" v-model="totalsupply">
           <input :placeholder="$t('lang24')" v-model="tokenToAddress">
         </div>
-        <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>{{$t('lang25')}}</p>
-        <div class="hasToken" v-show="hasToken">
+        <p class="selType" @click="hasToken = true;popshow2=!popshow2;popshow=false"><i :class="hasToken?'active':''"></i><span>{{$t('lang25')}}</span></p>
+        <div class="hasToken" v-show="hasToken && popshow2">
           <input :placeholder="$t('lang26')" v-model="contractAddress" >
         </div>  
         <el-button class="btn" :disabled='false' @click="createNext">{{$t('lang27')}}</el-button>
@@ -29,12 +29,14 @@ export default {
     return {
       isConnect:false,
       web3:null,
-      hasToken:true,
+      hasToken:false,
       tokenName:'',
       symbol:'',
       totalsupply:'',
       contractAddress:'',
-      tokenToAddress:''
+      tokenToAddress:'',
+      popshow:true,
+      popshow2:false
     }
   },
   mounted() {
@@ -98,7 +100,7 @@ export default {
     width: 345px;
     min-height:400px;
     background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+    box-shadow:inset 3px 3px 3px 0px rgb(0 0 0 / 20%);
     border-radius: 18px;
     border: 1px solid #232221;
     box-sizing: border-box;
@@ -130,6 +132,12 @@ export default {
           background:url('../../assets/img/icon35.png') no-repeat center;
           background-size:100% 100%;
         }
+      }
+      span{
+        display: inline-block;
+        vertical-align: top;
+        width: 85%;
+        line-height: 23px;
       }
     }
     .hasToken{
