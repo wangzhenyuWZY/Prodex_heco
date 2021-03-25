@@ -107,7 +107,7 @@ module.exports = {
   lang106:'Tokenの総量は空ではいけません。',
   lang107:'単一通貨',
   lang108:'質権額は0より大きくなければなりません',
-  lang110:'选择',
+  lang110:'ProDEXについて',
   lang111:'选择',
   lang112:'选择',
   lang113:'选择',

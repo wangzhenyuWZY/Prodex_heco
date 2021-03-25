@@ -107,7 +107,7 @@ module.exports = {
   lang106:'Token 전체 수량 이 비 어 있 으 면 안 됩 니 다.',
   lang107:'단일 통화',
   lang108:'약정 금액은 0보다 커야합니다.',
-  lang109:'选择',
+  lang109:'ProDEX 정보',
   lang110:'选择',
   lang111:'选择',
   lang112:'选择',

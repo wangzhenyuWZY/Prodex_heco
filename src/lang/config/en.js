@@ -107,7 +107,7 @@ module.exports = {
   lang106:'Total supply cannot be null',
   lang107:'Single Token',
   lang108:'The stake amount must be greater than 0',
-  lang109:'选择',
+  lang109:'About ProDEX',
   lang110:'选择',
   lang111:'选择',
   lang112:'选择',

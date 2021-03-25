@@ -42,7 +42,9 @@ export default {
         this.PdxToken = pdxToken[0]
         let usdtToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
         this.UsdtToken = usdtToken[0]
-      this.getPdxInfo()
+        this.$initWeb3().then((web3)=>{
+            this.getPdxInfo()
+        })
     },
   }, 
   mounted(){

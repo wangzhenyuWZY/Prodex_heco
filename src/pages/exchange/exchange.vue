@@ -4,8 +4,8 @@
     <div class="exchangeBar">
         <selectToken v-show="tokensPop" @closePop='tokensPop=false' @change='changeToken'></selectToken>
         <div class="changePanel">
-            <h2>From<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
-            <input class='entrynum' v-model="token1Num" @input="caleToken2">
+            <h2>From<span class="balance">{{$t('lang51')}}：{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' placeholder='0.0' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
                 <img :src="requierImg(token1.name)" class="coinimg">
                 <span class="coinname">{{token1.name}}</span>
@@ -14,8 +14,8 @@
         </div>
         <i class="changeico" @click="convertToken"></i>
         <div class="changePanel">
-            <h2>To<span class="balance">{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
-            <input class='entrynum' v-model="token2Num" @input="caleToken1">
+            <h2>To<span class="balance">{{$t('lang51')}}：{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' placeholder='0.0' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="requierImg(token2.name)" class="coinimg">
                 <span class="coinname">{{token2.name?token2.name:'Select'}}</span>

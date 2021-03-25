@@ -107,16 +107,5 @@ module.exports = {
   lang106:'请填写Token 总量',
   lang107:'单币种',
   lang108:'质押数量必须大于0',
-  lang109:'选择',
-  lang110:'选择',
-  lang111:'选择',
-  lang112:'选择',
-  lang113:'选择',
-  lang114:'选择',
-  lang115:'选择',
-  lang116:'选择',
-  lang117:'选择',
-  lang118:'选择',
-  lang119:'选择',
-  lang120:'选择'
+  lang109:'关于ProDEX'
 }
