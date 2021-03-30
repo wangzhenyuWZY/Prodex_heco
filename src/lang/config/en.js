@@ -108,7 +108,7 @@ module.exports = {
   lang107:'Single Token',
   lang108:'The stake amount must be greater than 0',
   lang109:'About ProDEX',
-  lang110:'价格影响',
-  lang111:'最低收到',
-  lang112:'手续费',
+  lang110:'Price Impact',
+  lang111:'Minimum received',
+  lang112:'Trade Fee',
 }
