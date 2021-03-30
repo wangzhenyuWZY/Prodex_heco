@@ -50,6 +50,14 @@ export default {
     };
   },
   created(){
+      let toler = sessionStorage.getItem('tolerance')
+      if(toler == '0.1'){
+          this.curryToler = 0
+      }else if(toler == '0.5'){
+          this.curryToler = 1
+      }else if(toler == '1'){
+          this.curryToler = 2
+      }
   },
   methods:{
       changeLang(ln){
@@ -62,6 +70,7 @@ export default {
       },
       setTolerance(num,cur){
           this.curryToler = cur
+          sessionStorage.setItem('tolerance',num)
           this.$store.commit('SET_TOLERANCE', num)
       },
       personToler(){

@@ -362,13 +362,15 @@ export default {
                 top: -90px;
                 width: 215px;
                 height: 203px;
-                background: #3D3B39;
                 border: 1px solid #6A6A6A;
                 box-sizing: border-box;
                 padding:15px;
                 font-size:14px;
                 color:#C4C2BE;
                 line-height:20px;
+                background:url(../../assets/img/icon38.png) no-repeat center;
+                background-size:100% 100%;
+                z-index:9999;   
             }
         }
     }
@@ -484,5 +486,8 @@ export default {
         background: url(../../assets/img/icon1.png) no-repeat center;
         background-size:100% 100%;
     }
+}
+@media screen and (max-width: 750px){
+    .container{margin-top:0;padding-top:70px;}
 }
 </style>

@@ -23,6 +23,24 @@
             </div>
         </div>
         <el-button class="btn" :disabled='isSwaping' :loading='isSwaping' @click="clickHdl">{{isConnect?(isApproved?$t('lang38'):$t('lang37')):'Connect Wallet'}}</el-button>
+        <div class='transDetail'>
+            <div class="transItem">
+                <p class="title">{{$t('lang15')}}<i></i></p>
+                <p class="val">{{tolerance}}%</p>
+            </div>
+            <div class="transItem">
+                <p class="title">{{$t('lang110')}}<i></i></p>
+                <p class="val oringe">{{priceToler}}%</p>
+            </div>
+            <div class="transItem">
+                <p class="title">{{$t('lang111')}}<i></i></p>
+                <p class="val">{{token2Num}} {{token2.name}}</p>
+            </div>
+            <div class="transItem">
+                <p class="title">{{$t('lang112')}}<i></i></p>
+                <p class="val">{{fee}} {{token1.name}} </p>
+            </div>
+        </div>
     </div>
   </div>
 </template>
@@ -64,7 +82,10 @@ export default {
       token2BalanceInPool:0,
       hasPair:false,
       baseToken:'PDX',
-      isSwaping:false
+      isSwaping:false,
+      priceToler:0,
+      minToken2:0,
+      fee:0
     }
   },
   computed: {
@@ -75,6 +96,9 @@ export default {
         set(v){
             return v
         }
+    },
+    tolerance(){
+        return this.$store.getters.tolerance
     }
   },
   watch: {
@@ -149,8 +173,6 @@ export default {
       let beforePrice = this.token1BalanceInPool/this.token2BalanceInPool
       let afterPrice = parseFloat(token1BalanceInPool)/parseFloat(token2BalanceInPool)
       let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
-      console.log(tolerance)
-      console.log(this.$store.getters.tolerance)
       if(this.$store.getters.tolerance && tolerance>this.$store.getters.tolerance){
           this.$message.error(this.$t('lang39'))
           that.isSwaping = false
@@ -236,6 +258,14 @@ export default {
             FactoryContract.methods.getAmountOut(token1Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
                 that.token2Num = parseInt(result)/Math.pow(10,that.token2.decimals)
                 that.token2Num = that.token2Num.toFixed(2)
+
+                let token1BalanceInPool = this.token1BalanceInPool+this.token1Num
+                let token2BalanceInPool = this.token2BalanceInPool-this.token2Num
+                let beforePrice = this.token1BalanceInPool/this.token2BalanceInPool
+                let afterPrice = parseFloat(token1BalanceInPool)/parseFloat(token2BalanceInPool)
+                let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
+                this.priceToler = tolerance.toFixed(2)
+                this.fee = this.token1Num*0.003
             })
         }
     },
@@ -252,6 +282,14 @@ export default {
             FactoryContract.methods.getAmountIn(token2Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
                 that.token1Num = parseInt(result)/Math.pow(10,that.token1.decimals)
                 that.token1Num = that.token1Num.toFixed(2)
+
+                let token1BalanceInPool = this.token1BalanceInPool+this.token1Num
+                let token2BalanceInPool = this.token2BalanceInPool-this.token2Num
+                let beforePrice = this.token1BalanceInPool/this.token2BalanceInPool
+                let afterPrice = parseFloat(token1BalanceInPool)/parseFloat(token2BalanceInPool)
+                let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
+                this.priceToler = tolerance.toFixed(2)
+                this.fee = this.token1Num*0.003
             })
         }
     },
@@ -270,6 +308,38 @@ export default {
     padding:20px 18px;
     margin:40px auto;
     position:relative;
+    .transDetail{
+        padding-top:20px;
+        .transItem{
+            padding-bottom:10px;
+            overflow:hidden;
+            .title{
+                float:left;
+                font-size:12px;
+                color:#6A6A6A;
+                line-height:16px;
+                font-weight:400;
+                i{
+                    display:inline-block;
+                    vertical-align:middle;
+                    margin-left:10px;
+                    width:16px;
+                    height:16px;
+                    background:url(../../assets/img/icon37.png) no-repeat;
+                    background-size:100% 100%;
+                }
+            }
+            .val{
+                float:right;
+                font-size:12px;
+                color:#C4C2BE;
+                line-height:16px;
+                &.oringe{
+                    color:#F8941F;
+                }
+            }
+        }
+    }
     .changePanel{
         height: 90px;
         box-shadow:inset 2px 2px 3px 0px rgba(19, 19, 19, 0.5);

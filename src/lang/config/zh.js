@@ -107,5 +107,8 @@ module.exports = {
   lang106:'请填写Token 总量',
   lang107:'单币种',
   lang108:'质押数量必须大于0',
-  lang109:'关于ProDEX'
+  lang109:'关于ProDEX',
+  lang110:'价格影响',
+  lang111:'最低收到',
+  lang112:'手续费',
 }

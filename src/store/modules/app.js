@@ -2,7 +2,7 @@ const state = {
   defaultAccout: '',
   tokenData:[],
   pairData:[],
-  tolerance:0,
+  tolerance:sessionStorage.getItem('tolerance') || 0.5,
   language:'zh'
 }
 const mutations = {
