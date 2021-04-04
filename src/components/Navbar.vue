@@ -11,7 +11,6 @@
                 <li :class="nav==0?'active':''" @click="toExchange">{{$t('lang8')}}</li>
                 <li :class="nav==1?'active':''" @click="toPool">{{$t('lang9')}}</li>
                 <li :class="nav==2?'active':''" @click="toDealMining">{{$t('lang10')}}</li>
-                <li :class="nav==3?'active':''" @click="toLpMining">{{$t('lang11')}}</li>
                 <li :class="nav==4?'active':''" @click="toProdex">Prodex</li>
                 <li :class="nav==5?'active':''" @click="toCreate">{{$t('lang12')}}</li>
             </ul>
@@ -44,10 +43,6 @@
             <li @click="toPool">
                 <img src="@/assets/img/icon30.png">
                 <span>{{$t('lang9')}}</span>
-            </li>
-            <li @click="toLpMining">
-                <img src="@/assets/img/icon31.png">
-                <span>{{$t('lang11')}}</span>
             </li>
             <li @click="toDealMining">
                 <img src="@/assets/img/icon31.png">
