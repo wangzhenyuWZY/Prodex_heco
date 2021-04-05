@@ -44,7 +44,7 @@
 export default {
   data(){
     return {
-        curryToler:0,
+        curryToler:1,
         toler:'',
         lang:this.$i18n.locale
     };
@@ -133,6 +133,7 @@ export default {
                 position:relative;
                 overflow: hidden;
                 height: 28px;
+                width:110px;
                 background: #121111;
                 border-radius: 15px;
                 border: 1px solid #3D3B39;

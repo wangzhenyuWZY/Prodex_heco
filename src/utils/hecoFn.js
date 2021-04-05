@@ -9,22 +9,33 @@ const initWeb3 = () => {
             web3Provider = window.ethereum;
             try {
                 // 请求用户授权
-                window.ethereum.enable();
+                window.ethereum.enable().then(res=>{
+                    let web3js = new Web3(web3Provider);
+                    web3js.eth.defaultAccount = res[0]
+                    resolve(web3js)
+                })
             } catch (error) {
                 // 用户不授权时
                 console.error("User denied account access")
             }
         } else if (window.web3) {   // 老版 MetaMask Legacy dapp browsers...
             web3Provider = window.web3.currentProvider;
+            let web3js = new Web3(web3Provider);//web3实例
+        
+            web3js.eth.getAccounts(function (error, result) {
+                web3js.eth.defaultAccount = result[0]
+                resolve(web3js)
+            });
         } else {
             web3Provider = new Web3.providers.HttpProvider('https://http-mainnet.hecochain.com');
-        }
-        let web3js = new Web3(web3Provider);//web3实例
+            let web3js = new Web3(web3Provider);//web3实例
         
-        web3js.eth.getAccounts(function (error, result) {
-            web3js.eth.defaultAccount = result[0]
-            resolve(web3js)
-        });
+            web3js.eth.getAccounts(function (error, result) {
+                web3js.eth.defaultAccount = result[0]
+                resolve(web3js)
+            });
+        }
+        
     })
 }
 

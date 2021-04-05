@@ -21,7 +21,7 @@ module.exports = {
   lang20:'I don’t have a token, help me issue HECO Token',
   lang21:'Full name',
   lang22:'Short name',
-  lang23:'Short name',
+  lang23:'Total supply',
   lang24:'Receiving address',
   lang25:'I have issued HECO Token to help me create  pairs',
   lang26:'Contract address',
@@ -111,4 +111,8 @@ module.exports = {
   lang110:'Price Impact',
   lang111:'Minimum received',
   lang112:'Trade Fee',
+  lang113:'Current Slippagetolerance',
+  lang114:'The difference between the market price and your price due to trade size.',
+  lang115:'Your transaction will revert if there is a large,unfavorable price movement before it is confirmed.',
+  lang116:'Part of each transaction will receive PDX rewards in the designated trading pair.'
 }

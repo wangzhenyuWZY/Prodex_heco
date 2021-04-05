@@ -3,7 +3,7 @@ const state = {
   tokenData:[],
   pairData:[],
   tolerance:sessionStorage.getItem('tolerance') || 0.5,
-  language:'zh'
+  language:'en'
 }
 const mutations = {
   SET_DEFAULT_ACCOUT(state, name) {

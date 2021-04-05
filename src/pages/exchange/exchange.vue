@@ -22,22 +22,39 @@
                 <i class="dropico"></i>
             </div>
         </div>
+        <p class="tokenBasicPrice" v-show="token2.name">1{{token2.name}} = {{token1BasicPrice}}{{token1.name}}</p>
         <el-button class="btn" :disabled='isSwaping' :loading='isSwaping' @click="clickHdl">{{isConnect?(isApproved?$t('lang38'):$t('lang37')):'Connect Wallet'}}</el-button>
         <div class='transDetail'>
             <div class="transItem">
-                <p class="title">{{$t('lang15')}}<i></i></p>
+                <p class="title">{{$t('lang15')}}
+                        <el-tooltip class="item" effect="dark" :content="$t('lang113')" placement="right">
+                            <i></i>
+                        </el-tooltip>
+                </p>
                 <p class="val">{{tolerance}}%</p>
             </div>
             <div class="transItem">
-                <p class="title">{{$t('lang110')}}<i></i></p>
+                <p class="title">{{$t('lang110')}}
+                    <el-tooltip class="item" effect="dark" :content="$t('lang114')" placement="right">
+                            <i></i>
+                        </el-tooltip>
+                </p>
                 <p class="val oringe">{{priceToler}}%</p>
             </div>
             <div class="transItem">
-                <p class="title">{{$t('lang111')}}<i></i></p>
+                <p class="title">{{$t('lang111')}}
+                    <el-tooltip class="item" effect="dark" :content="$t('lang115')" placement="right">
+                            <i></i>
+                        </el-tooltip>
+                </p>
                 <p class="val">{{token2Num}} {{token2.name}}</p>
             </div>
             <div class="transItem">
-                <p class="title">{{$t('lang112')}}<i></i></p>
+                <p class="title">{{$t('lang112')}}
+                    <el-tooltip class="item" effect="dark" :content="$t('lang116')" placement="right">
+                            <i></i>
+                        </el-tooltip>
+                </p>
                 <p class="val">{{fee}} {{token1.name}} </p>
             </div>
         </div>
@@ -85,7 +102,8 @@ export default {
       isSwaping:false,
       priceToler:0,
       minToken2:0,
-      fee:0
+      fee:0,
+      token1BasicPrice:0
     }
   },
   computed: {
@@ -143,10 +161,16 @@ export default {
         })
     },
     convertToken(){
-        this.token1 = this.token2
-        this.token2 = this.token1
-        this.token1BalanceInPool = this.token2BalanceInPool
-        this.token2BalanceInPool = this.token1BalanceInPool
+        let token1 = this.token1
+        let token2 = this.token2
+        let token1BalanceInPool = this.token2BalanceInPool
+        let token2BalanceInPool = this.token1BalanceInPool
+        this.token1 = token2
+        this.token2 = token1
+        this.token1BalanceInPool = token2BalanceInPool
+        this.token2BalanceInPool = token1BalanceInPool
+        this.token1Num = ''
+        this.token2Num = ''
         this.getPair()
     },
     async clickHdl(){
@@ -242,6 +266,14 @@ export default {
                 that.poolsReserves = res
                 that.token1BalanceInPool = res[0]/Math.pow(10,that.token1.decimals)
                 that.token2BalanceInPool = res[1]/Math.pow(10,that.token2.decimals)
+
+                let token2Num = new BigNumber(1)
+                token2Num = token2Num.times(Math.pow(10,that.token2.decimals))
+                let FactoryContract = new this.web3.eth.Contract(Factory.abi, Factory.address)
+                FactoryContract.methods.getAmountIn(token2Num,this.poolsReserves[0],this.poolsReserves[1]).call().then((result)=>{
+                    let token1Num = parseInt(result)/Math.pow(10,that.token1.decimals)
+                    that.token1BasicPrice = token1Num.toFixed(2)
+                })
             })
         }
     },
@@ -259,9 +291,10 @@ export default {
                 that.token2Num = parseInt(result)/Math.pow(10,that.token2.decimals)
                 that.token2Num = that.token2Num.toFixed(2)
 
-                let token1BalanceInPool = this.token1BalanceInPool+this.token1Num
-                let token2BalanceInPool = this.token2BalanceInPool-this.token2Num
+                let token1BalanceInPool = parseFloat(this.token1BalanceInPool)+parseFloat(this.token1Num)
+                let token2BalanceInPool = parseFloat(this.token2BalanceInPool)-parseFloat(this.token2Num)
                 let beforePrice = this.token1BalanceInPool/this.token2BalanceInPool
+                console.log(parseFloat(token1BalanceInPool),parseFloat(token2BalanceInPool))
                 let afterPrice = parseFloat(token1BalanceInPool)/parseFloat(token2BalanceInPool)
                 let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
                 this.priceToler = tolerance.toFixed(2)
@@ -308,6 +341,11 @@ export default {
     padding:20px 18px;
     margin:40px auto;
     position:relative;
+    .tokenBasicPrice{
+        color:#C4C2BE;
+        padding-top:20px;
+        font-size:12px;
+    }
     .transDetail{
         padding-top:20px;
         .transItem{
@@ -418,4 +456,7 @@ export default {
         background-size:100% 100%;
     }
 }
+</style>
+<style>
+    .el-button.btn{margin-top:10px;}
 </style>

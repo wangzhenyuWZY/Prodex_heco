@@ -98,7 +98,8 @@ export default {
         totalSupply:this.tokenInfo.totalsupply,
         type:this.tokenInfo.hasToken?2:1,
         contractAddress:this.tokenInfo.contractAddress,
-        tokenToAddress:this.tokenInfo.tokenToAddress
+        tokenToAddress:this.tokenInfo.tokenToAddress,
+        iconUrl:this.tokenInfo.imageUrl
       }
       createPledge(data).then((res)=>{
         if(res.data.status==200){

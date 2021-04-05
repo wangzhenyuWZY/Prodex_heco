@@ -54,6 +54,7 @@ export default {
   mounted() {
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
+        console.log(SwapMing.address)
         this.SwapMingContract = new web3.eth.Contract(SwapMing.abi, SwapMing.address)
         this.getPairLength()
     })
@@ -103,7 +104,7 @@ export default {
         item.personReward = userreward[0]/Math.pow(10,18)
         item.totalQuantity = item.totalQuantity/Math.pow(10,6)
         item.quantity = item.quantity/Math.pow(10,6)
-        item.allocPdxAmount = item.allocPdxAmount/Math.pow(10,18)
+        item.allocPdxAmount = res[5]/Math.pow(10,18)
         this.totalReward += item.allocPdxAmount
         this.totalPersonReward += item.personReward
         console.log(userreward)

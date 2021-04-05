@@ -96,9 +96,11 @@ export default {
   },
   methods:{
       checkWalter(){
-          if(!this.isConnect){
-              this.walletFlag()
-          }
+          this.$initWeb3().then(web3=>{
+              this.web3 = web3
+              this.isConnect = true
+              this.defaultAccount = this.plusXing(web3.eth.defaultAccount,5,5)
+          })
       },
       plusXing (str,frontLen,endLen) { 
         var len = str.length-frontLen-endLen;

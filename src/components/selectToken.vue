@@ -2,7 +2,7 @@
     <div class="tokenContainer">
         <h2 class="title">{{$t('lang13')}}<i></i></h2>
         <i class="closeico" @click="closePop"></i>
-        <input class="searchput" placeholder="Search name or paste address">
+        <input class="searchput" v-model='searchModel' @input="searchToken" placeholder="Search name or paste address">
         <h2 class="title" v-show='false'>Common bases<i></i></h2>
         <div class="commonCoin" v-show='false'>
             <div class="coinitem"><img>ETH</div>
@@ -18,7 +18,7 @@
         </div>
         <div class="tokenlistbar">
             <ul class="tokenlist">
-                <li v-for="(item,index) in tokenList" :key="index" @click="changeToken(item)"><img :src="item.logoURI">{{item.name}}</li>
+                <li v-for="(item,index) in newsTokenList" :key="index" @click="changeToken(item)"><img :src="requierImg(item.name)">{{item.name}}</li>
             </ul>
         </div>
         <div class="tokenlistbtm clearfix" v-show='false'>
@@ -33,14 +33,18 @@ export default {
   data() {
     return {
       tokens:defaultTokenList.tokens,
+      searchModel:'',
+      newsTokenList:[]
     }
   },
   computed: {
     tokenList : {
         get(){
+            this.newsTokenList = this.$store.state.app.tokenData
             return this.$store.state.app.tokenData;
         },
         set(v){
+            console.log('执行了set方法')
             return v
         }
     }
@@ -48,12 +52,37 @@ export default {
   watch: {
     tokenList(list) {
       this.tokenList = list  
+      this.newsTokenList = list
     },
   },
   mounted() {
   },
   methods: {
+    searchToken(){
+        let that = this
+        if(this.searchModel==''){
+            this.newsTokenList = this.$store.state.app.tokenData
+        }else{
+            let tokenList = this.$store.state.app.tokenData
+            let tokenListSearch = tokenList.filter(res=>{
+                if(res.name.search(that.searchModel.toUpperCase()) !== -1){
+                    return res
+                } 
+            })
+            this.newsTokenList = tokenListSearch
+        }
+    },
+    requierImg(name) {
+      if (name) {
+        try {
+          return require('@/assets/img/logo/' + name + '.png')
+        } catch (error) {
+          return require('@/assets/img/logo/PETH.png')
+        }
+      }
+    },
     closePop(){
+        this.newsTokenList = this.$store.state.app.tokenData
         this.$emit('closePop')
     },
     changeToken(item){

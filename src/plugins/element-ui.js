@@ -13,7 +13,8 @@ import {
   Icon,
   Select,
   Option,
-  Dialog //
+  Dialog,
+  Upload
 
 } from 'element-ui'
 Vue.use(Dialog)
@@ -28,6 +29,7 @@ Vue.use(Tooltip)
 Vue.use(Slider)
 Vue.use(Icon)
 Vue.use(Drawer)
+Vue.use(Upload)
 
 Vue.use(Loading.directive)
 
