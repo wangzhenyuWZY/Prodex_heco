@@ -99,11 +99,11 @@ export default {
 
         item.token1Name = token1Name
         item.token2Name = token2Name
-        item.personAmount = userreward[1]/Math.pow(10,6)
+        item.personAmount = userreward[1]/Math.pow(10,18)//usdt
         item.personZhanbi = parseFloat(userreward[1]/item.totalQuantity*100).toFixed(2)
         item.personReward = userreward[0]/Math.pow(10,18)
-        item.totalQuantity = item.totalQuantity/Math.pow(10,6)
-        item.quantity = item.quantity/Math.pow(10,6)
+        item.totalQuantity = item.totalQuantity/Math.pow(10,18)//usdt
+        item.quantity = item.quantity/Math.pow(10,18)//usdt
         item.allocPdxAmount = res[5]/Math.pow(10,18)
         this.totalReward += item.allocPdxAmount
         this.totalPersonReward += item.personReward
