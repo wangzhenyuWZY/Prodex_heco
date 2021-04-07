@@ -1,5 +1,5 @@
 <template>
-    <div class="breakdownCon">
+    <div class="breakdownCon" @click.stop>
         <div class="breakTitle">
             <h2>{{$t('lang1')}}</h2>
             <i class="closeico" @click="close"></i>
@@ -42,7 +42,9 @@ export default {
         this.PdxToken = pdxToken[0]
         let usdtToken = this.tokenData.filter((res)=>{return res.name.toUpperCase() == 'PUSDT'})
         this.UsdtToken = usdtToken[0]
-      this.getPdxInfo()
+        this.$initWeb3().then((web3)=>{
+            this.getPdxInfo()
+        })
     },
   }, 
   mounted(){
@@ -76,7 +78,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .breakdownCon{
-    position:absolute;
+    position:fixed;
     top:240px;
     left:50%;
     width:375px;

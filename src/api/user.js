@@ -55,3 +55,12 @@ export function getCoinInfoList(data) {
     data
   )
 }
+
+//上传
+export function uploadPicture(data) {
+  return request(
+    api.uploadPicture,
+    'post',
+    data
+  )
+}

@@ -13,8 +13,8 @@
             <h2>{{$t('lang75')}}</h2>
         </div>
         <div class="changePanel">
-            <h2>Input<span class="balance">{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
-            <input class='entrynum' v-model="token1Num" @input="caleToken2">
+            <h2>Input<span class="balance">{{$t('lang51')}}：{{parseFloat(token1.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' placeholder='0.0' v-model="token1Num" @input="caleToken2">
             <div class="coinbar" @click="item=0;tokensPop=true">
                 <img :src="requierImg(token1.name)" class="coinimg">
                 <span class="coinname">{{token1.name}}</span>
@@ -23,8 +23,8 @@
         </div>
         <i class="changeico"></i>
         <div class="changePanel">
-            <h2>Input<span class="balance">{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
-            <input class='entrynum' v-model="token2Num" @input="caleToken1">
+            <h2>Input<span class="balance">{{$t('lang51')}}：{{parseFloat(token2.balance).toFixed(2)}}</span></h2>
+            <input class='entrynum' placeholder='0.0' v-model="token2Num" @input="caleToken1">
             <div class="coinbar" @click="item=1;tokensPop=true">
                 <img :src="requierImg(token2.name)" class="coinimg">
                 <span class="coinname">{{token2.name}}</span>
@@ -321,7 +321,7 @@ export default {
     width: 345px;
     min-height:400px;
     background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
+    box-shadow:inset 3px 3px 3px 0px rgba(0, 0, 0, 0.2);
     border-radius: 18px;
     border: 1px solid #232221;
     box-sizing: border-box;
@@ -362,13 +362,15 @@ export default {
                 top: -90px;
                 width: 215px;
                 height: 203px;
-                background: #3D3B39;
                 border: 1px solid #6A6A6A;
                 box-sizing: border-box;
                 padding:15px;
                 font-size:14px;
                 color:#C4C2BE;
                 line-height:20px;
+                background:url(../../assets/img/icon38.png) no-repeat center;
+                background-size:100% 100%;
+                z-index:9999;   
             }
         }
     }
@@ -382,9 +384,8 @@ export default {
         margin:18px 0 15px;
     }
     .changePanel{
-        width: 310px;
         height: 90px;
-        box-shadow: 2px 2px 3px 0px rgba(19, 19, 19, 0.5);
+        box-shadow:inset 2px 2px 3px 0px rgba(19, 19, 19, 0.5);
         border-radius: 12px;
         border: 1px solid #38393B;
         h2{
@@ -437,6 +438,8 @@ export default {
                 color:#C4C2BE;
                 line-height:30px;
                 padding:0 4px;
+                width:54%;
+                text-align:center;
             }
             .dropico{
                 position: absolute;
@@ -483,5 +486,8 @@ export default {
         background: url(../../assets/img/icon1.png) no-repeat center;
         background-size:100% 100%;
     }
+}
+@media screen and (max-width: 750px){
+    .container{margin-top:0;padding-top:70px;}
 }
 </style>

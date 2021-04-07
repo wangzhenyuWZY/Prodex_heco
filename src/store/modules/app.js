@@ -2,8 +2,8 @@ const state = {
   defaultAccout: '',
   tokenData:[],
   pairData:[],
-  tolerance:0,
-  language:'zh'
+  tolerance:sessionStorage.getItem('tolerance') || 0.5,
+  language:'en'
 }
 const mutations = {
   SET_DEFAULT_ACCOUT(state, name) {

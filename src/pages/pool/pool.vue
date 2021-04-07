@@ -19,7 +19,7 @@
                     <p>{{$t('lang85')}}</p>
                 </div>
                 <div class="liquidityCon" v-show="item.show">
-                    <p class="clearfix"><span class="fl">{{$t('lang86')}}：</span><span class="fr">{{item.myLpTotal}}</span></p>
+                    <p class="clearfix"><span class="fl">{{$t('lang86')}}：</span><span class="fr">{{parseFloat(item.myLpTotal/Math.pow(10,18)).toFixed(4)}}</span></p>
                     <p class="clearfix"><span class="fl">{{$t('lang87')}} {{item.token1.name}}：</span><span class="fr">{{parseFloat(item.token1.poolBalance).toFixed(2)}}</span></p>
                     <p class="clearfix"><span class="fl">{{$t('lang87')}} {{item.token2.name}}：</span><span class="fr">{{parseFloat(item.token2.poolBalance).toFixed(2)}}</span></p>
                     <p class="clearfix"><span class="fl">{{$t('lang88')}}：</span><span class="fr">{{parseFloat(item.myShare*100).toFixed(2)}}%</span></p>
@@ -130,7 +130,7 @@ export default {
                         address:item.contract,
                         decimails:item.wei,
                         totalSupply:0,
-                        myLpTotal:res/Math.pow(10,18),
+                        myLpTotal:parseFloat(res),
                         myShare:0,
                         token1:{
                             address:item.coinInfos[0].token,
@@ -154,11 +154,10 @@ export default {
         let PoolContract = new this.web3.eth.Contract(LpPair.abi, item.address)
         let totalSupply = await PoolContract.methods.totalSupply().call()
             item.totalSupply = totalSupply
-            item.myShare = item.myLpTotal/totalSupply
-        let reserves = await PoolContract.methods.getReserves().call()      
-        let basic = item.myLpTotal/item.totalSupply    
-        item.token1.poolBalance = basic*reserves[0]/Math.pow(10,item.token1.decimails)
-        item.token2.poolBalance = basic*reserves[1]/Math.pow(10,item.token2.decimails)   
+            item.myShare = item.myLpTotal/item.totalSupply
+        let reserves = await PoolContract.methods.getReserves().call()
+        item.token1.poolBalance = item.myShare*reserves[0]/Math.pow(10,item.token1.decimails)
+        item.token2.poolBalance = item.myShare*reserves[1]/Math.pow(10,item.token2.decimails)   
         this.pairList.push(item)    
     }
   }
@@ -206,6 +205,7 @@ export default {
       width:300px;
       margin:0 auto;
       overflow:hidden;
+      text-align:center;
       .btn{
           width: 240px;
           height: 32px;
@@ -215,9 +215,7 @@ export default {
           line-height:32px;
           color:#fff;
           font-size:14px;
-          &.add{
-              float:left;
-          }
+          display:inline-block;
           &.create{
               float:right;
               background:none;

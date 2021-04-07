@@ -54,6 +54,7 @@ export default {
   mounted() {
     this.$initWeb3().then((web3)=>{
         this.web3 = web3
+        console.log(SwapMing.address)
         this.SwapMingContract = new web3.eth.Contract(SwapMing.abi, SwapMing.address)
         this.getPairLength()
     })
@@ -98,12 +99,12 @@ export default {
 
         item.token1Name = token1Name
         item.token2Name = token2Name
-        item.personAmount = userreward[1]/Math.pow(10,6)
+        item.personAmount = userreward[1]/Math.pow(10,18)//usdt
         item.personZhanbi = parseFloat(userreward[1]/item.totalQuantity*100).toFixed(2)
         item.personReward = userreward[0]/Math.pow(10,18)
-        item.totalQuantity = item.totalQuantity/Math.pow(10,6)
-        item.quantity = item.quantity/Math.pow(10,6)
-        item.allocPdxAmount = item.allocPdxAmount/Math.pow(10,18)
+        item.totalQuantity = item.totalQuantity/Math.pow(10,18)//usdt
+        item.quantity = item.quantity/Math.pow(10,18)//usdt
+        item.allocPdxAmount = res[5]/Math.pow(10,18)
         this.totalReward += item.allocPdxAmount
         this.totalPersonReward += item.personReward
         console.log(userreward)

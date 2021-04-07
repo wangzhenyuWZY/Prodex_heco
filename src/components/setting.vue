@@ -1,5 +1,5 @@
 <template>
-    <div class="popmask">
+    <div class="popmask" @click.stop>
         <div class="setContainer">
             <h2>{{$t('lang14')}}</h2>
             <div class="setItem">
@@ -44,12 +44,20 @@
 export default {
   data(){
     return {
-        curryToler:0,
+        curryToler:1,
         toler:'',
         lang:this.$i18n.locale
     };
   },
   created(){
+      let toler = sessionStorage.getItem('tolerance')
+      if(toler == '0.1'){
+          this.curryToler = 0
+      }else if(toler == '0.5'){
+          this.curryToler = 1
+      }else if(toler == '1'){
+          this.curryToler = 2
+      }
   },
   methods:{
       changeLang(ln){
@@ -62,6 +70,7 @@ export default {
       },
       setTolerance(num,cur){
           this.curryToler = cur
+          sessionStorage.setItem('tolerance',num)
           this.$store.commit('SET_TOLERANCE', num)
       },
       personToler(){
@@ -73,7 +82,7 @@ export default {
 </script>
 <style lang='less' scoped>
 .setContainer{
-    position:absolute;
+    position:fixed;
     top:70px;
     left:0;
     right:0;
@@ -124,6 +133,7 @@ export default {
                 position:relative;
                 overflow: hidden;
                 height: 28px;
+                width:110px;
                 background: #121111;
                 border-radius: 15px;
                 border: 1px solid #3D3B39;

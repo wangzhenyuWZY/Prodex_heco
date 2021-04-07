@@ -3,16 +3,42 @@
     <Navbar></Navbar>
     <div class="exchangeBar">
         <h2 class="createTitle">token {{$t('lang19')}}</h2>
-        <p class="selType" @click="hasToken = false"><i :class="!hasToken?'active':''"></i>{{$t('lang20')}}</p>
-        <div class="hasToken" v-show="!hasToken">
+        <p class="selType" @click="hasToken = false;popshow=!popshow;popshow2=false"><i :class="!hasToken?'active':''"></i><span>{{$t('lang20')}}</span></p>
+        <div class="hasToken" v-show="!hasToken && popshow">
           <input :placeholder="$t('lang21')" v-model="tokenName">
           <input :placeholder="$t('lang22')" v-model="symbol">
           <input :placeholder="$t('lang23')" v-model="totalsupply">
           <input :placeholder="$t('lang24')" v-model="tokenToAddress">
+          <p class='tokenlogo'>Token Logo</p>
+          <el-upload
+            class="avatar-uploader"
+            action="#"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :on-change="handleAvatarChange"
+            :before-upload="beforeAvatarUpload"
+            accept="image/gif,image/jpeg,image/jpg,image/png"
+            >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </div>
-        <p class="selType" @click="hasToken = true"><i :class="hasToken?'active':''"></i>{{$t('lang25')}}</p>
-        <div class="hasToken" v-show="hasToken">
+        <p class="selType" @click="hasToken = true;popshow2=!popshow2;popshow=false"><i :class="hasToken?'active':''"></i><span>{{$t('lang25')}}</span></p>
+        <div class="hasToken" v-show="hasToken && popshow2">
           <input :placeholder="$t('lang26')" v-model="contractAddress" >
+          <p class='tokenlogo'>Token Logo</p>
+          <el-upload
+            class="avatar-uploader"
+            action="#"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+            :on-change="handleAvatarChange"
+            :before-upload="beforeAvatarUpload"
+            accept="image/gif,image/jpeg,image/jpg,image/png"
+            >
+            <img v-if="imageUrl" :src="imageUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+          </el-upload>
         </div>  
         <el-button class="btn" :disabled='false' @click="createNext">{{$t('lang27')}}</el-button>
     </div>
@@ -21,6 +47,7 @@
 
 <script>
 import Navbar from '../../components/Navbar'
+import {uploadPicture} from '../../api/user'
 export default {
   components:{
     Navbar
@@ -29,12 +56,15 @@ export default {
     return {
       isConnect:false,
       web3:null,
-      hasToken:true,
+      hasToken:false,
       tokenName:'',
       symbol:'',
       totalsupply:'',
       contractAddress:'',
-      tokenToAddress:''
+      tokenToAddress:'',
+      popshow:true,
+      popshow2:false,
+      imageUrl: ''
     }
   },
   mounted() {
@@ -44,6 +74,28 @@ export default {
       })
   },
   methods: {
+    handleAvatarChange(item){
+      var form = new FormData();
+      form.append("file",item.raw);
+      uploadPicture(form).then(res=>{
+        if(res.data.status==200){
+          this.imageUrl = URL.createObjectURL(item.raw);
+          this.iconUrl = res.data.data
+        }
+      })
+    },
+    handleAvatarSuccess(res, file) {
+        this.imageUrl = URL.createObjectURL(file.raw);
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isLt2M) {
+          this.$message.error('上传Logo图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      },
     createNext(){
       let tokenInfo = {
           tokenName:this.tokenName,
@@ -51,7 +103,8 @@ export default {
           totalsupply:this.totalsupply,
           hasToken:this.hasToken,
           contractAddress:this.contractAddress,
-          tokenToAddress:this.tokenToAddress
+          tokenToAddress:this.tokenToAddress,
+          imageUrl:this.iconUrl
       }
       if(this.hasToken){
         if(this.contractAddress==''){
@@ -98,7 +151,7 @@ export default {
     width: 345px;
     min-height:400px;
     background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+    box-shadow:inset 3px 3px 3px 0px rgb(0 0 0 / 20%);
     border-radius: 18px;
     border: 1px solid #232221;
     box-sizing: border-box;
@@ -131,6 +184,17 @@ export default {
           background-size:100% 100%;
         }
       }
+      span{
+        display: inline-block;
+        vertical-align: top;
+        width: 85%;
+        line-height: 23px;
+      }
+    }
+    .tokenlogo{
+      font-size:14px;
+      color:#837F76;
+      padding-bottom:10px;
     }
     .hasToken{
       input{
@@ -152,4 +216,30 @@ export default {
       }
     }
 }
+</style>
+<style>
+.avatar-uploader{margin-bottom:20px;}
+  .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 178px;
+    height: 178px;
+    line-height: 178px;
+    text-align: center;
+  }
+  .avatar {
+    width: 178px;
+    height: 178px;
+    display: block;
+  }
 </style>

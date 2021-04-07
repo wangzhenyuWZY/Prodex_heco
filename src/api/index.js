@@ -4,7 +4,8 @@ const api = {
   pledgeDetail:'/pledge/get/{orderId}',
   getPoolInfo:'/poolInfo/get',
   getSingle:'/poolInfo/getSingle',
-  getCoinInfoList:'/coinInfo/getCoinInfoList'
+  getCoinInfoList:'/coinInfo/getCoinInfoList',
+  uploadPicture:'/picture/img'
 }
 
 export default api

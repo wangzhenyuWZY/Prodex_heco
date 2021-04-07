@@ -98,7 +98,8 @@ export default {
         totalSupply:this.tokenInfo.totalsupply,
         type:this.tokenInfo.hasToken?2:1,
         contractAddress:this.tokenInfo.contractAddress,
-        tokenToAddress:this.tokenInfo.tokenToAddress
+        tokenToAddress:this.tokenInfo.tokenToAddress,
+        iconUrl:this.tokenInfo.imageUrl
       }
       createPledge(data).then((res)=>{
         if(res.data.status==200){
@@ -159,7 +160,7 @@ export default {
     width: 345px;
     min-height:340px;
     background: #232221;
-    box-shadow: 3px 3px 3px 0px rgba(0, 0, 0, 0.4);
+    box-shadow:inset 3px 3px 3px 0px rgb(0 0 0 / 20%);
     border-radius: 18px;
     border: 1px solid #232221;
     box-sizing: border-box;

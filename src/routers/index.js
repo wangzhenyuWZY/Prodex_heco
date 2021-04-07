@@ -23,6 +23,7 @@ export default new VueRouter({
     { path: '/create', name:'Create1', component: ()=> import('../pages/create/create1') },
     { path: '/createConfirm', name:'Create2', component: ()=> import('../pages/create/create2') },
     { path: '/createSuc', name:'Create3', component: ()=> import('../pages/create/create3') },
-    { path: '/removeLiquidity', name:'RemoveLiquidity', component: ()=> import('../pages/pool/removeLiquidity') }
+    { path: '/removeLiquidity', name:'RemoveLiquidity', component: ()=> import('../pages/pool/removeLiquidity') },
+    { path: '/overview', name:'Overview', component: ()=> import('../pages/quotation/overview') },
   ]
 })

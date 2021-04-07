@@ -28,10 +28,21 @@ const service = (url,method,data) =>{
       alert(error)
     });
   } else if(type === 'post'){
-    res = axios.post(realUrl,qs.stringify(data),{headers:headers})
-    .catch(function (error) {
-      alert(error)
-    })
+    if(url=='/picture/img'){
+      headers = {
+        'Content-Type':'multipart/form-data'
+      }
+      res = axios.post(realUrl,data,{headers:headers})
+      .catch(function (error) {
+        alert(error)
+      })
+    }else{
+      res = axios.post(realUrl,qs.stringify(data),{headers:headers})
+      .catch(function (error) {
+        alert(error)
+      })
+    }
+    
   } else if(type === 'put') {
     res = axios.put(realUrl,qs.stringify(data))
     .catch(function (error) {

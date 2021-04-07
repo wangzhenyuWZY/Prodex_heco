@@ -1,5 +1,5 @@
 <template>
-    <div class="moreContainer">
+    <div class="moreContainer" @click.stop>
         <p>
             <img src="../assets/img/icon18.png">
             About
@@ -24,7 +24,7 @@
 </template>
 <style lang='less' scoped>
 .moreContainer{
-    position:absolute;
+    position:fixed;
     right:15px;
     top:70px;
     width: 100px;

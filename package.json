@@ -12,6 +12,7 @@
     "serve:prod": "vue-cli-service serve --host 0.0.0.0 --mode production"
   },
   "dependencies": {
+    "@antv/f2": "^3.8.6",
     "@uniswap/default-token-list": "^2.0.0",
     "axios": "^0.21.0",
     "bignumber.js": "^9.0.1",

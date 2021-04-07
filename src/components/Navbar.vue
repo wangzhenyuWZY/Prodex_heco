@@ -1,13 +1,16 @@
 <template>
     <div>
-    <div class="navcontainer clearfix">
+    <div class="navcontainer clearfix"  @click.stop>
         <div class="navigation clearfix">
-            <img class="logo" src="../assets/img/icon2.png">
+            <div class='logobar'>
+                <img class="logo" src="../assets/img/icon2.png">
+                Prodex
+            </div>
+            
             <ul class="navlist clearfix">
                 <li :class="nav==0?'active':''" @click="toExchange">{{$t('lang8')}}</li>
                 <li :class="nav==1?'active':''" @click="toPool">{{$t('lang9')}}</li>
                 <li :class="nav==2?'active':''" @click="toDealMining">{{$t('lang10')}}</li>
-                <li :class="nav==3?'active':''" @click="toLpMining">{{$t('lang11')}}</li>
                 <li :class="nav==4?'active':''" @click="toProdex">Prodex</li>
                 <li :class="nav==5?'active':''" @click="toCreate">{{$t('lang12')}}</li>
             </ul>
@@ -16,9 +19,9 @@
             <div class="connected" @click="checkWalter">
                 {{!isConnect?'Connect to a Wallet':defaultAccount}}
             </div>
-            <div class="prodexbtn" @click="breakFlag = !breakFlag">Prodex</div>
-            <i class="setico" @click="setFlag = !setFlag"></i>
-            <i class="moreico" @click="moreFlag = !moreFlag"></i>
+            <div class="prodexbtn" @click="breakFlag = !breakFlag;setFlag =false;moreFlag =false;walletFlag=false;">Prodex</div>
+            <i class="setico" @click="setFlag = !setFlag;moreFlag =false;breakFlag=false;walletFlag=false;"></i>
+            <i class="moreico" @click="moreFlag = !moreFlag;breakFlag=false;walletFlag=false;setFlag=false"></i>
         </div>
 
         <div class="nav_merge">
@@ -26,12 +29,15 @@
         </div>
         
         <!---->
-        <Settings v-show="setFlag"></Settings>
-        <Mores v-show="moreFlag"></Mores>
-        <Wallet v-show="walletFlag" @close='walletFlag=false'></Wallet>
-        <Breakdown v-show="breakFlag" @close='breakFlag=false'></Breakdown>
+        <div :class="[drawer?'none':'',setFlag?'panelWapper':'',moreFlag?'panelWapper':'',walletFlag?'panelWapper':'',breakFlag?'panelWapper':'']" @click="closePop">
+            <Settings v-show="setFlag" @click.stop></Settings>
+            <Mores v-show="moreFlag" @click.stop></Mores>
+            <Wallet v-show="walletFlag" @close='walletFlag=false' @click.stop></Wallet>
+            <Breakdown v-show="breakFlag" @close='breakFlag=false' @click.stop></Breakdown>
+        </div>
+        
     </div>
-    <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
+    <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click.stop="tolerPop=false">
         <ul class="mobelNavlist">
             <li @click="toExchange">
                 <img src="@/assets/img/icon29.png">
@@ -40,10 +46,6 @@
             <li @click="toPool">
                 <img src="@/assets/img/icon30.png">
                 <span>{{$t('lang9')}}</span>
-            </li>
-            <li @click="toLpMining">
-                <img src="@/assets/img/icon31.png">
-                <span>{{$t('lang11')}}</span>
             </li>
             <li @click="toDealMining">
                 <img src="@/assets/img/icon31.png">
@@ -96,10 +98,18 @@ export default {
     })
   },
   methods:{
+      closePop(){
+          this.setFlag = false
+          this.moreFlag = false
+          this.walletFlag = false
+          this.breakFlag = false
+      },
       checkWalter(){
-          if(!this.isConnect){
-              this.walletFlag()
-          }
+          this.$initWeb3().then(web3=>{
+              this.web3 = web3
+              this.isConnect = true
+              this.defaultAccount = this.plusXing(web3.eth.defaultAccount,5,5)
+          })
       },
       plusXing (str,frontLen,endLen) { 
         var len = str.length-frontLen-endLen;
@@ -138,6 +148,17 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.panelWapper{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
+    &.none{
+        position:static;
+    }
+}
 .navcontainer{
     height:70px;
     border-bottom:1px solid #282827;
@@ -145,8 +166,18 @@ export default {
     .nav_merge{display:none;}
     .navigation{
         float:left;
+        .logobar{
+            display:inline-block;
+            vertical-align:bottom;
+            font-size:14px;
+            color:#F8941F;
+            line-height:20px;
+            font-weight:600;
+        }
         .logo{
             width:19px;
+            vertical-align: bottom;
+            margin-right:10px;
         }
         .navlist{
             display:inline-block;
@@ -214,6 +245,8 @@ export default {
         position: fixed;
         top: 0;
         width: 100%;
+        z-index:99;
+        background:linear-gradient(180deg, #282824 0%, #1A1918 100%);
         .navigation .navlist{display:none;}
         .toolCon{
             position:fixed;
