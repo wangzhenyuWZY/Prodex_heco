@@ -1,6 +1,6 @@
 <template>
     <div>
-    <div class="navcontainer clearfix">
+    <div class="navcontainer clearfix"  @click.stop>
         <div class="navigation clearfix">
             <div class='logobar'>
                 <img class="logo" src="../assets/img/icon2.png">
@@ -29,12 +29,15 @@
         </div>
         
         <!---->
-        <Settings v-show="setFlag"></Settings>
-        <Mores v-show="moreFlag"></Mores>
-        <Wallet v-show="walletFlag" @close='walletFlag=false'></Wallet>
-        <Breakdown v-show="breakFlag" @close='breakFlag=false'></Breakdown>
+        <div :class="[drawer?'none':'',setFlag?'panelWapper':'',moreFlag?'panelWapper':'',walletFlag?'panelWapper':'',breakFlag?'panelWapper':'']" @click="closePop">
+            <Settings v-show="setFlag" @click.stop></Settings>
+            <Mores v-show="moreFlag" @click.stop></Mores>
+            <Wallet v-show="walletFlag" @close='walletFlag=false' @click.stop></Wallet>
+            <Breakdown v-show="breakFlag" @close='breakFlag=false' @click.stop></Breakdown>
+        </div>
+        
     </div>
-    <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click="tolerPop=false">
+    <el-drawer title="我是标题" :visible.sync="drawer" :show-close="false" custom-class="drawer_body" :with-header="false" @click.stop="tolerPop=false">
         <ul class="mobelNavlist">
             <li @click="toExchange">
                 <img src="@/assets/img/icon29.png">
@@ -95,6 +98,12 @@ export default {
     })
   },
   methods:{
+      closePop(){
+          this.setFlag = false
+          this.moreFlag = false
+          this.walletFlag = false
+          this.breakFlag = false
+      },
       checkWalter(){
           this.$initWeb3().then(web3=>{
               this.web3 = web3
@@ -139,6 +148,17 @@ export default {
 </script>
 
 <style lang='less' scoped>
+.panelWapper{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
+    &.none{
+        position:static;
+    }
+}
 .navcontainer{
     height:70px;
     border-bottom:1px solid #282827;

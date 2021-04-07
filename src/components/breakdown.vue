@@ -1,5 +1,5 @@
 <template>
-    <div class="breakdownCon">
+    <div class="breakdownCon" @click.stop>
         <div class="breakTitle">
             <h2>{{$t('lang1')}}</h2>
             <i class="closeico" @click="close"></i>

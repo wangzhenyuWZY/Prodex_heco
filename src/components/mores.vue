@@ -1,5 +1,5 @@
 <template>
-    <div class="moreContainer">
+    <div class="moreContainer" @click.stop>
         <p>
             <img src="../assets/img/icon18.png">
             About

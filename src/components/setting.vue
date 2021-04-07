@@ -1,5 +1,5 @@
 <template>
-    <div class="popmask">
+    <div class="popmask" @click.stop>
         <div class="setContainer">
             <h2>{{$t('lang14')}}</h2>
             <div class="setItem">

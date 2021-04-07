@@ -103,7 +103,8 @@ export default {
       priceToler:0,
       minToken2:0,
       fee:0,
-      token1BasicPrice:0
+      token1BasicPrice:0,
+      curryPut:0
     }
   },
   computed: {
@@ -165,13 +166,21 @@ export default {
         let token2 = this.token2
         let token1BalanceInPool = this.token2BalanceInPool
         let token2BalanceInPool = this.token1BalanceInPool
+        let token1Num = this.token1Num
+        let token2Num = this.token2Num
         this.token1 = token2
         this.token2 = token1
         this.token1BalanceInPool = token2BalanceInPool
         this.token2BalanceInPool = token1BalanceInPool
-        this.token1Num = ''
-        this.token2Num = ''
-        this.getPair()
+        this.token1Num = token2Num
+        this.token2Num = token1Num
+        if(this.curryPut==0){
+            this.caleToken1()
+            this.curryPut==0
+        }else{
+            this.caleToken2()
+            this.curryPut==1
+        }
     },
     async clickHdl(){
         
@@ -279,6 +288,7 @@ export default {
     },
     caleToken2(){
         let that = this
+        this.curryPut = 0
         if(!this.hasPair){
             this.$message.error(that.$t('lang42'))
             return
@@ -299,11 +309,13 @@ export default {
                 let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
                 this.priceToler = tolerance.toFixed(2)
                 this.fee = this.token1Num*0.003
+                that.token1BasicPrice = (that.token1Num/that.token2Num).toFixed(2)
             })
         }
     },
     caleToken1(){
         let that = this
+        this.curryPut = 1
         if(!this.hasPair){
             this.$message.error(that.$t('lang42'))
             return
@@ -323,6 +335,7 @@ export default {
                 let tolerance = Math.abs((1-afterPrice/beforePrice)*100)
                 this.priceToler = tolerance.toFixed(2)
                 this.fee = this.token1Num*0.003
+                that.token1BasicPrice = (that.token1Num/that.token2Num).toFixed(2)
             })
         }
     },
