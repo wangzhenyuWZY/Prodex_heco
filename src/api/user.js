@@ -64,3 +64,30 @@ export function uploadPicture(data) {
     data
   )
 }
+
+//获取token排行
+export function getTokens(data) {
+  return request(
+    api.getTokens,
+    'get',
+    data
+  )
+}
+
+//获取pair排行
+export function getPairs(data) {
+  return request(
+    api.getPairs,
+    'get',
+    data
+  )
+}
+
+//获取交易排行
+export function getTransactions(data) {
+  return request(
+    api.getTransactions+data.pageNum,
+    'get',
+    data
+  )
+}

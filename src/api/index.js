@@ -5,7 +5,10 @@ const api = {
   getPoolInfo:'/poolInfo/get',
   getSingle:'/poolInfo/getSingle',
   getCoinInfoList:'/coinInfo/getCoinInfoList',
-  uploadPicture:'/picture/img'
+  uploadPicture:'/picture/img',
+  getTokens:'/index/getTokens',
+  getPairs:'/index/getPairs',
+  getTransactions:'/index/getTransactions/'
 }
 
 export default api

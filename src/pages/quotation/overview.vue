@@ -25,12 +25,11 @@
         <h2 class="quoTitle">Top Tokens<router-link to="#" class="more">See All</router-link></h2>
         <div class="tableCon">
           <el-table
-            :data="tableData"
+            :data="tokenList"
             class='elTable'
             height="250">
             <el-table-column
               fixed
-              prop="date"
               label="Name"
               width='150'>
               <template  slot-scope="scope">
@@ -39,27 +38,23 @@
                   <img src="../../assets/img/logo/PETH.png" width="20px">
                   <img src="../../assets/img/logo/PETH.png" width="20px">
                 </span>
-                <span class="pairName">Name</span>
+                <span class="pairName">{{scope.row.symbol}}</span>
               </template>
             </el-table-column>
             <el-table-column
-              prop="name"
-              label="Liquidity">
+              prop="liquidity"
+              label="liquidity">
             </el-table-column>
             <el-table-column
-              prop="province"
+              prop="volume"
               label="Volume(24hrs)">
             </el-table-column>
-            <el-table-column
-              prop="city"
-              label="Volume(7d)">
-            </el-table-column>
-            <el-table-column
+            <!-- <el-table-column
               prop="address"
               label="Fees(24hr)">
-            </el-table-column>
+            </el-table-column> -->
             <el-table-column
-              prop="zip"
+              prop="priceChange"
               label="1y Fees/Liquidity">
             </el-table-column>
           </el-table>
@@ -172,6 +167,7 @@
 <script>
 import Navbar from '../../components/Navbar'
 import F2 from '@antv/f2';
+import {getTokens,getPairs,getTransactions} from '../../api/user'
 export default {
   components:{
     Navbar
@@ -181,6 +177,7 @@ export default {
       isConnect:false,
       web3:null,
       styWidth:320,
+      tokenList:[],
       tableData:[{
           date: 'HUSD-WHT',
           name: '$2,323,233,434',
@@ -224,6 +221,7 @@ export default {
           this.web3 = web3
           this.isConnect = true
           this.initChart()
+          this.getDatas()
       })
   },
   methods: {
@@ -303,6 +301,13 @@ export default {
         this.$nextTick(function () {
             _this.styWidth = _this.$refs.chartBars.clientWidth-60;
         })
+    },
+    getDatas(){
+      getTokens().then((res)=>{
+        if(res.data.status==200){
+          this.tokenList = res.data.data
+        }
+      })
     }
   }
 }  

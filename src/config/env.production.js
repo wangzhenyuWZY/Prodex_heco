@@ -1,4 +1,4 @@
 // 正式
 module.exports = {
-  baseApi: 'http://18.180.215.139:8152'
+  baseApi: 'http://47.57.237.241:8152'
 }
