@@ -8,7 +8,9 @@ const api = {
   uploadPicture:'/picture/img',
   getTokens:'/index/getTokens',
   getPairs:'/index/getPairs',
-  getTransactions:'/index/getTransactions/'
+  getTransactions:'/index/getTransactions/',
+  getPrices:'/token/getPrices',
+  
 }
 
 export default api

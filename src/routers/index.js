@@ -25,5 +25,8 @@ export default new VueRouter({
     { path: '/createSuc', name:'Create3', component: ()=> import('../pages/create/create3') },
     { path: '/removeLiquidity', name:'RemoveLiquidity', component: ()=> import('../pages/pool/removeLiquidity') },
     { path: '/overview', name:'Overview', component: ()=> import('../pages/quotation/overview') },
+    { path: '/tokens', name:'tokens', component: ()=> import('../pages/quotation/tokens') },
+    { path: '/pairs', name:'pairs', component: ()=> import('../pages/quotation/pairs') },
+    { path: '/transtions', name:'transtions', component: ()=> import('../pages/quotation/transtions') },
   ]
 })

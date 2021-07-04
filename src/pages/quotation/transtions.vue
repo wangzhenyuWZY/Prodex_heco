@@ -3,112 +3,16 @@
     <Navbar></Navbar>
     <div class="quoContent clearfix">
       <div class="leftNav">
-        <p class='active'>Overview</p>
+        <p @click="toOverview">Overview</p>
         <p @click="toTokens">Tokens</p>
         <p @click="toPairs">Pairs</p>
-        <p @click="toTranstions">Accounts</p>
+        <p class='active'>Transation</p>
       </div>
       <div class="rightCon">
         <h2 class="quoTitle">Mdex Analytics</h2>
         <div class="searchTokenPut">
           <input placeholder="Search Mdex pairs and tokens…">
           <i class="searchIco"></i>
-        </div>
-        <h2 class="quoTitle size">HT Price:$17.18  Transations(24H):1,43,284 Pairs:4,343</h2>
-        <div class="chartCon clearfix">
-          <div class="chartBar fl" ref="chartBars">
-            <h2>Liquidity</h2>
-            <canvas id="container" :width="styWidth" height="180"></canvas>
-          </div>
-          <div class="chartBar fr"></div>
-        </div>
-        <h2 class="quoTitle">Top Tokens<router-link to="/tokens" class="more">See All</router-link></h2>
-        <div class="tableCon">
-          <el-table
-            :data="tokenList"
-            class='elTable'
-            height="250">
-            <el-table-column
-              fixed
-              label="Name"
-              width='150'>
-              <template  slot-scope="scope">
-                <span class="sortitem">1</span>
-                <span class="pairLogo">
-                  <img src="../../assets/img/logo/PETH.png" width="20px">
-                  <img src="../../assets/img/logo/PETH.png" width="20px">
-                </span>
-                <span class="pairName">{{scope.row.symbol}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="liquidity"
-              label="liquidity">
-            </el-table-column>
-            <el-table-column
-              prop="volume"
-              label="Volume(24hrs)">
-            </el-table-column>
-            <!-- <el-table-column
-              prop="address"
-              label="Fees(24hr)">
-            </el-table-column> -->
-            <el-table-column
-              prop="priceChange"
-              label="1y Fees/Liquidity">
-            </el-table-column>
-          </el-table>
-          <div class="pagePabel" v-show="false">
-            <i class="prex"></i>
-            <span>Page 1 of 20</span>
-            <i class="next"></i>
-          </div>
-        </div>
-        <h2 class="quoTitle">Top Pairs<router-link to="/pairs" class="more">See All</router-link></h2>
-        <div class="tableCon">
-          <el-table
-            :data="pairList"
-            class='elTable'
-            height="250">
-            <el-table-column
-              fixed
-              prop="date"
-              label="Name">
-              <template  slot-scope="scope">
-                <span class="sortitem">1</span>
-                <span class="pairLogo">
-                  <img src="../../assets/img/logo/PETH.png" width="20px">
-                  <img src="../../assets/img/logo/PETH.png" width="20px">
-                </span>
-                <span class="pairName">{{scope.row.symbol0}}</span>
-              </template>
-            </el-table-column>
-            <el-table-column
-              prop="liquidity"
-              label="Liquidity">
-            </el-table-column>
-            <el-table-column
-              prop="volumeOneDay"
-              label="Volume(24hrs)">
-            </el-table-column>
-            <el-table-column
-              prop="volumeSevenDay"
-              label="Volume(7d)">
-            </el-table-column>
-            <el-table-column
-              prop="pairContract"
-              label="Fees(24hr)">
-            </el-table-column>
-            <el-table-column
-              prop="feesOfLiquidity"
-              label="1y Fees/Liquidity">
-            </el-table-column>
-          </el-table>
-          <div class="pagePabel" v-show="false">
-            <i class="prex"></i>
-            <span>Page 1 of 20</span>
-            <i class="next"></i>
-          </div>
         </div>
         <h2 class="quoTitle">Transactions</h2>
         <div class="tableCon">
@@ -154,9 +58,9 @@
             </el-table-column>
           </el-table>
           <div class="pagePabel">
-            <i class="prex" @click="prexData"></i>
+            <i class="prex"></i>
             <span>Page 1 of 20</span>
-            <i class="next" @click="nextData"></i>
+            <i class="next"></i>
           </div>
         </div>
       </div>
@@ -191,101 +95,24 @@ export default {
       this.$initWeb3().then((web3)=>{
           this.web3 = web3
           this.isConnect = true
-          this.initChart()
-          this.getDatas()
           this.getTrans()
       })
   },
   methods: {
-    initChart(){
-      let data = [{
-        flow_num:20,
-        date:'1/1'
-      },{
-        flow_num:60,
-        date:'2/1'
-      },{
-        flow_num:30,
-        date:'3/1'
-      },{
-        flow_num:40,
-        date:'4/1'
-      }]
-        const chart = new F2.Chart({
-            id: 'container',
-            pixelRatio: window.devicePixelRatio,
-        });
-        chart.source(data, {
-            flow_num: {
-                tickCount: 5,
-                min: 0
-            },
-            date: {
-                range: [ 0, 1 ],
-                tickCount: 4
-            }
-        });
-        chart.tooltip({
-            custom: true,
-            showXTip: true,
-            showYTip: true,
-            snap: true,
-            crosshairsType: 'xy',
-            crosshairsStyle: {
-                lineDash: [ 2 ]
-            }
-        });
-        chart.legend('gender', {
-            position: 'left'
-        });
-        chart.axis('date', {
-            line:null,
-            label: function label(text, index, total) {
-                const textCfg = {};
-                if (index === 0) {
-                    textCfg.textAlign = 'left';
-                } else if (index === total - 1) {
-                    textCfg.textAlign = 'right';
-                }
-                textCfg.fontSize = 10
-                textCfg.color = '#fff'
-                return textCfg;
-            }
-        });
-        chart.axis('flow_num', {
-            line:null,
-            tickLine:null,
-            grid:null,
-            position:'right',
-            label:function label(text, index, total) {
-                const textCfg = {};
-                textCfg.fontSize = 10
-                textCfg.text = text+' BJ'
-                return textCfg;
-            }
-        });
-        chart.area().position('date*flow_num').color('l(90) 0:#37CC65 1:#36C963').shape('smooth');
-        chart.line().position('date*flow_num').color('l(90) 0:#37CC65 1:#37CC65').shape('smooth');
-        chart.render();
+    toTokens(){
+      this.$router.push('/tokens')
+    },
+    toPairs(){
+      this.$router.push('/pairs')
+    },
+    toOverview(){
+      this.$router.push('/overview')
     },
     elWidth(){
         let _this= this;
         this.$nextTick(function () {
             _this.styWidth = _this.$refs.chartBars.clientWidth-60;
         })
-    },
-    getDatas(){
-      getTokens().then((res)=>{
-        if(res.data.status==200){
-          this.tokenList = res.data.data
-        }
-      })
-      getPairs().then((res)=>{
-        if(res.data.status==200){
-          this.pairList = res.data.data
-        }
-      })
-      
     },
     getTrans(){
       let data = {
@@ -307,15 +134,6 @@ export default {
         this.pageNum++
         this.getTrans()
       }
-    },
-    toTranstions(){
-      this.$router.push('/transtions')
-    },
-    toTokens(){
-      this.$router.push('/tokens')
-    },
-    toPairs(){
-      this.$router.push('/pairs')
     }
   }
 }  
